@@ -1,0 +1,27 @@
+.canon-loupe {
+  position: relative;
+  box-sizing: border-box;
+  inline-size: var(--canon-loupe-side);
+  block-size: var(--canon-loupe-side);
+  border: var(--canon-loupe-frame) solid var(--canon-loupe-colour);
+  background: var(--canon-loupe-colour);
+  box-shadow: var(--canon-loupe-shadow);
+  pointer-events: none;
+}
+
+.canon-loupe-pixels {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  image-rendering: pixelated;
+}
+
+.canon-loupe-centre {
+  position: absolute;
+  inset-block-start: calc(50% - 50% / var(--canon-loupe-count) - 1px);
+  inset-inline-start: calc(50% - 50% / var(--canon-loupe-count) - 1px);
+  box-sizing: border-box;
+  inline-size: calc(100% / var(--canon-loupe-count) + 2px);
+  block-size: calc(100% / var(--canon-loupe-count) + 2px);
+  border: 1px solid var(--canon-loupe-ink);
+}

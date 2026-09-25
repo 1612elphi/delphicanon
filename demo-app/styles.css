@@ -66,3 +66,23 @@ body {
   flex: 1;
   min-block-size: 0;
 }
+
+.gallery-loupe {
+  position: absolute;
+}
+
+.gallery-fit {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  margin: 0;
+  padding: 16px;
+  border: 0;
+  background: none;
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-title3);
+  font-weight: var(--canon-weight-semibold);
+  text-align: start;
+  cursor: pointer;
+}

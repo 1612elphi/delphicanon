@@ -96,6 +96,16 @@
   --canon-math-clay: color(srgb 0.659 0.275 0.133);
   --canon-math-yellow: color(srgb 0.965 0.776 0.157);
   --canon-math-tint-share: 13%;
+
+  /* phase C */
+  --canon-loupe-frame: 6px;
+  --canon-loupe-side: 112px;
+  --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
+  --canon-loupe-ink-dark: black;
+  --canon-loupe-ink-light: white;
+  --canon-text-big-number: 32px;
+  --canon-value-line-fade: 250ms;
+  --canon-canvas-refit: 300ms;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -136,6 +146,11 @@
     --canon-math-clay: color(srgb 0.925 0.561 0.431);
     --canon-math-yellow: color(srgb 0.914 0.741 0.2);
     --canon-math-tint-share: 20%;
+
+    /* phase C */
+    --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
+    --canon-loupe-ink-dark: black;
+    --canon-loupe-ink-light: white;
   }
 }
 
@@ -176,4 +191,9 @@ html.dark {
   --canon-math-clay: color(srgb 0.925 0.561 0.431);
   --canon-math-yellow: color(srgb 0.914 0.741 0.2);
   --canon-math-tint-share: 20%;
+
+  /* phase C */
+  --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
+  --canon-loupe-ink-dark: black;
+  --canon-loupe-ink-light: white;
 }

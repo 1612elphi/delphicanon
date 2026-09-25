@@ -85,3 +85,16 @@ export const Picture: TOC<{ Args: object }> = <template>
       r="2"
     /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg>
 </template>;
+
+export const Pipette: TOC<{ Args: object }> = <template>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  ><path d="m2 22 1-1h3l9-9" /><path d="M3 21v-3l9-9" /><path
+      d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"
+    /></svg>
+</template>;

@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import CanonBigNumberField from '#src/components/canon-big-number-field.gts';
 import CanonDecimalField from '#src/components/canon-decimal-field.gts';
 import CanonDualList, {
   type CanonDualItem,
@@ -37,6 +38,7 @@ const rates = ['23.976', '24', '25'];
 
 export default class Controls extends Component {
   @tracked number = 200;
+  @tracked big = '16';
   @tracked seconds = 1.5;
   @tracked factor = 1;
   @tracked hidden: CanonDualItem[] = [
@@ -53,6 +55,9 @@ export default class Controls extends Component {
   }
 
   setNumber = (value: number) => (this.number = value);
+  setBig = (text: string) => (this.big = text);
+  stepBig = (direction: -1 | 1) =>
+    (this.big = String(Math.max(0, (parseInt(this.big) || 0) + direction)));
   setSeconds = (value: number) => (this.seconds = value);
   setFactor = (value: number) => (this.factor = value);
 
@@ -127,6 +132,15 @@ export default class Controls extends Component {
           </CanonRow>
         {{/each}}
       </CanonGrid>
+      <CanonHeading @text="Big number" />
+      <CanonBigNumberField
+        @value={{this.big}}
+        @placeholder="0"
+        @unit="PX"
+        @label="Big number"
+        @onStep={{this.stepBig}}
+        @onInput={{this.setBig}}
+      />
       <CanonRow @title="Decimal" @form="flush" as |titleId|>
         <CanonDecimalField
           @value={{this.seconds}}

@@ -1,4 +1,5 @@
 .canon-value-line {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -21,9 +22,13 @@
 }
 
 @media (hover: hover) {
-  .canon-value-line:hover {
+  .canon-value-line:hover:not(:disabled) {
     background: var(--canon-accent-bg);
   }
+}
+
+.canon-value-line:disabled {
+  cursor: default;
 }
 
 .canon-value-line:focus-visible {
@@ -49,6 +54,11 @@
   white-space: nowrap;
 }
 
+.canon-value-line-ghost {
+  position: absolute;
+  pointer-events: none;
+}
+
 .canon-value-line-glyph {
   display: flex;
   flex: none;
@@ -56,7 +66,76 @@
   color: var(--canon-muted-foreground);
 }
 
+.canon-value-line:disabled .canon-value-line-glyph {
+  visibility: hidden;
+}
+
 .canon-value-line-glyph svg {
   inline-size: 100%;
   block-size: auto;
+}
+
+.canon-value-line--lit {
+  background: var(--canon-accent-bg);
+}
+
+.canon-value-line--lit .canon-value-line-value {
+  color: var(--canon-primary);
+}
+
+.canon-value-line--above {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 12px;
+  row-gap: 2px;
+  align-content: center;
+  min-block-size: var(--canon-row-height);
+  padding-block: 10px;
+}
+
+.canon-value-line--above .canon-value-line-label,
+.canon-value-line--above .canon-value-line-value {
+  grid-column: 1;
+  inline-size: auto;
+}
+
+.canon-value-line--above .canon-value-line-glyph {
+  grid-row: 1 / 3;
+  grid-column: 2;
+  align-self: center;
+}
+
+.canon-value-line--wrapping {
+  align-items: first baseline;
+  gap: 12px;
+  padding-block: 13px;
+}
+
+.canon-value-line--wrapping .canon-value-line-label {
+  inline-size: auto;
+}
+
+.canon-value-line--wrapping .canon-value-line-value,
+.canon-value-line--wraps .canon-value-line-value {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.canon-value-line--wrapping .canon-value-line-glyph {
+  align-self: center;
+}
+
+.canon-value-line--numbered {
+  gap: 10px;
+}
+
+.canon-value-line--numbered .canon-value-line-label {
+  inline-size: auto;
+  min-inline-size: 26px;
+  font-variant-numeric: tabular-nums;
+}
+
+.canon-value-line--wraps {
+  padding-block: 10px;
 }
