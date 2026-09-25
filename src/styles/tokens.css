@@ -73,9 +73,15 @@
   --canon-icon-large: 32px;
   /* colour solid */
   --canon-colour-solid-wire: color-mix(
+    in srgb,
     var(--canon-foreground) 30%,
+    transparent
+  );
   --canon-colour-solid-hollow: color-mix(
+    in srgb,
     var(--canon-foreground) 50%,
+    transparent
+  );
   --canon-colour-solid-shadow: rgb(0 0 0 / 25%);
   --canon-colour-solid-ink-dark: black;
   --canon-colour-solid-ink-light: white;
