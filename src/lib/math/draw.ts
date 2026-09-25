@@ -1,4 +1,10 @@
-import { grown, morphEasing, settleSeconds, type Keyed, type Placed } from './morph.ts';
+import {
+  grown,
+  morphEasing,
+  settleSeconds,
+  type Keyed,
+  type Placed,
+} from './morph.ts';
 import type { Atom, Box, Rect } from './typeset.ts';
 
 const ns = 'http://www.w3.org/2000/svg';
@@ -128,7 +134,8 @@ function current(shown: Shown): { frame: Rect; alpha: number } {
   const style = getComputedStyle(shown.el);
   const alpha = Number(style.opacity);
   const rest = shown.placed.frame;
-  if (style.transform === 'none' || !style.transform) return { frame: rest, alpha };
+  if (style.transform === 'none' || !style.transform)
+    return { frame: rest, alpha };
   const m = new DOMMatrixReadOnly(style.transform);
   return {
     frame: {
@@ -212,7 +219,10 @@ export class MathMorph {
         });
       } else if (moving) {
         el.animate(
-          [{ transform: toward(placed, grown(placed, 0.6)) }, { transform: identity }],
+          [
+            { transform: toward(placed, grown(placed, 0.6)) },
+            { transform: identity },
+          ],
           { duration: ms, easing: this.#easing },
         );
         el.animate(
@@ -245,5 +255,14 @@ export class MathMorph {
     this.#leaving = [];
     for (const { el } of this.#shown.values())
       el.getAnimations().forEach((a) => a.finish());
+  }
+}
+
+/** Pointer capture that tolerates a pointer already gone, as a synthetic event's is. */
+export function capture(element: Element, pointerId: number): void {
+  try {
+    element.setPointerCapture(pointerId);
+  } catch {
+    // the pointer ended before the capture
   }
 }

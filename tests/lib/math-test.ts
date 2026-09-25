@@ -61,7 +61,10 @@ module('Unit | lib/math', function () {
     assert.deepEqual(p('b*c^(-1)'), N.quotient(N.symbol('b'), N.symbol('c')));
     assert.deepEqual(
       p('(1/2)*x^(-1/2)'),
-      N.quotient(N.number('1'), N.product([N.number('2'), N.call('sqrt', [x])])),
+      N.quotient(
+        N.number('1'),
+        N.product([N.number('2'), N.call('sqrt', [x])]),
+      ),
     );
     assert.deepEqual(
       p('-x^(-2)'),
@@ -129,25 +132,73 @@ module('Unit | lib/math', function () {
       [[s('x'), { kind: 'inverse' }], 'x^(-1)'],
       [[{ kind: 'root' }, s('2')], 'sqrt(2)'],
       [[{ kind: 'cubeRoot' }, s('8')], 'nthroot(8,3)'],
-      [[{ kind: 'nthRoot' }, s('4'), { kind: 'right' }, s('x')], 'nthroot(x,4)'],
+      [
+        [{ kind: 'nthRoot' }, s('4'), { kind: 'right' }, s('x')],
+        'nthroot(x,4)',
+      ],
       [[{ kind: 'logBase' }, s('2'), { kind: 'right' }, s('8')], 'log(8,2)'],
       [[{ kind: 'exponential', base: 'e' }, s('x')], 'e^x'],
       [[s('2'), { kind: 'scientific' }, s('3')], '2*10^3'],
-      [[{ kind: 'series', product: false }, s('1'), { kind: 'up' }, s('n'), { kind: 'right' }, s('k')], 'sum(k,k,1,n)'],
-      [[{ kind: 'series', product: true }, s('1'), { kind: 'up' }, s('5'), { kind: 'right' }, s('k')], 'product(k,k,1,5)'],
+      [
+        [
+          { kind: 'series', product: false },
+          s('1'),
+          { kind: 'up' },
+          s('n'),
+          { kind: 'right' },
+          s('k'),
+        ],
+        'sum(k,k,1,n)',
+      ],
+      [
+        [
+          { kind: 'series', product: true },
+          s('1'),
+          { kind: 'up' },
+          s('5'),
+          { kind: 'right' },
+          s('k'),
+        ],
+        'product(k,k,1,5)',
+      ],
       [[{ kind: 'integral', bounded: false }, s('x')], 'integrate(x,x)'],
-      [[{ kind: 'integral', bounded: true }, s('0'), { kind: 'up' }, s('1'), { kind: 'right' }, s('x')], 'defint(x,0,1,x)'],
+      [
+        [
+          { kind: 'integral', bounded: true },
+          s('0'),
+          { kind: 'up' },
+          s('1'),
+          { kind: 'right' },
+          s('x'),
+        ],
+        'defint(x,0,1,x)',
+      ],
       [[{ kind: 'derivative' }, s('x')], 'diff(x,x)'],
       [[{ kind: 'limit' }, s('0'), { kind: 'right' }, s('x')], 'limit(x,x,0)'],
       [[{ kind: 'fence', fence: 'abs' }, s('x')], 'abs(x)'],
       [[{ kind: 'fence', fence: 'floor' }, s('x')], 'floor(x)'],
       [[{ kind: 'fence', fence: 'ceil' }, s('x')], 'ceil(x)'],
       [[{ kind: 'open' }, s('x'), { kind: 'close' }, s('2')], '(x)*2'],
-      [[{ kind: 'function', name: 'gcd', arity: 2 }, s('4'), { kind: 'right' }, s('6')], 'gcd(4,6)'],
-      [[{ kind: 'binomial' }, s('5'), { kind: 'right' }, s('2')], '(factorial(5)/(factorial(2)*factorial((5)-(2))))'],
-      [[{ kind: 'permutation' }, s('5'), { kind: 'right' }, s('2')], '(factorial(5)/factorial((5)-(2)))'],
+      [
+        [
+          { kind: 'function', name: 'gcd', arity: 2 },
+          s('4'),
+          { kind: 'right' },
+          s('6'),
+        ],
+        'gcd(4,6)',
+      ],
+      [
+        [{ kind: 'binomial' }, s('5'), { kind: 'right' }, s('2')],
+        '(factorial(5)/(factorial(2)*factorial((5)-(2))))',
+      ],
+      [
+        [{ kind: 'permutation' }, s('5'), { kind: 'right' }, s('2')],
+        '(factorial(5)/factorial((5)-(2)))',
+      ],
     ];
-    for (const [keys, text] of cases) assert.strictEqual(typed(keys).text, text);
+    for (const [keys, text] of cases)
+      assert.strictEqual(typed(keys).text, text);
   });
 
   test('nCr and nPr come back as factorials that keep their value', function (assert) {
@@ -182,7 +233,13 @@ module('Unit | lib/math', function () {
     e.apply(s('3'));
     assert.strictEqual(e.text, 'x^(23)+');
     assert.strictEqual(
-      typed([s('2'), { kind: 'open' }, s('x'), { kind: 'close' }, { kind: 'square' }]).text,
+      typed([
+        s('2'),
+        { kind: 'open' },
+        s('x'),
+        { kind: 'close' },
+        { kind: 'square' },
+      ]).text,
       '2*(x)^2',
     );
     const calculus = typed(
@@ -285,7 +342,9 @@ module('Unit | lib/math', function () {
     const flat = new Expression('12+x');
     const stops = layoutRow(setter, flat.root).carets;
     assert.strictEqual(stops.length, 5);
-    assert.true(stops.every((c, i) => i === 0 || c.rect.x > stops[i - 1]!.rect.x));
+    assert.true(
+      stops.every((c, i) => i === 0 || c.rect.x > stops[i - 1]!.rect.x),
+    );
   });
 
   test('keypad pages cover their grids once', function (assert) {
@@ -295,7 +354,10 @@ module('Unit | lib/math', function () {
         for (let cx = spec.x; cx < spec.x + spec.w; cx += 1)
           for (let cy = spec.y; cy < spec.y + spec.h; cy += 1) {
             assert.true(cx < columns && cy < rows, `page ${index} on the grid`);
-            assert.false(covered.has(cy * columns + cx), `page ${index} ${cx},${cy} once`);
+            assert.false(
+              covered.has(cy * columns + cx),
+              `page ${index} ${cx},${cy} once`,
+            );
             covered.add(cy * columns + cx);
           }
         for (const key of spec.menu?.keys ?? [spec.key]) {
@@ -308,11 +370,17 @@ module('Unit | lib/math', function () {
     assert.strictEqual(letters('t')[0], 't');
     assert.strictEqual(letters('t').length, 12);
     assert.strictEqual(familyOf(s('7')), 'digit');
-    assert.strictEqual(familyOf({ kind: 'integral', bounded: true }), 'calculus');
+    assert.strictEqual(
+      familyOf({ kind: 'integral', bounded: true }),
+      'calculus',
+    );
     assert.strictEqual(familyOf(s('×')), 'operation');
     assert.strictEqual(familyOf(s('y')), 'letter');
     assert.strictEqual(spoken({ kind: 'root' }, 'x'), 'Square root');
-    assert.strictEqual(spoken({ kind: 'function', name: 'gcd', arity: 2 }, 'x'), 'gcd');
+    assert.strictEqual(
+      spoken({ kind: 'function', name: 'gcd', arity: 2 }, 'x'),
+      'gcd',
+    );
   });
 
   test('morph keys stay with their glyphs', function (assert) {
@@ -327,6 +395,11 @@ module('Unit | lib/math', function () {
       frame: { x: 0, y: 0, width: 10, height: 20 },
       alpha: 1,
     };
-    assert.deepEqual(grown(placed, 0.5), { x: 2.5, y: 0, width: 5, height: 10 });
+    assert.deepEqual(grown(placed, 0.5), {
+      x: 2.5,
+      y: 0,
+      width: 5,
+      height: 10,
+    });
   });
 });

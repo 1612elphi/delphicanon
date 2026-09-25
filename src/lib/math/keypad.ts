@@ -1,4 +1,10 @@
-import { Expression, layoutRow, Row, type Item, type Key } from './expression.ts';
+import {
+  Expression,
+  layoutRow,
+  Row,
+  type Item,
+  type Key,
+} from './expression.ts';
 import { isItalic } from './node.ts';
 import { Box, Typesetter, type Metrics } from './typeset.ts';
 
@@ -112,11 +118,26 @@ export function pages(variable: string): Spec[][] {
     n: string,
     x: number,
     y: number,
-    { arity = 1, family = 'structure' as Family, w = 1 } = {},
-  ) => key({ kind: 'function', name: n, arity }, family, x, y, { w, scale: nameScale });
+    {
+      arity = 1,
+      family = 'structure',
+      w = 1,
+    }: { arity?: number; family?: Family; w?: number } = {},
+  ) =>
+    key({ kind: 'function', name: n, arity }, family, x, y, {
+      w,
+      scale: nameScale,
+    });
   const menu = (title: string, names: string[], x: number, y: number): Spec => {
-    const keys = names.map((n): Key => ({ kind: 'function', name: n, arity: 1 }));
-    return { ...key(keys[0]!, 'structure', x, y, { w: 3 }), menu: { title, keys } };
+    const keys = names.map((n): Key => ({
+      kind: 'function',
+      name: n,
+      arity: 1,
+    }));
+    return {
+      ...key(keys[0]!, 'structure', x, y, { w: 3 }),
+      menu: { title, keys },
+    };
   };
   const numbers = [
     key({ kind: 'fraction' }, 'structure', 0, 0),
@@ -162,7 +183,12 @@ export function pages(variable: string): Spec[][] {
     name({ kind: 'fence', fence: 'abs' }, 'structure', 3, 2),
     name({ kind: 'fence', fence: 'floor' }, 'structure', 4, 2),
     name({ kind: 'fence', fence: 'ceil' }, 'structure', 5, 2),
-    menu('sinh cosh tanh', ['sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh'], 0, 3),
+    menu(
+      'sinh cosh tanh',
+      ['sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh'],
+      0,
+      3,
+    ),
     menu('sec csc cot', ['sec', 'csc', 'cot', 'asec', 'acsc', 'acot'], 3, 3),
   ];
   const tall = { h: 2, scale: 1.3 };
@@ -186,7 +212,9 @@ export function pages(variable: string): Spec[][] {
   ];
   const greek = ['theta', 'alpha', 'beta', 'lambda', 'mu', 'omega'];
   const variables = [
-    ...ls.map((l, i) => key(symbol(l), 'letter', i % 6, Math.floor(i / 6), { scale: 1.1 })),
+    ...ls.map((l, i) =>
+      key(symbol(l), 'letter', i % 6, Math.floor(i / 6), { scale: 1.1 }),
+    ),
     ...greek.map((g, i) => key(symbol(g), 'letter', i, 2, { scale: 1.1 })),
     key(symbol(pi), 'letter', 0, 3, { scale: 1.1 }),
     key(symbol('e'), 'letter', 1, 3, { scale: 1.1 }),
@@ -198,17 +226,27 @@ export function pages(variable: string): Spec[][] {
 }
 
 /** A key's one label at `size`: its symbol or its name, with letters where the key opens slots. */
-export function label(key: Key, variable: string, size: number, metrics: Metrics): Box {
+export function label(
+  key: Key,
+  variable: string,
+  size: number,
+  metrics: Metrics,
+): Box {
   const setter = new Typesetter(metrics, size, 'result');
-  const row = (items: Item[]) => layoutRow(setter, new Row(items), { variable });
+  const row = (items: Item[]) =>
+    layoutRow(setter, new Row(items), { variable });
   const sym = (symbol: string): Item => ({ kind: 'symbol', symbol });
   const letters = (text: string) => new Row([...text].map(sym));
   const italic = (text: string) => setter.text(text, { italic: true });
   switch (key.kind) {
     case 'symbol':
-      return key.symbol === '!' ? row([sym('n'), sym('!')]) : row([sym(key.symbol)]);
+      return key.symbol === '!'
+        ? row([sym('n'), sym('!')])
+        : row([sym(key.symbol)]);
     case 'fraction':
-      return row([{ kind: 'fraction', top: letters('a'), bottom: letters('b') }]);
+      return row([
+        { kind: 'fraction', top: letters('a'), bottom: letters('b') },
+      ]);
     case 'divide':
       return setter.text('÷');
     case 'power':
@@ -218,21 +256,35 @@ export function label(key: Key, variable: string, size: number, metrics: Metrics
     case 'cube':
       return row([sym('x'), { kind: 'power', exponent: letters('3') }]);
     case 'inverse':
-      return row([sym('x'), { kind: 'power', exponent: new Row([sym('−'), sym('1')]) }]);
+      return row([
+        sym('x'),
+        { kind: 'power', exponent: new Row([sym('−'), sym('1')]) },
+      ]);
     case 'root':
       return row([{ kind: 'root', radicand: letters('x') }]);
     case 'cubeRoot':
-      return row([{ kind: 'nthRoot', index: letters('3'), radicand: letters('x') }]);
+      return row([
+        { kind: 'nthRoot', index: letters('3'), radicand: letters('x') },
+      ]);
     case 'nthRoot':
-      return row([{ kind: 'nthRoot', index: letters('n'), radicand: letters('x') }]);
+      return row([
+        { kind: 'nthRoot', index: letters('n'), radicand: letters('x') },
+      ]);
     case 'logBase':
       return setter.logBase(setter.text('b', { italic: true, level: 2 }), 0);
     case 'exponential':
-      return row([...[...key.base].map(sym), { kind: 'power', exponent: letters('x') }]);
+      return row([
+        ...[...key.base].map(sym),
+        { kind: 'power', exponent: letters('x') },
+      ]);
     case 'scientific': {
       const box = setter.text('×10');
       return box.append(
-        setter.raised(setter.text('n', { italic: true, level: 2 }), box.ascent, 0),
+        setter.raised(
+          setter.text('n', { italic: true, level: 2 }),
+          box.ascent,
+          0,
+        ),
         size * 0.04,
       );
     }
@@ -296,4 +348,31 @@ export function spoken(key: Key, variable: string): string {
   const typed = new Expression('', variable);
   typed.apply(key);
   return typed.text.replaceAll('()', '').replaceAll('(,)', '');
+}
+
+const typedSigns: Record<string, Key> = {
+  '+': { kind: 'symbol', symbol: '+' },
+  '-': { kind: 'symbol', symbol: '−' },
+  '*': { kind: 'symbol', symbol: '×' },
+  '=': { kind: 'symbol', symbol: '=' },
+  ',': { kind: 'symbol', symbol: ',' },
+  '!': { kind: 'symbol', symbol: '!' },
+  '.': { kind: 'symbol', symbol: '.' },
+  '/': { kind: 'divide' },
+  '^': { kind: 'power' },
+  '(': { kind: 'open' },
+  ')': { kind: 'close' },
+  '|': { kind: 'fence', fence: 'abs' },
+  ArrowLeft: { kind: 'left' },
+  ArrowRight: { kind: 'right' },
+  ArrowUp: { kind: 'up' },
+  ArrowDown: { kind: 'down' },
+  Backspace: { kind: 'delete' },
+};
+
+/** The key a physical keyboard's `KeyboardEvent.key` types: digits, signs, letters, arrows and Backspace. */
+export function keyForKeyboard(name: string): Key | undefined {
+  if (typedSigns[name]) return typedSigns[name];
+  if (/^[0-9a-zA-Z]$/.test(name)) return { kind: 'symbol', symbol: name };
+  return undefined;
 }

@@ -1,0 +1,54 @@
+.canon-math-editor {
+  display: flex;
+  min-block-size: 0;
+  overflow: auto hidden;
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-family: var(--canon-math-font);
+  cursor: text;
+  scrollbar-width: none;
+  touch-action: none;
+  user-select: none;
+}
+
+.canon-math-editor::-webkit-scrollbar {
+  display: none;
+}
+
+.canon-math-editor-content {
+  position: relative;
+  flex: 1 0 auto;
+}
+
+.canon-math-editor-content > svg {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+}
+
+.canon-math-editor g > * {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.canon-math-editor-caret {
+  position: absolute;
+  background: var(--canon-primary);
+  pointer-events: none;
+}
+
+/* empty slot fills faintly */
+.canon-math-editor-caret--slot {
+  background: color-mix(in srgb, var(--canon-primary) 22%, transparent);
+}
+
+.canon-math-editor-text {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

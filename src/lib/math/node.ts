@@ -132,10 +132,7 @@ export const isLetter = (c: string | undefined) =>
 
 /** Letters are italic; constants shown as signs (π, ∞, ∅) are upright. */
 export function isItalic(text: string): boolean {
-  return (
-    !['π', '∞', '∅'].includes(text) &&
-    [...text].every((c) => isLetter(c))
-  );
+  return !['π', '∞', '∅'].includes(text) && [...text].every((c) => isLetter(c));
 }
 
 // MARK: parsing
@@ -146,7 +143,8 @@ type Token =
   | { t: 'op'; v: string };
 
 const digit = (c: string) => (c >= '0' && c <= '9') || c === '.';
-const nameChar = (c: string) => isLetter(c) || c === '_' || (c >= '0' && c <= '9');
+const nameChar = (c: string) =>
+  isLetter(c) || c === '_' || (c >= '0' && c <= '9');
 
 function tokenise(text: string): Token[] {
   const chars = [...text];
@@ -168,8 +166,7 @@ function tokenise(text: string): Token[] {
     } else {
       i += 1;
       if (c === '−') tokens.push({ t: 'op', v: '-' });
-      else if (['×', '·', '⋅'].includes(c))
-        tokens.push({ t: 'op', v: '*' });
+      else if (['×', '·', '⋅'].includes(c)) tokens.push({ t: 'op', v: '*' });
       else if (c === '÷') tokens.push({ t: 'op', v: '/' });
       else if (c === '√') tokens.push({ t: 'name', v: 'sqrt' });
       else tokens.push({ t: 'op', v: c });

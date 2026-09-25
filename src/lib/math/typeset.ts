@@ -382,7 +382,7 @@ export class Typesetter {
       case name === 'abs':
         return this.bars(this.layout(first, level), level);
       case name === 'floor' || name === 'ceil':
-        return this.fence(name as Fence, this.layout(first, level), level);
+        return this.fence(name, this.layout(first, level), level);
       case name === 'nthroot' && args.length === 2:
         return this.indexedRadical(small(1), at(0), level);
       case name === 'cbrt':
@@ -437,8 +437,7 @@ export class Typesetter {
             this.argument(first, level),
             isBare(first) ? s * 0.17 : s * 0.03,
           );
-        else
-          box.append(this.parens(this.listed(args, level), level), s * 0.03);
+        else box.append(this.parens(this.listed(args, level), level), s * 0.03);
         return box;
       }
     }
@@ -632,7 +631,12 @@ export class Typesetter {
       new Box(weight, -top, content.descent + s * 0.08, [
         {
           mark: { m: 'rule' },
-          frame: { x: 0, y: top, width: weight, height: content.height + s * 0.16 },
+          frame: {
+            x: 0,
+            y: top,
+            width: weight,
+            height: content.height + s * 0.16,
+          },
           weight: 0,
           ink: this.ink,
         },

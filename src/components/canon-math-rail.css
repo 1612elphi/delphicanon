@@ -1,0 +1,38 @@
+.canon-math-rail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) repeat(4, var(--canon-math-arrow-width));
+  gap: var(--canon-hairline);
+  block-size: var(--canon-math-rail-height);
+  background: var(--canon-border);
+}
+
+.canon-math-rail > .canon-button {
+  min-block-size: 0;
+}
+
+/* ribs every 7 px, 42 % tall, fading towards both ends */
+.canon-math-rail-ribs {
+  position: relative;
+  background: var(--canon-card);
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.canon-math-rail-ribs::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--canon-muted-foreground) 55%, transparent) 1px,
+      transparent 1px
+    )
+    var(--canon-math-rail-phase, 0px) center / 7px 42% repeat-x;
+  content: "";
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 35%,
+    #000 65%,
+    transparent
+  );
+}

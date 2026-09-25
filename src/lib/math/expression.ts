@@ -1,4 +1,12 @@
-import { isItalic, isLetter, N, parse, shown, type Fence, type Node } from './node.ts';
+import {
+  isItalic,
+  isLetter,
+  N,
+  parse,
+  shown,
+  type Fence,
+  type Node,
+} from './node.ts';
 import { Box, type Caret, type Typesetter } from './typeset.ts';
 
 /** A run of items in an edited expression; some items hold rows of their own, their slots. */
@@ -164,9 +172,7 @@ function isNumeral(item: Item) {
   return item.kind === 'symbol' && numeral.test(item.symbol);
 }
 function isName(symbol: string) {
-  return (
-    ['π', '∞'].includes(symbol) || isLetter([...symbol][0])
-  );
+  return ['π', '∞'].includes(symbol) || isLetter([...symbol][0]);
 }
 function endsOperand(item: Item) {
   if (item.kind === 'symbol')
@@ -212,7 +218,10 @@ export class Expression {
         this.caret.index += 1;
         return;
       case 'fraction':
-        return this.insert({ kind: 'fraction', top: empty(), bottom: empty() }, 0);
+        return this.insert(
+          { kind: 'fraction', top: empty(), bottom: empty() },
+          0,
+        );
       case 'divide': {
         let start = index;
         while (start > 0 && !isOperator(row.items[start - 1]!)) start -= 1;
@@ -230,7 +239,10 @@ export class Expression {
       case 'inverse': {
         const exponent =
           key.kind === 'square' ? '2' : key.kind === 'cube' ? '3' : `${minus}1`;
-        row.items.splice(index, 0, { kind: 'power', exponent: symbols(exponent) });
+        row.items.splice(index, 0, {
+          kind: 'power',
+          exponent: symbols(exponent),
+        });
         this.caret.index += 1;
         return;
       }
@@ -261,7 +273,10 @@ export class Expression {
       case 'open':
         return this.insert({ kind: 'group', inner: empty() }, 0);
       case 'fence':
-        return this.insert({ kind: 'fence', fence: key.fence, inner: empty() }, 0);
+        return this.insert(
+          { kind: 'fence', fence: key.fence, inner: empty() },
+          0,
+        );
       case 'function':
         return this.insert(
           {
@@ -286,7 +301,12 @@ export class Expression {
       case 'integral':
         return this.insert(
           key.bounded
-            ? { kind: 'integral', lower: empty(), upper: empty(), body: empty() }
+            ? {
+                kind: 'integral',
+                lower: empty(),
+                upper: empty(),
+                body: empty(),
+              }
             : { kind: 'integral', body: empty() },
           0,
         );
@@ -300,9 +320,17 @@ export class Expression {
         return this.insert({ kind: 'permutation', n: empty(), r: empty() }, 0);
       case 'close': {
         let current = row;
-        for (let found = this.parent(current); found; found = this.parent(current)) {
+        for (
+          let found = this.parent(current);
+          found;
+          found = this.parent(current)
+        ) {
           const kind = found.row.items[found.index]!.kind;
-          if (['group', 'function', 'fence', 'logBase', 'derivative'].includes(kind)) {
+          if (
+            ['group', 'function', 'fence', 'logBase', 'derivative'].includes(
+              kind,
+            )
+          ) {
             this.caret = { row: found.row, index: found.index + 1 };
             return;
           }
@@ -386,7 +414,11 @@ export class Expression {
   /** To the slot above or below in the nearest structure that has one; up into a neighbouring exponent, down out of one. */
   private moveVertically(up: boolean) {
     let current = this.caret.row;
-    for (let found = this.parent(current); found; found = this.parent(current)) {
+    for (
+      let found = this.parent(current);
+      found;
+      found = this.parent(current)
+    ) {
       const item = found.row.items[found.index]!;
       const target = slotFrom(item, found.slot, up);
       if (target !== undefined) {
@@ -405,7 +437,10 @@ export class Expression {
     const before = row.items[index - 1];
     const after = row.items[index];
     if (before?.kind === 'power')
-      this.caret = { row: before.exponent, index: before.exponent.items.length };
+      this.caret = {
+        row: before.exponent,
+        index: before.exponent.items.length,
+      };
     else if (after?.kind === 'power')
       this.caret = { row: after.exponent, index: 0 };
   }
@@ -472,7 +507,7 @@ export function rowText(row: Row, variable: string): string {
 const symbolText: Record<string, string> = {
   [times]: '*',
   [minus]: '-',
-  'π': 'pi',
+  π: 'pi',
   '∞': 'Infinity',
 };
 
@@ -643,7 +678,8 @@ function call(name: string, args: Node[]): Item[] {
     ];
   if (name === 'integrate' && n === 2)
     return [{ kind: 'integral', body: rows[0]! }];
-  if (name === 'diff' && n === 2) return [{ kind: 'derivative', body: rows[0]! }];
+  if (name === 'diff' && n === 2)
+    return [{ kind: 'derivative', body: rows[0]! }];
   if (name === 'limit' && n === 3)
     return [{ kind: 'limit', to: rows[2]!, body: rows[0]! }];
   return [{ kind: 'function', name, args: n === 0 ? [new Row()] : rows }];
@@ -679,7 +715,8 @@ function gap(row: Row, index: number, s: number, level: number): number {
   if (before === ',') return s * 0.2;
   // sin(x) x, (a+b)(a−b)
   if (before === undefined) return s * 0.1;
-  const digits = (item: Item) => item.kind === 'symbol' && numeral.test(item.symbol);
+  const digits = (item: Item) =>
+    item.kind === 'symbol' && numeral.test(item.symbol);
   return digits(previous) && digits(item) ? 0 : s * 0.05;
 }
 
@@ -785,12 +822,7 @@ export function layoutRow(
           .append(setter.text('=', { level: script }), s * 0.04)
           .append(slot(item.from, script), s * 0.04);
         set = setter
-          .series(
-            item.product ? 'Π' : 'Σ',
-            below,
-            slot(item.to, script),
-            level,
-          )
+          .series(item.product ? 'Π' : 'Σ', below, slot(item.to, script), level)
           .append(bodied(item.body), s * 0.1);
         break;
       }
@@ -816,12 +848,20 @@ export function layoutRow(
         break;
       case 'binomial':
         set = setter.parens(
-          setter.stacked(slot(item.n, level + 1), slot(item.r, level + 1), level),
+          setter.stacked(
+            slot(item.n, level + 1),
+            slot(item.r, level + 1),
+            level,
+          ),
           level,
         );
         break;
       case 'permutation':
-        set = setter.permutation(slot(item.n, script), slot(item.r, script), level);
+        set = setter.permutation(
+          slot(item.n, script),
+          slot(item.r, script),
+          level,
+        );
         break;
     }
     const italicGap = item.kind === 'power' && previousItalic ? s * 0.04 : 0;
@@ -840,13 +880,11 @@ export function layoutRow(
     box.carets.push({ row, index: 0, rect: hole.frame });
   } else {
     box.carets.push(
-      ...stops.map(
-        (x, index): Caret => ({
-          row,
-          index,
-          rect: { x, y: -s * 0.78, width: 0, height: s },
-        }),
-      ),
+      ...stops.map((x, index): Caret => ({
+        row,
+        index,
+        rect: { x, y: -s * 0.78, width: 0, height: s },
+      })),
     );
   }
   return box;

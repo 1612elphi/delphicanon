@@ -4,7 +4,10 @@ const fallbackFamily =
   'ui-serif, "New York", "Iowan Old Style", Georgia, "Times New Roman", serif';
 let context: CanvasRenderingContext2D | null | undefined;
 let family: string | undefined;
-const cache = new Map<string, { width: number; ascent: number; descent: number }>();
+const cache = new Map<
+  string,
+  { width: number; ascent: number; descent: number }
+>();
 
 function mathFamily(): string {
   family ??=
@@ -21,7 +24,11 @@ function measure(text: string, italic: boolean, size: number) {
   // ponytail: unbounded cache cleared wholesale; typing makes a few hundred entries at most
   if (cache.size > 2000) cache.clear();
   context ??= document.createElement('canvas').getContext('2d');
-  let result = { width: text.length * size * 0.5, ascent: size * 0.7, descent: 0 };
+  let result = {
+    width: text.length * size * 0.5,
+    ascent: size * 0.7,
+    descent: 0,
+  };
   if (context) {
     context.font = `${italic ? 'italic ' : ''}${size}px ${mathFamily()}`;
     const m = context.measureText(text);
