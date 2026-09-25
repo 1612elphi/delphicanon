@@ -33,7 +33,7 @@ Reference for web conventions: `~/GitRepos/delphitools` (Ember 7.1, `.gts`, Vite
 | Copy | `canonCopy` is the service method `copy(text)`; it shows the toast only after `navigator.clipboard.writeText` resolves. Tests replace `service.write`. | A toast after a failed write would say Copied when nothing was copied. |
 | Pattern | The consumer sets `--canon-pattern` (from `canonPatternTile(svg)`) on an ancestor, standing in for the `CanonPatternSymbol` trait. Canvases draw it as a mask in the foreground colour at 4 %. | A mask follows the theme; a baked image would not. |
 | Not ported | `CanonActionBar` alias (use CanonGrid), `CanonPaddedSection` (a CSS rule in `canon-page.css`), `setCanonSectionHidden` (render conditionally), status bar bleed under a page (web pages start below the app's own header), menu-as-primary-action press handling (goes with CanonMenuCell). | No web counterpart, or it belongs to a later group. |
-| Demo only | `lucide-static` is a devDependency for gallery icons. It is not a runtime dependency. | The gallery needs symbols; the addon takes icons as components. |
+| Demo only | `lucide-static` (gallery icons) and `puppeteer-core` (`bun run shot`) are devDependencies, not runtime ones. | The gallery needs symbols; the addon takes icons as components. Screenshots check the gallery headlessly. |
 | Unverified | The crease (`horizontal-viewport-segments`) and laptop (`device-posture: folded`) rules have no test and were not seen on a device. | No dual-screen browser available. |
 
 ## Phases
