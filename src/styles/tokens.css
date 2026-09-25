@@ -50,6 +50,14 @@
   --canon-press-duration: 80ms;
   --canon-release-duration: 450ms;
   --canon-filled-hover-mix: 15%;
+
+  /* display group */
+  --canon-segment-font:
+    "FluoWrite", ui-monospace, "Cascadia Mono", menlo, monaco, consolas,
+    monospace;
+  --canon-paper: #fff;
+  --canon-paper-shadow: rgb(0 0 0 / 12%);
+  --canon-copied: color(srgb 0.204 0.78 0.349);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -65,6 +73,8 @@
     --canon-primary: color(srgb 0.761 0.678 0.38);
     --canon-primary-foreground: color(srgb 0.035 0.106 0.039);
     --canon-destructive: color(srgb 0.843 0.278 0.271);
+    /* display group */
+    --canon-copied: color(srgb 0.188 0.82 0.345);
   }
 }
 
@@ -80,4 +90,6 @@ html.dark {
   --canon-primary: color(srgb 0.761 0.678 0.38);
   --canon-primary-foreground: color(srgb 0.035 0.106 0.039);
   --canon-destructive: color(srgb 0.843 0.278 0.271);
+  /* display group */
+  --canon-copied: color(srgb 0.188 0.82 0.345);
 }

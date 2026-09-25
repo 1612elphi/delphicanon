@@ -1,0 +1,227 @@
+/* strip, cell and paper geometry from CanonPageStrip: insets 14 16 8, gap 14, caption 34 */
+.canon-page-strip {
+  --canon-page-caption: 34px;
+
+  position: relative;
+  block-size: 100%;
+  container-type: size;
+  background: var(--canon-muted);
+  font-family: var(--canon-font);
+}
+
+.canon-page-strip-list {
+  display: flex;
+  gap: 14px;
+  box-sizing: border-box;
+  block-size: 100%;
+  margin: 0;
+  padding: 14px var(--canon-panel-padding) 8px;
+  overflow: auto hidden;
+  overscroll-behavior-x: contain;
+  list-style: none;
+  scrollbar-width: none;
+}
+
+.canon-page-strip-cell {
+  --canon-page-height: max(20px, 100cqh - 22px - var(--canon-page-caption));
+  --canon-page-cell: max(
+    56px,
+    min(70cqw, var(--canon-page-height) * var(--canon-page-ratio))
+  );
+
+  position: relative;
+  flex: none;
+  inline-size: var(--canon-page-cell);
+  block-size: calc(var(--canon-page-height) + var(--canon-page-caption));
+}
+
+.canon-page-strip-cell--drop-before::before,
+.canon-page-strip-cell--drop-after::after {
+  position: absolute;
+  inset-block: 0 var(--canon-page-caption);
+  inline-size: 2px;
+  background: var(--canon-primary);
+  content: "";
+}
+
+.canon-page-strip-cell--drop-before::before {
+  inset-inline-start: -8px;
+}
+
+.canon-page-strip-cell--drop-after::after {
+  inset-inline-end: -8px;
+}
+
+.canon-page-strip-page {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--canon-foreground);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+.canon-page-strip-page:focus-visible {
+  outline: none;
+}
+
+.canon-page-strip-page:focus-visible .canon-page-strip-paper {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: 3px;
+}
+
+.canon-page-strip-art {
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: var(--canon-page-height);
+  padding-right: var(--canon-page-room);
+}
+
+.canon-page-strip-stack {
+  position: relative;
+  display: flex;
+  inline-size: min(
+    var(--canon-page-cell) - var(--canon-page-room),
+    (var(--canon-page-height) - var(--canon-page-room)) *
+      var(--canon-page-ratio)
+  );
+  aspect-ratio: var(--canon-page-ratio);
+}
+
+.canon-page-strip-sheet,
+.canon-page-strip-paper {
+  position: absolute;
+  inset: 0;
+  background: var(--canon-paper);
+}
+
+.canon-page-strip-sheet {
+  box-shadow: inset 0 0 0 var(--canon-hairline) var(--canon-border);
+}
+
+.canon-page-strip-paper {
+  overflow: hidden;
+  box-shadow: 0 1px 3px var(--canon-paper-shadow);
+}
+
+.canon-page-strip-paper::after {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 var(--canon-hairline) var(--canon-border);
+  content: "";
+  pointer-events: none;
+}
+
+.canon-page-strip-cell--lit .canon-page-strip-paper::after {
+  box-shadow: inset 0 0 0 var(--canon-frame) var(--canon-primary);
+}
+
+.canon-page-strip-clip {
+  position: absolute;
+  inset: 0;
+}
+
+.canon-page-strip-picture {
+  position: absolute;
+  max-inline-size: none;
+  object-fit: fill;
+}
+
+.canon-page-strip-area {
+  position: absolute;
+  outline: var(--canon-hairline) dashed
+    color-mix(in srgb, var(--canon-primary) 40%, transparent);
+}
+
+.canon-page-strip-number {
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 15px;
+  margin-block-start: 4px;
+  font-size: var(--canon-text-footnote);
+  font-weight: var(--canon-weight-semibold);
+  line-height: 15px;
+  text-align: center;
+}
+
+.canon-page-strip-number--named {
+  text-align: start;
+}
+
+.canon-page-strip-cell--lit .canon-page-strip-number {
+  color: var(--canon-primary);
+}
+
+.canon-page-strip-name {
+  inline-size: 100%;
+  block-size: 14px;
+  overflow: hidden;
+  color: var(--canon-muted-foreground);
+  font-size: var(--canon-text-caption);
+  line-height: 14px;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canon-page-strip-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  margin: 0;
+  color: var(--canon-muted-foreground);
+  font-size: var(--canon-text-subheadline);
+  font-weight: var(--canon-weight-semibold);
+}
+
+.canon-page-strip-menu {
+  position: fixed;
+  inset: auto;
+  min-inline-size: 180px;
+  margin: 0;
+  padding: var(--canon-hairline);
+  border: 0;
+  background: var(--canon-border);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 18%);
+}
+
+.canon-page-strip-menu:popover-open {
+  display: flex;
+  flex-direction: column;
+  gap: var(--canon-hairline);
+}
+
+.canon-page-strip-menu-item {
+  min-block-size: var(--canon-control-height);
+  margin: 0;
+  padding: 8px var(--canon-panel-padding);
+  border: 0;
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-body);
+  text-align: start;
+  cursor: pointer;
+}
+
+.canon-page-strip-menu-item:hover,
+.canon-page-strip-menu-item:focus-visible {
+  outline: none;
+  background: var(--canon-accent-bg);
+}
+
+.canon-page-strip-menu-item--destructive {
+  color: var(--canon-destructive);
+}
