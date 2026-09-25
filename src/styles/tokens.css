@@ -50,6 +50,22 @@
   --canon-press-duration: 80ms;
   --canon-release-duration: 450ms;
   --canon-filled-hover-mix: 15%;
+
+  /* colour solid */
+  --canon-colour-solid-wire: color-mix(
+    in srgb,
+    var(--canon-foreground) 30%,
+    transparent
+  );
+  --canon-colour-solid-hollow: color-mix(
+    in srgb,
+    var(--canon-foreground) 50%,
+    transparent
+  );
+  --canon-colour-solid-shadow: rgb(0 0 0 / 25%);
+  --canon-colour-solid-ink-dark: black;
+  --canon-colour-solid-ink-light: white;
+  --canon-colour-solid-fade: 200ms;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -65,6 +81,21 @@
     --canon-primary: color(srgb 0.761 0.678 0.38);
     --canon-primary-foreground: color(srgb 0.035 0.106 0.039);
     --canon-destructive: color(srgb 0.843 0.278 0.271);
+
+    /* colour solid */
+    --canon-colour-solid-wire: color-mix(
+      in srgb,
+      var(--canon-foreground) 30%,
+      transparent
+    );
+    --canon-colour-solid-hollow: color-mix(
+      in srgb,
+      var(--canon-foreground) 50%,
+      transparent
+    );
+    --canon-colour-solid-shadow: rgb(0 0 0 / 25%);
+    --canon-colour-solid-ink-dark: black;
+    --canon-colour-solid-ink-light: white;
   }
 }
 
@@ -80,4 +111,19 @@ html.dark {
   --canon-primary: color(srgb 0.761 0.678 0.38);
   --canon-primary-foreground: color(srgb 0.035 0.106 0.039);
   --canon-destructive: color(srgb 0.843 0.278 0.271);
+
+  /* colour solid */
+  --canon-colour-solid-wire: color-mix(
+    in srgb,
+    var(--canon-foreground) 30%,
+    transparent
+  );
+  --canon-colour-solid-hollow: color-mix(
+    in srgb,
+    var(--canon-foreground) 50%,
+    transparent
+  );
+  --canon-colour-solid-shadow: rgb(0 0 0 / 25%);
+  --canon-colour-solid-ink-dark: black;
+  --canon-colour-solid-ink-light: white;
 }
