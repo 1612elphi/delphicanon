@@ -126,7 +126,6 @@ export function axisAnchors(
         ['b', [0, 0, reach]],
       ];
     case 'cmyk': {
-      // k by corner diagonal
       const k = (1 + innerSize) / 2 + 0.1;
       return [
         ['C', [reach, edge, edge]],

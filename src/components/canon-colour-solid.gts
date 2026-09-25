@@ -223,7 +223,6 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
         if (!drag.grabbed || travel < dragSlop) return;
         drag.active = true;
         state.stopSpin();
-        // ortho: drags pick
         drag.picks = state.nearPick(at) || !state.dragsTurn;
       }
       if (drag.picks) {

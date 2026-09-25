@@ -214,7 +214,7 @@ void main() {
     return;
   }
 
-  // GLSL ES leaves division by zero undefined; Metal gives infinity
+  // glsl es: x / 0 undefined
   vec3 safe = mix(ray, vec3(1e-20), equal(ray, vec3(0.0)));
   vec3 a = (-1.001 - origin) / safe;
   vec3 b = (1.001 - origin) / safe;
@@ -222,7 +222,6 @@ void main() {
   float far = min3(max(a, b));
   if (far < max(near, 0.0)) { outColour = vec4(0.0); return; }
 
-  // ghost off: skip march
   if (U_SLICE.x >= 0.0 && U_SLICE.y <= 0.0) {
     float at = slicesHit(origin, ray);
     outColour = at < 0.0 ? vec4(0.0) : vec4(colourAt(origin + ray * at), 1.0);

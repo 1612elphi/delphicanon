@@ -162,11 +162,11 @@ export class SolidState {
     const old = this.space;
     this.space = space;
     this.stopUnroll();
-    // ease: per-space units
+    // an ease mixes units
     this.stop('point');
     this.assignPoint(pointFor(space, colourAt(old, this.point)));
     this.markPoints = this.marks.map((m) => pointFor(space, m));
-    // turn lands new size
+    // running turn: new size
     if (!this.isOrtho && this.aimTo) this.aimTo.fit = radius(space);
     if (this.freeAim) this.freeAim.fit = radius(space);
     if (this.isOrtho) this.reaim();
@@ -438,7 +438,6 @@ export class SolidState {
       target.lookAt = [0, 0, 0];
       if (!this.isOrtho) this.freeAim = undefined;
     }
-    // shortest turn
     target.yaw += 2 * Math.PI * round((this.yaw - target.yaw) / (2 * Math.PI));
     this.stop('spin');
     if (!this.animates) {
@@ -619,7 +618,6 @@ export class SolidState {
     if (isCartesian(this.space)) channels = channels.map(clamp01) as Vec3;
     this.stop('point');
     const next: Vec4 = [...channels, this.point[3]];
-    // slice axis fixed
     if (this.sliceAxis !== null)
       next[this.sliceAxis] = this.point[this.sliceAxis]!;
     this.assignPoint(next);
@@ -660,7 +658,6 @@ export class SolidState {
     ).display(box);
     const at = project(cam, this.size, p);
     if (!at) return undefined;
-    // hollow when occluded
     const toward = sub(p, cam.position);
     const r = normalize(toward);
     const front =
@@ -766,7 +763,6 @@ export class SolidState {
     const reach = geometry
       .display(geometry.pick)
       .map((v) => geometry.size + Math.abs(v)) as Vec3;
-    // plane: fixed axis
     if (isCartesian(this.space)) reach[axis] = 0;
     return length(reach);
   }

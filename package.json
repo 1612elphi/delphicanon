@@ -110,6 +110,7 @@
       "./components/canon-bar.js": "./dist/_app_/components/canon-bar.js",
       "./components/canon-button.js": "./dist/_app_/components/canon-button.js",
       "./components/canon-canvas.js": "./dist/_app_/components/canon-canvas.js",
+      "./components/canon-colour-solid.js": "./dist/_app_/components/canon-colour-solid.js",
       "./components/canon-empty-row.js": "./dist/_app_/components/canon-empty-row.js",
       "./components/canon-grid.js": "./dist/_app_/components/canon-grid.js",
       "./components/canon-heading.js": "./dist/_app_/components/canon-heading.js",
