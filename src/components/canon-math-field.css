@@ -1,0 +1,51 @@
+.canon-math-field {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: calc(var(--canon-row-height) + 12px);
+  margin: 0;
+  padding: 10px var(--canon-panel-padding);
+  border: 0;
+  border-radius: 0;
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  text-align: start;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+@media (hover: hover) {
+  .canon-math-field:hover {
+    background: var(--canon-accent-bg);
+  }
+}
+
+.canon-math-field--editing {
+  background: var(--canon-accent-bg);
+}
+
+.canon-math-field:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: -2px;
+}
+
+.canon-math-field > .canon-math-view {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+}
+
+.canon-math-field-glyph {
+  display: flex;
+  flex: none;
+  margin-inline-start: auto;
+  color: var(--canon-muted-foreground);
+}
+
+.canon-math-field-glyph > svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
