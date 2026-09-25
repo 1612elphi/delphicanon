@@ -4,30 +4,3 @@
   gap: var(--canon-hairline);
   background: var(--canon-border);
 }
-
-.canon-text-input-area {
-  box-sizing: border-box;
-  inline-size: 100%;
-  margin: 0;
-  padding: 12px;
-  border: 0;
-  border-radius: 0;
-  background: var(--canon-muted);
-  color: var(--canon-foreground);
-  caret-color: var(--canon-primary);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-subheadline);
-  line-height: 1.4;
-  resize: none;
-  appearance: none;
-}
-
-.canon-text-input-area::placeholder {
-  color: var(--canon-muted-foreground);
-  opacity: 1;
-}
-
-.canon-text-input-area:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
-}

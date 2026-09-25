@@ -1,9 +1,8 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
-import { htmlSafe } from '@ember/template';
 import CanonButton from './canon-button.gts';
 import CanonGrid from './canon-grid.gts';
+import CanonTextArea from './canon-text-area.gts';
 import '../styles/tokens.css';
 import './canon-text-input.css';
 
@@ -56,12 +55,8 @@ export default class CanonTextInput extends Component<CanonTextInputSignature> {
   @tracked text = this.args.value ?? '';
   #timer?: number;
 
-  get style() {
-    return htmlSafe(`block-size: ${this.args.height ?? 128}px`);
-  }
-
-  typed = (event: Event) => {
-    this.text = (event.target as HTMLTextAreaElement).value;
+  typed = (text: string) => {
+    this.text = text;
     window.clearTimeout(this.#timer);
     this.#timer = window.setTimeout(
       () => this.args.onChange?.(this.text),
@@ -94,17 +89,13 @@ export default class CanonTextInput extends Component<CanonTextInputSignature> {
 
   <template>
     <div class="canon-text-input" ...attributes>
-      <textarea
-        class="canon-text-input-area"
-        style={{this.style}}
-        placeholder={{if @placeholder @placeholder "Type or paste"}}
+      <CanonTextArea
+        @value={{this.text}}
+        @placeholder={{if @placeholder @placeholder "Type or paste"}}
+        @height={{if @height @height 128}}
+        @onChange={{this.typed}}
         aria-label={{if @label @label "Input"}}
-        autocomplete="off"
-        autocapitalize="off"
-        spellcheck="false"
-        value={{this.text}}
-        {{on "input" this.typed}}
-      ></textarea>
+      />
       <CanonGrid>
         <CanonButton
           @text="Paste"

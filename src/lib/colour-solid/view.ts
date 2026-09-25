@@ -1,5 +1,5 @@
 import { innerSize, type Geometry } from './geometry.ts';
-import type { Space } from './space.ts';
+import type { SolidSpace as Space } from '../colour-space.ts';
 import { add, cross, dot, normalize, scale, sub, type Vec3 } from './vec.ts';
 
 export interface Aim {

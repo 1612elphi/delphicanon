@@ -22,7 +22,8 @@ export interface CanonSliderSignature {
     fillsFromTrailing?: boolean;
     labelledBy?: string;
     label?: string;
-    onChange?: (value: number) => void;
+    /** `dragging` is true for a sideways drag, false for a tap or a key. */
+    onChange?: (value: number, dragging: boolean) => void;
   };
   Element: HTMLDivElement;
 }
@@ -69,7 +70,7 @@ export default class CanonSlider extends Component<CanonSliderSignature> {
     const next = snap(raw, this.min, this.max, this.args.step);
     if (next === this.value) return;
     this.held = { value: next, over: this.args.value };
-    this.args.onChange?.(next);
+    this.args.onChange?.(next, this.dragging);
   }
 
   key = (event: KeyboardEvent) => {

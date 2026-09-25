@@ -1,5 +1,5 @@
 import { nearSurface, steps, substeps, wedge } from './geometry.ts';
-import { labReach, oklabReach } from './space.ts';
+import { labReach, oklabReach } from '../colour-space.ts';
 
 const float = (n: number) => (Number.isInteger(n) ? `${n}.0` : String(n));
 
