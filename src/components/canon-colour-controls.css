@@ -1,0 +1,185 @@
+/* the rows belong to the enclosing CanonRows */
+.canon-colour-controls {
+  display: contents;
+}
+
+.canon-colour-controls-lit .canon-row-title:not(.canon-row-sizer) {
+  color: var(--canon-primary);
+  font-weight: var(--canon-weight-semibold);
+}
+
+.canon-colour-controls-notation {
+  position: relative;
+  display: flex;
+  min-block-size: var(--canon-control-height);
+}
+
+.canon-colour-controls-notation-field {
+  flex: 1;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-body);
+  font-variant-numeric: tabular-nums;
+  caret-color: var(--canon-primary);
+  outline: none;
+}
+
+.canon-colour-controls-notation-field::placeholder {
+  color: var(--canon-muted-foreground);
+}
+
+.canon-colour-controls-notation-field:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--canon-primary);
+}
+
+.canon-colour-controls-fails {
+  color: var(--canon-destructive);
+}
+
+.canon-colour-controls-notation > .canon-button {
+  flex: none;
+  inline-size: var(--canon-control-height);
+}
+
+.canon-colour-controls-picker {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  inline-size: var(--canon-control-height);
+  block-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/*
+ * Stand-in for canon-slider until the controls group merges: the track
+ * fills to the value with a foreground marker at its edge, beside a readout
+ * cell.
+ */
+.canon-colour-controls-slider {
+  display: flex;
+  gap: var(--canon-hairline);
+  min-block-size: var(--canon-control-height);
+  background: var(--canon-border);
+}
+
+.canon-colour-controls-slider input {
+  --canon-slider-marker: 2px;
+  flex: 1 1 160px;
+  min-inline-size: 96px;
+  margin: 0;
+  background: linear-gradient(
+    to right,
+    var(--canon-primary)
+      calc(var(--canon-slider-fraction) - var(--canon-slider-marker)),
+    var(--canon-foreground) 0 var(--canon-slider-fraction),
+    var(--canon-muted) 0
+  );
+  cursor: pointer;
+  touch-action: pan-y;
+  appearance: none;
+}
+
+.canon-colour-controls-slider input:dir(rtl) {
+  background: linear-gradient(
+    to left,
+    var(--canon-primary)
+      calc(var(--canon-slider-fraction) - var(--canon-slider-marker)),
+    var(--canon-foreground) 0 var(--canon-slider-fraction),
+    var(--canon-muted) 0
+  );
+}
+
+.canon-colour-controls-slider input:hover,
+.canon-colour-controls-slider input:active,
+.canon-colour-controls-slider input:focus-visible {
+  --canon-slider-marker: 6px;
+}
+
+.canon-colour-controls-slider input:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: -2px;
+}
+
+.canon-colour-controls-slider input::-webkit-slider-thumb {
+  inline-size: 1px;
+  block-size: var(--canon-control-height);
+  opacity: 0;
+  appearance: none;
+}
+
+.canon-colour-controls-slider input::-moz-range-thumb {
+  inline-size: 1px;
+  block-size: var(--canon-control-height);
+  border: 0;
+  opacity: 0;
+}
+
+.canon-colour-controls-readout {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-inline-size: 64px;
+  padding: 0 10px;
+  background: var(--canon-card);
+  font-size: var(--canon-text-body);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--canon-weight-semibold);
+}
+
+/* stand-in for canon-switch: UISwitch geometry, 51 by 31 */
+.canon-colour-controls-switch {
+  position: relative;
+  flex: none;
+  inline-size: 51px;
+  block-size: 31px;
+  margin: 0;
+  border-radius: 16px;
+  background: var(--canon-muted);
+  box-shadow: inset 0 0 0 var(--canon-hairline) var(--canon-border);
+  cursor: pointer;
+  appearance: none;
+  transition: background 200ms;
+}
+
+.canon-colour-controls-switch::before {
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  inline-size: 27px;
+  block-size: 27px;
+  border-radius: 50%;
+  background: var(--canon-card);
+  box-shadow: 0 1px 3px
+    color-mix(in srgb, var(--canon-foreground) 30%, transparent);
+  content: "";
+  transition: translate 200ms;
+}
+
+.canon-colour-controls-switch:checked {
+  background: var(--canon-primary);
+}
+
+.canon-colour-controls-switch:checked::before {
+  translate: 20px 0;
+}
+
+.canon-colour-controls-switch:checked:dir(rtl)::before {
+  translate: -20px 0;
+}
+
+.canon-colour-controls-switch:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: 2px;
+}

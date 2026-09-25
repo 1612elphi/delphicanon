@@ -1,0 +1,97 @@
+.canon-palette-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--canon-hairline);
+  box-sizing: border-box;
+  padding: var(--canon-frame);
+  background: var(--canon-border);
+  font-family: var(--canon-font);
+}
+
+.canon-palette-card-strip {
+  display: flex;
+  gap: var(--canon-hairline);
+  overflow: hidden;
+}
+
+.canon-palette-card-swatch {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 10px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  container-type: inline-size;
+  font-family: var(--canon-font);
+  line-height: 1.3;
+  text-align: start;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  transition: flex-grow 500ms var(--canon-palette-spring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canon-palette-card-swatch {
+    transition: none;
+  }
+}
+
+.canon-palette-card-swatch:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: -2px;
+}
+
+.canon-palette-card-name,
+.canon-palette-card-details,
+.canon-palette-card-hex {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canon-palette-card-name,
+.canon-palette-card-details {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.canon-palette-card-swatch--wide .canon-palette-card-name,
+.canon-palette-card-swatch--wide .canon-palette-card-details {
+  opacity: 1;
+}
+
+.canon-palette-card-name {
+  min-block-size: 22px;
+  font-size: var(--canon-text-subheadline);
+  font-weight: var(--canon-weight-semibold);
+}
+
+.canon-palette-card-details {
+  min-block-size: 16px;
+  font-size: var(--canon-text-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+.canon-palette-card-hex {
+  align-self: flex-start;
+  font-size: var(--canon-text-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+/* PaletteStrip.sidewaysBelow 72, less the 10 px insets: container queries see the content box */
+@container (max-width: 51.99px) {
+  .canon-palette-card-swatch:not(.canon-palette-card-swatch--wide)
+    .canon-palette-card-hex {
+    align-self: center;
+    overflow: visible;
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+  }
+}

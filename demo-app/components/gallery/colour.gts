@@ -1,0 +1,249 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
+import CanonButton from '#src/components/canon-button.gts';
+import CanonCanvas from '#src/components/canon-canvas.gts';
+import CanonColourCard from '#src/components/canon-colour-card.gts';
+import CanonColourControls, {
+  CanonColourSolidState,
+} from '#src/components/canon-colour-controls.gts';
+import CanonColourStrip from '#src/components/canon-colour-strip.gts';
+import CanonColourWell from '#src/components/canon-colour-well.gts';
+import CanonHeading from '#src/components/canon-heading.gts';
+import CanonPaletteCard from '#src/components/canon-palette-card.gts';
+import CanonRow from '#src/components/canon-row.gts';
+import CanonRows from '#src/components/canon-rows.gts';
+import CanonSegmented from '#src/components/canon-segmented.gts';
+import CanonValueLine from '#src/components/canon-value-line.gts';
+import {
+  fromOklch,
+  hex,
+  luminance,
+  oklabToLinear,
+  oklch,
+  parseHex,
+  type Rgb,
+} from '#src/lib/colour.ts';
+import Icon from '../icon.gts';
+import copy from 'lucide-static/icons/copy.svg?raw';
+import save from 'lucide-static/icons/download.svg?raw';
+import share from 'lucide-static/icons/share.svg?raw';
+
+export const pane = 'main';
+export const order = 40;
+
+// stand-in for the app's 4,926 colour names
+const names: [string, Rgb][] = (
+  [
+    ['Black', '000000'],
+    ['White', 'FFFFFF'],
+    ['Grey', '808080'],
+    ['Red', 'E53935'],
+    ['Orange', 'FB8C00'],
+    ['Yellow', 'FDD835'],
+    ['Olive', '808000'],
+    ['Green', '43A047'],
+    ['Forest', '1E6626'],
+    ['Teal', '00897B'],
+    ['Cyan', '00ACC1'],
+    ['Blue', '1E88E5'],
+    ['Navy', '1A237E'],
+    ['Purple', '8E24AA'],
+    ['Pink', 'D81B60'],
+    ['Brown', '6D4C41'],
+    ['Cream', 'FAF5E6'],
+  ] as const
+).map(([name, code]) => [name, parseHex(code)!]);
+
+function nameOf(code: string): string {
+  const [r, g, b] = parseHex(code)!;
+  let best = names[0]!;
+  let distance = Infinity;
+  for (const entry of names) {
+    const [x, y, z] = entry[1];
+    const d = (r - x) ** 2 + (g - y) ** 2 + (b - z) ** 2;
+    if (d < distance) [best, distance] = [entry, d];
+  }
+  return best[0];
+}
+
+function maxChroma(l: number, h: number): number {
+  const radians = (h * Math.PI) / 180;
+  let [low, high] = [0, 0.5];
+  for (let i = 0; i < 24; i++) {
+    const mid = (low + high) / 2;
+    const inside = oklabToLinear(
+      l,
+      mid * Math.cos(radians),
+      mid * Math.sin(radians),
+    ).every((v) => v >= -1e-5 && v <= 1 + 1e-5);
+    if (inside) low = mid;
+    else high = mid;
+  }
+  return low;
+}
+
+function inGamut(l: number, c: number, h: number): Rgb {
+  const hue = ((h % 360) + 360) % 360;
+  return fromOklch(l, Math.min(c, maxChroma(l, hue)), hue);
+}
+
+const views = ['Slice', 'Ortho', 'Cut'];
+const harmonyKinds = ['Analogous', 'Split'];
+
+export default class ColourGallery extends Component {
+  state = new CanonColourSolidState();
+  @tracked view = 0;
+  @tracked split = false;
+  @tracked stripPalette = false;
+  @tracked foreground: Rgb = [0.118, 0.4, 0.149];
+  @tracked orange: Rgb = [1, 0.584, 0];
+
+  get colour() {
+    return this.state.colour;
+  }
+
+  get harmony(): Rgb[] {
+    const [l, c, h] = oklch(this.colour);
+    return (this.split ? [0, 150, 210] : [0, 30, -30]).map((turn) =>
+      inGamut(l, c, h + turn),
+    );
+  }
+
+  get shades(): Rgb[] {
+    const [, c, h] = oklch(this.colour);
+    return Array.from({ length: 9 }, (_, i) => inGamut(0.95 - i * 0.085, c, h));
+  }
+
+  get decimal() {
+    return `rgb(${this.colour.map((v) => v.toFixed(4)).join(', ')})`;
+  }
+
+  get luminance() {
+    return luminance(this.colour).toFixed(3);
+  }
+
+  get palette() {
+    return this.stripPalette ? this.harmony : undefined;
+  }
+
+  showView = (index: number) => {
+    this.view = index;
+    this.state.slices = index !== 2;
+    this.state.viewPlane = index === 1;
+  };
+
+  pickHarmony = (index: number) => (this.split = index === 1);
+
+  toggleStrip = (event: Event) =>
+    (this.stripPalette = (event.target as HTMLInputElement).checked);
+
+  copyPalette = () =>
+    void navigator.clipboard?.writeText(this.harmony.map(hex).join('\n'));
+
+  setForeground = (colour: Rgb) => (this.foreground = colour);
+  setOrange = (colour: Rgb) => (this.orange = colour);
+
+  <template>
+    <CanonCanvas
+      id="colour"
+      @aspect={{1}}
+      @maxHeight={{360}}
+      @background="var(--canon-muted)"
+    >
+      <div class="gallery-solid">
+        <div class="gallery-solid-picture"></div>
+        <CanonColourStrip
+          @colour={{this.colour}}
+          @palette={{this.palette}}
+          @nameOf={{nameOf}}
+        />
+      </div>
+    </CanonCanvas>
+    <CanonRows @framed={{true}}>
+      <CanonHeading @text="Solid" />
+      <CanonColourControls @state={{this.state}} />
+      <CanonRow @title="View" @form="flush">
+        <CanonSegmented
+          @items={{views}}
+          @selected={{this.view}}
+          @onChange={{this.showView}}
+        />
+      </CanonRow>
+      <CanonRow @title="Strip palette" as |titleId|>
+        <input
+          type="checkbox"
+          role="switch"
+          class="canon-colour-controls-switch"
+          checked={{this.stripPalette}}
+          aria-checked={{if this.stripPalette "true" "false"}}
+          aria-labelledby={{titleId}}
+          {{on "change" this.toggleStrip}}
+        />
+      </CanonRow>
+    </CanonRows>
+    <CanonColourCard @colour={{this.colour}} @nameOf={{nameOf}} />
+    <CanonColourCard @colour={{this.colour}} @layout="row" @nameOf={{nameOf}} />
+    <CanonRows @framed={{true}}>
+      <CanonHeading @text="Value lines" />
+      <CanonValueLine
+        @label="Decimal RGB"
+        @value={{this.decimal}}
+        @labelWidth={{92}}
+      />
+      <CanonValueLine
+        @label="Luminance"
+        @value={{this.luminance}}
+        @labelWidth={{92}}
+      />
+    </CanonRows>
+    <CanonPaletteCard
+      @title="Harmony"
+      @colours={{this.harmony}}
+      @nameOf={{nameOf}}
+    >
+      <:picker>
+        <CanonSegmented
+          @items={{harmonyKinds}}
+          @selected={{if this.split 1 0}}
+          @onChange={{this.pickHarmony}}
+        />
+      </:picker>
+      <:actions>
+        <CanonButton
+          @text="Copy"
+          @icon={{component Icon svg=copy}}
+          @kind="cell"
+          @flashesCopied={{true}}
+          @onClick={{this.copyPalette}}
+        />
+        <CanonButton
+          @text="Export"
+          @icon={{component Icon svg=share}}
+          @kind="cell"
+        />
+        <CanonButton
+          @text="Save"
+          @icon={{component Icon svg=save}}
+          @kind="cell"
+        />
+      </:actions>
+    </CanonPaletteCard>
+    <CanonPaletteCard
+      @title="Shades"
+      @colours={{this.shades}}
+      @height={{120}}
+      @nameOf={{nameOf}}
+    />
+    <CanonRows @framed={{true}}>
+      <CanonHeading @text="Wells" />
+      <CanonColourWell
+        @label="Foreground"
+        @colour={{this.foreground}}
+        @format="oklch"
+        @onChange={{this.setForeground}}
+      />
+      <CanonColourWell @colour={{this.orange}} @onChange={{this.setOrange}} />
+    </CanonRows>
+  </template>
+}
