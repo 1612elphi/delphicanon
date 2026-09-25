@@ -1,6 +1,56 @@
-/**
-* See: https://vite.dev/guide/features.html#css
-*      for features beyond normal CSS that are available to you.
-*
-* This CSS is meant for the demo-app only, and will not be included in the published assets for this library.
-*/
+/* demo only; the published addon ships tokens and component styles, not this */
+@font-face {
+  font-family: "iA Writer Quattro";
+  font-style: normal;
+  font-weight: 400 700;
+  src: url("/fonts/iAWriterQuattroV.woff2") format("woff2");
+  font-display: swap;
+}
+
+html,
+body {
+  block-size: 100%;
+  margin: 0;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--canon-background);
+  -webkit-font-smoothing: antialiased;
+}
+
+.gallery {
+  block-size: 100dvh;
+}
+
+.gallery-bar {
+  inline-size: 120px;
+  block-size: 6px;
+}
+
+.gallery-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  background: linear-gradient(
+    to right,
+    var(--canon-primary),
+    var(--canon-destructive)
+  );
+  color: var(--canon-primary-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-title2);
+  font-weight: var(--canon-weight-bold);
+}

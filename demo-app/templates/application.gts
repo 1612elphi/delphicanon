@@ -1,11 +1,9 @@
 import { pageTitle } from 'ember-page-title';
-
-const greeting = 'hello';
+import CanonToast from '#src/components/canon-toast.gts';
+import Gallery from '../components/gallery.gts';
 
 <template>
-  {{pageTitle "Demo App"}}
-
-  <h1>Welcome to ember!</h1>
-
-  {{greeting}}, world!
+  {{pageTitle "Canon"}}
+  <Gallery />
+  <CanonToast />
 </template>

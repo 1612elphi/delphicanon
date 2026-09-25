@@ -1,0 +1,83 @@
+/* colours from the iOS asset catalog (delphi*.colorset, sRGB floats) at 4628b8d */
+:root {
+  --canon-background: color(srgb 0.98 0.961 0.902);
+  --canon-foreground: color(srgb 0.078 0.153 0.059);
+  --canon-card: color(srgb 0.988 0.973 0.929);
+  --canon-muted: color(srgb 0.929 0.91 0.851);
+  --canon-muted-foreground: color(srgb 0.341 0.412 0.325);
+  --canon-secondary-foreground: color(srgb 0.106 0.271 0.118);
+  --canon-accent-bg: color(srgb 0.914 0.886 0.769);
+  --canon-border: color(srgb 0.867 0.847 0.761);
+  --canon-primary: color(srgb 0.118 0.4 0.149);
+  --canon-primary-foreground: color(srgb 0.98 0.961 0.902);
+  --canon-destructive: color(srgb 0.8 0.153 0.18);
+  --canon-heading-background: var(--canon-muted);
+
+  /* DelphiMetrics; 1 pt = 1 px */
+  --canon-hairline: 1px;
+  --canon-frame: 2px;
+  --canon-control-height: 44px;
+  --canon-row-height: 52px;
+  --canon-primary-height: 68px;
+  --canon-secondary-height: 60px;
+  --canon-panel-padding: 16px;
+  --canon-panel-spacing: 12px;
+
+  /* the consumer supplies the @font-face */
+  --canon-font:
+    "iA Writer Quattro", ui-monospace, "Cascadia Mono", menlo, monaco, consolas,
+    monospace;
+
+  /*
+   * iOS text styles, scaled: Quattro is about a third wider than SF
+   * Condensed, so the iOS point sizes truncate segment titles
+   */
+  --canon-text-title2: 20px;
+  --canon-text-title3: 18px;
+  --canon-text-body: 15px;
+  --canon-text-subheadline: 13px;
+  --canon-text-footnote: 12px;
+  --canon-text-caption: 11px;
+  --canon-weight-regular: 400;
+  --canon-weight-medium: 500;
+  --canon-weight-semibold: 600;
+  --canon-weight-bold: 700;
+
+  --canon-icon-inline: 14px;
+  --canon-icon-alone: 20px;
+
+  /* CanonMotion */
+  --canon-press-duration: 80ms;
+  --canon-release-duration: 450ms;
+  --canon-filled-hover-mix: 15%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --canon-background: color(srgb 0.035 0.082 0.035);
+    --canon-foreground: color(srgb 0.922 0.894 0.824);
+    --canon-card: color(srgb 0.063 0.122 0.063);
+    --canon-muted: color(srgb 0.094 0.149 0.098);
+    --canon-muted-foreground: color(srgb 0.584 0.565 0.455);
+    --canon-secondary-foreground: color(srgb 0.863 0.843 0.788);
+    --canon-accent-bg: color(srgb 0.11 0.18 0.11);
+    --canon-border: color(srgb 0.129 0.2 0.129);
+    --canon-primary: color(srgb 0.761 0.678 0.38);
+    --canon-primary-foreground: color(srgb 0.035 0.106 0.039);
+    --canon-destructive: color(srgb 0.843 0.278 0.271);
+  }
+}
+
+html.dark {
+  --canon-background: color(srgb 0.035 0.082 0.035);
+  --canon-foreground: color(srgb 0.922 0.894 0.824);
+  --canon-card: color(srgb 0.063 0.122 0.063);
+  --canon-muted: color(srgb 0.094 0.149 0.098);
+  --canon-muted-foreground: color(srgb 0.584 0.565 0.455);
+  --canon-secondary-foreground: color(srgb 0.863 0.843 0.788);
+  --canon-accent-bg: color(srgb 0.11 0.18 0.11);
+  --canon-border: color(srgb 0.129 0.2 0.129);
+  --canon-primary: color(srgb 0.761 0.678 0.38);
+  --canon-primary-foreground: color(srgb 0.035 0.106 0.039);
+  --canon-destructive: color(srgb 0.843 0.278 0.271);
+}

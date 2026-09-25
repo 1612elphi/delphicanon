@@ -22,6 +22,20 @@ Reference for web conventions: `~/GitRepos/delphitools` (Ember 7.1, `.gts`, Vite
 | Tests | One QUnit rendering test per component. Unit tests for pure logic (maths parser and typesetter, glyph row layout, colour conversion). |
 | Git | Local repo, no remote. Each parallel agent works in `~/GitRepos/delphicanon-wt/<group>` on branch `port/<group>`; the coordinator merges into `main`. |
 
+## Phase A changes to the decisions
+
+| Topic | Change | Why |
+|---|---|---|
+| Row stacking | CanonRow uses a wrapping flex line, not a container query. The label grows 999 times faster than the control, so a side-by-side control keeps its width and a wrapped one fills its line. `sizingTitle` is a hidden copy of the longest title inside the label. | The break point is the label's width plus the control's width, which a container query cannot know. |
+| Text sizes | `--canon-text-*` tokens are the iOS text styles scaled down (body 15, subheadline 13, footnote 12, caption 11). Geometry stays 1 pt = 1 px. | iA Writer Quattro is about a third wider than SF Condensed; at the iOS sizes segment titles truncated at the 340 px sidebar. |
+| Press motion | `lib/motion.ts` and the `canon-press` modifier exist from phase A with the press tilt, spring and constants. The display group adds the pan modifiers to the same file. | Every button presses; CanonButton needed it. |
+| Grid measuring | CanonGrid places spans and drops titles to symbols with a small modifier (MutationObserver, ResizeObserver, canvas `measureText`). | Balanced rows and "any title does not fit" depend on the cell count and text widths. |
+| Copy | `canonCopy` is the service method `copy(text)`; it shows the toast only after `navigator.clipboard.writeText` resolves. Tests replace `service.write`. | A toast after a failed write would say Copied when nothing was copied. |
+| Pattern | The consumer sets `--canon-pattern` (from `canonPatternTile(svg)`) on an ancestor, standing in for the `CanonPatternSymbol` trait. Canvases draw it as a mask in the foreground colour at 4 %. | A mask follows the theme; a baked image would not. |
+| Not ported | `CanonActionBar` alias (use CanonGrid), `CanonPaddedSection` (a CSS rule in `canon-page.css`), `setCanonSectionHidden` (render conditionally), status bar bleed under a page (web pages start below the app's own header), menu-as-primary-action press handling (goes with CanonMenuCell). | No web counterpart, or it belongs to a later group. |
+| Demo only | `lucide-static` is a devDependency for gallery icons. It is not a runtime dependency. | The gallery needs symbols; the addon takes icons as components. |
+| Unverified | The crease (`horizontal-viewport-segments`) and laptop (`device-posture: folded`) rules have no test and were not seen on a device. | No dual-screen browser available. |
+
 ## Phases
 
 A. Scaffold and foundation, one agent, sequential. Blocks everything else.
@@ -35,17 +49,17 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 
 | Tick | Group | Swift source | Glimmer | Notes |
 |---|---|---|---|---|
-| [ ] | A | CanonLayout: CanonRule, CanonRows, CanonRow, CanonHeading, CanonEmptyRow, CanonGrid, CanonPage, CanonPaddedSection, CanonBar | canon-rule, canon-rows, canon-row, canon-heading, canon-empty-row, canon-grid, canon-page, canon-bar | Row: plain, flush, stacked; control drops below label when narrow (container query). Grid sizes columns to the longest row. |
-| [ ] | A | CanonControls: CanonButton, CanonSegmented | canon-button, canon-segmented | Kinds primary, secondary, cell, segment; `icon: oversized`; symbol-only when narrow. Icons via an `@icon` arg the consumer renders (lucide in the web app). |
-| [ ] | A | CanonCanvas | canon-canvas | `.fixed`, `.aspect`, `maxHeight`, `boxing`, pattern background. |
-| [ ] | A | CanonSplit | canon-split | Sidebar 340, one column under 640, `halves`, `bannerSticks`, `mainLeadsStacked`, `collapsesTo`, footer strip. Crease behaviour per Decisions. |
-| [ ] | A | CanonToast, CanonCopyFeedback | canon-toast, service `canon-toast`, `canonCopy` | 1.4 s, fade, bottom of the column. |
+| [x] | A | CanonLayout: CanonRule, CanonRows, CanonRow, CanonHeading, CanonEmptyRow, CanonGrid, CanonPage, CanonPaddedSection, CanonBar | canon-rule, canon-rows, canon-row, canon-heading, canon-empty-row, canon-grid, canon-page, canon-bar, `lib/grid.ts` | Row: plain, flush, stacked; control drops below label when narrow (container query). Grid sizes columns to the longest row. |
+| [x] | A | CanonControls: CanonButton, CanonSegmented | canon-button, canon-segmented, modifier `canon-press`, `lib/motion.ts` (press only) | Kinds primary, secondary, cell, segment; `icon: oversized`; symbol-only when narrow. Icons via an `@icon` arg the consumer renders (lucide in the web app). |
+| [x] | A | CanonCanvas | canon-canvas, `lib/pattern.ts` | `.fixed`, `.aspect`, `maxHeight`, `boxing`, pattern background. |
+| [x] | A | CanonSplit | canon-split | Sidebar 340, one column under 640, `halves`, `bannerSticks`, `mainLeadsStacked`, `collapsesTo`, footer strip. Crease behaviour per Decisions. |
+| [x] | A | CanonToast, CanonCopyFeedback | canon-toast, service `canon-toast` (`show`, `copy`), `lib/toast.ts` | 1.4 s, fade, bottom of the column. |
 | [ ] | B controls | CanonControls: CanonSwitch, CanonStatus, CanonTextCell, CanonStepper, CanonNumberField, CanonSlider | canon-switch, canon-status, canon-text-cell, canon-stepper, canon-number-field, canon-slider | Stepper repeats while held. |
 | [ ] | B controls | CanonDecimalField, CanonTextArea, CanonMenuCell, CanonFromTo, CanonLoader, CanonFigure, CanonDualList, CanonFileCell, CanonDropZone | canon-decimal-field, canon-text-area, canon-menu-cell, canon-from-to, canon-loader, canon-figure, canon-dual-list, canon-file-cell, canon-drop-zone | Loader: compare the web app's `ui/nds-loader.gts`. |
 | [ ] | B display | CanonClassics: CanonPreviewPanel, CanonCodeBlock | canon-preview-panel, canon-code-block | |
 | [ ] | B display | CanonTiles, CanonImageCompare, CanonPageStrip, CanonReadout (CanonTimecode, CanonLamps, CanonTransport, CanonReadoutBand) | canon-tiles, canon-image-compare, canon-page-strip, canon-timecode, canon-lamps, canon-readout-band | PageStrip reorder: native drag and drop or pointer events, no new dependency. |
 | [ ] | B display | CanonGlyphFlow (CanonGlyphRows, CanonTextInput, CanonTextOutput) | canon-glyph-flow, canon-text-input, canon-text-output, `lib/glyph-rows.ts` | Glyph painting through a block. |
-| [ ] | B display | CanonMotion (CanonGrabPan, CanonSidewaysPan, motion constants) | modifiers `canon-grab-pan`, `canon-sideways-pan`, `lib/motion.ts` | |
+| [ ] | B display | CanonMotion (CanonGrabPan, CanonSidewaysPan, motion constants) | modifiers `canon-grab-pan`, `canon-sideways-pan`, add to `lib/motion.ts` | |
 | [ ] | B colour | CanonClassics: CanonColourWell; CanonColourCards (CanonColourCard, CanonValueLine, CanonColourStrip, CanonSwatch, CanonPaletteCard) | canon-colour-well, canon-colour-card, canon-value-line, canon-colour-strip, canon-swatch, canon-palette-card | Nearest colour name is an arg (a function), so the addon carries no name dataset. |
 | [ ] | B colour | CanonColourControls | canon-colour-controls | Drives canon-colour-solid through args; build against its arg interface. |
 | [ ] | B solid | CanonColourSolid | canon-colour-solid, `lib/colour-solid/*` | Metal to WebGL2. Every solid, slice, ortho unroll, marks, vision matrix. Largest single file. |
