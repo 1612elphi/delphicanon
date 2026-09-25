@@ -54,3 +54,14 @@ body {
   font-size: var(--canon-text-title2);
   font-weight: var(--canon-weight-bold);
 }
+
+/* colour group: the solid's place over its strip */
+.gallery-solid {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+}
+
+.gallery-solid-picture {
+  flex: 1;
+}
