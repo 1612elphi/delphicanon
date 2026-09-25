@@ -1,14 +1,11 @@
 import { Geometry, march, Sheet } from './geometry.ts';
+import { clamp01, type Rgb } from '../colour.ts';
 import {
-  clamp01,
   colourAt,
   isCartesian,
   pointFor,
-  radius,
-  shaderIds,
-  type Rgb,
-  type Space,
-} from './space.ts';
+  type SolidSpace as Space,
+} from '../colour-space.ts';
 import {
   axisAnchors,
   camera,
@@ -35,6 +32,25 @@ import {
   type Vec3,
   type Vec4,
 } from './vec.ts';
+
+/** The shader's space numbers. */
+export const shaderIds: Record<Space, number> = {
+  rgb: 0,
+  hsl: 1,
+  hsb: 2,
+  oklch: 3,
+  lch: 4,
+  oklab: 5,
+  lab: 6,
+  cmyk: 7,
+};
+
+/** Largest distance of the solid from its centre. */
+export function radius(space: Space): number {
+  if (space === 'rgb' || space === 'hsl' || space === 'cmyk')
+    return Math.sqrt(3);
+  return space === 'hsb' ? Math.SQRT2 : 1.25;
+}
 
 /** Timings in seconds, rates in radians. */
 export const solidMotion = {
@@ -626,12 +642,11 @@ export class SolidState {
 
   /** `colour` as `vision` draws it. */
   seen(colour: Rgb): Rgb {
-    const [r, g, b] = mulMat3(this.shownVision, [
-      clamp01(colour.r),
-      clamp01(colour.g),
-      clamp01(colour.b),
+    return mulMat3(this.shownVision, [
+      clamp01(colour[0]),
+      clamp01(colour[1]),
+      clamp01(colour[2]),
     ]).map(clamp01) as Vec3;
-    return { r, g, b };
   }
 
   private place(

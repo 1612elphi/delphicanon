@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
-import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
 import { hex, parseColour, parseHex, type Rgb } from '../lib/colour.ts';
 import {
@@ -18,14 +17,18 @@ import CanonButton from './canon-button.gts';
 import CanonRow from './canon-row.gts';
 import CanonRule from './canon-rule.gts';
 import CanonSegmented from './canon-segmented.gts';
+import CanonSlider from './canon-slider.gts';
+import CanonSwitch from './canon-switch.gts';
+import CanonTextCell from './canon-text-cell.gts';
 import '../styles/tokens.css';
 import './canon-colour-controls.css';
 
 /**
  * What a CanonColourSolid shows and what its controls change: the Swift
  * controls held the solid itself, so here both read one state. Pass
- * `space`, `point`, `sliceAxis`, `isOrtho` and `showsWhole` to the solid and
- * its picks to `pick`.
+ * `space`, `point`, `animated`, `sliceAxis`, `isOrtho` and `showsWhole` to
+ * the solid and `pick` as its `onChange`. A new space reaches the solid with
+ * the old point; the solid converts it and reports it through `pick`.
  */
 export class CanonColourSolidState {
   @tracked space: SolidSpace;
@@ -75,8 +78,6 @@ export class CanonColourSolidState {
   }
 
   selectSpace(space: SolidSpace) {
-    if (space === this.space) return;
-    this.setPoint(pointFor(space, this.colour), false);
     this.space = space;
   }
 
@@ -97,7 +98,7 @@ export interface CanonColourControlsSignature {
 
 const spaceTitles = solidSpaces.map((space) => spaceNames[space]);
 const typingDelay = 400;
-const dragSlop = 3;
+const fixed = (decimals: number) => (value: number) => value.toFixed(decimals);
 
 const Eyedropper = <template>
   <svg
@@ -120,7 +121,6 @@ const Eyedropper = <template>
 export default class CanonColourControls extends Component<CanonColourControlsSignature> {
   @tracked typed?: string;
   #typing?: number;
-  #dragging = false;
   #picker?: HTMLInputElement;
 
   get state() {
@@ -151,70 +151,51 @@ export default class CanonColourControls extends Component<CanonColourControlsSi
       (a, c) => (c.name.length > a.length ? c.name : a),
       '',
     );
-    return list.map((channel, index) => {
-      const value = Math.min(
-        state.point[channel.axis]! * channel.scale + channel.offset,
-        channel.max,
-      );
-      const fraction = (value - channel.min) / (channel.max - channel.min);
-      return {
-        index,
-        channel,
-        value,
-        readout: value.toFixed(channel.decimals),
-        lit: index === lit,
-        longest,
-        style: htmlSafe(`--canon-slider-fraction: ${fraction * 100}%`),
-      };
-    });
+    return list.map((channel, index) => ({
+      index,
+      channel,
+      value: state.point[channel.axis]! * channel.scale + channel.offset,
+      lit: index === lit,
+      longest,
+    }));
   }
 
   selectSpace = (index: number) => {
     this.state.selectSpace(solidSpaces[index]!);
   };
 
-  slide = (index: number, event: Event) => {
+  slide = (index: number, value: number, dragging: boolean) => {
     const channel = channels(this.state.space)[index];
     if (!channel) return;
     if (index < 3) this.state.activeRow = index;
-    const value = Number((event.target as HTMLInputElement).value);
     const next = [...this.state.point] as SolidPoint;
     next[channel.axis] = (value - channel.offset) / channel.scale;
     // taps ease, drags follow
-    this.state.setPoint(next, !this.#dragging);
+    this.state.setPoint(next, !dragging);
   };
 
-  // template-lint forbids binding pointerdown; a touch picks the row there
-  touch = modifier((slider: HTMLInputElement, [index]: [number]) => {
-    let startX = 0;
-    const down = (event: PointerEvent) => {
-      startX = event.clientX;
-      this.#dragging = false;
+  // CanonSlider has no touch-down callback: a touch picks the row, black shows the whole solid
+  touch = modifier((slider: HTMLElement, [index]: [number]) => {
+    const down = () => {
       if (index === 3) this.state.showsWhole = true;
       else this.state.activeRow = index;
       window.addEventListener('pointerup', up);
       window.addEventListener('pointercancel', up);
     };
-    const move = (event: PointerEvent) => {
-      if (Math.abs(event.clientX - startX) > dragSlop) this.#dragging = true;
-    };
     const up = () => {
-      this.#dragging = false;
       this.state.showsWhole = false;
       window.removeEventListener('pointerup', up);
       window.removeEventListener('pointercancel', up);
     };
     slider.addEventListener('pointerdown', down);
-    slider.addEventListener('pointermove', move);
     return () => {
       slider.removeEventListener('pointerdown', down);
-      slider.removeEventListener('pointermove', move);
       up();
     };
   });
 
-  type = (event: Event) => {
-    this.typed = (event.target as HTMLInputElement).value;
+  type = (text: string) => {
+    this.typed = text;
     window.clearTimeout(this.#typing);
     this.#typing = window.setTimeout(this.readNotation, typingDelay);
   };
@@ -229,10 +210,6 @@ export default class CanonColourControls extends Component<CanonColourControlsSi
     window.clearTimeout(this.#typing);
     this.readNotation();
     this.typed = undefined;
-  };
-
-  done = (event: KeyboardEvent) => {
-    if (event.key === 'Enter') (event.target as HTMLInputElement).blur();
   };
 
   keepPicker = modifier((input: HTMLInputElement) => {
@@ -258,8 +235,8 @@ export default class CanonColourControls extends Component<CanonColourControlsSi
     if (colour) this.state.use(colour);
   };
 
-  toggleViewPlane = (event: Event) => {
-    this.state.viewPlane = (event.target as HTMLInputElement).checked;
+  toggleViewPlane = (on: boolean) => {
+    this.state.viewPlane = on;
   };
 
   willDestroy() {
@@ -276,20 +253,18 @@ export default class CanonColourControls extends Component<CanonColourControlsSi
           as |titleId|
         >
           <div class="canon-colour-controls-notation">
-            <input
-              type="text"
+            <CanonTextCell
               class="canon-colour-controls-notation-field
                 {{if this.notationFails 'canon-colour-controls-fails'}}"
-              value={{this.notation}}
-              placeholder="oklch(0.64 0.15 264)"
+              @value={{this.notation}}
+              @placeholder="oklch(0.64 0.15 264)"
+              @onChange={{this.type}}
               spellcheck="false"
               autocomplete="off"
               autocapitalize="off"
               aria-labelledby={{titleId}}
               aria-invalid={{if this.notationFails "true"}}
-              {{on "input" this.type}}
               {{on "blur" this.leaveNotation}}
-              {{on "keydown" this.done}}
             />
             <CanonRule @vertical={{true}} />
             <CanonButton
@@ -318,7 +293,7 @@ export default class CanonColourControls extends Component<CanonColourControlsSi
           @onChange={{this.selectSpace}}
         />
       </CanonRow>
-      {{#each this.rows as |row|}}
+      {{#each this.rows key="index" as |row|}}
         <CanonRow
           class="canon-colour-controls-channel
             {{if row.lit 'canon-colour-controls-lit'}}"
@@ -328,34 +303,22 @@ export default class CanonColourControls extends Component<CanonColourControlsSi
           @sizingTitle={{row.longest}}
           as |titleId|
         >
-          <div class="canon-colour-controls-slider" style={{row.style}}>
-            <input
-              type="range"
-              min={{row.channel.min}}
-              max={{row.channel.max}}
-              step="any"
-              value={{row.value}}
-              aria-labelledby={{titleId}}
-              aria-valuetext={{row.readout}}
-              {{this.touch row.index}}
-              {{on "input" (fn this.slide row.index)}}
-            />
-            <span
-              class="canon-colour-controls-readout"
-              aria-hidden="true"
-            >{{row.readout}}</span>
-          </div>
+          <CanonSlider
+            @value={{row.value}}
+            @min={{row.channel.min}}
+            @max={{row.channel.max}}
+            @readout={{fixed row.channel.decimals}}
+            @labelledBy={{titleId}}
+            @onChange={{fn this.slide row.index}}
+            {{this.touch row.index}}
+          />
         </CanonRow>
       {{/each}}
       <CanonRow @title="View plane" as |titleId|>
-        <input
-          type="checkbox"
-          role="switch"
-          class="canon-colour-controls-switch"
-          checked={{this.state.viewPlane}}
-          aria-checked={{if this.state.viewPlane "true" "false"}}
+        <CanonSwitch
+          @on={{this.state.viewPlane}}
+          @onChange={{this.toggleViewPlane}}
           aria-labelledby={{titleId}}
-          {{on "change" this.toggleViewPlane}}
         />
       </CanonRow>
     </div>

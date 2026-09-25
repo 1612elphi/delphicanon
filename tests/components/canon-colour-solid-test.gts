@@ -9,7 +9,8 @@ import {
 } from '@ember/test-helpers';
 import { tracked } from '@glimmer/tracking';
 import CanonColourSolid from '#src/components/canon-colour-solid.gts';
-import type { Rgb, Space } from '#src/lib/colour-solid/space.ts';
+import type { Rgb } from '#src/lib/colour.ts';
+import type { SolidSpace as Space } from '#src/lib/colour-space.ts';
 import type { Vec4 } from '#src/lib/colour-solid/vec.ts';
 import { css } from '../helpers/css.ts';
 

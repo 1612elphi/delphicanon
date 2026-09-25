@@ -6,13 +6,13 @@ import {
   Sheet,
 } from '#src/lib/colour-solid/geometry.ts';
 import { SolidState } from '#src/lib/colour-solid/solid.ts';
+import type { Rgb } from '#src/lib/colour.ts';
 import {
   colourAt,
   convertPoint,
   pointFor,
-  spaces,
-  type Rgb,
-} from '#src/lib/colour-solid/space.ts';
+  solidSpaces,
+} from '#src/lib/colour-space.ts';
 import { camera, project, ray } from '#src/lib/colour-solid/view.ts';
 import {
   length,
@@ -23,23 +23,23 @@ import {
 } from '#src/lib/colour-solid/vec.ts';
 
 const samples: Rgb[] = [
-  { r: 0.12, g: 0.4, b: 0.15 },
-  { r: 0.9, g: 0.3, b: 0.6 },
-  { r: 0.2, g: 0.5, b: 0.95 },
+  [0.12, 0.4, 0.15],
+  [0.9, 0.3, 0.6],
+  [0.2, 0.5, 0.95],
 ];
 
 const near = (a: Vec3, b: Vec3, within = 1e-9) => length(sub(a, b)) < within;
 
 module('Unit | lib/colour-solid', function () {
   test('every space round-trips a colour and its point', function (assert) {
-    for (const space of spaces) {
+    for (const space of solidSpaces) {
       for (const sample of samples) {
         const point = pointFor(space, sample);
         const back = colourAt(space, point);
         assert.true(
-          Math.abs(back.r - sample.r) +
-            Math.abs(back.g - sample.g) +
-            Math.abs(back.b - sample.b) <
+          Math.abs(back[0] - sample[0]) +
+            Math.abs(back[1] - sample[1]) +
+            Math.abs(back[2] - sample[2]) <
             0.01,
           `${space} colour`,
         );
@@ -57,7 +57,7 @@ module('Unit | lib/colour-solid', function () {
         );
       }
     }
-    assert.deepEqual(pointFor('cmyk', { r: 0, g: 0, b: 0 }), [0, 0, 0, 1]);
+    assert.deepEqual(pointFor('cmyk', [0, 0, 0]), [0, 0, 0, 1]);
     const moved = convertPoint('rgb', 'hsl', [1, 0, 0, 0]);
     assert.deepEqual(moved, [0, 0.5, 1, 0], 'red is hue 0, half light, full');
   });
@@ -209,7 +209,7 @@ module('Unit | lib/colour-solid', function () {
       true,
     );
     state.tick(1);
-    assert.deepEqual(state.seen({ r: 1, g: 1, b: 1 }), { r: 0, g: 0, b: 0 });
+    assert.deepEqual(state.seen([1, 1, 1]), [0, 0, 0]);
     assert.false(state.animating);
   });
 });

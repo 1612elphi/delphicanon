@@ -10,6 +10,7 @@ import {
 import CanonColourControls, {
   CanonColourSolidState,
 } from '#src/components/canon-colour-controls.gts';
+import CanonColourSolid from '#src/components/canon-colour-solid.gts';
 import CanonRows from '#src/components/canon-rows.gts';
 import { hex } from '#src/lib/colour.ts';
 import { css } from '../helpers/css.ts';
@@ -25,26 +26,53 @@ module('Component | canon-colour-controls', function (hooks) {
     await render(
       <template>
         <div style={{css "width: 400px"}}>
+          <div style={{css "height: 200px"}}>
+            <CanonColourSolid
+              @space={{state.space}}
+              @point={{state.point}}
+              @animated={{state.animated}}
+              @sliceAxis={{state.sliceAxis}}
+              @isOrtho={{state.isOrtho}}
+              @showsWhole={{state.showsWhole}}
+              @onChange={{state.pick}}
+            />
+          </div>
           <CanonRows><CanonColourControls @state={{state}} /></CanonRows>
         </div>
       </template>,
     );
-    assert.dom('input[type=range]').exists({ count: 3 });
+    assert.dom('.canon-slider').exists({ count: 3 });
     assert
       .dom('.canon-colour-controls-lit .canon-row-title')
       .hasText('Lightness');
     assert.strictEqual(state.sliceAxis, 1, 'hsl lightness is axis 1');
     assert.dom('.canon-colour-controls-notation-field').hasValue('#FF0000');
 
-    await fillIn('input[type=range]', '120');
+    const track = document
+      .querySelector('.canon-slider-track')!
+      .getBoundingClientRect();
+    const at = {
+      button: 0,
+      pointerId: 1,
+      clientX: track.left + track.width / 3,
+      clientY: track.top + track.height / 2,
+    };
+    await triggerEvent('.canon-slider', 'pointerdown', at);
+    await triggerEvent('.canon-slider', 'pointerup', at);
     assert.strictEqual(hex(state.colour), '#00FF00');
     assert.strictEqual(state.activeRow, 0);
-    assert.true(state.animated, 'a change without a drag eases');
+    assert.true(state.animated, 'a tap eases');
+    assert.dom('.canon-colour-solid output').hasText('#00FF00');
 
     await click('[role=radio]:nth-child(8)');
     assert.strictEqual(state.space, 'cmyk');
-    assert.dom('input[type=range]').exists({ count: 4 });
-    assert.strictEqual(hex(state.colour), '#00FF00', 'the colour survives');
+    await waitUntil(() => hex(state.colour) === '#00FF00');
+    assert.dom('.canon-slider').exists({ count: 4 });
+    assert.deepEqual(
+      state.point.map((v) => Math.round(v * 100)),
+      [100, 0, 100, 0],
+      'the solid converts the pick, the colour survives',
+    );
 
     await triggerEvent('input[role=switch]', 'click');
     assert.true(state.isOrtho);

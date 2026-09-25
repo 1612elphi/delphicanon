@@ -19,7 +19,7 @@ export const colourFormats: ColourFormat[] = [
   'oklch',
 ];
 
-const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1);
+export const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1);
 const byte = (v: number) => Math.round(clamp01(v) * 255);
 const turn = (degrees: number) => (degrees < 0 ? degrees + 360 : degrees);
 
@@ -133,14 +133,6 @@ export function xyz(colour: Rgb): Triple {
   ];
 }
 
-function fromXyz(x: number, y: number, z: number): Triple {
-  return [
-    3.2404542 * x - 1.5371385 * y - 0.4985314 * z,
-    -0.969266 * x + 1.8760108 * y + 0.041556 * z,
-    0.0556434 * x - 0.2040259 * y + 1.0572252 * z,
-  ].map(fromLinear) as Triple;
-}
-
 const delta = 6 / 29;
 const labF = (t: number) =>
   t > delta ** 3 ? Math.cbrt(t) : t / (3 * delta * delta) + 4 / 29;
@@ -156,13 +148,21 @@ export function lab(colour: Rgb): Triple {
   return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
 }
 
-export function fromLab(l: number, a: number, b: number): Triple {
+/** CIELAB to linear sRGB, unclamped: outside 0...1 is outside the gamut. */
+export function labToLinear(l: number, a: number, b: number): Triple {
   const fy = (l + 16) / 116;
-  return fromXyz(
-    d65[0] * labFInverse(a / 500 + fy),
-    d65[1] * labFInverse(fy),
-    d65[2] * labFInverse(fy - b / 200),
-  );
+  const x = d65[0] * labFInverse(a / 500 + fy);
+  const y = d65[1] * labFInverse(fy);
+  const z = d65[2] * labFInverse(fy - b / 200);
+  return [
+    3.2404542 * x - 1.5371385 * y - 0.4985314 * z,
+    -0.969266 * x + 1.8760108 * y + 0.041556 * z,
+    0.0556434 * x - 0.2040259 * y + 1.0572252 * z,
+  ];
+}
+
+export function fromLab(l: number, a: number, b: number): Triple {
+  return labToLinear(l, a, b).map(fromLinear) as Triple;
 }
 
 function polar([l, a, b]: Triple): Triple {

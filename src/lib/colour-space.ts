@@ -1,4 +1,5 @@
 import {
+  clamped,
   cmyk,
   fromCmyk,
   fromHsb,
@@ -189,7 +190,7 @@ export function pointFor(space: SolidSpace, colour: Rgb): SolidPoint {
     case 'cmyk':
       return cmyk(colour);
     case 'rgb':
-      return [...(colour.map((v) => Math.min(Math.max(v, 0), 1)) as Triple), 0];
+      return [...clamped(colour), 0];
     case 'hsl': {
       const [h, s, l] = hsl(colour);
       return [h / 360, l / 100, s / 100, 0];
@@ -216,3 +217,10 @@ export function pointFor(space: SolidSpace, colour: Rgb): SolidPoint {
     }
   }
 }
+
+/** `point` in `from` moved to `to`, through the colour it names. */
+export const convertPoint = (
+  from: SolidSpace,
+  to: SolidSpace,
+  point: SolidPoint,
+): SolidPoint => pointFor(to, colourAt(from, point));

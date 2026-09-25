@@ -55,7 +55,7 @@ body {
   font-weight: var(--canon-weight-bold);
 }
 
-/* colour group: the solid's place over its strip */
+/* colour page: the solid over its strip */
 .gallery-solid {
   display: flex;
   flex-direction: column;
@@ -64,4 +64,5 @@ body {
 
 .gallery-solid-picture {
   flex: 1;
+  min-block-size: 0;
 }

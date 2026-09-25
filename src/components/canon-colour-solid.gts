@@ -6,15 +6,13 @@ import {
   solidMotion,
   type Overlays,
 } from '../lib/colour-solid/solid.ts';
+import { hex, takesBlackInk, type Rgb } from '../lib/colour.ts';
 import {
   colourAt,
-  hex,
   pointFor,
   spaceNames,
-  takesBlackInk,
-  type Rgb,
-  type Space,
-} from '../lib/colour-solid/space.ts';
+  type SolidSpace as Space,
+} from '../lib/colour-space.ts';
 import { identity, type Mat3, type Vec4 } from '../lib/colour-solid/vec.ts';
 import '../styles/tokens.css';
 import './canon-colour-solid.css';
@@ -83,8 +81,7 @@ const sameValues = (a?: readonly number[], b?: readonly number[]) =>
   a === b ||
   (!!a && !!b && a.length === b.length && a.every((v, i) => v === b[i]));
 
-const css = (c: Rgb) =>
-  `color(srgb ${c.r.toFixed(4)} ${c.g.toFixed(4)} ${c.b.toFixed(4)})`;
+const css = (c: Rgb) => `color(srgb ${c.map((v) => v.toFixed(4)).join(' ')})`;
 
 /**
  * A colour space drawn as a solid: drag to turn it, tap a face to pick the
@@ -97,7 +94,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
   state = new SolidState(
     this.args.space ?? 'hsl',
     (this.args.point as Vec4 | undefined) ??
-      pointFor(this.args.space ?? 'hsl', { r: 0.12, g: 0.4, b: 0.15 }),
+      pointFor(this.args.space ?? 'hsl', [0.12, 0.4, 0.15]),
     () => this.redraw(),
   );
 

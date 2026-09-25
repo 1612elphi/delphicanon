@@ -1,11 +1,10 @@
+import { labToLinear, oklabToLinear } from '../colour.ts';
 import {
   isCartesian,
   labReach,
-  labToLinear,
   oklabReach,
-  oklabToLinear,
-  type Space,
-} from './space.ts';
+  type SolidSpace as Space,
+} from '../colour-space.ts';
 import { add, dot, scale, sub, type Vec3, type Vec4 } from './vec.ts';
 
 /** Share of a turn the cut takes out of a cylinder. */
