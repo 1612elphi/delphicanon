@@ -1,0 +1,56 @@
+.canon-switch {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  inline-size: var(--canon-switch-width);
+  block-size: var(--canon-switch-height);
+  margin: 0;
+  border-radius: 999px;
+  background: var(--canon-switch-off);
+  cursor: pointer;
+  transition: background-color 200ms ease;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.canon-switch::before {
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  inline-size: calc(var(--canon-switch-height) - 4px);
+  block-size: calc(var(--canon-switch-height) - 4px);
+  border-radius: 50%;
+  background: var(--canon-switch-knob);
+  box-shadow: var(--canon-switch-knob-shadow);
+  content: "";
+  transition: translate 200ms ease;
+}
+
+.canon-switch:checked {
+  background: var(--canon-primary);
+}
+
+.canon-switch:checked::before {
+  translate: calc(var(--canon-switch-width) - var(--canon-switch-height)) 0;
+}
+
+.canon-switch:checked:dir(rtl)::before {
+  translate: calc(var(--canon-switch-height) - var(--canon-switch-width)) 0;
+}
+
+.canon-switch:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: 2px;
+}
+
+.canon-switch:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canon-switch,
+  .canon-switch::before {
+    transition: none;
+  }
+}

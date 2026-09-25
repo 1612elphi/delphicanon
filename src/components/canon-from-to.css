@@ -1,0 +1,28 @@
+.canon-from-to {
+  display: flex;
+  gap: var(--canon-hairline);
+  background: var(--canon-border);
+}
+
+.canon-from-to > .canon-menu-cell {
+  flex: 1 1 0;
+}
+
+.canon-from-to-arrow {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--canon-control-height);
+  background: var(--canon-card);
+  color: var(--canon-muted-foreground);
+}
+
+.canon-from-to-arrow svg {
+  inline-size: var(--canon-icon-inline);
+  block-size: var(--canon-icon-inline);
+}
+
+.canon-from-to-arrow:dir(rtl) svg {
+  scale: -1 1;
+}
