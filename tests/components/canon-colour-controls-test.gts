@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import {
   click,
   fillIn,
+  find,
   render,
   triggerEvent,
   waitUntil,
@@ -62,7 +63,10 @@ module('Component | canon-colour-controls', function (hooks) {
     assert.strictEqual(hex(state.colour), '#00FF00');
     assert.strictEqual(state.activeRow, 0);
     assert.true(state.animated, 'a tap eases');
-    assert.dom('.canon-colour-solid output').hasText('#00FF00');
+    // the solid paints on the next animation frame, which test waiters do not track
+    await waitUntil(
+      () => find('.canon-colour-solid output')?.textContent === '#00FF00',
+    );
 
     await click('[role=radio]:nth-child(8)');
     assert.strictEqual(state.space, 'cmyk');
