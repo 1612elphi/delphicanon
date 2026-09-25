@@ -9,6 +9,11 @@ import bug from 'lucide-static/icons/bug.svg?raw';
 export const pane = 'sidebar';
 export const order = 10;
 
+// ∑CG: gallery, caption under the "Detail and icon" row title
+//   spec: shows what a row's detail line looks like; plain, lowercase after the first word, about 25 characters
+//   sample: "Caption under the title"
+const detailCaption = '∑CG';
+
 <template>
   <CanonRows @framed={{true}}>
     <CanonHeading @text="Rows" />
@@ -19,10 +24,7 @@ export const order = 10;
     <CanonRow
       @title="Detail and icon"
       @icon={{component Icon svg=bug}}
-      {{! ∑CG: gallery, caption under the "Detail and icon" row title }}
-      {{! spec: shows what a row's detail line looks like; plain, lowercase after the first word, about 25 characters }}
-      {{! sample: "Caption under the title" }}
-      @detail="∑CG"
+      @detail={{detailCaption}}
     ><CanonBar class="gallery-bar" @share={{0.3}} /></CanonRow>
     <CanonRow @title="No control" />
     <CanonEmptyRow @text="Nothing here" />
