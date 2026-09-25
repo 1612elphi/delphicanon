@@ -113,6 +113,7 @@
       "./components/canon-code-block.js": "./dist/_app_/components/canon-code-block.js",
       "./components/canon-colour-card.js": "./dist/_app_/components/canon-colour-card.js",
       "./components/canon-colour-controls.js": "./dist/_app_/components/canon-colour-controls.js",
+      "./components/canon-colour-solid.js": "./dist/_app_/components/canon-colour-solid.js",
       "./components/canon-colour-strip.js": "./dist/_app_/components/canon-colour-strip.js",
       "./components/canon-colour-well.js": "./dist/_app_/components/canon-colour-well.js",
       "./components/canon-decimal-field.js": "./dist/_app_/components/canon-decimal-field.js",
