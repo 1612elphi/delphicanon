@@ -1,11 +1,18 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, settled, triggerKeyEvent } from '@ember/test-helpers';
+import {
+  click,
+  render,
+  settled,
+  triggerKeyEvent,
+  waitUntil,
+} from '@ember/test-helpers';
 import CanonMathField, {
   CanonMathFieldHandle,
 } from '#src/components/canon-math-field.gts';
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// the sheet closes after its 350 ms slide, which test waiters do not track
+const closed = () => waitUntil(() => !document.querySelector('dialog'));
 
 module('Component | canon-math-field', function (hooks) {
   setupRenderingTest(hooks);
@@ -36,7 +43,7 @@ module('Component | canon-math-field', function (hooks) {
     await triggerKeyEvent('dialog', 'keydown', '1');
     assert.deepEqual(changes, ['x*2', 'x*2+', 'x*2+1']);
     await click('dialog [aria-label="Done"]');
-    await wait(350);
+    await closed();
     await settled();
     assert.strictEqual(completed, 'x*2+1', 'completed');
     assert.dom('dialog').doesNotExist();
@@ -51,7 +58,7 @@ module('Component | canon-math-field', function (hooks) {
     document
       .querySelector('dialog')!
       .dispatchEvent(new Event('cancel', { cancelable: true }));
-    await wait(350);
+    await closed();
     await settled();
     assert.dom('dialog').doesNotExist('Escape closes it');
     assert.strictEqual(completed, 'x*2+1*()/()');

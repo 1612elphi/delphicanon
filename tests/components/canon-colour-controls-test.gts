@@ -47,7 +47,7 @@ module('Component | canon-colour-controls', function (hooks) {
       .dom('.canon-colour-controls-lit .canon-row-title')
       .hasText('Lightness');
     assert.strictEqual(state.sliceAxis, 1, 'hsl lightness is axis 1');
-    assert.dom('.canon-colour-controls-notation-field').hasValue('#FF0000');
+    assert.dom('.canon-colour-notation-input-field').hasValue('#FF0000');
 
     const track = document
       .querySelector('.canon-slider-track')!
@@ -89,12 +89,19 @@ module('Component | canon-colour-controls', function (hooks) {
         <CanonRows><CanonColourControls @state={{state}} /></CanonRows>
       </template>,
     );
-    await fillIn('.canon-colour-controls-notation-field', 'rgb(59, 130, 246)');
+    await fillIn('.canon-colour-notation-input-field', 'rgb(59, 130, 246)');
     await waitUntil(() => hex(state.colour) === '#3B82F6', { timeout: 2000 });
     assert.strictEqual(hex(state.colour), '#3B82F6');
-    await fillIn('.canon-colour-controls-notation-field', 'nope');
+    await fillIn('.canon-colour-notation-input-field', 'nope');
+    await waitUntil(
+      () =>
+        find('.canon-colour-notation-input-field')?.getAttribute(
+          'aria-invalid',
+        ) === 'true',
+      { timeout: 2000 },
+    );
     assert
-      .dom('.canon-colour-controls-notation-field')
+      .dom('.canon-colour-notation-input-field')
       .hasAttribute('aria-invalid', 'true');
   });
 });

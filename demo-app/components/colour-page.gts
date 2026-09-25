@@ -7,8 +7,12 @@ import CanonColourControls, {
   CanonColourSolidState,
 } from '#src/components/canon-colour-controls.gts';
 import CanonColourSolid from '#src/components/canon-colour-solid.gts';
+import CanonColourNotationInput from '#src/components/canon-colour-notation-input.gts';
 import CanonColourStrip from '#src/components/canon-colour-strip.gts';
+import CanonDetentWheel from '#src/components/canon-detent-wheel.gts';
+import CanonDetentWheelRow from '#src/components/canon-detent-wheel-row.gts';
 import CanonHeading from '#src/components/canon-heading.gts';
+import CanonLoupe from '#src/components/canon-loupe.gts';
 import CanonPaletteCard from '#src/components/canon-palette-card.gts';
 import CanonRow from '#src/components/canon-row.gts';
 import CanonRows from '#src/components/canon-rows.gts';
@@ -25,7 +29,9 @@ import {
   parseHex,
   type Rgb,
 } from '#src/lib/colour.ts';
-import { solidSpaces } from '#src/lib/colour-space.ts';
+import { solidSpaces, spaceNames } from '#src/lib/colour-space.ts';
+import { frame } from '#src/lib/loupe.ts';
+import { modifier } from 'ember-modifier';
 import Icon from './icon.gts';
 import copy from 'lucide-static/icons/copy.svg?raw';
 import save from 'lucide-static/icons/download.svg?raw';
@@ -102,10 +108,53 @@ const deuteranopia = [
   [0, 0.3, 0.7],
 ];
 
-// ?colourSpace=<picker index>&colourRow=<0-3>&colourView=<0-2>: the starting state, as the iOS launch arguments
+const spaceName = (index: number) => spaceNames[solidSpaces[index]!];
+const tintDigits = (character: string) =>
+  /\d/.test(character) ? 'var(--canon-primary)' : 'var(--canon-foreground)';
+
+// the colour's shades around the middle pixel, as the iOS gallery draws them
+function loupePixels(colour: Rgb): ImageData {
+  const side = 15;
+  const pixels = new ImageData(side, side);
+  for (let y = 0; y < side; y++) {
+    for (let x = 0; x < side; x++) {
+      const toward = (x + y) % 2 === 0 ? 1 : 0;
+      const by = (Math.abs(x - 7) + Math.abs(y - 7)) / 16;
+      const at = (y * side + x) * 4;
+      colour.forEach((channel, i) => {
+        pixels.data[at + i] = Math.round(
+          (channel + (toward - channel) * by) * 255,
+        );
+      });
+      pixels.data[at + 3] = 255;
+    }
+  }
+  return pixels;
+}
+
+const placeLoupe = modifier((loupe: HTMLElement) => {
+  const box = loupe.parentElement!;
+  const observer = new ResizeObserver(() => {
+    const { clientWidth: width, clientHeight: height } = box;
+    const spot = frame(
+      { x: width / 2, y: height / 2 + 60 },
+      112,
+      24,
+      { width, height },
+      8,
+    );
+    loupe.style.insetInlineStart = `${spot.x}px`;
+    loupe.style.insetBlockStart = `${spot.y}px`;
+  });
+  observer.observe(box);
+  return () => observer.disconnect();
+});
+
+// ?colourSpace=<picker index>&colourRow=<0-3>&colourView=<0-2>&colourCrease: the starting state, as the iOS launch arguments
 const query = new URLSearchParams(window.location.search);
 const number = (key: string) => Number(query.get(key) ?? 0) || 0;
 const startView = number('colourView');
+const crease = query.has('colourCrease');
 
 /** The port of CanonColourGalleryViewController: the solid, colour cards and palette cards, driven by one colour. */
 export default class ColourPage extends Component {
@@ -151,6 +200,22 @@ export default class ColourPage extends Component {
     return luminance(this.colour).toFixed(3);
   }
 
+  get spaceIndex() {
+    return solidSpaces.indexOf(this.state.space);
+  }
+
+  get loupePixels() {
+    return loupePixels(this.colour);
+  }
+
+  get repeatedHex() {
+    return hex(this.colour).repeat(4);
+  }
+
+  get longHex() {
+    return hex(this.colour).repeat(5);
+  }
+
   get palette() {
     return this.stripPalette ? this.harmony : undefined;
   }
@@ -165,6 +230,7 @@ export default class ColourPage extends Component {
     this.state.viewPlane = index === 1;
   };
 
+  pickSpace = (index: number) => this.state.selectSpace(solidSpaces[index]!);
   pickHarmony = (index: number) => (this.split = index === 1);
   showStripPalette = (on: boolean) => (this.stripPalette = on);
   showDeuteranopia = (on: boolean) => (this.deuteranopia = on);
@@ -173,8 +239,13 @@ export default class ColourPage extends Component {
     void navigator.clipboard?.writeText(this.harmony.map(hex).join('\n'));
 
   <template>
-    <CanonSplit class="gallery" @collapsesTo={{240}}>
-      <:banner>
+    <CanonSplit
+      class="gallery"
+      @halves={{true}}
+      @collapsesTo={{240}}
+      @pictureMeetsCrease={{crease}}
+    >
+      <:sidebar>
         <CanonCanvas
           @aspect={{1}}
           @maxHeight={{640}}
@@ -201,18 +272,19 @@ export default class ColourPage extends Component {
             />
           </div>
         </CanonCanvas>
-      </:banner>
-      <:sidebar>
+      </:sidebar>
+      <:main>
         <CanonRows @framed={{true}}>
           <CanonHeading @text="Solid" />
-          <CanonColourControls @state={{this.state}} />
-          <CanonRow @title="View" @form="flush">
-            <CanonSegmented
-              @items={{views}}
-              @selected={{this.view}}
-              @onChange={{this.showView}}
-            />
-          </CanonRow>
+          <CanonColourControls @state={{this.state}}>
+            <CanonRow @title="View" @form="flush">
+              <CanonSegmented
+                @items={{views}}
+                @selected={{this.view}}
+                @onChange={{this.showView}}
+              />
+            </CanonRow>
+          </CanonColourControls>
           <CanonRow @title="Strip palette" as |titleId|>
             <CanonSwitch
               @on={{this.stripPalette}}
@@ -228,8 +300,6 @@ export default class ColourPage extends Component {
             />
           </CanonRow>
         </CanonRows>
-      </:sidebar>
-      <:main>
         <CanonColourCard @colour={{this.colour}} @nameOf={{nameOf}} />
         <CanonColourCard
           @colour={{this.colour}}
@@ -248,6 +318,64 @@ export default class ColourPage extends Component {
             @value={{this.luminance}}
             @labelWidth={{92}}
           />
+          <CanonValueLine
+            @label="Above"
+            @value={{hex this.colour}}
+            @layout="above"
+          />
+          <CanonValueLine
+            @label="x ="
+            @value={{this.repeatedHex}}
+            @layout="wrapping"
+          />
+          <CanonValueLine @label="Nil" @value={{null}} @layout="wrapping" />
+          <CanonValueLine
+            @label="01"
+            @value={{hex this.colour}}
+            @layout="numbered"
+            @lit={{true}}
+          />
+          <CanonValueLine
+            @label="02"
+            @value={{this.longHex}}
+            @layout="numbered"
+            @wraps={{true}}
+            @tint={{tintDigits}}
+          />
+        </CanonRows>
+        <CanonRows @framed={{true}}>
+          <CanonHeading @text="Notation input" />
+          <CanonRow @title="Any notation" @form="stacked" as |titleId|>
+            <CanonColourNotationInput
+              @colour={{this.colour}}
+              @onColour={{this.state.use}}
+              @labelledBy={{titleId}}
+            />
+          </CanonRow>
+          <CanonHeading @text="Loupe" />
+          <CanonCanvas @height={{200}} @background="var(--canon-muted)">
+            <CanonLoupe
+              class="gallery-loupe"
+              @pixels={{this.loupePixels}}
+              @colour={{this.colour}}
+              {{placeLoupe}}
+            />
+          </CanonCanvas>
+          <CanonHeading @text="Detent wheel" />
+          <CanonCanvas @height={{200}}>
+            <CanonDetentWheel
+              @count={{solidSpaces.length}}
+              @selected={{this.spaceIndex}}
+              @onSelect={{this.pickSpace}}
+              @text={{spaceName}}
+              @label="Space"
+              as |index focus|
+            >
+              <CanonDetentWheelRow @focus={{focus}}>{{spaceName
+                  index
+                }}</CanonDetentWheelRow>
+            </CanonDetentWheel>
+          </CanonCanvas>
         </CanonRows>
         <CanonPaletteCard
           @title="Harmony"
