@@ -71,4 +71,9 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [ ] | B math | CanonMath (typesetter, CanonMathView, CanonMathMorph) | canon-math-view, `lib/math/*` | Typeset to HTML/CSS. Morph with the Web Animations API. |
 | [ ] | B math | CanonMathInput (CanonMathExpression, CanonMathEditor, CanonMathField, CanonMathInputViewController, CanonPaneSheetPresentation) | canon-math-field, canon-math-editor, `lib/math/expression.ts` | Keypad sheet as `<dialog>` docked to the field's pane on wide containers. Reads and writes nerdamer syntax. |
 | [ ] | B math | CanonMathKeypad (families, keys, submenu, rail, tabs) | canon-math-keypad, canon-math-key, canon-math-rail, canon-math-tabs | Braun ET66 family colours as tokens. |
-| [ ] | C | New from the parallel session: CanonValueLine layout option, big number field, CanonCanvas `.fitting`, CanonColourNotationInput, shared loupe, CanonDetentWheel | tbd | Waits for the merge notice. |
+| [ ] | C | CanonColourNotationInput.swift (new) | canon-colour-notation-input | Notation cell with eyedropper, injectable `parse`; CanonColourControls' notation row uses it. |
+| [ ] | C | CanonDetentWheel.swift (new): CanonDetentWheel, CanonDetentWheelRow | canon-detent-wheel, canon-detent-wheel-row | Detent drum, friction, spring catch, selection tick per row. |
+| [ ] | C | CanonLoupe.swift (new) | canon-loupe, `lib/loupe.ts` for `frame(near:side:gap:in:top:sides:)` | Unsmoothed pixels (`image-rendering: pixelated`), framed in the sampled colour. |
+| [ ] | C | CanonColourCards.swift: CanonValueLine `layout` (`beside(labelWidth)`, `above`, `wrapping`, `numbered(wraps)`), `show(_:_:fadeDelay:)` with nil as a dash, `isLit`, `tint`, `isEnabled` | canon-value-line | Changes to the colour group's port. |
+| [ ] | C | CanonDecimalField.swift: CanonBigNumberField (new) | canon-big-number-field | After the controls group merges. |
+| [ ] | C | CanonCanvas.swift: `Size.fitting`, `canvasFittingHeight`, `refit(animated:)`, `band(fitting:)` | canon-canvas | Height from content for the width. |
