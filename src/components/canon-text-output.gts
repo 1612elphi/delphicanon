@@ -8,6 +8,8 @@ import CanonRows from './canon-rows.gts';
 import type CanonToastService from '../services/canon-toast.ts';
 import '../styles/tokens.css';
 import './canon-text-output.css';
+import { Copy as copy, Share as share } from 'lucide-static';
+import CanonIcon from './canon-icon.gts';
 
 export interface CanonTextOutputSignature {
   Args: {
@@ -29,31 +31,9 @@ export interface CanonTextOutputSignature {
   Element: HTMLDivElement;
 }
 
-const CopyIcon = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><rect width="14" height="14" x="8" y="8" /><path
-      d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-    /></svg>
-</template>;
+const CopyIcon = <template><CanonIcon @svg={{copy}} /></template>;
 
-const ShareIcon = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path
-      d="M12 2v13M16 6l-4-4-4 4M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
-    /></svg>
-</template>;
+const ShareIcon = <template><CanonIcon @svg={{share}} /></template>;
 
 /** Hands a text file to the system share sheet, or downloads it where there is none. */
 export async function shareText(text: string, fileName: string) {

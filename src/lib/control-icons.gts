@@ -1,100 +1,31 @@
 import type { TOC } from '@ember/component/template-only';
+import {
+  ArrowRight as arrowRight,
+  ChevronsUpDown as chevronsUpDown,
+  Clipboard as clipboard,
+  Folder as folder,
+  Image as image,
+  Minus as minus,
+  Pipette as pipette,
+  Plus as plus,
+} from 'lucide-static';
+import CanonIcon from '../components/canon-icon.gts';
 
-// lucide-static 1.48 paths (ISC); the controls draw these themselves
-export const Minus: TOC<{ Args: object }> = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path d="M5 12h14" /></svg>
+type Icon = TOC<{ Args: object }>;
+
+export const Minus: Icon = <template><CanonIcon @svg={{minus}} /></template>;
+export const Plus: Icon = <template><CanonIcon @svg={{plus}} /></template>;
+export const ChevronsUpDown: Icon = <template>
+  <CanonIcon @svg={{chevronsUpDown}} />
 </template>;
-
-export const Plus: TOC<{ Args: object }> = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+export const ArrowRight: Icon = <template>
+  <CanonIcon @svg={{arrowRight}} />
 </template>;
-
-export const ChevronsUpDown: TOC<{ Args: object }> = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path d="m7 15 5 5 5-5" /><path d="m7 9 5-5 5 5" /></svg>
+export const Folder: Icon = <template><CanonIcon @svg={{folder}} /></template>;
+export const Clipboard: Icon = <template>
+  <CanonIcon @svg={{clipboard}} />
 </template>;
-
-export const ArrowRight: TOC<{ Args: object }> = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-</template>;
-
-export const Folder: TOC<{ Args: object }> = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path
-      d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"
-    /></svg>
-</template>;
-
-export const Clipboard: TOC<{ Args: object }> = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path
-      d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
-    /></svg>
-</template>;
-
-export const Picture: TOC<{ Args: object }> = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle
-      cx="9"
-      cy="9"
-      r="2"
-    /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg>
-</template>;
-
-export const Pipette: TOC<{ Args: object }> = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path d="m2 22 1-1h3l9-9" /><path d="M3 21v-3l9-9" /><path
-      d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"
-    /></svg>
+export const Picture: Icon = <template><CanonIcon @svg={{image}} /></template>;
+export const Pipette: Icon = <template>
+  <CanonIcon @svg={{pipette}} />
 </template>;

@@ -59,15 +59,9 @@
   --canon-paper-shadow: rgb(0 0 0 / 12%);
   --canon-copied: color(srgb 0.204 0.78 0.349);
   /* controls */
-  --canon-switch-width: 51px;
-  --canon-switch-height: 31px;
-  --canon-switch-knob: white;
-  --canon-switch-knob-shadow: 0 2px 6px rgb(0 0 0 / 0.2);
-  --canon-switch-off: color-mix(
-    in srgb,
-    var(--canon-foreground) 16%,
-    transparent
-  );
+  --canon-row-shrink-basis: 64px;
+  --canon-switch-width: 40px;
+  --canon-switch-height: 22px;
   --canon-text-area-height: 200px;
   --canon-drop-height: 140px;
   --canon-icon-large: 32px;

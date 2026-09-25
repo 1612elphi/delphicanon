@@ -7,6 +7,8 @@ import type { ComponentLike } from '@glint/template';
 import press from '../modifiers/canon-press.ts';
 import '../styles/tokens.css';
 import './canon-button.css';
+import { Check as check } from 'lucide-static';
+import CanonIcon from './canon-icon.gts';
 
 export type CanonButtonKind = 'primary' | 'secondary' | 'cell' | 'segment';
 
@@ -44,16 +46,7 @@ export interface CanonButtonSignature {
 export const repeatTiming = { delay: 0.4, interval: 0.09, fast: 0.04 } as const;
 export const flashSeconds = 1.5;
 
-const Check = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path d="M20 6 9 17l-5-5" /></svg>
-</template>;
+const Check = <template><CanonIcon @svg={{check}} /></template>;
 
 export default class CanonButton extends Component<CanonButtonSignature> {
   @tracked flashing = false;

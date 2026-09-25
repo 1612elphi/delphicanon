@@ -5,8 +5,8 @@
   inline-size: var(--canon-switch-width);
   block-size: var(--canon-switch-height);
   margin: 0;
-  border-radius: 999px;
-  background: var(--canon-switch-off);
+  border: var(--canon-hairline) solid var(--canon-border);
+  background: var(--canon-muted);
   cursor: pointer;
   transition: background-color 200ms ease;
   appearance: none;
@@ -15,19 +15,21 @@
 
 .canon-switch::before {
   position: absolute;
-  inset-block-start: 2px;
+  inset-block: 2px;
   inset-inline-start: 2px;
-  inline-size: calc(var(--canon-switch-height) - 4px);
-  block-size: calc(var(--canon-switch-height) - 4px);
-  border-radius: 50%;
-  background: var(--canon-switch-knob);
-  box-shadow: var(--canon-switch-knob-shadow);
+  aspect-ratio: 1;
+  background: var(--canon-muted-foreground);
   content: "";
   transition: translate 200ms ease;
 }
 
 .canon-switch:checked {
+  border-color: var(--canon-primary);
   background: var(--canon-primary);
+}
+
+.canon-switch:checked::before {
+  background: var(--canon-primary-foreground);
 }
 
 .canon-switch:checked::before {

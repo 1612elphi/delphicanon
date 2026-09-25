@@ -8,6 +8,8 @@ import type CanonToastService from '../services/canon-toast.ts';
 import { flashSeconds } from './canon-button.gts';
 import '../styles/tokens.css';
 import './canon-code-block.css';
+import { Check as check, Copy as copy } from 'lucide-static';
+import CanonIcon from './canon-icon.gts';
 
 export interface CanonCodeBlockSignature {
   Args: {
@@ -20,29 +22,9 @@ export interface CanonCodeBlockSignature {
   Element: HTMLDivElement;
 }
 
-const CopyIcon = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><rect width="14" height="14" x="8" y="8" /><path
-      d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-    /></svg>
-</template>;
+const CopyIcon = <template><CanonIcon @svg={{copy}} /></template>;
 
-const CheckIcon = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2.5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path d="M20 6 9 17l-5-5" /></svg>
-</template>;
+const CheckIcon = <template><CanonIcon @svg={{check}} /></template>;
 
 /** Monospaced, selectable code with a copy button. Lines do not wrap; the block scrolls sideways. */
 export default class CanonCodeBlock extends Component<CanonCodeBlockSignature> {

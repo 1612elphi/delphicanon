@@ -6,6 +6,8 @@ import { compareSpring, springEasing } from '../lib/motion.ts';
 import sidewaysPan from '../modifiers/canon-sideways-pan.ts';
 import '../styles/tokens.css';
 import './canon-image-compare.css';
+import { ArrowLeftRight as arrowLeftRight } from 'lucide-static';
+import CanonIcon from './canon-icon.gts';
 
 export interface CanonImageCompareSignature {
   Args: {
@@ -26,16 +28,7 @@ export interface CanonImageCompareSignature {
 const tapEasing = springEasing(compareSpring.damping);
 const nudge = 0.1;
 
-const Grip = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2.5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><path d="M8 3 4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4" /></svg>
-</template>;
+const Grip = <template><CanonIcon @svg={{arrowLeftRight}} /></template>;
 
 /**
  * One picture, the original on the leading side of a draggable divider and

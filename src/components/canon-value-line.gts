@@ -7,6 +7,8 @@ import press from '../modifiers/canon-press.ts';
 import type CanonToastService from '../services/canon-toast.ts';
 import '../styles/tokens.css';
 import './canon-value-line.css';
+import { Copy as copy } from 'lucide-static';
+import CanonIcon from './canon-icon.gts';
 
 export type CanonValueLineLayout = 'beside' | 'above' | 'wrapping' | 'numbered';
 
@@ -36,18 +38,7 @@ export interface CanonValueLineSignature {
   Element: HTMLButtonElement;
 }
 
-const CopyGlyph = <template>
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  ><rect x="8" y="8" width="14" height="14" rx="2" /><path
-      d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-    /></svg>
-</template>;
+const CopyGlyph = <template><CanonIcon @svg={{copy}} /></template>;
 
 const dash = '—';
 const shownBefore = new WeakMap<HTMLElement, string>();

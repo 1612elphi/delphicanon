@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
+import CanonBar from '#src/components/canon-bar.gts';
 import CanonRow from '#src/components/canon-row.gts';
 import { css } from '../helpers/css.ts';
 
@@ -48,6 +49,28 @@ module('Component | canon-row', function (hooks) {
     };
     assert.strictEqual(offset('.wide'), 0, 'side by side');
     assert.true(offset('.narrow') > 0, 'stacked');
+  });
+
+  test('a bar shrinks beside the title before the row stacks', async function (assert) {
+    await render(
+      <template>
+        <div style={{css "width: 260px"}}>
+          <CanonRow @title="Detail and icon">
+            <CanonBar
+              style={{css "inline-size: 100%; max-inline-size: 160px"}}
+              @share={{0.5}}
+            />
+          </CanonRow>
+        </div>
+      </template>,
+    );
+    const label = document.querySelector<HTMLElement>('.canon-row-label')!;
+    const bar = document.querySelector<HTMLElement>('.canon-bar')!;
+    assert.true(
+      bar.getBoundingClientRect().top < label.getBoundingClientRect().bottom,
+      'beside the title',
+    );
+    assert.true(bar.offsetWidth < 160, 'shrunk');
   });
 
   test('a sizing title stacks a row whose own title fits', async function (assert) {

@@ -95,3 +95,9 @@
 .canon-row--stacked {
   flex-direction: column;
 }
+
+/* bars and sliders shrink beside the title; the row stacks only below the basis */
+.canon-row-control:has(> .canon-bar, > .canon-slider) {
+  flex: 999 1 var(--canon-row-shrink-basis);
+  justify-content: flex-end;
+}

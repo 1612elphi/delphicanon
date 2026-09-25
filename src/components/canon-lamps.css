@@ -12,7 +12,6 @@
   inline-size: 17px;
   block-size: 17px;
   color: color-mix(in srgb, var(--canon-muted-foreground) 30%, transparent);
-  fill: currentcolor;
 }
 
 .canon-lamps-lamp--record {

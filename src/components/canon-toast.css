@@ -28,9 +28,15 @@
 }
 
 .canon-toast-check {
+  display: flex;
   flex: none;
   inline-size: 16px;
   block-size: 16px;
+}
+
+.canon-toast-check svg {
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .canon-toast-title {

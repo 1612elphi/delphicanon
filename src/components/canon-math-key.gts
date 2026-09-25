@@ -18,6 +18,8 @@ import { canvasMetrics } from '../lib/math/measure.ts';
 import type { Box } from '../lib/math/typeset.ts';
 import '../styles/tokens.css';
 import './canon-math-key.css';
+import { ChevronUp as chevronUp } from 'lucide-static';
+import CanonIcon from './canon-icon.gts';
 
 export interface CanonMathKeySignature {
   Args: {
@@ -47,16 +49,7 @@ export interface CanonMathKeySignature {
 export const slop = 10;
 
 const Chevron = <template>
-  <svg
-    class="canon-math-key-chevron"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="3"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-  ><path d="m18 15-6-6-6 6" /></svg>
+  <span class="canon-math-key-chevron"><CanonIcon @svg={{chevronUp}} /></span>
 </template>;
 
 /**

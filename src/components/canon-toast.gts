@@ -6,6 +6,8 @@ import { springEasing } from '../lib/motion.ts';
 import { placeToast, type Box } from '../lib/toast.ts';
 import '../styles/tokens.css';
 import './canon-toast.css';
+import { Check as check } from 'lucide-static';
+import CanonIcon from './canon-icon.gts';
 
 export interface CanonToastSignature {
   Element: HTMLDivElement;
@@ -104,15 +106,7 @@ export default class CanonToast extends Component<CanonToastSignature> {
       ...attributes
     >
       <div class="canon-toast-note">
-        <svg
-          class="canon-toast-check"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ><path d="M20 6 9 17l-5-5" /></svg>
+        <span class="canon-toast-check"><CanonIcon @svg={{check}} /></span>
         <span class="canon-toast-title">Copied</span>
         {{#if this.toast.detail}}
           <span class="canon-toast-detail">{{this.toast.detail}}</span>

@@ -35,7 +35,8 @@ body {
 }
 
 .gallery-bar {
-  inline-size: 120px;
+  inline-size: 100%;
+  max-inline-size: 120px;
   block-size: 6px;
 }
 
