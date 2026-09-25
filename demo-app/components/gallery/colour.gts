@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
+import { modifier } from 'ember-modifier';
 import CanonButton from '#src/components/canon-button.gts';
 import CanonCanvas from '#src/components/canon-canvas.gts';
 import CanonColourCard from '#src/components/canon-colour-card.gts';
@@ -8,7 +9,11 @@ import CanonColourControls, {
   CanonColourSolidState,
 } from '#src/components/canon-colour-controls.gts';
 import CanonColourStrip from '#src/components/canon-colour-strip.gts';
+import CanonColourNotationInput from '#src/components/canon-colour-notation-input.gts';
 import CanonColourWell from '#src/components/canon-colour-well.gts';
+import CanonDetentWheel from '#src/components/canon-detent-wheel.gts';
+import CanonDetentWheelRow from '#src/components/canon-detent-wheel-row.gts';
+import CanonLoupe from '#src/components/canon-loupe.gts';
 import CanonHeading from '#src/components/canon-heading.gts';
 import CanonPaletteCard from '#src/components/canon-palette-card.gts';
 import CanonRow from '#src/components/canon-row.gts';
@@ -24,6 +29,8 @@ import {
   parseHex,
   type Rgb,
 } from '#src/lib/colour.ts';
+import { solidSpaces, spaceNames } from '#src/lib/colour-space.ts';
+import { frame } from '#src/lib/loupe.ts';
 import Icon from '../icon.gts';
 import copy from 'lucide-static/icons/copy.svg?raw';
 import save from 'lucide-static/icons/download.svg?raw';
@@ -89,6 +96,47 @@ function inGamut(l: number, c: number, h: number): Rgb {
 }
 
 const views = ['Slice', 'Ortho', 'Cut'];
+const spaceName = (index: number) => spaceNames[solidSpaces[index]!];
+const tintDigits = (character: string) =>
+  /\d/.test(character) ? 'var(--canon-primary)' : 'var(--canon-foreground)';
+
+// the colour's shades around the middle pixel, as the iOS gallery draws them
+function loupePixels(colour: Rgb): ImageData {
+  const side = 15;
+  const pixels = new ImageData(side, side);
+  for (let y = 0; y < side; y++) {
+    for (let x = 0; x < side; x++) {
+      const toward = (x + y) % 2 === 0 ? 1 : 0;
+      const by = (Math.abs(x - 7) + Math.abs(y - 7)) / 16;
+      const at = (y * side + x) * 4;
+      colour.forEach((channel, i) => {
+        pixels.data[at + i] = Math.round(
+          (channel + (toward - channel) * by) * 255,
+        );
+      });
+      pixels.data[at + 3] = 255;
+    }
+  }
+  return pixels;
+}
+
+const placeLoupe = modifier((loupe: HTMLElement) => {
+  const box = loupe.parentElement!;
+  const observer = new ResizeObserver(() => {
+    const { clientWidth: width, clientHeight: height } = box;
+    const spot = frame(
+      { x: width / 2, y: height / 2 + 60 },
+      112,
+      24,
+      { width, height },
+      8,
+    );
+    loupe.style.insetInlineStart = `${spot.x}px`;
+    loupe.style.insetBlockStart = `${spot.y}px`;
+  });
+  observer.observe(box);
+  return () => observer.disconnect();
+});
 const harmonyKinds = ['Analogous', 'Split'];
 
 export default class ColourGallery extends Component {
@@ -123,6 +171,22 @@ export default class ColourGallery extends Component {
     return luminance(this.colour).toFixed(3);
   }
 
+  get spaceIndex() {
+    return solidSpaces.indexOf(this.state.space);
+  }
+
+  get loupePixels() {
+    return loupePixels(this.colour);
+  }
+
+  get repeatedHex() {
+    return hex(this.colour).repeat(4);
+  }
+
+  get longHex() {
+    return hex(this.colour).repeat(5);
+  }
+
   get palette() {
     return this.stripPalette ? this.harmony : undefined;
   }
@@ -140,6 +204,9 @@ export default class ColourGallery extends Component {
 
   copyPalette = () =>
     void navigator.clipboard?.writeText(this.harmony.map(hex).join('\n'));
+
+  use = (colour: Rgb) => this.state.use(colour);
+  pickSpace = (index: number) => this.state.selectSpace(solidSpaces[index]!);
 
   setForeground = (colour: Rgb) => (this.foreground = colour);
   setOrange = (colour: Rgb) => (this.orange = colour);
@@ -196,6 +263,65 @@ export default class ColourGallery extends Component {
         @value={{this.luminance}}
         @labelWidth={{92}}
       />
+      <CanonValueLine
+        @label="Above"
+        @value={{hex this.colour}}
+        @layout="above"
+      />
+      <CanonValueLine
+        @label="x ="
+        @value={{this.repeatedHex}}
+        @layout="wrapping"
+      />
+      <CanonValueLine @label="Nil" @value={{null}} @layout="wrapping" />
+      <CanonValueLine
+        @label="01"
+        @value={{hex this.colour}}
+        @layout="numbered"
+        @lit={{true}}
+      />
+      <CanonValueLine
+        @label="02"
+        @value={{this.longHex}}
+        @layout="numbered"
+        @wraps={{true}}
+        @tint={{tintDigits}}
+        @fadeDelay={{0.1}}
+      />
+    </CanonRows>
+    <CanonRows @framed={{true}}>
+      <CanonHeading @text="Notation input" />
+      <CanonRow @title="Any notation" @form="stacked" as |titleId|>
+        <CanonColourNotationInput
+          @colour={{this.colour}}
+          @onColour={{this.use}}
+          @labelledBy={{titleId}}
+        />
+      </CanonRow>
+      <CanonHeading @text="Loupe" />
+      <CanonCanvas @height={{200}} @background="var(--canon-muted)">
+        <CanonLoupe
+          class="gallery-loupe"
+          @pixels={{this.loupePixels}}
+          @colour={{this.colour}}
+          {{placeLoupe}}
+        />
+      </CanonCanvas>
+      <CanonHeading @text="Detent wheel" />
+      <CanonCanvas @height={{200}}>
+        <CanonDetentWheel
+          @count={{solidSpaces.length}}
+          @selected={{this.spaceIndex}}
+          @onSelect={{this.pickSpace}}
+          @text={{spaceName}}
+          @label="Space"
+          as |index focus|
+        >
+          <CanonDetentWheelRow @focus={{focus}}>{{spaceName
+              index
+            }}</CanonDetentWheelRow>
+        </CanonDetentWheel>
+      </CanonCanvas>
     </CanonRows>
     <CanonPaletteCard
       @title="Harmony"

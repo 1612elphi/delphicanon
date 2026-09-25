@@ -40,3 +40,25 @@
 .canon-canvas--unless-wide {
   padding-inline: var(--canon-frame);
 }
+
+.canon-canvas--fitting > .canon-canvas-content {
+  block-size: var(--canon-canvas-fitted, auto);
+}
+
+.canon-canvas--collapsed {
+  padding-block: 0;
+}
+
+.canon-canvas--eases,
+.canon-canvas--eases > .canon-canvas-content {
+  transition-duration: var(--canon-canvas-refit);
+  transition-property: block-size, padding-block;
+  transition-timing-function: ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canon-canvas--eases,
+  .canon-canvas--eases > .canon-canvas-content {
+    transition: none;
+  }
+}
