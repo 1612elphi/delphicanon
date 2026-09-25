@@ -1,0 +1,16 @@
+.canon-glyph-flow {
+  position: relative;
+  block-size: 100%;
+  overflow: hidden;
+}
+
+.canon-glyph-flow-glyphs {
+  position: absolute;
+  inset: 0;
+}
+
+.canon-glyph-flow-glyph,
+.canon-glyph-flow-empty {
+  position: absolute;
+  box-sizing: border-box;
+}

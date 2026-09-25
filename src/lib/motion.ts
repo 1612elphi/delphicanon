@@ -60,3 +60,30 @@ export function springEasing(damping: number, samples = 40): string {
 function round(value: number): number {
   return Math.round(value * 10000) / 10000;
 }
+
+/** Travel in px before a sideways pan judges the direction, and how many times the sideways travel must exceed the vertical. */
+export const sidewaysJudgement = { travel: 6, ratio: 2 } as const;
+
+/** A tap that moves a CanonImageCompare divider springs there. */
+export const compareSpring = { ms: 450, damping: 0.7 } as const;
+
+/** CanonGlyphFlow: seconds for glyphs to settle. */
+export const glyphSettleMs = 450;
+
+/** CanonGlyphFlow's settle curve: a damped spring with one overshoot, 0 to 1. */
+export function glyphEased(progress: number): number {
+  return progress >= 1
+    ? 1
+    : 1 - Math.exp(-7 * progress) * Math.cos(8 * progress);
+}
+
+/** A CSS linear() easing sampled from `curve` over 0 to 1. */
+export function curveEasing(
+  curve: (progress: number) => number,
+  samples = 40,
+): string {
+  const points = Array.from({ length: samples + 1 }, (_, i) =>
+    round(curve(i / samples)),
+  );
+  return `linear(${points.join(', ')})`;
+}

@@ -1,0 +1,35 @@
+.canon-tiles-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-sizing: border-box;
+  padding: 10px 12px 12px var(--canon-panel-padding);
+  background: var(--canon-card);
+  font-family: var(--canon-font);
+  line-height: 1.3;
+}
+
+.canon-tiles-label,
+.canon-tiles-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canon-tiles-label {
+  color: var(--canon-muted-foreground);
+  font-size: var(--canon-text-caption);
+  font-weight: var(--canon-weight-semibold);
+}
+
+.canon-tiles-value {
+  color: var(--canon-foreground);
+  font-size: var(--canon-text-subheadline);
+}
+
+.canon-tiles-level {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+}

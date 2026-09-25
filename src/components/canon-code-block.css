@@ -1,0 +1,81 @@
+.canon-code-block {
+  display: flex;
+  flex-direction: column-reverse;
+  min-inline-size: 0;
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+}
+
+.canon-code-block--titled {
+  flex-direction: column;
+}
+
+.canon-code-block-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline-start: 12px;
+}
+
+.canon-code-block--titled > .canon-code-block-bar {
+  background: var(--canon-heading-background);
+}
+
+.canon-code-block-language {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  color: var(--canon-muted-foreground);
+  font-size: var(--canon-text-footnote);
+  font-weight: var(--canon-weight-semibold);
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.canon-code-block-copy {
+  display: flex;
+  flex: none;
+  margin: 0;
+  padding: 8px 12px;
+  border: 0;
+  background: none;
+  color: var(--canon-muted-foreground);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.canon-code-block-copy svg {
+  inline-size: 14px;
+  block-size: 14px;
+}
+
+@media (hover: hover) {
+  .canon-code-block-copy:hover {
+    color: var(--canon-foreground);
+  }
+}
+
+.canon-code-block-copy--copied,
+.canon-code-block-copy--copied:hover {
+  color: var(--canon-copied);
+}
+
+.canon-code-block-copy:focus-visible,
+.canon-code-block-code:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: -2px;
+}
+
+.canon-code-block-code {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 12px;
+  overflow: auto;
+  font-family: inherit;
+  font-size: var(--canon-text-footnote);
+  line-height: 1.4;
+  white-space: pre;
+  tab-size: 4;
+  scrollbar-width: thin;
+}

@@ -1,0 +1,33 @@
+.canon-lamps {
+  display: inline-flex;
+  gap: 16px;
+  align-items: center;
+  pointer-events: none;
+}
+
+.canon-lamps-lamp {
+  --canon-lamp-colour: var(--canon-primary);
+
+  display: flex;
+  inline-size: 17px;
+  block-size: 17px;
+  color: color-mix(in srgb, var(--canon-muted-foreground) 30%, transparent);
+  fill: currentcolor;
+}
+
+.canon-lamps-lamp--record {
+  --canon-lamp-colour: var(--canon-destructive);
+}
+
+.canon-lamps-lamp svg {
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+}
+
+.canon-lamps-lamp--lit:not(.canon-lamps-lamp--blink) {
+  color: var(--canon-lamp-colour);
+  filter: drop-shadow(
+    0 0 3px color-mix(in srgb, var(--canon-lamp-colour) 60%, transparent)
+  );
+}

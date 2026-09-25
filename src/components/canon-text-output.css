@@ -1,0 +1,15 @@
+.canon-text-output-text {
+  padding: 14px var(--canon-panel-padding);
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-body);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  user-select: text;
+}
+
+.canon-text-output-text::selection {
+  background: color-mix(in srgb, var(--canon-primary) 30%, transparent);
+}
