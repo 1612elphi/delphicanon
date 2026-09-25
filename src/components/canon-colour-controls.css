@@ -7,37 +7,3 @@
   color: var(--canon-primary);
   font-weight: var(--canon-weight-semibold);
 }
-
-.canon-colour-controls-notation {
-  position: relative;
-  display: flex;
-  min-block-size: var(--canon-control-height);
-}
-
-.canon-colour-controls-notation > .canon-text-cell {
-  flex: 1;
-  inline-size: auto;
-  font-variant-numeric: tabular-nums;
-}
-
-.canon-colour-controls-notation > .canon-colour-controls-fails {
-  color: var(--canon-destructive);
-}
-
-.canon-colour-controls-notation > .canon-button {
-  flex: none;
-  inline-size: var(--canon-control-height);
-}
-
-.canon-colour-controls-picker {
-  position: absolute;
-  inset-block-end: 0;
-  inset-inline-end: 0;
-  inline-size: var(--canon-control-height);
-  block-size: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  opacity: 0;
-  pointer-events: none;
-}
