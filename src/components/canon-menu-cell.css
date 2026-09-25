@@ -1,0 +1,67 @@
+.canon-menu-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  min-block-size: var(--canon-control-height);
+  padding: 8px 12px;
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-body);
+  font-weight: var(--canon-weight-medium);
+  line-height: 1.3;
+}
+
+.canon-menu-cell-title {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canon-menu-cell-icon {
+  display: flex;
+  flex: none;
+  inline-size: var(--canon-icon-inline);
+  block-size: var(--canon-icon-inline);
+}
+
+.canon-menu-cell-icon svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.canon-menu-cell-select {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  opacity: 0;
+  font: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+
+@media (hover: hover) {
+  .canon-menu-cell:not(.canon-menu-cell--disabled):hover {
+    background: var(--canon-accent-bg);
+  }
+}
+
+.canon-menu-cell:has(:focus-visible) {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: -2px;
+}
+
+.canon-menu-cell--disabled {
+  color: color-mix(in srgb, var(--canon-foreground) 40%, transparent);
+}
+
+.canon-menu-cell--disabled .canon-menu-cell-select {
+  cursor: default;
+}

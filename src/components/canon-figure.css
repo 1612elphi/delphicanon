@@ -1,0 +1,41 @@
+.canon-figure {
+  display: inline-flex;
+  align-items: baseline;
+  gap: calc(var(--canon-figure-size) * 0.08);
+  color: var(--canon-figure-colour, var(--canon-primary));
+  font-family: var(--canon-font);
+  line-height: 1.1;
+  white-space: nowrap;
+  transition: color 200ms ease-out;
+}
+
+.canon-figure-said {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.canon-figure-text {
+  font-size: var(--canon-figure-size);
+  font-weight: var(--canon-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.canon-figure-char {
+  position: relative;
+  display: inline-block;
+  white-space: pre;
+}
+
+.canon-figure-ghost {
+  position: absolute;
+  inset: 0;
+}
+
+.canon-figure-unit {
+  font-size: calc(var(--canon-figure-size) * 0.55);
+  font-weight: var(--canon-weight-semibold);
+}

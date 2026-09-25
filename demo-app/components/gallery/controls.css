@@ -1,0 +1,10 @@
+.gallery-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.gallery-loaders {
+  gap: 16px;
+}

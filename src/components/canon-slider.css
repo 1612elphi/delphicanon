@@ -1,0 +1,101 @@
+@property --canon-slider-thickness {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 2px;
+}
+
+.canon-slider {
+  --canon-slider-thickness: 2px;
+
+  display: flex;
+  gap: var(--canon-hairline);
+  box-sizing: border-box;
+  min-block-size: var(--canon-control-height);
+  background: var(--canon-border);
+  font-family: var(--canon-font);
+  cursor: pointer;
+  touch-action: pan-y;
+  user-select: none;
+  transition: --canon-slider-thickness 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.canon-slider[data-active],
+.canon-slider:focus-visible {
+  --canon-slider-thickness: 6px;
+}
+
+@media (hover: hover) {
+  .canon-slider:hover {
+    --canon-slider-thickness: 6px;
+  }
+}
+
+.canon-slider:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: -2px;
+}
+
+.canon-slider-track {
+  position: relative;
+  flex: 1 1 auto;
+  inline-size: 160px;
+  min-inline-size: 96px;
+  overflow: hidden;
+  background: var(--canon-muted);
+}
+
+.canon-slider-fill,
+.canon-slider-marker {
+  position: absolute;
+  inset-block: 0;
+}
+
+.canon-slider-fill {
+  inset-inline-start: 0;
+  inline-size: calc(var(--canon-slider-fraction) * 100%);
+  background: var(--canon-primary);
+}
+
+.canon-slider-marker {
+  inset-inline-start: max(
+    0px,
+    calc(var(--canon-slider-fraction) * 100% - var(--canon-slider-thickness))
+  );
+  inline-size: var(--canon-slider-thickness);
+  background: var(--canon-foreground);
+}
+
+.canon-slider--trailing .canon-slider-fill {
+  inset-inline: auto 0;
+}
+
+.canon-slider--trailing .canon-slider-marker {
+  inset-inline: auto
+    max(
+      0px,
+      calc(var(--canon-slider-fraction) * 100% - var(--canon-slider-thickness))
+    );
+}
+
+.canon-slider-readout {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-inline-size: 64px;
+  padding: 0 10px;
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-size: var(--canon-text-body);
+  font-weight: var(--canon-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canon-slider {
+    transition: none;
+  }
+}

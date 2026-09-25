@@ -1,0 +1,161 @@
+/*
+ * The web nds-loader: each outer cell is dim with a lit layer whose keyframe
+ * is shifted by its clockwise index --i; the negative delay starts every cell
+ * at its steady phase. 12.5 % of a keyframe is one step of the 8-step cycle.
+ */
+.canon-loader {
+  --canon-loader-tick: 100ms;
+  --canon-loader-cycle: 8;
+
+  display: inline-grid;
+  flex: none;
+  grid-template-columns: repeat(3, var(--canon-loader-cell));
+  gap: var(--canon-loader-gap);
+  color: var(--canon-foreground);
+  vertical-align: middle;
+}
+
+.canon-loader > * {
+  position: relative;
+  aspect-ratio: 1;
+  background: color-mix(in srgb, currentcolor 20%, transparent);
+}
+
+.canon-loader > i {
+  background: currentcolor;
+}
+
+.canon-loader > span::before,
+.canon-loader > span::after {
+  position: absolute;
+  inset: 0;
+  background: currentcolor;
+  opacity: 0;
+  animation: none calc(var(--canon-loader-cycle) * var(--canon-loader-tick))
+    step-end infinite;
+  animation-delay: calc(
+    (var(--i) - var(--canon-loader-cycle)) * var(--canon-loader-tick)
+  );
+}
+
+.canon-loader > span::before {
+  content: "";
+  animation-name: canon-loader-snake;
+}
+
+.canon-loader--comet > span::before {
+  animation-name: canon-loader-comet;
+}
+
+.canon-loader--dot > span::before {
+  animation-name: canon-loader-dot;
+}
+
+.canon-loader--twin > span::before {
+  animation-name: canon-loader-twin;
+}
+
+/* the head visits cell i at step i and again at 15 - i, one layer per visit */
+.canon-loader--thinking {
+  --canon-loader-cycle: 16;
+}
+
+.canon-loader--thinking > span::before,
+.canon-loader--thinking > span::after {
+  animation-name: canon-loader-swing;
+}
+
+.canon-loader--thinking > span::after {
+  content: "";
+  animation-delay: calc((-1 - var(--i)) * var(--canon-loader-tick));
+}
+
+.canon-loader--reverse:not(.canon-loader--thinking) > span::before {
+  animation-delay: calc(var(--i) * -1 * var(--canon-loader-tick));
+}
+
+@keyframes canon-loader-snake {
+  0% {
+    opacity: 1;
+  }
+
+  62.5%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes canon-loader-comet {
+  0% {
+    opacity: 1;
+  }
+
+  12.5% {
+    opacity: 0.65;
+  }
+
+  25% {
+    opacity: 0.4;
+  }
+
+  37.5% {
+    opacity: 0.22;
+  }
+
+  50% {
+    opacity: 0.1;
+  }
+
+  62.5%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes canon-loader-dot {
+  0% {
+    opacity: 1;
+  }
+
+  12.5%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes canon-loader-twin {
+  0% {
+    opacity: 1;
+  }
+
+  37.5% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  87.5%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* 16-step cycle: 31.25 % is 5 steps */
+@keyframes canon-loader-swing {
+  0% {
+    opacity: 1;
+  }
+
+  31.25%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canon-loader {
+    --canon-loader-tick: 500ms;
+  }
+}
