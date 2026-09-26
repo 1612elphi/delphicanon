@@ -36,3 +36,42 @@ export function splitForMiddle(name: string, keep = 8): [string, string] {
   if (chars.length <= keep) return ['', name];
   return [chars.slice(0, -keep).join(''), chars.slice(-keep).join('')];
 }
+
+/**
+ * The text of a file in its detected encoding: UTF-16 by its byte order
+ * mark, else UTF-8, else Windows-1252.
+ */
+export function decodeText(bytes: Uint8Array): string {
+  const [a, b] = bytes;
+  if (a === 0xff && b === 0xfe)
+    return new TextDecoder('utf-16le').decode(bytes);
+  if (a === 0xfe && b === 0xff)
+    return new TextDecoder('utf-16be').decode(bytes);
+  try {
+    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  } catch {
+    return new TextDecoder('windows-1252').decode(bytes);
+  }
+}
+
+/**
+ * Opens the file picker for one text file and resolves with its text, or
+ * undefined when the picker is cancelled. `accept` is an `<input type=file>`
+ * accept list, the file types the tool takes.
+ */
+export function pickTextFile(accept: string): Promise<string | undefined> {
+  return new Promise((resolve) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = accept;
+    input.addEventListener('cancel', () => resolve(undefined));
+    input.addEventListener('change', () => {
+      const file = input.files?.[0];
+      if (!file) return resolve(undefined);
+      void file
+        .arrayBuffer()
+        .then((buffer) => resolve(decodeText(new Uint8Array(buffer))));
+    });
+    input.click();
+  });
+}

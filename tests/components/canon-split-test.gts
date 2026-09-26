@@ -58,6 +58,21 @@ module('Component | canon-split', function (hooks) {
     assert.strictEqual(box('.main').left, box('.side').left);
   });
 
+  test('oneColumn stacks at every width', async function (assert) {
+    await render(
+      <template>
+        <div style={{css "width: 1000px; height: 600px"}}>
+          <CanonSplit @oneColumn={{true}}>
+            <:sidebar><div class="side">Side</div></:sidebar>
+            <:main><div class="main">Main</div></:main>
+          </CanonSplit>
+        </div>
+      </template>,
+    );
+    assert.strictEqual(layout(), 'stacked');
+    assert.true(box('.main').top > box('.side').top);
+  });
+
   test('mainLeadsStacked and halves', async function (assert) {
     await render(
       <template>

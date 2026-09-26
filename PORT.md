@@ -110,3 +110,6 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | C | CanonColourCards.swift: CanonValueLine `layout` (`beside(labelWidth)`, `above`, `wrapping`, `numbered(wraps)`), `show(_:_:fadeDelay:)` with nil as a dash, `isLit`, `tint`, `isEnabled` | canon-value-line | Changes to the colour group's port. |
 | [x] | C | CanonDecimalField.swift: CanonBigNumberField (new) | canon-big-number-field | After the controls group merges. |
 | [x] | C | CanonCanvas.swift: `Size.fitting`, `canvasFittingHeight`, `refit(animated:)`, `band(fitting:)` | canon-canvas | Height from content for the width. |
+| [x] | C2 | CanonSplit.swift: `oneColumn` (e1db1b8) | canon-split `@oneColumn` | The split's container loses its name, so the wide query never matches; the laptop pose skips it too. |
+| [x] | C2 | CanonTextFilePicker.swift (new, e1db1b8) | `pickTextFile(accept)` in `lib/files.ts`, with `decodeText` | A function, not a component: it has no view. Encoding: UTF-16 by byte order mark, else UTF-8, else Windows-1252. |
+| [ ] | C2 | CanonTextArea scroll on begin editing and keyboardDidShow; CanonCanvasContent `canvasOverscroll` (e1db1b8) | not ported | The browser scrolls a focused field into view itself. The overscroll stretch follows the iOS bounce, which a web page does not have. |

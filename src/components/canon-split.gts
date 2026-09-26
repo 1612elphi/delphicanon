@@ -7,6 +7,8 @@ import './canon-split.css';
 
 export interface CanonSplitSignature {
   Args: {
+    /** Never splits: the sections stack at every width, sidebar first. */
+    oneColumn?: boolean;
     /** Sidebar width in px beside the main pane, at most 40 % of the split. Default 340. */
     sidebarWidth?: number;
     /** In one column the banner stays at the top and the page scrolls under it. */
@@ -101,7 +103,8 @@ export default class CanonSplit extends Component<CanonSplitSignature> {
         {{if @halves 'canon-split--halves'}}
         {{if @bannerSticks 'canon-split--sticks'}}
         {{if @mainLeadsStacked 'canon-split--main-leads'}}
-        {{if @pictureMeetsCrease 'canon-split--meets-crease'}}"
+        {{if @pictureMeetsCrease 'canon-split--meets-crease'}}
+        {{if @oneColumn 'canon-split--one-column'}}"
       style={{this.style}}
       {{collapse @collapsesTo}}
       ...attributes

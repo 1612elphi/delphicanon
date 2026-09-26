@@ -14,6 +14,11 @@
   container: canon-split / size;
 }
 
+/* unnamed, so the wide container query never matches */
+.canon-split--one-column {
+  container-name: none;
+}
+
 .canon-split-body {
   --canon-split-layout: stacked;
   --canon-page-max-width: 720px;
@@ -238,9 +243,10 @@
 
 /* laptop pose: a halves picture above the crease, the page below it */
 @media (vertical-viewport-segments: 2) and (device-posture: folded) {
-  .canon-split--halves:not(:has(> .canon-split-body > .canon-split-banner)):has(
-      > .canon-split-body > .canon-split-sidebar > .canon-canvas:only-child
-    )
+  .canon-split--halves:not(
+      .canon-split--one-column,
+      :has(> .canon-split-body > .canon-split-banner)
+    ):has(> .canon-split-body > .canon-split-sidebar > .canon-canvas:only-child)
     > .canon-split-body {
     --canon-split-layout: wide;
     --canon-page-max-width: 100000px;

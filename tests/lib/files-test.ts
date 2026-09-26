@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { accepts, splitForMiddle, stem } from '#src/lib/files.ts';
+import { accepts, decodeText, splitForMiddle, stem } from '#src/lib/files.ts';
 
 const png = { name: 'Photo.PNG', type: 'image/png' };
 const wav = { name: 'take.wav', type: 'audio/wav' };
@@ -26,5 +26,25 @@ module('Unit | lib/files', function () {
       'a-long-',
       'name.wav',
     ]);
+  });
+
+  test('decodeText detects the encoding', function (assert) {
+    const utf8 = new TextEncoder().encode('Grüße');
+    assert.strictEqual(decodeText(utf8), 'Grüße', 'UTF-8');
+    assert.strictEqual(
+      decodeText(new Uint8Array([0xff, 0xfe, 0x48, 0x00, 0x69, 0x00])),
+      'Hi',
+      'UTF-16LE by its byte order mark',
+    );
+    assert.strictEqual(
+      decodeText(new Uint8Array([0xfe, 0xff, 0x00, 0x48, 0x00, 0x69])),
+      'Hi',
+      'UTF-16BE by its byte order mark',
+    );
+    assert.strictEqual(
+      decodeText(new Uint8Array([0x47, 0x72, 0xfc, 0xdf, 0x65])),
+      'Grüße',
+      'Windows-1252 when not UTF-8',
+    );
   });
 });
