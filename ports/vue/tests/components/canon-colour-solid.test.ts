@@ -120,9 +120,16 @@ test('a new space converts the pick; arrow keys turn it', async () => {
 
 test('cuts away by default, as cutsAway true', async () => {
   if (!hasWebGL2) return;
+  // the first solid leaves the prop out: Vue casts only an absent key to false
   await render(
-    `<div v-for="cuts in [undefined, true, false]" style="width: 200px; height: 200px">
-      <CanonColourSolid space="rgb" :point="[0.5, 0.5, 0.5, 0]" :cuts-away="cuts" />
+    `<div style="width: 200px; height: 200px">
+      <CanonColourSolid space="rgb" :point="[0.5, 0.5, 0.5, 0]" />
+    </div>
+    <div style="width: 200px; height: 200px">
+      <CanonColourSolid space="rgb" :point="[0.5, 0.5, 0.5, 0]" :cuts-away="true" />
+    </div>
+    <div style="width: 200px; height: 200px">
+      <CanonColourSolid space="rgb" :point="[0.5, 0.5, 0.5, 0]" :cuts-away="false" />
     </div>`,
     { CanonColourSolid },
   );
