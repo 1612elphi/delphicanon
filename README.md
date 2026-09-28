@@ -27,6 +27,10 @@ ember install delphicanon
 > - Return value
 > - Example usage
 
+## Framework ports
+
+`ports/react`, `ports/vue` and `ports/svelte` are distributed as shadcn-compatible registries; see [registry/README.md](registry/README.md) for the install command per framework and how to build and serve the registry.
+
 ## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
