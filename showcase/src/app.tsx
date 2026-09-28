@@ -20,7 +20,7 @@ const cli: Record<Framework, string> = {
 };
 
 const base = (
-  import.meta.env.VITE_REGISTRY_BASE || 'http://localhost:4330'
+  import.meta.env.CANON_REGISTRY_URL || 'http://localhost:4330'
 ).replace(/\/+$/, '');
 
 const command = (framework: Framework, name: string) =>

@@ -6,6 +6,7 @@ const path = (relative: string) =>
   fileURLToPath(new URL(relative, import.meta.url));
 
 export default defineConfig({
+  envPrefix: ['VITE_', 'CANON_'],
   base: './',
   // one tsconfig for ../src too; the root one extends @ember/app-tsconfig, absent without a root install
   tsconfig: './tsconfig.json',
