@@ -1,0 +1,122 @@
+.canon-window {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background: var(--canon-background);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+}
+
+.canon-window--framed {
+  border: var(--canon-frame) solid var(--canon-border);
+}
+
+.canon-window-bar,
+.canon-window-menubar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  border-block-end: var(--canon-hairline) solid var(--canon-border);
+  background: var(--canon-muted);
+}
+
+.canon-window-bar {
+  gap: var(--canon-panel-spacing);
+  min-block-size: var(--canon-row-height);
+  padding-inline: var(--canon-panel-spacing);
+}
+
+.canon-window-controls {
+  display: flex;
+  flex: none;
+}
+
+.canon-window-control {
+  --canon-window-light: var(--canon-window-close);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 24px;
+  block-size: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+}
+
+.canon-window-control::before {
+  content: "";
+  inline-size: 12px;
+  block-size: 12px;
+  background: var(--canon-window-light);
+}
+
+.canon-window-control--minimise {
+  --canon-window-light: var(--canon-window-minimise);
+}
+
+.canon-window-control--zoom {
+  --canon-window-light: var(--canon-window-zoom);
+}
+
+@media (hover: hover) {
+  .canon-window-control:hover:enabled::before {
+    background: color-mix(
+      in srgb,
+      var(--canon-window-light),
+      var(--canon-foreground) 25%
+    );
+  }
+}
+
+.canon-window-control:disabled {
+  cursor: default;
+}
+
+.canon-window-control:disabled::before {
+  background: var(--canon-border);
+}
+
+.canon-window-control:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: -2px;
+}
+
+.canon-window-title {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  font-size: var(--canon-text-subheadline);
+  font-weight: var(--canon-weight-semibold);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.canon-window-toolbar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--canon-frame);
+}
+
+.canon-window-body {
+  display: flex;
+  flex: 1;
+  min-block-size: 0;
+  container: canon-window / inline-size;
+}
+
+.canon-window-main {
+  display: grid;
+  flex: 1;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  min-inline-size: 0;
+  overflow: hidden;
+}
