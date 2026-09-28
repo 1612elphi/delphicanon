@@ -156,7 +156,7 @@ const state = new SolidState(
 );
 
 const label = computed(() => spaceNames[props.space ?? 'hsl']);
-const rootRef = useTemplateRef<HTMLDivElement>('root');
+const rootRef = useTemplateRef<HTMLDivElement>('rootElement');
 
 let root: HTMLDivElement | undefined;
 let renderer: Renderer | undefined;
@@ -384,7 +384,7 @@ function key(e: KeyboardEvent) {
 -->
 <template>
   <div
-    ref="root"
+    ref="rootElement"
     class="canon-colour-solid"
     tabindex="0"
     role="group"

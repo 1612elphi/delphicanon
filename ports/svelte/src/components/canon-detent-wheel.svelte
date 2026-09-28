@@ -287,7 +287,7 @@
 
   onDestroy(() => {
     stop();
-    window.clearTimeout(wheelTimer);
+    clearTimeout(wheelTimer);
   });
 </script>
 

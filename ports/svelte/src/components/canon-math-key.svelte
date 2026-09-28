@@ -142,7 +142,7 @@
     };
   };
 
-  onDestroy(() => window.clearTimeout(timer));
+  onDestroy(() => clearTimeout(timer));
 </script>
 
 <!--

@@ -7,10 +7,12 @@ export class MathEditing {
   /** The next layout morphs: true after a key, false after the caret is placed by pointer. */
   animates = false;
 
-  constructor(
-    public expression: Expression,
-    public onChange?: (text: string) => void,
-  ) {
+  expression: Expression;
+  onChange?: (text: string) => void;
+
+  constructor(expression: Expression, onChange?: (text: string) => void) {
+    this.expression = expression;
+    this.onChange = onChange;
     // private fields do not survive a reactive proxy
     markRaw(this);
   }

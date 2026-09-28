@@ -141,8 +141,8 @@
   };
 
   onDestroy(() => {
-    window.clearTimeout(flashTimer);
-    window.clearTimeout(holdTimer);
+    clearTimeout(flashTimer);
+    clearTimeout(holdTimer);
   });
 </script>
 

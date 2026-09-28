@@ -26,15 +26,27 @@ export function linearAt(p: Vec3, space: Space): Vec3 {
 
 /** The solid in its box, x y z each -1...1, y up. Mirrors the fragment shader: change both together. */
 export class Geometry {
+  readonly space: Space;
+  /** Channels along x y z. */
+  readonly pick: Vec3;
+  readonly cut: Vec4;
+  readonly slice: number | null;
+  /** CMYK's black; 0 in every other space. */
+  readonly black: number;
+
   constructor(
-    readonly space: Space,
-    /** Channels along x y z. */
-    readonly pick: Vec3,
-    readonly cut: Vec4 = [0, 0, 0, 0],
-    readonly slice: number | null = null,
-    /** CMYK's black; 0 in every other space. */
-    readonly black = 0,
-  ) {}
+    space: Space,
+    pick: Vec3,
+    cut: Vec4 = [0, 0, 0, 0],
+    slice: number | null = null,
+    black = 0,
+  ) {
+    this.space = space;
+    this.pick = pick;
+    this.cut = cut;
+    this.slice = slice;
+    this.black = black;
+  }
 
   /** Half-size of the box. */
   get size() {
@@ -179,11 +191,15 @@ export function march(
  * Mirrors `unrolledHit` in the fragment shader: change both together.
  */
 export class Sheet {
-  constructor(
-    readonly radius: number,
-    readonly facing: number,
-    readonly bend: number,
-  ) {}
+  readonly radius: number;
+  readonly facing: number;
+  readonly bend: number;
+
+  constructor(radius: number, facing: number, bend: number) {
+    this.radius = radius;
+    this.facing = facing;
+    this.bend = bend;
+  }
 
   get normal(): Vec3 {
     return [Math.cos(this.facing), 0, Math.sin(this.facing)];

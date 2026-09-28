@@ -293,7 +293,7 @@
   }
 
   function cancelPress() {
-    window.clearTimeout(pressTimer);
+    clearTimeout(pressTimer);
   }
 
   const longPress: Attachment<HTMLElement> = (button) => {

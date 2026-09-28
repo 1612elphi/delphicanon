@@ -45,7 +45,7 @@
 
   onDestroy(() => {
     destroyed = true;
-    window.clearTimeout(timer);
+    clearTimeout(timer);
   });
 </script>
 

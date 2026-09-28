@@ -11,7 +11,11 @@ import { Box, type Caret, type Typesetter } from './typeset.ts';
 
 /** A run of items in an edited expression; some items hold rows of their own, their slots. */
 export class Row {
-  constructor(public items: Item[] = []) {}
+  items: Item[];
+
+  constructor(items: Item[] = []) {
+    this.items = items;
+  }
 }
 
 export type Item =
@@ -193,12 +197,11 @@ function startsOperand(item: Item) {
 export class Expression {
   root: Row;
   caret: { row: Row; index: number };
+  /** The variable of derivatives, integrals and limits. */
+  variable: string;
 
-  /** `variable` is the variable of derivatives, integrals and limits. */
-  constructor(
-    text = '',
-    public variable = 'x',
-  ) {
+  constructor(text = '', variable = 'x') {
+    this.variable = variable;
     this.root = new Row(items(text));
     this.caret = { row: this.root, index: this.root.items.length };
   }

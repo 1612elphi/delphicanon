@@ -9,10 +9,13 @@ export class MathEditing {
   animates = false;
   #listeners = new Set<() => void>();
 
-  constructor(
-    public expression: Expression,
-    public onChange?: (text: string) => void,
-  ) {}
+  expression: Expression;
+  onChange?: (text: string) => void;
+
+  constructor(expression: Expression, onChange?: (text: string) => void) {
+    this.expression = expression;
+    this.onChange = onChange;
+  }
 
   subscribe = (listener: () => void) => {
     this.#listeners.add(listener);

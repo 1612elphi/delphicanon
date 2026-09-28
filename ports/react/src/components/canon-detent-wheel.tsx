@@ -79,11 +79,16 @@ class Turning {
   drag = { startY: 0, lastY: 0, travel: 0, samples: [] as [number, number][] };
   wheelTimer?: number;
 
+  readonly props: RefObject<WheelProps>;
+  readonly show: (position: number, selected: number) => void;
+
   constructor(
     selected: number,
-    readonly props: RefObject<WheelProps>,
-    readonly show: (position: number, selected: number) => void,
+    props: RefObject<WheelProps>,
+    show: (position: number, selected: number) => void,
   ) {
+    this.props = props;
+    this.show = show;
     this.count = props.current.count;
     this.asked = selected;
     this.selected = selected;

@@ -57,7 +57,7 @@
   let fails = $state(false);
   let typing: number | undefined;
   let focused = false;
-  const hasEyedropper = 'EyeDropper' in window;
+  const hasEyedropper = typeof window !== 'undefined' && 'EyeDropper' in window;
 
   const shown = $derived(text ?? (colour ? hex(colour) : ''));
   const value = $derived(
@@ -104,7 +104,7 @@
     }
   }
 
-  onDestroy(() => window.clearTimeout(typing));
+  onDestroy(() => clearTimeout(typing));
 </script>
 
 <!--

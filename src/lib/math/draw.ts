@@ -158,7 +158,11 @@ export class MathMorph {
   #leaving: Shown[] = [];
   #easing = morphEasing();
 
-  constructor(private group: SVGGElement) {}
+  private group: SVGGElement;
+
+  constructor(group: SVGGElement) {
+    this.group = group;
+  }
 
   /** Renames the shown atoms, so the next `show` moves them to where their new keys are. */
   rename(transform: (key: string) => string): void {

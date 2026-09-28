@@ -69,5 +69,8 @@ export const fineTiers = [
 ] as const;
 
 export function dragSpeed(distance: number): number {
-  return fineTiers.findLast((tier) => distance >= tier.distance)?.speed ?? 1;
+  return (
+    [...fineTiers].reverse().find((tier) => distance >= tier.distance)?.speed ??
+    1
+  );
 }

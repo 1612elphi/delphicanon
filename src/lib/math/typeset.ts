@@ -56,13 +56,14 @@ export interface Metrics {
 export class Box {
   atoms: Atom[] = [];
   carets: Caret[] = [];
+  width: number;
+  ascent: number;
+  descent: number;
 
-  constructor(
-    public width = 0,
-    public ascent = 0,
-    public descent = 0,
-    atoms: Atom[] = [],
-  ) {
+  constructor(width = 0, ascent = 0, descent = 0, atoms: Atom[] = []) {
+    this.width = width;
+    this.ascent = ascent;
+    this.descent = descent;
     this.atoms = atoms;
   }
 
@@ -158,11 +159,15 @@ function italicSymbol(node: Node): boolean {
  * 1 text (a fraction's parts, same size), 2 script, 3 script-script.
  */
 export class Typesetter {
-  constructor(
-    public metrics: Metrics,
-    public size: number,
-    public ink: Ink = 'result',
-  ) {}
+  metrics: Metrics;
+  size: number;
+  ink: Ink;
+
+  constructor(metrics: Metrics, size: number, ink: Ink = 'result') {
+    this.metrics = metrics;
+    this.size = size;
+    this.ink = ink;
+  }
 
   points(level: number): number {
     return this.size * [1, 1, 0.7, 0.55][Math.min(level, 3)]!;

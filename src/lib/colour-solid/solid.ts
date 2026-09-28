@@ -149,11 +149,10 @@ export class SolidState {
   private ghost = ghostOpacity;
   private spin: [number, number] = [0, 0];
 
-  constructor(
-    space: Space,
-    point: Vec4,
-    private redraw: () => void,
-  ) {
+  private redraw: () => void;
+
+  constructor(space: Space, point: Vec4, redraw: () => void) {
+    this.redraw = redraw;
     this.space = space;
     this.point = [...point];
     this.shown = [...point];

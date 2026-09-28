@@ -23,7 +23,10 @@ function measure(text: string, italic: boolean, size: number) {
   if (hit) return hit;
   // ponytail: unbounded cache cleared wholesale; typing makes a few hundred entries at most
   if (cache.size > 2000) cache.clear();
-  context ??= document.createElement('canvas').getContext('2d');
+  context ??=
+    typeof document === 'undefined'
+      ? null
+      : document.createElement('canvas').getContext('2d');
   let result = {
     width: text.length * size * 0.5,
     ascent: size * 0.7,

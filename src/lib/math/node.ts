@@ -177,7 +177,11 @@ function tokenise(text: string): Token[] {
 
 class Parser {
   at = 0;
-  constructor(private tokens: Token[]) {}
+  private tokens: Token[];
+
+  constructor(tokens: Token[]) {
+    this.tokens = tokens;
+  }
 
   private get peek(): Token | undefined {
     return this.tokens[this.at];

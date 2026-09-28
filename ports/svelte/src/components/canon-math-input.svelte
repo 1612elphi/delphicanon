@@ -72,7 +72,8 @@
 
   let large = $state(false);
   let pane = $state<{ left: number; width: number }>();
-  const short = window.innerHeight < shortWindow;
+  const short =
+    typeof window !== 'undefined' && window.innerHeight < shortWindow;
   let finished = false;
   let dialogElement: HTMLDialogElement | undefined;
 

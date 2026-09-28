@@ -94,7 +94,7 @@
     draft = undefined;
   }
 
-  onDestroy(() => window.clearTimeout(typing));
+  onDestroy(() => clearTimeout(typing));
 </script>
 
 <!-- @component A decimal number with step buttons and a unit; seconds by default. -->

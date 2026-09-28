@@ -21,7 +21,6 @@ Files go to `<components alias>/canon/`: components and their CSS in `canon/`, l
 - The `@font-face` rules for the first family of `--canon-font` ("iA Writer Quattro") and, for `canon-timecode`, of `--canon-segment-font` ("FluoWrite"), both in `tokens.css`. Without them the text falls back to the system monospace fonts in the same lists.
 - The framework (`react` and `react-dom`, `vue`, or `svelte`). Items list no npm dependencies.
 - Next.js: the App Router. Components import their CSS, which the Pages Router rejects outside `_app`. React component files start with `'use client'`. Where `rsc` is false, shadcn 4.21 removes it from about half of the files (its directive pattern carries the `g` flag, so `test` alternates); Vite builds the rest without a warning.
-- TypeScript: `lib` with ES2023 or later (`Array.prototype.findLast`), and `erasableSyntaxOnly` off (the shared maths and colour solid code has constructor parameter properties).
 
 ## Build and serve
 
