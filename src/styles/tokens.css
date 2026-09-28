@@ -100,6 +100,15 @@
   --canon-text-big-number: 32px;
   --canon-value-line-fade: 250ms;
   --canon-canvas-refit: 300ms;
+
+  /* command group */
+  --canon-dialog-width: 480px;
+  --canon-sheet-width: 360px;
+  --canon-dialog-backdrop: rgb(0 0 0 / 35%);
+  --canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 18%);
+  --canon-command-list-height: 360px;
+  --canon-command-icon: 24px;
+  --canon-key-cap: 22px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -145,6 +154,10 @@
     --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
     --canon-loupe-ink-dark: black;
     --canon-loupe-ink-light: white;
+
+    /* command group */
+    --canon-dialog-backdrop: rgb(0 0 0 / 55%);
+    --canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 45%);
   }
 }
 
@@ -190,4 +203,8 @@ html.dark {
   --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
   --canon-loupe-ink-dark: black;
   --canon-loupe-ink-light: white;
+
+  /* command group */
+  --canon-dialog-backdrop: rgb(0 0 0 / 55%);
+  --canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 45%);
 }

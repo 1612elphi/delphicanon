@@ -1,0 +1,78 @@
+.canon-dialog {
+  box-sizing: border-box;
+  inline-size: var(--canon-dialog-width);
+  max-inline-size: calc(100% - 2 * var(--canon-panel-padding));
+  max-block-size: calc(100% - 2 * var(--canon-panel-padding));
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: var(--canon-background);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  box-shadow: var(--canon-dialog-shadow);
+}
+
+.canon-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.canon-dialog:focus {
+  outline: none;
+}
+
+.canon-dialog::backdrop {
+  background: var(--canon-dialog-backdrop);
+}
+
+.canon-dialog-rows {
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+.canon-dialog-title {
+  flex: none;
+  padding-block: 12px;
+  color: var(--canon-foreground);
+  font-size: var(--canon-text-body);
+}
+
+.canon-dialog-header {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--canon-hairline);
+}
+
+.canon-dialog-message {
+  flex: none;
+  margin: 0;
+  padding: var(--canon-panel-padding);
+  background: var(--canon-card);
+  color: var(--canon-secondary-foreground);
+  font-size: var(--canon-text-subheadline);
+  line-height: 1.45;
+}
+
+.canon-dialog-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--canon-hairline);
+  min-block-size: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.canon-dialog-footer {
+  flex: none;
+}
+
+/* fills tall sheet bodies */
+.canon-dialog-body::after {
+  flex: 1 1 auto;
+  background: var(--canon-background);
+  content: "";
+}
