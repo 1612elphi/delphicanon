@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import type { TOC } from '@ember/component/template-only';
 import { array, fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
@@ -19,9 +20,16 @@ import CanonColourNotationInput from '#src/components/canon-colour-notation-inpu
 import CanonColourSolid from '#src/components/canon-colour-solid.gts';
 import CanonColourStrip from '#src/components/canon-colour-strip.gts';
 import CanonColourWell from '#src/components/canon-colour-well.gts';
+import CanonCommand, {
+  type CanonCommandItem,
+} from '#src/components/canon-command.gts';
+import CanonContextMenu from '#src/components/canon-context-menu.gts';
 import CanonDecimalField from '#src/components/canon-decimal-field.gts';
 import CanonDetentWheel from '#src/components/canon-detent-wheel.gts';
 import CanonDetentWheelRow from '#src/components/canon-detent-wheel-row.gts';
+import CanonDialog, {
+  type CanonDialogClose,
+} from '#src/components/canon-dialog.gts';
 import CanonDropZone from '#src/components/canon-drop-zone.gts';
 import CanonDualList, {
   type CanonDualItem,
@@ -48,6 +56,13 @@ import CanonMathKeypad from '#src/components/canon-math-keypad.gts';
 import CanonMathRail from '#src/components/canon-math-rail.gts';
 import CanonMathTabs from '#src/components/canon-math-tabs.gts';
 import CanonMathView from '#src/components/canon-math-view.gts';
+import CanonMenu, {
+  type CanonMenuEntry,
+  type CanonMenuItem,
+} from '#src/components/canon-menu.gts';
+import CanonMenuBar, {
+  type CanonMenuBarMenu,
+} from '#src/components/canon-menu-bar.gts';
 import CanonMenuCell from '#src/components/canon-menu-cell.gts';
 import CanonNumberField from '#src/components/canon-number-field.gts';
 import CanonPage from '#src/components/canon-page.gts';
@@ -56,12 +71,20 @@ import CanonPageStrip, {
   type CanonPage as CanonPageItem,
 } from '#src/components/canon-page-strip.gts';
 import CanonPaletteCard from '#src/components/canon-palette-card.gts';
+import CanonPopover from '#src/components/canon-popover.gts';
 import CanonPreviewPanel from '#src/components/canon-preview-panel.gts';
 import CanonReadoutBand from '#src/components/canon-readout-band.gts';
 import CanonRow from '#src/components/canon-row.gts';
 import CanonRows from '#src/components/canon-rows.gts';
 import CanonRule from '#src/components/canon-rule.gts';
 import CanonSegmented from '#src/components/canon-segmented.gts';
+import CanonSheet, {
+  type CanonSheetEdge,
+} from '#src/components/canon-sheet.gts';
+import CanonSidebar from '#src/components/canon-sidebar.gts';
+import CanonSidebarRow, {
+  type CanonSidebarLight,
+} from '#src/components/canon-sidebar-row.gts';
 import CanonSlider from '#src/components/canon-slider.gts';
 import CanonSplit from '#src/components/canon-split.gts';
 import CanonStatus from '#src/components/canon-status.gts';
@@ -74,27 +97,52 @@ import CanonTextInput from '#src/components/canon-text-input.gts';
 import CanonTextOutput from '#src/components/canon-text-output.gts';
 import CanonTiles from '#src/components/canon-tiles.gts';
 import CanonTimecode from '#src/components/canon-timecode.gts';
+import CanonTooltip from '#src/components/canon-tooltip.gts';
 import CanonValueLine from '#src/components/canon-value-line.gts';
+import CanonWindow from '#src/components/canon-window.gts';
 import { hex, parseHex, type Rgb } from '#src/lib/colour.ts';
 import { solidSpaces, spaceNames } from '#src/lib/colour-space.ts';
 import type { GlyphKind } from '#src/lib/glyph-rows.ts';
 import { frame } from '#src/lib/loupe.ts';
+import type { CanonPlacement } from '#src/lib/popover.ts';
 import { MathEditing } from '#src/lib/math/editing.ts';
 import { Expression, type Key } from '#src/lib/math/expression.ts';
 import type CanonToastService from '#src/services/canon-toast.ts';
 import GalleryArt from '../../demo-app/components/gallery-art.gts';
 import Icon from '../../demo-app/components/icon.gts';
+import aperture from 'lucide-static/icons/aperture.svg?raw';
+import blend from 'lucide-static/icons/blend.svg?raw';
 import bug from 'lucide-static/icons/bug.svg?raw';
+import camera from 'lucide-static/icons/camera.svg?raw';
+import caseSensitive from 'lucide-static/icons/case-sensitive.svg?raw';
+import chevronDown from 'lucide-static/icons/chevron-down.svg?raw';
 import circleDot from 'lucide-static/icons/circle-dot.svg?raw';
+import clipboard from 'lucide-static/icons/clipboard.svg?raw';
+import clipboardPaste from 'lucide-static/icons/clipboard-paste.svg?raw';
+import commandKey from 'lucide-static/icons/command.svg?raw';
+import contrast from 'lucide-static/icons/contrast.svg?raw';
 import copy from 'lucide-static/icons/copy.svg?raw';
 import file from 'lucide-static/icons/file.svg?raw';
+import hashSvg from 'lucide-static/icons/hash.svg?raw';
+import keyboard from 'lucide-static/icons/keyboard.svg?raw';
 import messageSquareCheck from 'lucide-static/icons/message-square-check.svg?raw';
 import moveHorizontal from 'lucide-static/icons/move-horizontal.svg?raw';
+import palette from 'lucide-static/icons/palette.svg?raw';
+import panelBottom from 'lucide-static/icons/panel-bottom.svg?raw';
+import panelLeft from 'lucide-static/icons/panel-left.svg?raw';
+import panelRight from 'lucide-static/icons/panel-right.svg?raw';
+import panelTop from 'lucide-static/icons/panel-top.svg?raw';
+import pencil from 'lucide-static/icons/pencil.svg?raw';
 import play from 'lucide-static/icons/play.svg?raw';
 import repeat from 'lucide-static/icons/repeat.svg?raw';
 import rotateCw from 'lucide-static/icons/rotate-cw.svg?raw';
+import ruler from 'lucide-static/icons/ruler.svg?raw';
+import settings from 'lucide-static/icons/settings.svg?raw';
 import share from 'lucide-static/icons/share.svg?raw';
 import square from 'lucide-static/icons/square.svg?raw';
+import textSvg from 'lucide-static/icons/text.svg?raw';
+import trash from 'lucide-static/icons/trash-2.svg?raw';
+import wrench from 'lucide-static/icons/wrench.svg?raw';
 import zoomIn from 'lucide-static/icons/zoom-in.svg?raw';
 import zoomOut from 'lucide-static/icons/zoom-out.svg?raw';
 
@@ -102,6 +150,16 @@ import zoomOut from 'lucide-static/icons/zoom-out.svg?raw';
 //   spec: invites dropping a file onto the area; four to six words, sentence case, no period
 //   sample: "Drop an image here"
 const dropPrompt = '∑CG';
+
+// ∑CG: showcase, the message of the export dialog under its title
+//   spec: one sentence saying the palette is saved as a file in the chosen format; up to 90 chars, plain, sentence case
+//   sample: "The palette is saved as one file in the format you pick."
+const exportMessage = '∑CG';
+
+// ∑CG: showcase, the message of the delete alert under its title
+//   spec: one sentence warning that deleting the palette cannot be undone; up to 70 chars, plain, sentence case
+//   sample: "This palette and its swatches go for good."
+const deleteMessage = '∑CG';
 
 const hexes = (codes: string[]): Rgb[] => codes.map((code) => parseHex(code)!);
 const forest: Rgb = [0.118, 0.4, 0.149];
@@ -1020,6 +1078,685 @@ const ValueLines = <template>
   />
 </template>;
 
+const eq = (a: string, b: string) => a === b;
+
+const commandItems: CanonCommandItem[] = [
+  {
+    id: 'contrast',
+    title: 'Contrast checker',
+    group: 'Colour',
+    keywords: ['wcag', 'apca'],
+    icon: <template><Icon @svg={{contrast}} /></template>,
+  },
+  {
+    id: 'shades',
+    title: 'Tailwind shades',
+    group: 'Colour',
+    keywords: ['palette', 'scale'],
+    icon: <template><Icon @svg={{palette}} /></template>,
+  },
+  {
+    id: 'harmony',
+    title: 'Harmony genny',
+    group: 'Colour',
+    keywords: ['complementary', 'triad'],
+    icon: <template><Icon @svg={{blend}} /></template>,
+  },
+  {
+    id: 'case',
+    title: 'Case converter',
+    group: 'Text',
+    keywords: ['upper', 'lower', 'title'],
+    icon: <template><Icon @svg={{caseSensitive}} /></template>,
+  },
+  {
+    id: 'count',
+    title: 'Word counter',
+    group: 'Text',
+    detail: 'Text › Analysis',
+    icon: <template><Icon @svg={{textSvg}} /></template>,
+  },
+  {
+    id: 'hash',
+    title: 'Hash generator',
+    group: 'Text',
+    keywords: ['sha', 'md5'],
+    icon: <template><Icon @svg={{hashSvg}} /></template>,
+  },
+  {
+    id: 'copy',
+    title: 'Copy',
+    group: 'Actions',
+    shortcut: ['⌘', 'C'],
+    icon: <template><Icon @svg={{copy}} /></template>,
+  },
+  {
+    id: 'paste',
+    title: 'Paste',
+    group: 'Actions',
+    shortcut: ['⌘', 'V'],
+    disabled: true,
+    icon: <template><Icon @svg={{clipboardPaste}} /></template>,
+  },
+  {
+    id: 'delete',
+    title: 'Delete palette',
+    group: 'Actions',
+    shortcut: ['⌘', '⌫'],
+    icon: <template><Icon @svg={{trash}} /></template>,
+  },
+];
+
+const rulerIcon = <template><Icon @svg={{ruler}} /></template>;
+const commandIcon = <template><Icon @svg={{commandKey}} /></template>;
+const pxPer: Record<string, number> = {
+  px: 1,
+  pt: 96 / 72,
+  mm: 96 / 25.4,
+  in: 96,
+};
+
+/** The Omnibox units answer, for lengths only: "12 pt" answers in the other units. */
+function answers(query: string): CanonCommandItem[] {
+  const match = /^(-?\d+(?:\.\d+)?)\s*(px|pt|mm|in)$/i.exec(query.trim());
+  if (!match) return [];
+  const unit = match[2]!.toLowerCase();
+  const px = Number(match[1]) * pxPer[unit]!;
+  const title = Object.keys(pxPer)
+    .filter((other) => other !== unit)
+    .map((other) => `${+(px / pxPer[other]!).toFixed(2)} ${other}`)
+    .join(' · ');
+  return [
+    {
+      id: 'answer',
+      title,
+      detail: query.trim(),
+      answer: true,
+      icon: rulerIcon,
+    },
+  ];
+}
+
+const paletteStyle = htmlSafe('--canon-dialog-width: 640px');
+
+class Command extends Component {
+  @tracked query = '';
+  @tracked paletteQuery = '';
+  @tracked picked = '';
+  @tracked open = false;
+
+  get items() {
+    return [...answers(this.query), ...commandItems];
+  }
+
+  get paletteItems() {
+    return [...answers(this.paletteQuery), ...commandItems];
+  }
+
+  setQuery = (query: string) => (this.query = query);
+  setPaletteQuery = (query: string) => (this.paletteQuery = query);
+  select = (item: CanonCommandItem) => (this.picked = item.title);
+  run = (close: CanonDialogClose, item: CanonCommandItem) => {
+    this.picked = item.title;
+    close(item.id);
+  };
+  show = () => (this.open = true);
+  close = () => {
+    this.open = false;
+    this.paletteQuery = '';
+  };
+
+  <template>
+    <CanonCommand
+      @items={{this.items}}
+      @placeholder="Search tools"
+      @onSelect={{this.select}}
+      @onQuery={{this.setQuery}}
+    />
+    <CanonRow @title="Picked" @detail={{if this.picked this.picked "—"}} />
+    <CanonRow @title="Palette" @form="flush">
+      <CanonButton
+        @kind="cell"
+        @text="Open"
+        @icon={{commandIcon}}
+        @onClick={{this.show}}
+      />
+    </CanonRow>
+    <CanonDialog
+      @open={{this.open}}
+      @onClose={{this.close}}
+      aria-label="Command palette"
+      style={{paletteStyle}}
+    >
+      <:default as |close|>
+        <CanonCommand
+          @items={{this.paletteItems}}
+          @placeholder="Search tools"
+          @onSelect={{fn this.run close}}
+          @onQuery={{this.setPaletteQuery}}
+        />
+      </:default>
+    </CanonDialog>
+  </template>
+}
+
+const formats = ['ASE', 'GPL', 'JSON'];
+const units = ['px', 'pt', 'mm'];
+
+class Dialog extends Component {
+  @tracked dialog = false;
+  @tracked alert = false;
+  @tracked returned = '';
+
+  openDialog = () => (this.dialog = true);
+  openAlert = () => (this.alert = true);
+  closeDialog = (value: string) => {
+    this.dialog = false;
+    this.returned = value;
+  };
+  closeAlert = (value: string) => {
+    this.alert = false;
+    this.returned = value;
+  };
+
+  <template>
+    <CanonGrid>
+      <CanonButton @text="Dialog" @onClick={{this.openDialog}} />
+      <CanonButton @text="Alert" @onClick={{this.openAlert}} />
+    </CanonGrid>
+    <CanonRow
+      @title="Returned"
+      @detail={{if this.returned this.returned "—"}}
+    />
+    <CanonDialog
+      @open={{this.dialog}}
+      @title="Export palette"
+      @message={{exportMessage}}
+      @onClose={{this.closeDialog}}
+    >
+      <:default>
+        <CanonRow @title="Format" @form="stacked" as |titleId|>
+          <CanonSegmented @items={{formats}} aria-labelledby={{titleId}} />
+        </CanonRow>
+        <CanonRow @title="Include names" as |titleId|>
+          <CanonSwitch @on={{true}} aria-labelledby={{titleId}} />
+        </CanonRow>
+      </:default>
+      <:footer as |close|>
+        <CanonButton @text="Cancel" @onClick={{fn close "cancel"}} />
+        <CanonButton
+          @text="Export"
+          @selected={{true}}
+          @onClick={{fn close "export"}}
+        />
+      </:footer>
+    </CanonDialog>
+    <CanonDialog
+      @open={{this.alert}}
+      @alert={{true}}
+      @title="Delete palette?"
+      @message={{deleteMessage}}
+      @onClose={{this.closeAlert}}
+    >
+      <:footer as |close|>
+        <CanonButton @text="Cancel" @onClick={{fn close "cancel"}} />
+        <CanonButton
+          @text="Delete"
+          @selected={{true}}
+          @onClick={{fn close "delete"}}
+        />
+      </:footer>
+    </CanonDialog>
+  </template>
+}
+
+const sheetEdges: { edge: CanonSheetEdge; title: string; svg: string }[] = [
+  { edge: 'bottom', title: 'Bottom', svg: panelBottom },
+  { edge: 'top', title: 'Top', svg: panelTop },
+  { edge: 'start', title: 'Start', svg: panelLeft },
+  { edge: 'end', title: 'End', svg: panelRight },
+];
+
+class Sheet extends Component {
+  @tracked sheet?: CanonSheetEdge;
+
+  show = (edge: CanonSheetEdge) => (this.sheet = edge);
+  close = () => (this.sheet = undefined);
+  isOpen = (edge: CanonSheetEdge) => this.sheet === edge;
+
+  <template>
+    <CanonGrid>
+      {{#each sheetEdges as |e|}}
+        <CanonButton
+          @text={{e.title}}
+          @icon={{component Icon svg=e.svg}}
+          @onClick={{fn this.show e.edge}}
+        />
+      {{/each}}
+    </CanonGrid>
+    {{#each sheetEdges as |e|}}
+      <CanonSheet
+        @open={{this.isOpen e.edge}}
+        @edge={{e.edge}}
+        @title={{e.title}}
+        @onClose={{this.close}}
+      >
+        <:default>
+          <CanonRow @title="Snap to grid" as |titleId|>
+            <CanonSwitch @on={{true}} aria-labelledby={{titleId}} />
+          </CanonRow>
+          <CanonRow @title="Show rulers" as |titleId|>
+            <CanonSwitch aria-labelledby={{titleId}} />
+          </CanonRow>
+          <CanonRow @title="Units" @form="stacked" as |titleId|>
+            <CanonSegmented @items={{units}} aria-labelledby={{titleId}} />
+          </CanonRow>
+        </:default>
+        <:footer as |close|>
+          <CanonButton @text="Done" @onClick={{fn close ""}} />
+        </:footer>
+      </CanonSheet>
+    {{/each}}
+  </template>
+}
+
+const CopyIcon = <template><Icon @svg={{copy}} /></template>;
+const PencilIcon = <template><Icon @svg={{pencil}} /></template>;
+const ShareIcon = <template><Icon @svg={{share}} /></template>;
+const TrashIcon = <template><Icon @svg={{trash}} /></template>;
+const separator = { kind: 'separator' } as const;
+const menuSizes = ['Small', 'Medium', 'Large'];
+
+class MenuState extends Component {
+  @tracked chosen = '—';
+  @tracked grid = true;
+  @tracked snap = false;
+  @tracked rulers = false;
+  @tracked size = 'Medium';
+
+  get items(): CanonMenuEntry[] {
+    return [
+      { title: 'Duplicate', icon: CopyIcon, shortcut: '⌘D' },
+      { title: 'Rename…', icon: PencilIcon },
+      {
+        title: 'Share',
+        icon: ShareIcon,
+        items: [
+          { title: 'Copy link' },
+          { title: 'Email' },
+          { title: 'Messages' },
+        ],
+      },
+      separator,
+      { title: 'Grid', kind: 'checkbox', checked: this.grid, shortcut: "⌘'" },
+      { title: 'Snap', kind: 'checkbox', checked: this.snap },
+      separator,
+      ...menuSizes.map((title) => ({
+        title,
+        kind: 'radio' as const,
+        checked: this.size === title,
+      })),
+      separator,
+      { title: 'Rasterise', disabled: true },
+      { title: 'Delete', icon: TrashIcon, destructive: true, shortcut: '⌫' },
+    ];
+  }
+
+  get menus(): CanonMenuBarMenu[] {
+    return [
+      {
+        title: 'File',
+        items: [
+          { title: 'New', shortcut: '⌘N' },
+          { title: 'Open…', shortcut: '⌘O' },
+          {
+            title: 'Open recent',
+            items: [{ title: 'Poster.pdf' }, { title: 'Letter.pdf' }],
+          },
+          separator,
+          { title: 'Close', shortcut: '⌘W' },
+        ],
+      },
+      {
+        title: 'Edit',
+        items: [
+          { title: 'Undo', shortcut: '⌘Z' },
+          { title: 'Redo', shortcut: '⇧⌘Z', disabled: true },
+          separator,
+          { title: 'Cut', shortcut: '⌘X' },
+          { title: 'Copy', shortcut: '⌘C' },
+          { title: 'Paste', shortcut: '⌘V' },
+        ],
+      },
+      {
+        title: 'View',
+        items: [
+          { title: 'Grid', kind: 'checkbox', checked: this.grid },
+          { title: 'Rulers', kind: 'checkbox', checked: this.rulers },
+          separator,
+          {
+            title: 'Zoom',
+            items: [
+              { title: 'Zoom in', shortcut: '⌘+' },
+              { title: 'Zoom out', shortcut: '⌘−' },
+              { title: 'Fit', shortcut: '⌘0' },
+            ],
+          },
+        ],
+      },
+      { title: 'Help', items: [{ title: 'About' }] },
+    ];
+  }
+
+  choose = (item: CanonMenuItem) => {
+    this.chosen = item.title;
+    if (item.title === 'Grid') this.grid = !this.grid;
+    if (item.title === 'Snap') this.snap = !this.snap;
+    if (item.title === 'Rulers') this.rulers = !this.rulers;
+    if (item.kind === 'radio') this.size = item.title;
+  };
+}
+
+class Menu extends MenuState {
+  <template>
+    <CanonRow @title="Dropdown" @form="flush">
+      <CanonMenu @items={{this.items}} @onSelect={{this.choose}} as |menu|>
+        <CanonButton
+          {{menu.trigger}}
+          @kind="cell"
+          @text="Actions"
+          @icon={{component Icon svg=chevronDown}}
+        />
+      </CanonMenu>
+    </CanonRow>
+    <CanonRow @title="Chosen" @detail={{this.chosen}} />
+  </template>
+}
+
+class ContextMenu extends MenuState {
+  <template>
+    <CanonContextMenu
+      class="gallery-context-area"
+      tabindex="0"
+      aria-label="Context area"
+      @items={{this.items}}
+      @onSelect={{this.choose}}
+    >
+      <CanonCanvas @height={{160}}><GalleryArt
+          @label="Right click"
+        /></CanonCanvas>
+    </CanonContextMenu>
+    <CanonRow @title="Chosen" @detail={{this.chosen}} />
+  </template>
+}
+
+class MenuBar extends MenuState {
+  <template>
+    <CanonMenuBar
+      aria-label="Showcase"
+      @menus={{this.menus}}
+      @onSelect={{this.choose}}
+    />
+    <CanonRow @title="Chosen" @detail={{this.chosen}} />
+  </template>
+}
+
+const sides = ['Top', 'Right', 'Bottom', 'Left'];
+const alignments = ['Start', 'Centre', 'End'];
+
+class Popover extends Component {
+  @tracked side = 2;
+  @tracked edge = 0;
+  @tracked opacity = 0.8;
+
+  get placement(): CanonPlacement {
+    const side = ['top', 'right', 'bottom', 'left'][this.side]!;
+    const edge = ['-start', '', '-end'][this.edge]!;
+    return `${side}${edge}` as CanonPlacement;
+  }
+
+  pickSide = (index: number) => (this.side = index);
+  pickEdge = (index: number) => (this.edge = index);
+  setOpacity = (value: number) => (this.opacity = value);
+
+  <template>
+    <CanonRow @title="Side" @form="stacked">
+      <CanonSegmented
+        @items={{sides}}
+        @selected={{this.side}}
+        @onChange={{this.pickSide}}
+      />
+    </CanonRow>
+    <CanonRow @title="Edge" @form="stacked">
+      <CanonSegmented
+        @items={{alignments}}
+        @selected={{this.edge}}
+        @onChange={{this.pickEdge}}
+      />
+    </CanonRow>
+    <CanonGrid>
+      <CanonPopover
+        class="gallery-popover"
+        role="dialog"
+        aria-label="Opacity"
+        @placement={{this.placement}}
+      >
+        <:trigger as |popover|>
+          <CanonButton {{popover.trigger}} @kind="cell" @text="Popover" />
+        </:trigger>
+        <:content as |popover|>
+          <CanonRows>
+            <CanonRow @title="Opacity" @form="stacked">
+              <CanonSlider
+                @value={{this.opacity}}
+                @label="Opacity"
+                @onChange={{this.setOpacity}}
+              />
+            </CanonRow>
+            <CanonButton
+              @kind="primary"
+              @text="Done"
+              @onClick={{popover.close}}
+            />
+          </CanonRows>
+        </:content>
+      </CanonPopover>
+    </CanonGrid>
+  </template>
+}
+
+const Tooltips = <template>
+  <CanonGrid>
+    <CanonTooltip @text="Copy" as |tip|>
+      <CanonButton
+        {{tip.trigger}}
+        @kind="cell"
+        @label="Copy"
+        @icon={{component Icon svg=copy}}
+      />
+    </CanonTooltip>
+    <CanonTooltip @text="Share" as |tip|>
+      <CanonButton
+        {{tip.trigger}}
+        @kind="cell"
+        @label="Share"
+        @icon={{component Icon svg=share}}
+      />
+    </CanonTooltip>
+    <CanonTooltip @text="Delete" as |tip|>
+      <CanonButton
+        {{tip.trigger}}
+        @kind="cell"
+        @label="Delete"
+        @icon={{component Icon svg=trash}}
+      />
+    </CanonTooltip>
+  </CanonGrid>
+</template>;
+
+const modules: { title: string; svg: string; light: CanonSidebarLight }[] = [
+  { title: 'Clipboard', svg: clipboard, light: 'on' },
+  { title: 'Capture', svg: camera, light: 'warning' },
+  { title: 'Hotkeys', svg: keyboard, light: 'off' },
+  { title: 'Loupe', svg: aperture, light: 'on' },
+];
+
+const SidebarRows: TOC<{
+  Args: {
+    selected: string;
+    onPick: (title: string, event: MouseEvent) => void;
+  };
+}> = <template>
+  <CanonSidebarRow
+    @title="Toolbox"
+    @icon={{component Icon svg=wrench}}
+    @selected={{eq @selected "Toolbox"}}
+    @onClick={{fn @onPick "Toolbox"}}
+  />
+  <CanonHeading @text="Modules" />
+  {{#each modules as |row|}}
+    <CanonSidebarRow
+      @title={{row.title}}
+      @icon={{component Icon svg=row.svg}}
+      @light={{row.light}}
+      @selected={{eq @selected row.title}}
+      @onClick={{fn @onPick row.title}}
+    />
+  {{/each}}
+  <CanonSidebarRow
+    @title="General"
+    @icon={{component Icon svg=settings}}
+    @href="#general"
+    @selected={{eq @selected "General"}}
+    @onClick={{fn @onPick "General"}}
+  />
+</template>;
+
+class Pick extends Component {
+  @tracked selected = 'Toolbox';
+
+  pick = (title: string, event: MouseEvent) => {
+    event.preventDefault();
+    this.selected = title;
+  };
+}
+
+class Sidebar extends Pick {
+  @tracked collapsed = false;
+
+  collapse = (on: boolean) => (this.collapsed = on);
+
+  <template>
+    <div class="showcase-sidebar-box">
+      <CanonSidebar @collapsed={{this.collapsed}} aria-label="Showcase">
+        <:hero><div class="gallery-shell-hero"><GalleryArt
+              @label="Hero"
+            /></div></:hero>
+        <:default>
+          <SidebarRows @selected={{this.selected}} @onPick={{this.pick}} />
+        </:default>
+      </CanonSidebar>
+    </div>
+    <CanonRow @title="Rail" as |titleId|>
+      <CanonSwitch
+        @on={{this.collapsed}}
+        @onChange={{this.collapse}}
+        aria-labelledby={{titleId}}
+      />
+    </CanonRow>
+  </template>
+}
+
+class SidebarRow extends Pick {
+  <template>
+    <div class="showcase-sidebar-rows">
+      <SidebarRows @selected={{this.selected}} @onPick={{this.pick}} />
+    </div>
+  </template>
+}
+
+const windowMenus: CanonMenuBarMenu[] = [
+  {
+    title: 'File',
+    items: [
+      { title: 'New', shortcut: '⌘N' },
+      { title: 'Close', shortcut: '⌘W' },
+    ],
+  },
+  {
+    title: 'Edit',
+    items: [
+      { title: 'Undo', shortcut: '⌘Z' },
+      { title: 'Copy', shortcut: '⌘C' },
+    ],
+  },
+  {
+    title: 'View',
+    items: [{ title: 'Sidebar', kind: 'checkbox', checked: true }],
+  },
+];
+
+class Window extends Pick {
+  // undefined follows the window's width
+  @tracked collapsed?: true;
+  @tracked closed = false;
+  @tracked minimised = false;
+  @tracked zoomed = false;
+
+  toggle = () => (this.collapsed = this.collapsed ? undefined : true);
+  close = () => (this.closed = true);
+  reopen = () => (this.closed = false);
+  minimise = () => (this.minimised = !this.minimised);
+  zoom = () => (this.zoomed = !this.zoomed);
+
+  <template>
+    {{#if this.closed}}
+      <CanonButton @text="Reopen" @onClick={{this.reopen}} />
+    {{else}}
+      <CanonWindow
+        class="gallery-shell-window
+          {{if this.minimised 'gallery-shell--minimised'}}
+          {{if this.zoomed 'gallery-shell--zoomed'}}"
+        @title="Delphi"
+        @onClose={{this.close}}
+        @onMinimise={{this.minimise}}
+        @onZoom={{this.zoom}}
+      >
+        <:toolbar>
+          <CanonButton
+            @kind="cell"
+            @icon={{component Icon svg=panelLeft}}
+            @label="Sidebar"
+            @selected={{this.collapsed}}
+            aria-pressed={{if this.collapsed "true" "false"}}
+            @onClick={{this.toggle}}
+          />
+        </:toolbar>
+        <:menubar>
+          <CanonMenuBar @menus={{windowMenus}} aria-label="Delphi" />
+        </:menubar>
+        <:sidebar>
+          <CanonSidebar @collapsed={{this.collapsed}} aria-label="Main">
+            <:hero><div class="gallery-shell-hero"><GalleryArt
+                  @label="Hero"
+                /></div></:hero>
+            <:default>
+              <SidebarRows @selected={{this.selected}} @onPick={{this.pick}} />
+            </:default>
+          </CanonSidebar>
+        </:sidebar>
+        <:main>
+          <CanonPage>
+            <CanonCanvas @aspect={{3}}><GalleryArt
+                @label={{this.selected}}
+              /></CanonCanvas>
+          </CanonPage>
+        </:main>
+      </CanonWindow>
+    {{/if}}
+  </template>
+}
+
 export interface Tile {
   /** The registry item name and the addon module, `canon-<name>`. */
   name: string;
@@ -1040,9 +1777,12 @@ export const tiles: Tile[] = [
   { name: 'canon-colour-solid', Live: ColourSolid },
   { name: 'canon-colour-strip', Live: ColourStrip },
   { name: 'canon-colour-well', Live: ColourWells },
+  { name: 'canon-command', Live: Command },
+  { name: 'canon-context-menu', Live: ContextMenu },
   { name: 'canon-decimal-field', Live: DecimalField },
   { name: 'canon-detent-wheel', Live: DetentWheel },
   { name: 'canon-detent-wheel-row', Live: DetentWheelRows },
+  { name: 'canon-dialog', Live: Dialog },
   { name: 'canon-drop-zone', Live: DropZone },
   { name: 'canon-dual-list', Live: DualList },
   { name: 'canon-empty-row', Live: EmptyRow },
@@ -1065,17 +1805,23 @@ export const tiles: Tile[] = [
   { name: 'canon-math-rail', Live: MathRail },
   { name: 'canon-math-tabs', Live: MathTabs },
   { name: 'canon-math-view', Live: MathView },
+  { name: 'canon-menu', Live: Menu },
+  { name: 'canon-menu-bar', Live: MenuBar },
   { name: 'canon-menu-cell', Live: MenuCell },
   { name: 'canon-number-field', Live: NumberField },
   { name: 'canon-page', Live: Page },
   { name: 'canon-page-strip', wide: true, Live: PageStrip },
   { name: 'canon-palette-card', Live: PaletteCard },
+  { name: 'canon-popover', Live: Popover },
   { name: 'canon-preview-panel', Live: PreviewPanel },
   { name: 'canon-readout-band', Live: ReadoutBand },
   { name: 'canon-row', Live: Row },
   { name: 'canon-rows', Live: Rows },
   { name: 'canon-rule', Live: Rule },
   { name: 'canon-segmented', Live: Segmented },
+  { name: 'canon-sheet', Live: Sheet },
+  { name: 'canon-sidebar', Live: Sidebar },
+  { name: 'canon-sidebar-row', Live: SidebarRow },
   { name: 'canon-slider', Live: Slider },
   { name: 'canon-split', wide: true, Live: Split },
   { name: 'canon-status', Live: Status },
@@ -1089,5 +1835,7 @@ export const tiles: Tile[] = [
   { name: 'canon-tiles', Live: Tiles },
   { name: 'canon-timecode', Live: Timecodes },
   { name: 'canon-toast', Live: Toast },
+  { name: 'canon-tooltip', Live: Tooltips },
   { name: 'canon-value-line', Live: ValueLines },
+  { name: 'canon-window', wide: true, Live: Window },
 ];
