@@ -36,7 +36,10 @@ function titleFits(button: HTMLElement): boolean {
 
 function layout(grid: HTMLElement, columns: number | undefined) {
   const place = () => {
-    const cells = [...grid.children] as HTMLElement[];
+    // a popover or menu panel renders beside its trigger and is no cell
+    const cells = [...grid.children].filter(
+      (child) => !child.hasAttribute('popover'),
+    ) as HTMLElement[];
     const perRow = spans(cells.length, columns ?? cells.length);
     const widest = balanced(cells.length, columns ?? cells.length)[0] ?? 1;
     grid.style.setProperty('--canon-grid-columns', String(widest));
