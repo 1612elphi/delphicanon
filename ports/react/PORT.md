@@ -35,7 +35,7 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [ ] | canon-big-number-field | |
 | [x] | canon-button | |
 | [x] | canon-canvas | |
-| [ ] | canon-code-block | |
+| [x] | canon-code-block | |
 | [ ] | canon-colour-card | |
 | [ ] | canon-colour-controls | |
 | [ ] | canon-colour-notation-input | |
@@ -51,12 +51,12 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [ ] | canon-figure | |
 | [ ] | canon-file-cell | |
 | [ ] | canon-from-to | |
-| [ ] | canon-glyph-flow | |
+| [x] | canon-glyph-flow | |
 | [x] | canon-grid | |
 | [x] | canon-heading | |
 | [x] | canon-icon | No Ember test; covered through the components that draw icons. |
-| [ ] | canon-image-compare | |
-| [ ] | canon-lamps | |
+| [x] | canon-image-compare | |
+| [x] | canon-lamps | |
 | [ ] | canon-loader | |
 | [ ] | canon-loupe | |
 | [x] | canon-math-editor | |
@@ -69,11 +69,11 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-math-view | |
 | [ ] | canon-menu-cell | |
 | [ ] | canon-number-field | |
-| [ ] | canon-page-strip | |
+| [x] | canon-page-strip | |
 | [x] | canon-page | |
 | [ ] | canon-palette-card | |
-| [ ] | canon-preview-panel | |
-| [ ] | canon-readout-band | |
+| [x] | canon-preview-panel | |
+| [x] | canon-readout-band | |
 | [x] | canon-row | |
 | [x] | canon-rows | |
 | [x] | canon-rule | |
@@ -86,9 +86,9 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [ ] | canon-switch | |
 | [ ] | canon-text-area | |
 | [ ] | canon-text-cell | |
-| [ ] | canon-text-input | |
-| [ ] | canon-text-output | |
-| [ ] | canon-tiles | |
-| [ ] | canon-timecode | |
+| [x] | canon-text-input | |
+| [x] | canon-text-output | |
+| [x] | canon-tiles | |
+| [x] | canon-timecode | |
 | [x] | canon-toast | |
 | [ ] | canon-value-line | |
