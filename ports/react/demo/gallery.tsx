@@ -1,4 +1,3 @@
-import type { ComponentType } from 'react';
 import CanonButton from '../src/components/canon-button.tsx';
 import CanonCanvas from '../src/components/canon-canvas.tsx';
 import CanonGrid from '../src/components/canon-grid.tsx';
@@ -8,18 +7,8 @@ import GalleryArt from './gallery-art.tsx';
 import play from 'lucide-static/icons/play.svg?raw';
 import repeat from 'lucide-static/icons/repeat.svg?raw';
 import square from 'lucide-static/icons/square.svg?raw';
-
-interface GalleryGroup {
-  default: ComponentType;
-  pane: 'sidebar' | 'main';
-  order: number;
-}
-
-const groups = Object.entries(
-  import.meta.glob<GalleryGroup>('./gallery/*.tsx', { eager: true }),
-)
-  .sort(([a, x], [b, y]) => x.order - y.order || a.localeCompare(b))
-  .map(([name, group]) => ({ name, ...group }));
+// last: Vite hoists an eager glob above the imports, and the groups' CSS must follow CanonSplit's
+import { groups } from './groups.ts';
 
 const sidebar = groups.filter((g) => g.pane === 'sidebar');
 const main = groups.filter((g) => g.pane === 'main');

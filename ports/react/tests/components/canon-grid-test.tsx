@@ -76,4 +76,19 @@ describe('canon-grid', () => {
       false,
     );
   });
+
+  test('a popover beside its trigger is no cell', async () => {
+    await render(
+      <div style={{ width: 300 }}>
+        <CanonGrid>
+          <div>1</div>
+          <div>2</div>
+          <div popover="auto">Panel</div>
+        </CanonGrid>
+      </div>,
+    );
+    expect(
+      find('.canon-grid').style.getPropertyValue('--canon-grid-columns'),
+    ).toBe('2');
+  });
 });
