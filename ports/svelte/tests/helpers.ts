@@ -117,3 +117,23 @@ export async function waitUntil(check: () => boolean, timeout = 1000) {
 
 export const nextFrame = () =>
   new Promise((resolve) => requestAnimationFrame(() => resolve(undefined)));
+
+/** Ember's select: focus, set the value, input and change. */
+export async function select(target: Target, value: string) {
+  const element = find<HTMLSelectElement>(target);
+  element.focus();
+  element.value = value;
+  fire(element, 'input');
+  fire(element, 'change');
+  await settled();
+}
+
+/** Ember's triggerEvent(input, 'change', { files }) on a file input. */
+export async function chooseFiles(target: Target, files: File[]) {
+  const input = find<HTMLInputElement>(target);
+  const data = new DataTransfer();
+  files.forEach((file) => data.items.add(file));
+  input.files = data.files;
+  fire(input, 'change');
+  await settled();
+}
