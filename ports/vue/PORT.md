@@ -14,6 +14,8 @@ The Ember addon in `../../src` is the reference; its `PORT.md` holds the decisio
 | Attributes | `...attributes` is Vue's attribute fallthrough to the root element. A component with more than one root (CanonToast) sets `inheritAttrs: false` and binds `$attrs` where Ember put `...attributes`. |
 | Icons | An `icon` prop takes a Vue component the consumer renders. CanonIcon draws an SVG string as an `<svg>` element with the string's attributes and children, no wrapper, so the shared `> svg` rules apply. The lucide icons the components draw themselves are inlined in `src/lib/lucide.ts` (lucide-static 1.48.0, ISC), so `vue` is the only runtime dependency. `src/lib/control-icons.ts` is the port of `control-icons.gts` as functional components. |
 | Modifiers | `canon-press`, `canon-grab-pan` and `canon-sideways-pan` are directives: `v-press` (`lib/press.ts`), `v-grab-pan="handlers"` (`lib/grab-pan.ts`), `v-sideways-pan="handlers"` (`lib/sideways-pan.ts`), built on `lib/directive.ts`, which reads the latest binding value on every event. A modifier private to one component becomes `onMounted` / `watch` on a template ref in that component. |
+| Yielded modifiers | A block that yields a modifier (CanonPopover, CanonTooltip and CanonMenu `trigger`) yields a function template ref as a slot prop, bound with `:ref="trigger"` on an element or a single-root component (`lib/trigger.ts` takes the component's `$el`). Vue calls a function ref during the patch, before the panel beside the trigger mounts, so the ref only stores the element; the component attaches in a post-flush watch on that element, its own panel ref and `placement`, and the watch cleanup detaches. These components have two roots, so they set `inheritAttrs: false` and bind `$attrs` on the panel, where Ember put `...attributes`. |
+| Menu list | There is no `canon-menu-list.vue`: CanonMenu without a default slot is the bare panel that Ember exports as CanonMenuList, with the list's `onEdge` and `sub` props beside CanonMenu's; `showMenu` is exported from its plain script block. A separate list file would import `canon-menu.css`, which the registry files under the item `canon-menu`, and `canon-menu` would import the list back: `registry/build.ts` rejects that cycle. Submenus render CanonMenu recursively. The parent anchors its submenus, and CanonMenuBar its menus, in `onMounted` and a post-flush watch on the submenu ids or the menu count, in place of a modifier on each list. |
 | Toast | The `canon-toast` service is `toast` in `lib/toast-store.ts`, a module-level `reactive` object with `show`, `copy` and a replaceable `write`. CanonToast is the outlet; render it once. |
 | Math editing | `lib/math-editing.ts` is `MathEditing` with its version in a `shallowRef`; the instance is `markRaw`. |
 | Demo | `demo/` is the gallery (Vite root). Groups are `demo/components/gallery/<group>.vue` with `pane` and `order` exported from a plain `<script>` block, found by `import.meta.glob`. The demo's own stylesheets are imported from `../../demo-app/`; fonts come from the root `public/`. Same query parameters as the Ember demo. |
@@ -38,9 +40,12 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-colour-solid | `canon-colour-solid.vue` | No gallery group; the colour page uses it. `cutsAway` and `animated` default to `undefined` (`cutsAway` undefined means true). The first sync of the renderer runs in setup, before mount; the mount paint draws the synced state. |
 | [x] | canon-colour-strip | `canon-colour-strip.vue` | |
 | [x] | canon-colour-well | `canon-colour-well.vue` | |
+| [x] | canon-command | `canon-command.vue` | `CanonCommandItem` exported. |
+| [x] | canon-context-menu | `canon-context-menu.vue` | The setup is `onMounted` on the anchor span; the panel is the span's next element. |
 | [x] | canon-decimal-field | `canon-decimal-field.vue` | `typingPauseMs` is exported from a plain script block. The internal step function is `nudge`, since `step` is a prop. |
-| [x] | canon-detent-wheel-row | `canon-detent-wheel-row.vue` | No test of its own, as in Ember; the detent-wheel test covers it. |
 | [x] | canon-detent-wheel | `canon-detent-wheel.vue` | Rows are the default slot with props `{ index, focus }`. `follow` runs in a watcher without Ember's `queueMicrotask`, which only kept tracked writes out of render. |
+| [x] | canon-detent-wheel-row | `canon-detent-wheel-row.vue` | No test of its own, as in Ember; the detent-wheel test covers it. |
+| [x] | canon-dialog | `canon-dialog.vue` | `dismissable` defaults to undefined, so an absent prop dismisses (tested). The blocks are slots with `{ close }`. The present modifier is `onMounted` and a post-flush watch on `open`; the listeners are template listeners on the `<dialog>`. Extra prop `keyframes(dialog)` for CanonSheet, which Ember overrides in a subclass; the internal function is `frames`, since `keyframes` is a prop. |
 | [x] | canon-drop-zone | `canon-drop-zone.vue` | `paste` defaults to undefined, so an absent prop shows Paste (tested). |
 | [x] | canon-dual-list | `canon-dual-list.vue` | `CanonDualItem` is exported from a plain script block; ids from `useId()`. |
 | [x] | canon-empty-row | `canon-empty-row.vue` | |
@@ -48,7 +53,7 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-file-cell | `canon-file-cell.vue` | |
 | [x] | canon-from-to | `canon-from-to.vue` | |
 | [x] | canon-glyph-flow | `canon-glyph-flow.vue` | Generic over the glyph type (`generic="G"`). `animated` defaults to undefined, so absent means animated (tested). Glide and fade are local directives; ghosts are keyed per scene so each fades from its own start. The scene is a `computed` that writes the animation memory, as Ember's `@cached` getter does. |
-| [x] | canon-grid | `canon-grid.vue` | |
+| [x] | canon-grid | `canon-grid.vue` | `place()` skips `[popover]` children, as in Ember. |
 | [x] | canon-heading | `canon-heading.vue` | |
 | [x] | canon-icon | `canon-icon.vue` | No test of its own, as in Ember; every icon test covers it. |
 | [x] | canon-image-compare | `canon-image-compare.vue` | `v-sideways-pan`. |
@@ -63,17 +68,23 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-math-rail | `canon-math-rail.vue` | |
 | [x] | canon-math-tabs | `canon-math-tabs.vue` | Covered by the canon-math-keypad test, as in Ember. |
 | [x] | canon-math-view | `canon-math-view.vue` | `inheritAttrs: false`; a consumer's `style` replaces the morph's `min-block-size`, as after Ember's `...attributes`. |
+| [x] | canon-menu | `canon-menu.vue` | Also CanonMenuList, see Menu list. `CanonMenuEntry` and `CanonMenuItem` exported with `Component` icons. |
+| [x] | canon-menu-bar | `canon-menu-bar.vue` | `CanonMenuBarMenu` exported. Cell listeners fall through CanonButton to its `<button>`. |
 | [x] | canon-menu-cell | `canon-menu-cell.vue` | |
 | [x] | canon-number-field | `canon-number-field.vue` | |
-| [x] | canon-page-strip | `canon-page-strip.vue` | The long press listens with `@pointerdown` and the rest on the button, in place of the modifier. |
 | [x] | canon-page | `canon-page.vue` | |
+| [x] | canon-page-strip | `canon-page-strip.vue` | The long press listens with `@pointerdown` and the rest on the button, in place of the modifier. |
 | [x] | canon-palette-card | `canon-palette-card.vue` | |
+| [x] | canon-popover | `canon-popover.vue` | `#trigger="{ trigger, close }"`, `#content="{ close }"`. |
 | [x] | canon-preview-panel | `canon-preview-panel.vue` | |
 | [x] | canon-readout-band | `canon-readout-band.vue` | The default slot takes `v-slot="{ playhead }"`. |
 | [x] | canon-row | `canon-row.vue` | |
 | [x] | canon-rows | `canon-rows.vue` | |
 | [x] | canon-rule | `canon-rule.vue` | |
 | [x] | canon-segmented | `canon-segmented.vue` | |
+| [x] | canon-sheet | `canon-sheet.vue` | Wraps CanonDialog instead of extending it: passes the edge classes through class fallthrough, the slide as `keyframes`, and forwards the three slots. `dismissable` defaults to undefined (tested through Escape). |
+| [x] | canon-sidebar | `canon-sidebar.vue` | `collapsed` defaults to undefined, so an absent prop follows the window's width (tested). |
+| [x] | canon-sidebar-row | `canon-sidebar-row.vue` | `CanonSidebarLight` exported. |
 | [x] | canon-slider | `canon-slider.vue` | The drag modifier is `onMounted` listeners on template refs. |
 | [x] | canon-split | `canon-split.vue` | |
 | [x] | canon-status | `canon-status.vue` | `CanonStatusTone` exported. |
@@ -87,4 +98,6 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-tiles | `canon-tiles.vue` | |
 | [x] | canon-timecode | `canon-timecode.vue` | `seconds` and `text` default to undefined, so null and undefined stay different. |
 | [x] | canon-toast | `canon-toast.vue` | |
+| [x] | canon-tooltip | `canon-tooltip.vue` | `v-slot="{ trigger }"`; `tooltipGraceMs` exported from the plain script block. |
 | [x] | canon-value-line | `canon-value-line.vue` | The fade is a post-flush watch on the shown value. |
+| [x] | canon-window | `canon-window.vue` | |

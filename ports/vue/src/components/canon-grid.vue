@@ -40,7 +40,10 @@ let stop: (() => void) | undefined;
 function place() {
   const element = grid.value;
   if (!element) return;
-  const cells = [...element.children] as HTMLElement[];
+  // a popover or menu panel renders beside its trigger and is no cell
+  const cells = [...element.children].filter(
+    (child) => !child.hasAttribute('popover'),
+  ) as HTMLElement[];
   const columns = props.columns ?? cells.length;
   const perRow = spans(cells.length, columns);
   const widest = balanced(cells.length, columns)[0] ?? 1;
