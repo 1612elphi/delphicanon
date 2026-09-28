@@ -36,15 +36,15 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-button | |
 | [x] | canon-canvas | |
 | [x] | canon-code-block | |
-| [ ] | canon-colour-card | |
-| [ ] | canon-colour-controls | |
-| [ ] | canon-colour-notation-input | |
+| [x] | canon-colour-card | |
+| [x] | canon-colour-controls | |
+| [x] | canon-colour-notation-input | |
 | [x] | canon-colour-solid | Canvas created in the ref callback, see Deviations. |
-| [ ] | canon-colour-strip | |
-| [ ] | canon-colour-well | |
+| [x] | canon-colour-strip | |
+| [x] | canon-colour-well | |
 | [x] | canon-decimal-field | |
-| [ ] | canon-detent-wheel-row | |
-| [ ] | canon-detent-wheel | |
+| [x] | canon-detent-wheel-row | No Ember test; covered by the canon-detent-wheel test. |
+| [x] | canon-detent-wheel | |
 | [x] | canon-drop-zone | |
 | [x] | canon-dual-list | |
 | [x] | canon-empty-row | |
@@ -58,7 +58,7 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-image-compare | |
 | [x] | canon-lamps | |
 | [x] | canon-loader | |
-| [ ] | canon-loupe | |
+| [x] | canon-loupe | |
 | [x] | canon-math-editor | |
 | [x] | canon-math-field | |
 | [x] | canon-math-input | Covered by the canon-math-field test, as in Ember. |
@@ -71,7 +71,7 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-number-field | |
 | [x] | canon-page-strip | |
 | [x] | canon-page | |
-| [ ] | canon-palette-card | |
+| [x] | canon-palette-card | |
 | [x] | canon-preview-panel | |
 | [x] | canon-readout-band | |
 | [x] | canon-row | |
@@ -82,7 +82,7 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-split | |
 | [x] | canon-status | |
 | [x] | canon-stepper | |
-| [ ] | canon-swatch | |
+| [x] | canon-swatch | |
 | [x] | canon-switch | |
 | [x] | canon-text-area | |
 | [x] | canon-text-cell | |
@@ -91,4 +91,4 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-tiles | |
 | [x] | canon-timecode | |
 | [x] | canon-toast | |
-| [ ] | canon-value-line | |
+| [x] | canon-value-line | |
