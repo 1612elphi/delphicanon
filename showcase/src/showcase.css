@@ -1,0 +1,181 @@
+@import '../../demo-app/components/gallery/controls.css';
+
+/* relative, so the build carries the fonts beside its assets */
+@font-face {
+  font-family: 'iA Writer Quattro';
+  font-style: normal;
+  font-weight: 400 700;
+  src: url('../../public/fonts/iAWriterQuattroV.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: FluoWrite;
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../public/fonts/fluoWrite-Regular.otf') format('opentype');
+  font-display: swap;
+}
+
+html,
+body,
+#root {
+  block-size: 100%;
+  margin: 0;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--canon-background);
+  -webkit-font-smoothing: antialiased;
+}
+
+.showcase-header {
+  max-inline-size: 720px;
+}
+
+.showcase-grid-box {
+  container-type: inline-size;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  grid-auto-flow: row dense;
+  gap: var(--canon-panel-padding);
+  align-items: start;
+}
+
+/* two 340 px columns and the gap */
+@container (min-width: 696px) {
+  .showcase-tile--wide {
+    grid-column: span 2;
+  }
+}
+
+.showcase-stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: 16px;
+  padding: var(--canon-panel-padding);
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+}
+
+.showcase-icons svg {
+  inline-size: 24px;
+  block-size: 24px;
+}
+
+.showcase-rules {
+  align-items: stretch;
+  justify-content: center;
+}
+
+.showcase-rule-across {
+  inline-size: 100%;
+}
+
+.showcase-swatches {
+  display: flex;
+  block-size: 64px;
+}
+
+.showcase-swatches > .canon-swatch {
+  flex: 1;
+}
+
+.showcase-wheel-rows {
+  display: grid;
+  grid-auto-rows: 44px;
+  background: var(--canon-card);
+}
+
+.showcase-editor {
+  display: flex;
+  block-size: 112px;
+  background: var(--canon-card);
+}
+
+.showcase-box {
+  block-size: 220px;
+}
+
+.showcase-box--split {
+  block-size: 320px;
+}
+
+/* from demo-app/styles.css and gallery/display.css, which also set page-wide rules and root-relative font URLs */
+.gallery-bar {
+  inline-size: 100%;
+  max-inline-size: 120px;
+  block-size: 6px;
+}
+
+.gallery-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  background: linear-gradient(
+    to right,
+    var(--canon-primary),
+    var(--canon-destructive)
+  );
+  color: var(--canon-primary-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-title2);
+  font-weight: var(--canon-weight-bold);
+}
+
+.gallery-loupe {
+  position: absolute;
+}
+
+.gallery-fit {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  margin: 0;
+  padding: 16px;
+  border: 0;
+  background: none;
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-title3);
+  font-weight: var(--canon-weight-semibold);
+  text-align: start;
+  cursor: pointer;
+}
+
+.gallery-swatch {
+  aspect-ratio: 16 / 9;
+  background: var(--canon-primary);
+}
+
+.gallery-glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  block-size: 100%;
+  border: var(--canon-hairline) solid var(--canon-border);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-title3);
+  font-weight: var(--canon-weight-bold);
+}
