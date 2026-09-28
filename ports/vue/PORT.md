@@ -30,15 +30,15 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-button | `canon-button.vue` | |
 | [x] | canon-canvas | `canon-canvas.vue` | |
 | [ ] | canon-code-block | `canon-code-block.vue` | |
-| [ ] | canon-colour-card | `canon-colour-card.vue` | |
-| [ ] | canon-colour-controls | `canon-colour-controls.vue` | |
-| [ ] | canon-colour-notation-input | `canon-colour-notation-input.vue` | |
+| [x] | canon-colour-card | `canon-colour-card.vue` | |
+| [x] | canon-colour-controls | `canon-colour-controls.vue` | `CanonColourSolidState` is a class exported from the plain script block; its constructor returns `shallowReactive(this)`, the depth of `@tracked`. The controls write the shared state (`vue/no-mutating-props` off for this file, as in Ember). The slider's touch modifier is a local `v-touch` directive. |
+| [x] | canon-colour-notation-input | `canon-colour-notation-input.vue` | The local parse function is `parseText`, since `parse` is a prop. |
 | [x] | canon-colour-solid | `canon-colour-solid.vue` | No gallery group; the colour page uses it. `cutsAway` and `animated` default to `undefined` (`cutsAway` undefined means true). The first sync of the renderer runs in setup, before mount; the mount paint draws the synced state. |
-| [ ] | canon-colour-strip | `canon-colour-strip.vue` | |
-| [ ] | canon-colour-well | `canon-colour-well.vue` | |
+| [x] | canon-colour-strip | `canon-colour-strip.vue` | |
+| [x] | canon-colour-well | `canon-colour-well.vue` | |
 | [x] | canon-decimal-field | `canon-decimal-field.vue` | `typingPauseMs` is exported from a plain script block. The internal step function is `nudge`, since `step` is a prop. |
-| [ ] | canon-detent-wheel-row | `canon-detent-wheel-row.vue` | |
-| [ ] | canon-detent-wheel | `canon-detent-wheel.vue` | |
+| [x] | canon-detent-wheel-row | `canon-detent-wheel-row.vue` | No test of its own, as in Ember; the detent-wheel test covers it. |
+| [x] | canon-detent-wheel | `canon-detent-wheel.vue` | Rows are the default slot with props `{ index, focus }`. `follow` runs in a watcher without Ember's `queueMicrotask`, which only kept tracked writes out of render. |
 | [x] | canon-drop-zone | `canon-drop-zone.vue` | `paste` defaults to undefined, so an absent prop shows Paste (tested). |
 | [x] | canon-dual-list | `canon-dual-list.vue` | `CanonDualItem` is exported from a plain script block; ids from `useId()`. |
 | [x] | canon-empty-row | `canon-empty-row.vue` | |
@@ -52,20 +52,20 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [ ] | canon-image-compare | `canon-image-compare.vue` | |
 | [ ] | canon-lamps | `canon-lamps.vue` | |
 | [x] | canon-loader | `canon-loader.vue` | `CanonLoaderMode` exported. |
-| [ ] | canon-loupe | `canon-loupe.vue` | |
-| [ ] | canon-math-editor | `canon-math-editor.vue` | |
-| [ ] | canon-math-field | `canon-math-field.vue` | |
-| [ ] | canon-math-input | `canon-math-input.vue` | |
-| [ ] | canon-math-key | `canon-math-key.vue` | |
-| [ ] | canon-math-keypad | `canon-math-keypad.vue` | |
-| [ ] | canon-math-rail | `canon-math-rail.vue` | |
-| [ ] | canon-math-tabs | `canon-math-tabs.vue` | |
-| [ ] | canon-math-view | `canon-math-view.vue` | |
+| [x] | canon-loupe | `canon-loupe.vue` | |
+| [x] | canon-math-editor | `canon-math-editor.vue` | |
+| [x] | canon-math-field | `canon-math-field.vue` | `CanonMathFieldHandle` is exported from the plain script block; `handle.field` holds `{ edit }` instead of the component. |
+| [x] | canon-math-input | `canon-math-input.vue` | Covered by the canon-math-field test, as in Ember. |
+| [x] | canon-math-key | `canon-math-key.vue` | `@key` is the prop `mathKey`: Vue never passes `key` to a component. |
+| [x] | canon-math-keypad | `canon-math-keypad.vue` | |
+| [x] | canon-math-rail | `canon-math-rail.vue` | |
+| [x] | canon-math-tabs | `canon-math-tabs.vue` | Covered by the canon-math-keypad test, as in Ember. |
+| [x] | canon-math-view | `canon-math-view.vue` | `inheritAttrs: false`; a consumer's `style` replaces the morph's `min-block-size`, as after Ember's `...attributes`. |
 | [x] | canon-menu-cell | `canon-menu-cell.vue` | |
 | [x] | canon-number-field | `canon-number-field.vue` | |
 | [ ] | canon-page-strip | `canon-page-strip.vue` | |
 | [x] | canon-page | `canon-page.vue` | |
-| [ ] | canon-palette-card | `canon-palette-card.vue` | |
+| [x] | canon-palette-card | `canon-palette-card.vue` | |
 | [ ] | canon-preview-panel | `canon-preview-panel.vue` | |
 | [ ] | canon-readout-band | `canon-readout-band.vue` | |
 | [x] | canon-row | `canon-row.vue` | |
@@ -76,7 +76,7 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-split | `canon-split.vue` | |
 | [x] | canon-status | `canon-status.vue` | `CanonStatusTone` exported. |
 | [x] | canon-stepper | `canon-stepper.vue` | |
-| [ ] | canon-swatch | `canon-swatch.vue` | |
+| [x] | canon-swatch | `canon-swatch.vue` | |
 | [x] | canon-switch | `canon-switch.vue` | `on` defaults to undefined. |
 | [x] | canon-text-area | `canon-text-area.vue` | The echo guard is a post-flush watch on the ref and `value`. |
 | [x] | canon-text-cell | `canon-text-cell.vue` | |
@@ -85,4 +85,4 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [ ] | canon-tiles | `canon-tiles.vue` | |
 | [ ] | canon-timecode | `canon-timecode.vue` | |
 | [x] | canon-toast | `canon-toast.vue` | |
-| [ ] | canon-value-line | `canon-value-line.vue` | |
+| [x] | canon-value-line | `canon-value-line.vue` | The fade is a post-flush watch on the shown value. |
