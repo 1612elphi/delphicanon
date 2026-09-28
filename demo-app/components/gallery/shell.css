@@ -1,0 +1,35 @@
+.gallery-shell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--canon-panel-padding);
+  align-items: flex-start;
+}
+
+.gallery-shell-window {
+  block-size: 480px;
+}
+
+.gallery-shell-wide {
+  flex: 2 1 480px;
+}
+
+.gallery-shell-narrow {
+  flex: 1 1 280px;
+}
+
+.gallery-shell--zoomed {
+  block-size: 600px;
+}
+
+.gallery-shell--minimised {
+  block-size: auto;
+}
+
+.gallery-shell--minimised > :not(.canon-window-bar) {
+  display: none;
+}
+
+.gallery-shell-hero {
+  inline-size: 100%;
+  block-size: 56px;
+}

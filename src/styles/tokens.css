@@ -100,6 +100,18 @@
   --canon-text-big-number: 32px;
   --canon-value-line-fade: 250ms;
   --canon-canvas-refit: 300ms;
+
+  /* shell: Sidebar, SidebarRow, EdgeLight in the Mac app's MainWindow.swift */
+  --canon-text-callout: 14px;
+  --canon-icon-row: 16px;
+  --canon-sidebar-width: 240px;
+  --canon-sidebar-collapse: 200ms;
+  --canon-edge-light-bloom: 130px;
+  --canon-edge-light-wash: 45%;
+  --canon-edge-light-glow: 90%;
+  --canon-window-close: var(--canon-destructive);
+  --canon-window-minimise: color(srgb 0.965 0.776 0.157);
+  --canon-window-zoom: var(--canon-copied);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -145,6 +157,9 @@
     --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
     --canon-loupe-ink-dark: black;
     --canon-loupe-ink-light: white;
+
+    /* shell */
+    --canon-window-minimise: color(srgb 0.914 0.741 0.2);
   }
 }
 
@@ -190,4 +205,7 @@ html.dark {
   --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
   --canon-loupe-ink-dark: black;
   --canon-loupe-ink-light: white;
+
+  /* shell */
+  --canon-window-minimise: color(srgb 0.914 0.741 0.2);
 }
