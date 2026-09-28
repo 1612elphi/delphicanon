@@ -158,3 +158,17 @@ export function focus(target: Target): Promise<void> {
 export function blur(target: Target): Promise<void> {
   return settle(() => find(target).blur());
 }
+
+/** Polls `check` every frame until it holds, as `waitUntil`; fails after `ms`. */
+export async function waitUntil(
+  check: () => boolean,
+  ms = 1000,
+): Promise<void> {
+  const end = performance.now() + ms;
+  while (!check()) {
+    if (performance.now() > end) throw new Error('waitUntil timed out');
+    await settle(
+      () => new Promise((resolve) => requestAnimationFrame(resolve)),
+    );
+  }
+}

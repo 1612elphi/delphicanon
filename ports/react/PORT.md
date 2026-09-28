@@ -31,10 +31,10 @@ Tick when the component renders in the demo, has its test, and passes lint.
 
 | Tick | Component | Notes |
 |---|---|---|
-| [ ] | canon-bar | |
+| [x] | canon-bar | |
 | [ ] | canon-big-number-field | |
 | [x] | canon-button | |
-| [ ] | canon-canvas | |
+| [x] | canon-canvas | |
 | [ ] | canon-code-block | |
 | [ ] | canon-colour-card | |
 | [ ] | canon-colour-controls | |
@@ -47,14 +47,14 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [ ] | canon-detent-wheel | |
 | [ ] | canon-drop-zone | |
 | [ ] | canon-dual-list | |
-| [ ] | canon-empty-row | |
+| [x] | canon-empty-row | |
 | [ ] | canon-figure | |
 | [ ] | canon-file-cell | |
 | [ ] | canon-from-to | |
 | [ ] | canon-glyph-flow | |
-| [ ] | canon-grid | |
-| [ ] | canon-heading | |
-| [ ] | canon-icon | |
+| [x] | canon-grid | |
+| [x] | canon-heading | |
+| [x] | canon-icon | No Ember test; covered through the components that draw icons. |
 | [ ] | canon-image-compare | |
 | [ ] | canon-lamps | |
 | [ ] | canon-loader | |
@@ -70,16 +70,16 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [ ] | canon-menu-cell | |
 | [ ] | canon-number-field | |
 | [ ] | canon-page-strip | |
-| [ ] | canon-page | |
+| [x] | canon-page | |
 | [ ] | canon-palette-card | |
 | [ ] | canon-preview-panel | |
 | [ ] | canon-readout-band | |
-| [ ] | canon-row | |
-| [ ] | canon-rows | |
-| [ ] | canon-rule | |
-| [ ] | canon-segmented | |
+| [x] | canon-row | |
+| [x] | canon-rows | |
+| [x] | canon-rule | |
+| [x] | canon-segmented | |
 | [ ] | canon-slider | |
-| [ ] | canon-split | |
+| [x] | canon-split | |
 | [ ] | canon-status | |
 | [ ] | canon-stepper | |
 | [ ] | canon-swatch | |
@@ -90,5 +90,5 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [ ] | canon-text-output | |
 | [ ] | canon-tiles | |
 | [ ] | canon-timecode | |
-| [ ] | canon-toast | |
+| [x] | canon-toast | |
 | [ ] | canon-value-line | |
