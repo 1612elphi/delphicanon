@@ -29,7 +29,7 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-big-number-field | `canon-big-number-field.vue` | |
 | [x] | canon-button | `canon-button.vue` | |
 | [x] | canon-canvas | `canon-canvas.vue` | |
-| [ ] | canon-code-block | `canon-code-block.vue` | |
+| [x] | canon-code-block | `canon-code-block.vue` | |
 | [x] | canon-colour-card | `canon-colour-card.vue` | |
 | [x] | canon-colour-controls | `canon-colour-controls.vue` | `CanonColourSolidState` is a class exported from the plain script block; its constructor returns `shallowReactive(this)`, the depth of `@tracked`. The controls write the shared state (`vue/no-mutating-props` off for this file, as in Ember). The slider's touch modifier is a local `v-touch` directive. |
 | [x] | canon-colour-notation-input | `canon-colour-notation-input.vue` | The local parse function is `parseText`, since `parse` is a prop. |
@@ -45,12 +45,12 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-figure | `canon-figure.vue` | `animated` defaults to undefined. The roll is a post-flush watch on the template ref, the text and `animated`. |
 | [x] | canon-file-cell | `canon-file-cell.vue` | |
 | [x] | canon-from-to | `canon-from-to.vue` | |
-| [ ] | canon-glyph-flow | `canon-glyph-flow.vue` | |
+| [x] | canon-glyph-flow | `canon-glyph-flow.vue` | Generic over the glyph type (`generic="G"`). `animated` defaults to undefined, so absent means animated (tested). Glide and fade are local directives; ghosts are keyed per scene so each fades from its own start. The scene is a `computed` that writes the animation memory, as Ember's `@cached` getter does. |
 | [x] | canon-grid | `canon-grid.vue` | |
 | [x] | canon-heading | `canon-heading.vue` | |
 | [x] | canon-icon | `canon-icon.vue` | No test of its own, as in Ember; every icon test covers it. |
-| [ ] | canon-image-compare | `canon-image-compare.vue` | |
-| [ ] | canon-lamps | `canon-lamps.vue` | |
+| [x] | canon-image-compare | `canon-image-compare.vue` | `v-sideways-pan`. |
+| [x] | canon-lamps | `canon-lamps.vue` | The blink is reactive state set by a watch on the flash counts: Vue's class patch would drop a class added by hand. Same 120 ms timing. |
 | [x] | canon-loader | `canon-loader.vue` | `CanonLoaderMode` exported. |
 | [x] | canon-loupe | `canon-loupe.vue` | |
 | [x] | canon-math-editor | `canon-math-editor.vue` | |
@@ -63,11 +63,11 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-math-view | `canon-math-view.vue` | `inheritAttrs: false`; a consumer's `style` replaces the morph's `min-block-size`, as after Ember's `...attributes`. |
 | [x] | canon-menu-cell | `canon-menu-cell.vue` | |
 | [x] | canon-number-field | `canon-number-field.vue` | |
-| [ ] | canon-page-strip | `canon-page-strip.vue` | |
+| [x] | canon-page-strip | `canon-page-strip.vue` | The long press listens with `@pointerdown` and the rest on the button, in place of the modifier. |
 | [x] | canon-page | `canon-page.vue` | |
 | [x] | canon-palette-card | `canon-palette-card.vue` | |
-| [ ] | canon-preview-panel | `canon-preview-panel.vue` | |
-| [ ] | canon-readout-band | `canon-readout-band.vue` | |
+| [x] | canon-preview-panel | `canon-preview-panel.vue` | |
+| [x] | canon-readout-band | `canon-readout-band.vue` | The default slot takes `v-slot="{ playhead }"`. |
 | [x] | canon-row | `canon-row.vue` | |
 | [x] | canon-rows | `canon-rows.vue` | |
 | [x] | canon-rule | `canon-rule.vue` | |
@@ -80,9 +80,9 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-switch | `canon-switch.vue` | `on` defaults to undefined. |
 | [x] | canon-text-area | `canon-text-area.vue` | The echo guard is a post-flush watch on the ref and `value`. |
 | [x] | canon-text-cell | `canon-text-cell.vue` | |
-| [ ] | canon-text-input | `canon-text-input.vue` | |
-| [ ] | canon-text-output | `canon-text-output.vue` | |
-| [ ] | canon-tiles | `canon-tiles.vue` | |
-| [ ] | canon-timecode | `canon-timecode.vue` | |
+| [x] | canon-text-input | `canon-text-input.vue` | `setText` is exposed through `defineExpose`. |
+| [x] | canon-text-output | `canon-text-output.vue` | The slot fallback is the text, as `has-block` did. |
+| [x] | canon-tiles | `canon-tiles.vue` | |
+| [x] | canon-timecode | `canon-timecode.vue` | `seconds` and `text` default to undefined, so null and undefined stay different. |
 | [x] | canon-toast | `canon-toast.vue` | |
 | [x] | canon-value-line | `canon-value-line.vue` | The fade is a post-flush watch on the shown value. |
