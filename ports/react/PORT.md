@@ -39,7 +39,7 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [ ] | canon-colour-card | |
 | [ ] | canon-colour-controls | |
 | [ ] | canon-colour-notation-input | |
-| [ ] | canon-colour-solid | |
+| [x] | canon-colour-solid | Canvas created in the ref callback, see Deviations. |
 | [ ] | canon-colour-strip | |
 | [ ] | canon-colour-well | |
 | [ ] | canon-decimal-field | |
