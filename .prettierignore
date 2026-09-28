@@ -15,6 +15,7 @@ config/ember-cli-update.json
 *.md
 *.html
 
-# framework ports and the registry lint themselves
+# framework ports, the registry and the showcase lint themselves
 /ports/
 /registry/
+/showcase/
