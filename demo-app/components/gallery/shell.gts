@@ -4,6 +4,9 @@ import { fn } from '@ember/helper';
 import CanonButton from '#src/components/canon-button.gts';
 import CanonCanvas from '#src/components/canon-canvas.gts';
 import CanonHeading from '#src/components/canon-heading.gts';
+import CanonMenuBar, {
+  type CanonMenuBarMenu,
+} from '#src/components/canon-menu-bar.gts';
 import CanonPage from '#src/components/canon-page.gts';
 import CanonSidebar from '#src/components/canon-sidebar.gts';
 import CanonSidebarRow from '#src/components/canon-sidebar-row.gts';
@@ -23,6 +26,27 @@ export const pane = 'main';
 export const order = 45;
 
 const eq = (a: string, b: string) => a === b;
+
+const menus: CanonMenuBarMenu[] = [
+  {
+    title: 'File',
+    items: [
+      { title: 'New', shortcut: '⌘N' },
+      { title: 'Close', shortcut: '⌘W' },
+    ],
+  },
+  {
+    title: 'Edit',
+    items: [
+      { title: 'Undo', shortcut: '⌘Z' },
+      { title: 'Copy', shortcut: '⌘C' },
+    ],
+  },
+  {
+    title: 'View',
+    items: [{ title: 'Sidebar', kind: 'checkbox', checked: true }],
+  },
+];
 
 export default class ShellGallery extends Component {
   @tracked selected = 'Toolbox';
@@ -133,9 +157,7 @@ export default class ShellGallery extends Component {
         @framed={{true}}
       >
         <:menubar>
-          <CanonButton @kind="cell" @text="File" />
-          <CanonButton @kind="cell" @text="Edit" />
-          <CanonButton @kind="cell" @text="View" />
+          <CanonMenuBar @menus={{menus}} aria-label="Narrow" />
         </:menubar>
         <:sidebar>
           <CanonSidebar aria-label="Narrow">
