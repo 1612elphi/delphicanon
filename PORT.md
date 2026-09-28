@@ -21,6 +21,7 @@ Reference for web conventions: `~/GitRepos/delphitools` (Ember 7.1, `.gts`, Vite
 | Privacy | No network calls in any component. No new runtime dependency without a line in this file saying why. |
 | Tests | One QUnit rendering test per component. Unit tests for pure logic (maths parser and typesetter, glyph row layout, colour conversion). |
 | Git | Local repo, no remote. Each parallel agent works in `~/GitRepos/delphicanon-wt/<group>` on branch `port/<group>`; the coordinator merges into `main`. |
+| Registry | `registry/` builds shadcn registries for the React, Vue and Svelte ports with each CLI's own build command. One item per component (`canon-<name>`, its CSS included), `canon-tokens`, one `canon-lib-<name>` per lib file (a root `lib/` subdirectory is one item), and `canon-all`. Files install under `<components alias>/canon/`, imports rewritten to relative paths without `.ts`/`.tsx`. |
 
 ## Phase A changes to the decisions
 
