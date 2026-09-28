@@ -112,38 +112,41 @@ export default function CanonButton({
     }
   };
 
-  const repeat = useCallback((button: HTMLButtonElement) => {
-    const schedule = (seconds: number, count: number) => {
-      window.clearTimeout(holdTimer.current);
-      holdTimer.current = window.setTimeout(() => {
-        if (!held.current || latest.current.disabled) return;
-        didRepeat.current = true;
-        latest.current.onClick?.();
-        schedule(
-          count < 10 ? repeatTiming.interval : repeatTiming.fast,
-          count + 1,
-        );
-      }, seconds * 1000);
-    };
-    const hold = (event: PointerEvent) => {
-      if (!latest.current.repeats || event.button !== 0) return;
-      held.current = true;
-      didRepeat.current = false;
-      schedule(repeatTiming.delay, 0);
-    };
-    const letGo = () => {
-      held.current = false;
-      window.clearTimeout(holdTimer.current);
-    };
-    const ends = ['pointerup', 'pointerleave', 'pointercancel'] as const;
-    button.addEventListener('pointerdown', hold);
-    ends.forEach((type) => button.addEventListener(type, letGo));
-    return () => {
-      letGo();
-      button.removeEventListener('pointerdown', hold);
-      ends.forEach((type) => button.removeEventListener(type, letGo));
-    };
-  }, [latest]);
+  const repeat = useCallback(
+    (button: HTMLButtonElement) => {
+      const schedule = (seconds: number, count: number) => {
+        window.clearTimeout(holdTimer.current);
+        holdTimer.current = window.setTimeout(() => {
+          if (!held.current || latest.current.disabled) return;
+          didRepeat.current = true;
+          latest.current.onClick?.();
+          schedule(
+            count < 10 ? repeatTiming.interval : repeatTiming.fast,
+            count + 1,
+          );
+        }, seconds * 1000);
+      };
+      const hold = (event: PointerEvent) => {
+        if (!latest.current.repeats || event.button !== 0) return;
+        held.current = true;
+        didRepeat.current = false;
+        schedule(repeatTiming.delay, 0);
+      };
+      const letGo = () => {
+        held.current = false;
+        window.clearTimeout(holdTimer.current);
+      };
+      const ends = ['pointerup', 'pointerleave', 'pointercancel'] as const;
+      button.addEventListener('pointerdown', hold);
+      ends.forEach((type) => button.addEventListener(type, letGo));
+      return () => {
+        letGo();
+        button.removeEventListener('pointerdown', hold);
+        ends.forEach((type) => button.removeEventListener(type, letGo));
+      };
+    },
+    [latest],
+  );
 
   return (
     <button

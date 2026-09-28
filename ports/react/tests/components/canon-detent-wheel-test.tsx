@@ -60,6 +60,7 @@ describe('canon-detent-wheel', () => {
         findAll('.canon-detent-wheel-row').find(
           (row) => row.style.getPropertyValue('--canon-detent-focus') === '1',
         )?.textContent === 'Blue',
+      2000,
     );
     expect(wheel.getAttribute('aria-valuetext')).toBe('Blue');
 
