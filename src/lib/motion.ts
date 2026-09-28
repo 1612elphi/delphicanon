@@ -87,3 +87,17 @@ export function curveEasing(
   );
   return `linear(${points.join(', ')})`;
 }
+
+/** CanonDialog and CanonSheet: in and out, the CanonMathInput sheet's curves. */
+export const dialogMotion = {
+  inMs: 350,
+  outMs: 250,
+  inEasing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+  outEasing: 'cubic-bezier(0.4, 0, 1, 1)',
+  /** A centred dialog grows from this scale. */
+  scale: 0.96,
+} as const;
+
+export function reducedMotion(): boolean {
+  return matchMedia('(prefers-reduced-motion: reduce)').matches;
+}

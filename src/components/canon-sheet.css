@@ -1,0 +1,37 @@
+.canon-sheet {
+  margin: 0;
+  max-inline-size: none;
+  max-block-size: none;
+}
+
+.canon-sheet--bottom,
+.canon-sheet--top {
+  inset-inline: 0;
+  inline-size: 100%;
+  max-block-size: calc(100% - 24px);
+}
+
+.canon-sheet--bottom {
+  inset-block: auto 0;
+  padding-block-end: env(safe-area-inset-bottom, 0px);
+}
+
+.canon-sheet--top {
+  inset-block: 0 auto;
+  padding-block-start: env(safe-area-inset-top, 0px);
+}
+
+.canon-sheet--start,
+.canon-sheet--end {
+  inset-block: 0;
+  inline-size: min(var(--canon-sheet-width), 100% - 24px);
+  block-size: 100%;
+}
+
+.canon-sheet--start {
+  inset-inline: 0 auto;
+}
+
+.canon-sheet--end {
+  inset-inline: auto 0;
+}
