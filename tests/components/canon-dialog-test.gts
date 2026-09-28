@@ -12,6 +12,7 @@ import {
 } from '@ember/test-helpers';
 import CanonButton from '#src/components/canon-button.gts';
 import CanonDialog from '#src/components/canon-dialog.gts';
+import { css } from '../helpers/css.ts';
 
 class State {
   @tracked open = false;
@@ -147,5 +148,27 @@ module('Component | canon-dialog', function (hooks) {
     held.open = false;
     await settled();
     assert.false(holding!.open, 'the owner closes it');
+  });
+
+  test('the top layer covers fixed page elements at any z-index', async function (assert) {
+    const state = new State();
+    state.open = true;
+    const floating = css(
+      'position: fixed; inset: auto 0 0; block-size: 60px; z-index: 2147483647',
+    );
+    await render(
+      <template>
+        <div class="floating" style={{floating}}>Footer</div>
+        <CanonDialog @open={{state.open}} @onClose={{state.close}}>
+          <p>Body</p>
+        </CanonDialog>
+      </template>,
+    );
+    const box = document.querySelector('.floating')!.getBoundingClientRect();
+    const hit = document.elementFromPoint(
+      box.left + box.width / 2,
+      box.top + box.height / 2,
+    );
+    assert.strictEqual(hit, document.querySelector('dialog'));
   });
 });
