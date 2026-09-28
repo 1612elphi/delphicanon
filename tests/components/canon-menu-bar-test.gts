@@ -1,6 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, triggerKeyEvent, waitUntil } from '@ember/test-helpers';
+import {
+  click,
+  render,
+  rerender,
+  triggerKeyEvent,
+  waitUntil,
+} from '@ember/test-helpers';
+import { tracked } from '@glimmer/tracking';
 import CanonMenuBar, {
   type CanonMenuBarMenu,
 } from '#src/components/canon-menu-bar.gts';
@@ -66,5 +73,35 @@ module('Component | canon-menu-bar', function (hooks) {
     await triggerKeyEvent(cell(1), 'keydown', 'ArrowLeft');
     assert.strictEqual(focused(), cell(0), 'no menu open: focus moves alone');
     assert.dom(':popover-open').doesNotExist();
+  });
+
+  test('keeps its cells wired when the menus are replaced', async function (assert) {
+    class State {
+      @tracked menus = menus;
+    }
+    const state = new State();
+    await render(
+      <template>
+        <div style={{css "width: 400px"}}>
+          <CanonMenuBar aria-label="App" @menus={{state.menus}} />
+        </div>
+      </template>,
+    );
+    state.menus = menus.map((menu) => ({ ...menu }));
+    await rerender();
+    assert.dom('[role=menubar] [role=menuitem][aria-haspopup=menu]').exists({
+      count: 2,
+    });
+    const panel = document.getElementById(
+      cell(0).getAttribute('aria-controls')!,
+    );
+    assert.ok(panel, 'the cell controls a rendered menu');
+    assert.strictEqual(
+      (cell(0) as HTMLButtonElement).popoverTargetElement,
+      panel,
+    );
+    await click(cell(0));
+    await waitUntil(() => focused().textContent?.trim() === 'New');
+    assert.true(panel!.matches(':popover-open'));
   });
 });

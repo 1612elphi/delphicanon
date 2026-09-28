@@ -51,7 +51,7 @@
     wrap,
     type CanonMenuRole,
   } from '@canon/lib/menu.ts';
-  import { attach, hide } from '@canon/lib/popover.ts';
+  import { attach, focusLeaves, hide } from '@canon/lib/popover.ts';
   import '@canon/styles/tokens.css';
   import '@canon/components/canon-popover.css';
 
@@ -250,8 +250,7 @@
   function focusout(event: FocusEvent) {
     if (isSub) return;
     const element = event.currentTarget as HTMLElement;
-    const next = event.relatedTarget;
-    if (next instanceof Node && !element.contains(next)) hide(element);
+    if (focusLeaves(element, event)) hide(element);
   }
 </script>
 

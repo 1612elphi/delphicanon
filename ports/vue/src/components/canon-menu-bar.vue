@@ -82,8 +82,8 @@ function anchorAll() {
     const detach = attach(menu, button, {
       placement: 'bottom-start',
       invokes: true,
+      haspopup: 'menu',
     });
-    button.setAttribute('aria-haspopup', 'menu');
     const toggle = (event: ToggleEvent) => {
       if (event.newState === 'open') opened.value = index;
       else if (opened.value === index) opened.value = undefined;
@@ -91,7 +91,6 @@ function anchorAll() {
     menu.addEventListener('toggle', toggle);
     detachAll.push(() => {
       menu.removeEventListener('toggle', toggle);
-      button.removeAttribute('aria-haspopup');
       detach();
     });
   });

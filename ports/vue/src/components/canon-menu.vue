@@ -47,7 +47,12 @@ import {
   type CanonMenuItem as Item,
   type CanonMenuRole,
 } from '@canon/lib/menu.ts';
-import { attach, hide, type CanonPlacement } from '@canon/lib/popover.ts';
+import {
+  attach,
+  focusLeaves,
+  hide,
+  type CanonPlacement,
+} from '@canon/lib/popover.ts';
 import { check, chevronRight } from '../lib/lucide.ts';
 import { elementOf, type CanonTriggerRef } from '../lib/trigger.ts';
 import CanonIcon from './canon-icon.vue';
@@ -137,8 +142,8 @@ watch(
     const detach = attach(panel, button, {
       placement: placement ?? 'bottom-start',
       invokes: true,
+      haspopup: 'menu',
     });
-    button.setAttribute('aria-haspopup', 'menu');
     const keydown = (event: KeyboardEvent) => {
       if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
       event.preventDefault();
@@ -147,7 +152,6 @@ watch(
     button.addEventListener('keydown', keydown);
     onCleanup(() => {
       button.removeEventListener('keydown', keydown);
-      button.removeAttribute('aria-haspopup');
       detach();
     });
   },
@@ -292,8 +296,7 @@ function findTyped(
 function focusout(event: FocusEvent) {
   if (props.sub) return;
   const panel = event.currentTarget as HTMLElement;
-  const next = event.relatedTarget;
-  if (next instanceof Node && !panel.contains(next)) hide(panel);
+  if (focusLeaves(panel, event)) hide(panel);
 }
 </script>
 

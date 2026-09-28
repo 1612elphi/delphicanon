@@ -72,8 +72,8 @@
         const detach = attach(list, button, {
           placement: 'bottom-start',
           invokes: true,
+          haspopup: 'menu',
         });
-        button.setAttribute('aria-haspopup', 'menu');
         const toggle = (event: ToggleEvent) => {
           if (event.newState === 'open') opened = index;
           else if (opened === index) opened = undefined;
@@ -81,7 +81,6 @@
         list.addEventListener('toggle', toggle);
         return () => {
           list.removeEventListener('toggle', toggle);
-          button.removeAttribute('aria-haspopup');
           detach();
         };
       };

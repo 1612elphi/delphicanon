@@ -88,8 +88,8 @@ export default class CanonMenuBar extends Component<CanonMenuBarSignature> {
     const detach = attach(panel, cell, {
       placement: 'bottom-start',
       invokes: true,
+      haspopup: 'menu',
     });
-    cell.setAttribute('aria-haspopup', 'menu');
     const toggle = (event: ToggleEvent) => {
       if (event.newState === 'open') this.opened = index;
       else if (this.opened === index) this.opened = undefined;
@@ -97,7 +97,6 @@ export default class CanonMenuBar extends Component<CanonMenuBarSignature> {
     panel.addEventListener('toggle', toggle);
     return () => {
       panel.removeEventListener('toggle', toggle);
-      cell.removeAttribute('aria-haspopup');
       detach();
     };
   });
@@ -181,7 +180,7 @@ export default class CanonMenuBar extends Component<CanonMenuBarSignature> {
           />
         {{/each}}
       </CanonGrid>
-      {{#each @menus as |menu index|}}
+      {{#each @menus key="@index" as |menu index|}}
         <CanonMenuList
           id="{{this.id}}-{{index}}"
           @items={{menu.items}}

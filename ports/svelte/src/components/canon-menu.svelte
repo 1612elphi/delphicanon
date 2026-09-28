@@ -40,8 +40,8 @@
     const detach = attach(panel, button, {
       placement: placement ?? 'bottom-start',
       invokes: true,
+      haspopup: 'menu',
     });
-    button.setAttribute('aria-haspopup', 'menu');
     const keydown = (event: KeyboardEvent) => {
       if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
       event.preventDefault();
@@ -50,7 +50,6 @@
     button.addEventListener('keydown', keydown);
     return () => {
       button.removeEventListener('keydown', keydown);
-      button.removeAttribute('aria-haspopup');
       detach();
     };
   };

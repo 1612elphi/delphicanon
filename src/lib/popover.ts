@@ -46,6 +46,8 @@ export interface AttachOptions {
   placement: CanonPlacement;
   /** The anchor is a button that toggles the panel natively (popovertarget) and shows aria-expanded. */
   invokes?: boolean;
+  /** aria-haspopup on the invoking button. */
+  haspopup?: 'menu' | 'dialog';
   /** Space between anchor and panel; default --canon-popover-gap. */
   gap?: string;
   /** Takes focus back when the panel closes with focus inside it; default the anchor. */
@@ -83,6 +85,8 @@ export function attach(
     button.popoverTargetElement = panel;
     button.setAttribute('aria-controls', panel.id);
     button.setAttribute('aria-expanded', 'false');
+    if (options.haspopup)
+      button.setAttribute('aria-haspopup', options.haspopup);
   }
 
   let hadFocus = false;
@@ -116,10 +120,12 @@ export function attach(
       gap,
     ])
       panel.style.removeProperty(property);
-    if (button) {
+    // a re-render can attach the new panel before the old one detaches
+    if (button?.popoverTargetElement === panel) {
       button.popoverTargetElement = null;
       button.removeAttribute('aria-controls');
       button.removeAttribute('aria-expanded');
+      button.removeAttribute('aria-haspopup');
     }
   };
 }
@@ -130,6 +136,20 @@ export function panelFor(trigger: Element, id: string): HTMLElement {
   const panel = root.getElementById(id);
   if (!panel) throw new Error(`no popover #${id} beside its trigger`);
   return panel;
+}
+
+/**
+ * Focus left `panel` for somewhere outside it. A press on the panel's own
+ * trigger does not count: its click toggles the panel closed.
+ */
+export function focusLeaves(panel: HTMLElement, event: FocusEvent): boolean {
+  const next = event.relatedTarget;
+  if (!(next instanceof Element) || panel.contains(next)) return false;
+  return !(
+    next.matches(':active') &&
+    next instanceof HTMLButtonElement &&
+    next.popoverTargetElement === panel
+  );
 }
 
 export function isOpen(panel: Element): boolean {

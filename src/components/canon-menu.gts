@@ -21,6 +21,7 @@ import {
   attach,
   hide,
   isOpen,
+  focusLeaves,
   panelFor,
   type CanonPlacement,
 } from '../lib/popover.ts';
@@ -239,8 +240,7 @@ export class CanonMenuList extends Component<CanonMenuListSignature> {
   focusout = (event: FocusEvent) => {
     if (this.args.sub) return;
     const panel = event.currentTarget as HTMLElement;
-    const next = event.relatedTarget;
-    if (next instanceof Node && !panel.contains(next)) hide(panel);
+    if (focusLeaves(panel, event)) hide(panel);
   };
 
   <template>
@@ -331,8 +331,8 @@ export default class CanonMenu extends Component<CanonMenuSignature> {
     const detach = attach(panel, button, {
       placement: this.args.placement ?? 'bottom-start',
       invokes: true,
+      haspopup: 'menu',
     });
-    button.setAttribute('aria-haspopup', 'menu');
     const keydown = (event: KeyboardEvent) => {
       if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
       event.preventDefault();
@@ -341,7 +341,6 @@ export default class CanonMenu extends Component<CanonMenuSignature> {
     button.addEventListener('keydown', keydown);
     return () => {
       button.removeEventListener('keydown', keydown);
-      button.removeAttribute('aria-haspopup');
       detach();
     };
   });
