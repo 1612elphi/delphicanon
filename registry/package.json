@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "bun build.ts",
-    "site": "bun build.ts && bun run --cwd ../showcase build && cp -R ../showcase/dist/. public/",
+    "site": "bun build.ts && bun run --cwd .. build:showcase && cp -R ../showcase/dist/. public/",
     "serve": "python3 -m http.server 4330 --directory public",
     "test": "bun test",
     "lint": "eslint . && prettier . --check && tsc --noEmit",

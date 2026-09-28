@@ -43,6 +43,8 @@
     "lint:types": "ember-tsc --noEmit",
     "prepack": "rollup --config",
     "start": "vite dev",
+    "showcase": "vite dev --config showcase/vite.config.mjs",
+    "build:showcase": "vite build --config showcase/vite.config.mjs",
     "test": "vite build --mode=development --out-dir dist-tests && testem --file testem.cjs ci --port 0",
     "shot": "node scripts/shot.mjs"
   },

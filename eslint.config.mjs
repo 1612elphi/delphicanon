@@ -36,6 +36,7 @@ export default defineConfig([
   globalIgnores([
     'dist/',
     'dist-*/',
+    'showcase/dist/',
     'declarations/',
     'coverage/',
     'ports/',

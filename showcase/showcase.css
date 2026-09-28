@@ -1,11 +1,11 @@
-@import '../../demo-app/components/gallery/controls.css';
+@import "../demo-app/components/gallery/controls.css";
 
 /* relative, so the build carries the fonts beside its assets */
 @font-face {
-  font-family: 'iA Writer Quattro';
+  font-family: "iA Writer Quattro";
   font-style: normal;
   font-weight: 400 700;
-  src: url('../../public/fonts/iAWriterQuattroV.woff2') format('woff2');
+  src: url("../public/fonts/iAWriterQuattroV.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -13,13 +13,12 @@
   font-family: FluoWrite;
   font-style: normal;
   font-weight: 400;
-  src: url('../../public/fonts/fluoWrite-Regular.otf') format('opentype');
+  src: url("../public/fonts/fluoWrite-Regular.otf") format("opentype");
   font-display: swap;
 }
 
 html,
-body,
-#root {
+body {
   block-size: 100%;
   margin: 0;
 }
