@@ -11,7 +11,8 @@
   font-family: var(--canon-font);
 }
 
-.canon-page > * {
+/* a dialog child sits in the top layer; :where keeps the old specificity */
+.canon-page > :where(:not(dialog)) {
   flex: none;
   box-sizing: border-box;
   inline-size: min(

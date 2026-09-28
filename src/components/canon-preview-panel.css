@@ -8,7 +8,7 @@
   line-height: 1.3;
 }
 
-/* below .canon-page > *, which centres the panel in a page */
+/* below the .canon-page child rule, which centres the panel in a page */
 :where(.canon-preview-panel) {
   margin: 0;
 }
