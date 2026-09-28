@@ -1,0 +1,97 @@
+.canon-menu {
+  min-inline-size: var(--canon-menu-min-inline);
+}
+
+.canon-menu:popover-open {
+  display: flex;
+  flex-direction: column;
+}
+
+.canon-menu-item {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: var(--canon-control-height);
+  margin: 0;
+  padding: 8px var(--canon-panel-padding);
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-body);
+  font-weight: var(--canon-weight-regular);
+  line-height: 1.3;
+  text-align: start;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+.canon-menu-item:focus,
+.canon-menu-item[aria-expanded="true"] {
+  outline: none;
+  background: var(--canon-accent-bg);
+}
+
+.canon-menu-item--destructive {
+  color: var(--canon-destructive);
+}
+
+.canon-menu-item[aria-disabled="true"] {
+  color: color-mix(in srgb, var(--canon-foreground) 40%, transparent);
+  cursor: default;
+}
+
+.canon-menu-item-check,
+.canon-menu-item-icon,
+.canon-menu-item-more {
+  display: flex;
+  flex: none;
+  inline-size: var(--canon-icon-inline);
+  block-size: var(--canon-icon-inline);
+}
+
+.canon-menu-item-check svg,
+.canon-menu-item-icon svg,
+.canon-menu-item-more svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.canon-menu:not(.canon-menu--checks)
+  > .canon-menu-item
+  > .canon-menu-item-check,
+.canon-menu:not(.canon-menu--icons) > .canon-menu-item > .canon-menu-item-icon {
+  display: none;
+}
+
+.canon-menu-item-check {
+  color: var(--canon-primary);
+}
+
+.canon-menu-item-title {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canon-menu-item-shortcut {
+  flex: none;
+  color: var(--canon-muted-foreground);
+  font-family: inherit;
+  font-size: var(--canon-text-footnote);
+}
+
+.canon-menu-item-more {
+  color: var(--canon-muted-foreground);
+}
+
+.canon-menu-item-more:dir(rtl) {
+  scale: -1 1;
+}

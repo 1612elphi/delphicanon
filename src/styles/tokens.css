@@ -120,6 +120,11 @@
   --canon-command-list-height: 360px;
   --canon-command-icon: 24px;
   --canon-key-cap: 22px;
+  /* menus: shadow from the web app's .dt-popover */
+  --canon-popover-gap: 4px;
+  --canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
+  --canon-menu-min-inline: 200px;
+  --canon-tooltip-max-inline: 240px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -171,6 +176,8 @@
     /* command group */
     --canon-dialog-backdrop: rgb(0 0 0 / 55%);
     --canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 45%);
+    /* menus */
+    --canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
   }
 }
 
@@ -222,4 +229,6 @@ html.dark {
   /* command group */
   --canon-dialog-backdrop: rgb(0 0 0 / 55%);
   --canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 45%);
+  /* menus */
+  --canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
 }
