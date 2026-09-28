@@ -59,14 +59,14 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [ ] | canon-lamps | |
 | [ ] | canon-loader | |
 | [ ] | canon-loupe | |
-| [ ] | canon-math-editor | |
-| [ ] | canon-math-field | |
-| [ ] | canon-math-input | |
-| [ ] | canon-math-key | |
-| [ ] | canon-math-keypad | |
-| [ ] | canon-math-rail | |
-| [ ] | canon-math-tabs | |
-| [ ] | canon-math-view | |
+| [x] | canon-math-editor | |
+| [x] | canon-math-field | |
+| [x] | canon-math-input | Covered by the canon-math-field test, as in Ember. |
+| [x] | canon-math-key | `@key` is `mathKey`. |
+| [x] | canon-math-keypad | |
+| [x] | canon-math-rail | |
+| [x] | canon-math-tabs | Covered by the canon-math-keypad test, as in Ember. |
+| [x] | canon-math-view | |
 | [ ] | canon-menu-cell | |
 | [ ] | canon-number-field | |
 | [ ] | canon-page-strip | |
