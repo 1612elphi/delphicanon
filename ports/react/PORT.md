@@ -32,7 +32,7 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | Tick | Component | Notes |
 |---|---|---|
 | [x] | canon-bar | |
-| [ ] | canon-big-number-field | |
+| [x] | canon-big-number-field | |
 | [x] | canon-button | |
 | [x] | canon-canvas | |
 | [x] | canon-code-block | |
@@ -42,22 +42,22 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-colour-solid | Canvas created in the ref callback, see Deviations. |
 | [ ] | canon-colour-strip | |
 | [ ] | canon-colour-well | |
-| [ ] | canon-decimal-field | |
+| [x] | canon-decimal-field | |
 | [ ] | canon-detent-wheel-row | |
 | [ ] | canon-detent-wheel | |
-| [ ] | canon-drop-zone | |
-| [ ] | canon-dual-list | |
+| [x] | canon-drop-zone | |
+| [x] | canon-dual-list | |
 | [x] | canon-empty-row | |
-| [ ] | canon-figure | |
-| [ ] | canon-file-cell | |
-| [ ] | canon-from-to | |
+| [x] | canon-figure | |
+| [x] | canon-file-cell | |
+| [x] | canon-from-to | |
 | [x] | canon-glyph-flow | |
 | [x] | canon-grid | |
 | [x] | canon-heading | |
 | [x] | canon-icon | No Ember test; covered through the components that draw icons. |
 | [x] | canon-image-compare | |
 | [x] | canon-lamps | |
-| [ ] | canon-loader | |
+| [x] | canon-loader | |
 | [ ] | canon-loupe | |
 | [x] | canon-math-editor | |
 | [x] | canon-math-field | |
@@ -67,8 +67,8 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-math-rail | |
 | [x] | canon-math-tabs | Covered by the canon-math-keypad test, as in Ember. |
 | [x] | canon-math-view | |
-| [ ] | canon-menu-cell | |
-| [ ] | canon-number-field | |
+| [x] | canon-menu-cell | |
+| [x] | canon-number-field | |
 | [x] | canon-page-strip | |
 | [x] | canon-page | |
 | [ ] | canon-palette-card | |
@@ -78,14 +78,14 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-rows | |
 | [x] | canon-rule | |
 | [x] | canon-segmented | |
-| [ ] | canon-slider | |
+| [x] | canon-slider | |
 | [x] | canon-split | |
-| [ ] | canon-status | |
-| [ ] | canon-stepper | |
+| [x] | canon-status | |
+| [x] | canon-stepper | |
 | [ ] | canon-swatch | |
-| [ ] | canon-switch | |
-| [ ] | canon-text-area | |
-| [ ] | canon-text-cell | |
+| [x] | canon-switch | |
+| [x] | canon-text-area | |
+| [x] | canon-text-cell | |
 | [x] | canon-text-input | |
 | [x] | canon-text-output | |
 | [x] | canon-tiles | |
