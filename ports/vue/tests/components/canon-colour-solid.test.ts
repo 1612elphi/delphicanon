@@ -117,3 +117,33 @@ test('a new space converts the pick; arrow keys turn it', async () => {
     before,
   );
 });
+
+test('cuts away by default, as cutsAway true', async () => {
+  if (!hasWebGL2) return;
+  await render(
+    `<div v-for="cuts in [undefined, true, false]" style="width: 200px; height: 200px">
+      <CanonColourSolid space="rgb" :point="[0.5, 0.5, 0.5, 0]" :cuts-away="cuts" />
+    </div>`,
+    { CanonColourSolid },
+  );
+  await frame();
+  await frame();
+  const pixels = findAll<HTMLCanvasElement>('.canon-colour-solid-canvas').map(
+    (canvas) => {
+      const gl = canvas.getContext('webgl2')!;
+      const out = new Uint8Array(canvas.width * canvas.height * 4);
+      gl.readPixels(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        out,
+      );
+      return out.join();
+    },
+  );
+  expect(pixels[0], 'absent draws as true').toBe(pixels[1]);
+  expect(pixels[0], 'and not as false').not.toBe(pixels[2]);
+});
