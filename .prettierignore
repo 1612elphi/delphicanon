@@ -14,3 +14,7 @@ config/ember-cli-update.json
 *.yml
 *.md
 *.html
+
+# framework ports and the registry lint themselves
+/ports/
+/registry/
