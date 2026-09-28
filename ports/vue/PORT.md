@@ -33,7 +33,7 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [ ] | canon-colour-card | `canon-colour-card.vue` | |
 | [ ] | canon-colour-controls | `canon-colour-controls.vue` | |
 | [ ] | canon-colour-notation-input | `canon-colour-notation-input.vue` | |
-| [ ] | canon-colour-solid | `canon-colour-solid.vue` | |
+| [x] | canon-colour-solid | `canon-colour-solid.vue` | No gallery group; the colour page uses it. `cutsAway` and `animated` default to `undefined` (`cutsAway` undefined means true). The first sync of the renderer runs in setup, before mount; the mount paint draws the synced state. |
 | [ ] | canon-colour-strip | `canon-colour-strip.vue` | |
 | [ ] | canon-colour-well | `canon-colour-well.vue` | |
 | [ ] | canon-decimal-field | `canon-decimal-field.vue` | |
