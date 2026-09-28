@@ -1,4 +1,6 @@
 @import "../demo-app/components/gallery/controls.css";
+@import "../demo-app/components/gallery/menus.css";
+@import "../demo-app/components/gallery/shell.css";
 
 /* relative, so the build carries the fonts beside its assets */
 @font-face {
@@ -108,6 +110,19 @@ body {
   display: flex;
   block-size: 112px;
   background: var(--canon-card);
+}
+
+.showcase-sidebar-box {
+  display: flex;
+  block-size: 400px;
+  background: var(--canon-card);
+}
+
+.showcase-sidebar-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--canon-frame);
+  background: var(--canon-border);
 }
 
 .showcase-box {
