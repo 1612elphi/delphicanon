@@ -26,7 +26,7 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | Tick | Ember component | Vue | Notes |
 |---|---|---|---|
 | [x] | canon-bar | `canon-bar.vue` | |
-| [ ] | canon-big-number-field | `canon-big-number-field.vue` | |
+| [x] | canon-big-number-field | `canon-big-number-field.vue` | |
 | [x] | canon-button | `canon-button.vue` | |
 | [x] | canon-canvas | `canon-canvas.vue` | |
 | [ ] | canon-code-block | `canon-code-block.vue` | |
@@ -36,22 +36,22 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-colour-solid | `canon-colour-solid.vue` | No gallery group; the colour page uses it. `cutsAway` and `animated` default to `undefined` (`cutsAway` undefined means true). The first sync of the renderer runs in setup, before mount; the mount paint draws the synced state. |
 | [ ] | canon-colour-strip | `canon-colour-strip.vue` | |
 | [ ] | canon-colour-well | `canon-colour-well.vue` | |
-| [ ] | canon-decimal-field | `canon-decimal-field.vue` | |
+| [x] | canon-decimal-field | `canon-decimal-field.vue` | `typingPauseMs` is exported from a plain script block. The internal step function is `nudge`, since `step` is a prop. |
 | [ ] | canon-detent-wheel-row | `canon-detent-wheel-row.vue` | |
 | [ ] | canon-detent-wheel | `canon-detent-wheel.vue` | |
-| [ ] | canon-drop-zone | `canon-drop-zone.vue` | |
-| [ ] | canon-dual-list | `canon-dual-list.vue` | |
+| [x] | canon-drop-zone | `canon-drop-zone.vue` | `paste` defaults to undefined, so an absent prop shows Paste (tested). |
+| [x] | canon-dual-list | `canon-dual-list.vue` | `CanonDualItem` is exported from a plain script block; ids from `useId()`. |
 | [x] | canon-empty-row | `canon-empty-row.vue` | |
-| [ ] | canon-figure | `canon-figure.vue` | |
-| [ ] | canon-file-cell | `canon-file-cell.vue` | |
-| [ ] | canon-from-to | `canon-from-to.vue` | |
+| [x] | canon-figure | `canon-figure.vue` | `animated` defaults to undefined. The roll is a post-flush watch on the template ref, the text and `animated`. |
+| [x] | canon-file-cell | `canon-file-cell.vue` | |
+| [x] | canon-from-to | `canon-from-to.vue` | |
 | [ ] | canon-glyph-flow | `canon-glyph-flow.vue` | |
 | [x] | canon-grid | `canon-grid.vue` | |
 | [x] | canon-heading | `canon-heading.vue` | |
 | [x] | canon-icon | `canon-icon.vue` | No test of its own, as in Ember; every icon test covers it. |
 | [ ] | canon-image-compare | `canon-image-compare.vue` | |
 | [ ] | canon-lamps | `canon-lamps.vue` | |
-| [ ] | canon-loader | `canon-loader.vue` | |
+| [x] | canon-loader | `canon-loader.vue` | `CanonLoaderMode` exported. |
 | [ ] | canon-loupe | `canon-loupe.vue` | |
 | [ ] | canon-math-editor | `canon-math-editor.vue` | |
 | [ ] | canon-math-field | `canon-math-field.vue` | |
@@ -61,8 +61,8 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [ ] | canon-math-rail | `canon-math-rail.vue` | |
 | [ ] | canon-math-tabs | `canon-math-tabs.vue` | |
 | [ ] | canon-math-view | `canon-math-view.vue` | |
-| [ ] | canon-menu-cell | `canon-menu-cell.vue` | |
-| [ ] | canon-number-field | `canon-number-field.vue` | |
+| [x] | canon-menu-cell | `canon-menu-cell.vue` | |
+| [x] | canon-number-field | `canon-number-field.vue` | |
 | [ ] | canon-page-strip | `canon-page-strip.vue` | |
 | [x] | canon-page | `canon-page.vue` | |
 | [ ] | canon-palette-card | `canon-palette-card.vue` | |
@@ -72,14 +72,14 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-rows | `canon-rows.vue` | |
 | [x] | canon-rule | `canon-rule.vue` | |
 | [x] | canon-segmented | `canon-segmented.vue` | |
-| [ ] | canon-slider | `canon-slider.vue` | |
+| [x] | canon-slider | `canon-slider.vue` | The drag modifier is `onMounted` listeners on template refs. |
 | [x] | canon-split | `canon-split.vue` | |
-| [ ] | canon-status | `canon-status.vue` | |
-| [ ] | canon-stepper | `canon-stepper.vue` | |
+| [x] | canon-status | `canon-status.vue` | `CanonStatusTone` exported. |
+| [x] | canon-stepper | `canon-stepper.vue` | |
 | [ ] | canon-swatch | `canon-swatch.vue` | |
-| [ ] | canon-switch | `canon-switch.vue` | |
-| [ ] | canon-text-area | `canon-text-area.vue` | |
-| [ ] | canon-text-cell | `canon-text-cell.vue` | |
+| [x] | canon-switch | `canon-switch.vue` | `on` defaults to undefined. |
+| [x] | canon-text-area | `canon-text-area.vue` | The echo guard is a post-flush watch on the ref and `value`. |
+| [x] | canon-text-cell | `canon-text-cell.vue` | |
 | [ ] | canon-text-input | `canon-text-input.vue` | |
 | [ ] | canon-text-output | `canon-text-output.vue` | |
 | [ ] | canon-tiles | `canon-tiles.vue` | |
