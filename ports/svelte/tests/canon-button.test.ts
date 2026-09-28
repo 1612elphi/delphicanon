@@ -4,11 +4,15 @@ import CanonButton from '../src/components/canon-button.svelte';
 import { click, dot, find, triggerEvent, wait } from './helpers.ts';
 
 describe('canon-button', () => {
-  test('kinds set their heights and fill', () => {
-    render(CanonButton, { class: 'primary', text: 'Go', kind: 'primary' });
-    render(CanonButton, { class: 'secondary', text: 'Go' });
-    render(CanonButton, { class: 'cell', text: 'Go', kind: 'cell' });
-    render(CanonButton, {
+  test('kinds set their heights and fill', async () => {
+    await render(CanonButton, {
+      class: 'primary',
+      text: 'Go',
+      kind: 'primary',
+    });
+    await render(CanonButton, { class: 'secondary', text: 'Go' });
+    await render(CanonButton, { class: 'cell', text: 'Go', kind: 'cell' });
+    await render(CanonButton, {
       class: 'segment',
       text: 'Go',
       kind: 'segment',
@@ -26,8 +30,8 @@ describe('canon-button', () => {
   test('runs onClick unless disabled', async () => {
     let clicks = 0;
     const count = () => (clicks += 1);
-    render(CanonButton, { class: 'on', text: 'Go', onClick: count });
-    render(CanonButton, {
+    await render(CanonButton, { class: 'on', text: 'Go', onClick: count });
+    await render(CanonButton, {
       class: 'off',
       text: 'Go',
       onClick: count,
@@ -38,15 +42,19 @@ describe('canon-button', () => {
     expect(clicks).toBe(1);
   });
 
-  test('an icon-only button is named by its label', () => {
-    render(CanonButton, { kind: 'cell', icon: dot, label: 'Zoom in' });
+  test('an icon-only button is named by its label', async () => {
+    await render(CanonButton, { kind: 'cell', icon: dot, label: 'Zoom in' });
     expect(find('button').getAttribute('aria-label')).toBe('Zoom in');
     expect(find('button').classList).toContain('canon-button--symbol');
     expect(document.querySelector('.canon-button-title')).toBeNull();
   });
 
-  test('oversized draws the icon behind the title', () => {
-    render(CanonButton, { text: 'Wipe', icon: dot, iconStyle: 'oversized' });
+  test('oversized draws the icon behind the title', async () => {
+    await render(CanonButton, {
+      text: 'Wipe',
+      icon: dot,
+      iconStyle: 'oversized',
+    });
     expect(
       document.querySelector('.canon-button-watermark svg'),
     ).not.toBeNull();
@@ -55,7 +63,7 @@ describe('canon-button', () => {
   });
 
   test('flashesCopied shows Copied after a click', async () => {
-    render(CanonButton, { text: 'Copy', icon: dot, flashesCopied: true });
+    await render(CanonButton, { text: 'Copy', icon: dot, flashesCopied: true });
     await click('button');
     expect(find('.canon-button-title').textContent).toBe('Copied');
   });
@@ -63,7 +71,7 @@ describe('canon-button', () => {
   test('repeats while held; the release does not add a step', async () => {
     let steps = 0;
     const step = () => (steps += 1);
-    render(CanonButton, { text: '+', repeats: true, onClick: step });
+    await render(CanonButton, { text: '+', repeats: true, onClick: step });
     await triggerEvent('button', 'pointerdown', { button: 0 });
     await wait(600);
     await triggerEvent('button', 'pointerup', { button: 0 });

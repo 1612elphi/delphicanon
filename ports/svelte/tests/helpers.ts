@@ -105,3 +105,15 @@ export function fakeClipboard(toast: CanonToastStore): string[] {
   };
   return written;
 }
+
+/** Polls until `check` holds or the time runs out, as Ember's waitUntil. */
+export async function waitUntil(check: () => boolean, timeout = 1000) {
+  const end = performance.now() + timeout;
+  while (!check()) {
+    if (performance.now() > end) throw new Error('waitUntil timed out');
+    await wait(10);
+  }
+}
+
+export const nextFrame = () =>
+  new Promise((resolve) => requestAnimationFrame(() => resolve(undefined)));
