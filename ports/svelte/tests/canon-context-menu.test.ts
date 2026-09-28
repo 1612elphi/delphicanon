@@ -1,0 +1,43 @@
+import { describe, expect, test } from 'vitest';
+import { render } from 'vitest-browser-svelte';
+import type {
+  CanonMenuEntry,
+  CanonMenuItem,
+} from '../src/components/canon-menu.svelte';
+import Scene from './fixtures/canon-context-menu-scene.svelte';
+import {
+  click,
+  find,
+  triggerEvent,
+  triggerKeyEvent,
+  waitUntil,
+} from './helpers.ts';
+
+const items: CanonMenuEntry[] = [{ title: 'Paste' }, { title: 'Select all' }];
+
+describe('canon-context-menu', () => {
+  test('opens at the pointer and by keyboard, and reports a choice', async () => {
+    const chosen: string[] = [];
+    const onSelect = (item: CanonMenuItem) => chosen.push(item.title);
+    await render(Scene, { items, onSelect });
+    const menu = find('[role=menu]');
+    const point = find('.canon-context-menu-point');
+
+    await triggerEvent('.area', 'contextmenu', { clientX: 40, clientY: 30 });
+    expect(menu.matches(':popover-open')).toBe(true);
+    expect(point.style.left).toBe('40px');
+    expect(point.style.top).toBe('30px');
+    expect(document.activeElement?.textContent?.trim()).toBe('Paste');
+
+    await click('[role=menuitem]:nth-child(2)');
+    expect(chosen).toEqual(['Select all']);
+    expect(menu.matches(':popover-open')).toBe(false);
+
+    find('.area').focus();
+    await triggerKeyEvent('.area', 'keydown', 'F10', { shiftKey: true });
+    expect(menu.matches(':popover-open'), 'Shift+F10').toBe(true);
+    menu.hidePopover();
+    await waitUntil(() => !!document.activeElement?.matches('.area'));
+    expect(document.activeElement, 'focus goes back').toBe(find('.area'));
+  });
+});

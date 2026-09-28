@@ -29,7 +29,14 @@ Svelte 5 port of the Ember addon in the repository root. The Ember sources (`src
 | Math | `CanonMathFieldHandle` is a class exported from the field's module script; the field registers `edit` on it in an effect. `CanonMathView` props extend `HTMLAttributes<Element>`, as its root is an `<svg>` or a `<div>`. | Same object passed to field and keypad as in Ember. |
 | Empty arrays | CanonLamps and CanonReadoutBand treat an empty `lamps` array as absent, as Glimmer's `if` does. | Same output as Ember. |
 | a11y ignores | `canon-colour-solid` (group with `tabindex`) and `canon-drop-zone` (static element with drop handlers) carry a `svelte-ignore` for the a11y warning. | Adding a role would change the DOM against Ember. |
-| Checks | 57 test files, 98 tests (the 97 Ember tests plus one for a consumer's `pointerdown` on the slider). The gallery and the colour page were compared with the Ember demo pixel for pixel at 1400 x 1000 and 1400 x 5200, light and dark. | |
+| Yielded modifiers | A modifier the Ember block yields (CanonPopover, CanonTooltip and CanonMenu `trigger`) is an attachment in the snippet's parameter object: `{#snippet children(menu)}<CanonButton {@attach menu.trigger} />{/snippet}`, `{#snippet trigger(popover)}`, `{#snippet content(popover)}`. An attachment on a component reaches the root element through the rest spread, as `...attributes` carries a modifier. Hash yields are one object parameter; positional yields (`close` in CanonDialog's blocks) are positional parameters. | Svelte passes values into a block only as snippet parameters, and an attachment is the element-level counterpart of a modifier. |
+| Stable attachments | CanonMenuBar's `anchor(index)` and CanonMenuList's `submenu(index)` return the same function per index. | A new function re-attaches through the spread, which clears `popoverTargetElement` and `aria-expanded` on an open menu. |
+| Menu list | `CanonMenuList` and `showMenu` are `canon-menu-list.svelte` (default export and module export); `canon-menu.svelte` re-exports `CanonMenuEntry` and `CanonMenuItem`. The list imports `canon-popover.css` only; CanonMenu, CanonContextMenu and CanonMenuBar import `canon-menu.css`. A submenu is the list importing itself. | A `.svelte` file has one component. The registry makes an item of every file, and `canon-menu.css` belongs to the `canon-menu` item, so the list importing it would make the cycle canon-menu, canon-menu-list, canon-menu. |
+| Sheet | CanonSheet renders CanonDialog with its classes and a `keyframes(dialog)` prop, the slide from its edge. `keyframes` is a public CanonDialog prop, default the centred scale. | Ember's CanonSheet subclasses CanonDialog and overrides `classNames` and `keyframes()`; a Svelte component cannot be subclassed. |
+| Dialog content | The implicit children of CanonDialog and CanonSheet are the default block; `header`, `children` and `footer` get `close` as their parameter. | Blocks with parameters are snippets. |
+| Server render | `tests/ssr.server.test.ts` renders each of the 11 menus, shell and command components with `svelte/server` `render()` in a Node Vitest project (`server` in `vite.config.ts`), so a `window` or `document` read during setup fails the run. | SvelteKit renders components on the server. |
+| Window test | The window test's fixture gives its three boxes `flex: none`. | The Vitest browser viewport is narrower than the Ember test container, and the boxes shrank below the 640 px rail break. |
+| Checks | 69 test files, 129 tests: in the browser project the 97 Ember tests of the first port, one for a consumer's `pointerdown` on the slider and the 20 Ember tests of the menus, shell and command groups; in the server project 11 server renders. The gallery was compared with the Ember demo pixel for pixel at 1400 x 1000 and 1400 x 8000, light and dark, and the new widgets were driven in both demos with the same puppeteer steps. | |
 
 ## Tracker
 
@@ -48,9 +55,12 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-colour-solid | |
 | [x] | canon-colour-strip | |
 | [x] | canon-colour-well | |
+| [x] | canon-command | |
+| [x] | canon-context-menu | |
 | [x] | canon-decimal-field | |
-| [x] | canon-detent-wheel-row | Tested by the detent wheel test. |
 | [x] | canon-detent-wheel | |
+| [x] | canon-detent-wheel-row | Tested by the detent wheel test. |
+| [x] | canon-dialog | |
 | [x] | canon-drop-zone | |
 | [x] | canon-dual-list | |
 | [x] | canon-empty-row | |
@@ -58,7 +68,7 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-file-cell | |
 | [x] | canon-from-to | |
 | [x] | canon-glyph-flow | |
-| [x] | canon-grid | |
+| [x] | canon-grid | Skips `[popover]` children when it places cells, as in Ember. |
 | [x] | canon-heading | |
 | [x] | canon-icon | No test, as in Ember. |
 | [x] | canon-image-compare | |
@@ -73,17 +83,24 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-math-rail | |
 | [x] | canon-math-tabs | Tested by the keypad test. |
 | [x] | canon-math-view | |
+| [x] | canon-menu | |
+| [x] | canon-menu-bar | |
 | [x] | canon-menu-cell | |
+| [x] | canon-menu-list | Tested by the menu, context menu and menu bar tests. |
 | [x] | canon-number-field | |
-| [x] | canon-page-strip | |
 | [x] | canon-page | |
+| [x] | canon-page-strip | |
 | [x] | canon-palette-card | |
+| [x] | canon-popover | |
 | [x] | canon-preview-panel | |
 | [x] | canon-readout-band | |
 | [x] | canon-row | |
 | [x] | canon-rows | |
 | [x] | canon-rule | |
 | [x] | canon-segmented | |
+| [x] | canon-sheet | |
+| [x] | canon-sidebar | |
+| [x] | canon-sidebar-row | |
 | [x] | canon-slider | |
 | [x] | canon-split | |
 | [x] | canon-status | |
@@ -97,4 +114,6 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-tiles | |
 | [x] | canon-timecode | |
 | [x] | canon-toast | |
+| [x] | canon-tooltip | |
 | [x] | canon-value-line | |
+| [x] | canon-window | |

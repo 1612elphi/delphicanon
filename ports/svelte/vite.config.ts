@@ -15,12 +15,30 @@ export default defineConfig({
   publicDir: '../../public',
   server: { fs: { allow: ['../..'] } },
   test: {
-    include: ['tests/**/*.test.ts'],
-    browser: {
-      enabled: true,
-      headless: true,
-      provider: playwright({ launchOptions: { executablePath: chrome } }),
-      instances: [{ browser: 'chromium' }],
-    },
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'browser',
+          include: ['tests/**/*.test.ts'],
+          exclude: ['tests/**/*.server.test.ts'],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({ launchOptions: { executablePath: chrome } }),
+            instances: [{ browser: 'chromium' }],
+          },
+        },
+      },
+      // SvelteKit renders components on the server
+      {
+        extends: true,
+        test: {
+          name: 'server',
+          include: ['tests/**/*.server.test.ts'],
+          environment: 'node',
+        },
+      },
+    ],
   },
 });
