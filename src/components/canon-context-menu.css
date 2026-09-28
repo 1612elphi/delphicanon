@@ -1,0 +1,6 @@
+.canon-context-menu-point {
+  position: fixed;
+  inline-size: 0;
+  block-size: 0;
+  pointer-events: none;
+}

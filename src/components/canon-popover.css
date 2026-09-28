@@ -1,0 +1,13 @@
+/* resets the UA [popover] box; lib/popover.ts sets the anchor, area and gap inline */
+.canon-popover {
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: var(--canon-hairline) solid var(--canon-border);
+  background: var(--canon-card);
+  color: var(--canon-foreground);
+  font-family: var(--canon-font);
+  box-shadow: var(--canon-popover-shadow);
+}

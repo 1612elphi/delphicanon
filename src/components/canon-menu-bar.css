@@ -1,0 +1,7 @@
+.canon-menu-bar-cell {
+  font-size: var(--canon-text-subheadline);
+}
+
+.canon-menu-bar-cell.canon-menu-bar-cell--open {
+  background: var(--canon-accent-bg);
+}

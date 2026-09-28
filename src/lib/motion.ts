@@ -87,3 +87,18 @@ export function curveEasing(
   );
   return `linear(${points.join(', ')})`;
 }
+
+/** A popover, menu or tooltip fades and grows in from this scale when it opens; it closes at once. */
+export const popover = { ms: 120, scale: 0.97 } as const;
+
+/** Plays the opening of a popover on `panel`, unless motion is reduced. */
+export function popIn(panel: HTMLElement) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  panel.animate(
+    [
+      { opacity: 0, transform: `scale(${popover.scale})` },
+      { opacity: 1, transform: 'none' },
+    ],
+    { duration: popover.ms, easing: 'ease-out' },
+  );
+}
