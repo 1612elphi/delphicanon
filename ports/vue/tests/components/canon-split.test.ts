@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest';
+import { reactive } from 'vue';
 import CanonCanvas from '../../src/components/canon-canvas.vue';
 import CanonSplit from '../../src/components/canon-split.vue';
-import { find, render } from '../helpers/render.ts';
+import { find, render, settled } from '../helpers/render.ts';
 
 const layout = () =>
   getComputedStyle(find('.canon-split-body'))
@@ -79,6 +80,26 @@ test('mainLeadsStacked and halves', async () => {
   const picture = find('.halves .canon-split-sidebar .canon-canvas');
   expect(picture.offsetWidth).toBe(500);
   expect(picture.offsetHeight, 'the picture fills its pane').toBe(600);
+});
+
+test('a collapsing picture refits to a new aspect', async () => {
+  const model = reactive({ aspect: 1 });
+  await render(
+    `<div style="width: 500px; height: 800px">
+      <CanonSplit halves :collapses-to="100">
+        <template #sidebar><CanonCanvas :aspect="model.aspect" /></template>
+        <template #main><div>Main</div></template>
+      </CanonSplit>
+    </div>`,
+    { CanonSplit, CanonCanvas, model },
+  );
+  const split = find('.canon-split');
+  const full = () => split.style.getPropertyValue('--canon-split-full');
+  expect(split).toHaveAttribute('data-collapsing');
+  expect(full()).toBe('480px');
+  model.aspect = 2;
+  await settled();
+  expect(full(), 'half the width and the frame').toBe('254px');
 });
 
 test('footerHidden takes the footer away', async () => {
