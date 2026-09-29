@@ -4,12 +4,10 @@ import {
   bytes,
   cover,
   diagonalAngle,
-  dimensionLines,
   drawMatte,
   fileName,
   fit,
   heightOf,
-  sheet,
   shifted,
   solid,
   widthLimit,
@@ -62,26 +60,6 @@ module('Unit | tools/matte-genny', function () {
     // the direction of (w, h) in CSS angle terms: (sin, -cos)
     assert.true(
       Math.abs(Math.sin(angle) / -Math.cos(angle) - 1920 / 1080) < 1e-9,
-    );
-  });
-
-  test('the sheet leaves room for the dimension lines', function (assert) {
-    const area = { x: 16, y: 8, width: 544, height: 544 };
-    const frame = sheet({ width: 1080, height: 1080 }, area);
-    assert.deepEqual(frame, { x: 60, y: 52, width: 500, height: 500 });
-    const { across, down } = dimensionLines({
-      x: 44,
-      y: 44,
-      width: 200,
-      height: 100,
-    });
-    assert.deepEqual(across, { x: 44, y: 0, width: 200, height: 32 });
-    // centre (16, 94), 100 by 32 before the turn
-    assert.deepEqual(down, { x: -34, y: 78, width: 100, height: 32 });
-    assert.strictEqual(
-      sheet({ width: 1, height: 1 }, { x: 0, y: 0, width: 40, height: 40 })
-        .width,
-      0,
     );
   });
 

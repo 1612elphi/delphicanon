@@ -1,4 +1,4 @@
-.ic-scale {
+.canon-compression-scale {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -9,7 +9,7 @@
   font-family: var(--canon-font);
 }
 
-.ic-scale-top {
+.canon-compression-scale-top {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -17,52 +17,53 @@
   margin-block-end: 10px;
 }
 
-.ic-scale-loader {
+.canon-compression-scale-loader {
   color: var(--canon-muted-foreground);
 }
 
-.ic-bar {
-  --ic-spring: 600ms var(--ic-spring-easing, ease-out);
+.canon-compression-scale-bar {
+  --canon-compression-scale-spring: 600ms
+    var(--canon-compression-scale-easing, ease-out);
 
   position: relative;
   block-size: 32px;
 }
 
-.ic-bar + .ic-bar {
+.canon-compression-scale-bar + .canon-compression-scale-bar {
   margin-block-start: var(--canon-hairline);
 }
 
-.ic-bar .canon-bar {
+.canon-compression-scale-bar .canon-bar {
   block-size: 100%;
 }
 
-.ic-bar .canon-bar-fill {
+.canon-compression-scale-bar .canon-bar-fill {
   transition:
-    inline-size var(--ic-spring),
+    inline-size var(--canon-compression-scale-spring),
     background-color 200ms ease-out;
 }
 
-.ic-bar-label {
+.canon-compression-scale-label {
   position: absolute;
   inset-block: 0;
-  inset-inline-start: calc(var(--ic-share) * 100% + 10px);
+  inset-inline-start: calc(var(--canon-compression-scale-share) * 100% + 10px);
   display: flex;
   align-items: center;
   color: var(--canon-foreground);
   font-size: var(--canon-text-footnote);
   font-weight: var(--canon-weight-semibold);
   white-space: pre;
-  transition: inset-inline-start var(--ic-spring);
+  transition: inset-inline-start var(--canon-compression-scale-spring);
 }
 
-.ic-bar[data-inside] .ic-bar-label {
+.canon-compression-scale-bar[data-inside] .canon-compression-scale-label {
   inset-inline-start: 10px;
-  color: var(--ic-ink);
+  color: var(--canon-compression-scale-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ic-bar .canon-bar-fill,
-  .ic-bar-label {
+  .canon-compression-scale-bar .canon-bar-fill,
+  .canon-compression-scale-label {
     transition: none;
   }
 }

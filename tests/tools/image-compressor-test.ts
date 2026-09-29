@@ -3,10 +3,7 @@ import {
   availableFormats,
   encode,
   exportName,
-  formatBytes,
   formats,
-  savingsFigure,
-  savingsPercent,
 } from '../../demo-app/components/tools/image-compressor/compress.ts';
 
 const format = (label: string) => formats.find((f) => f.label === label)!;
@@ -22,19 +19,7 @@ async function transparentPng(width: number, height: number) {
 }
 
 module('Unit | tools/image-compressor', function () {
-  test('savings carry the sign of the change', function (assert) {
-    assert.strictEqual(savingsPercent(1000, 400), -60);
-    assert.strictEqual(savingsPercent(1000, 1500), 50);
-    assert.strictEqual(savingsPercent(0, 100), 0);
-    assert.strictEqual(savingsFigure(1000, 1000), '±0');
-    assert.strictEqual(savingsFigure(1000, 400), '−60');
-    assert.strictEqual(savingsFigure(1000, 1500), '+50');
-  });
-
-  test('bytes and names', function (assert) {
-    assert.strictEqual(formatBytes(512), '512 B');
-    assert.strictEqual(formatBytes(1536), '1.5 KB');
-    assert.strictEqual(formatBytes(3 * 1024 * 1024), '3.0 MB');
+  test('export names', function (assert) {
     assert.strictEqual(exportName('photo.heic', format('JPEG')), 'photo.jpg');
     assert.strictEqual(exportName('a.b.png', format('WebP')), 'a.b.webp');
     assert.strictEqual(exportName('noext', format('PNG')), 'noext.png');

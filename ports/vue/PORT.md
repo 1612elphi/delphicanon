@@ -41,11 +41,13 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-colour-strip | `canon-colour-strip.vue` | |
 | [x] | canon-colour-well | `canon-colour-well.vue` | |
 | [x] | canon-command | `canon-command.vue` | `CanonCommandItem` exported. |
+| [x] | canon-compression-scale | `canon-compression-scale.vue` | The two bars are a `v-for` in the one file, with a local `v-place` directive for the label, so the registry sees no second component file. |
 | [x] | canon-context-menu | `canon-context-menu.vue` | The setup is `onMounted` on the anchor span; the panel is the span's next element. |
 | [x] | canon-decimal-field | `canon-decimal-field.vue` | `typingPauseMs` is exported from a plain script block. The internal step function is `nudge`, since `step` is a prop. |
 | [x] | canon-detent-wheel | `canon-detent-wheel.vue` | Rows are the default slot with props `{ index, focus }`. `follow` runs in a watcher without Ember's `queueMicrotask`, which only kept tracked writes out of render. |
 | [x] | canon-detent-wheel-row | `canon-detent-wheel-row.vue` | No test of its own, as in Ember; the detent-wheel test covers it. |
 | [x] | canon-dialog | `canon-dialog.vue` | `dismissable` defaults to undefined, so an absent prop dismisses (tested). The blocks are slots with `{ close }`. The present modifier is `onMounted` and a post-flush watch on `open`; the listeners are template listeners on the `<dialog>`. Extra prop `keyframes(dialog)` for CanonSheet, which Ember overrides in a subclass; the internal function is `frames`, since `keyframes` is a prop. |
+| [x] | canon-dimension-line | `canon-dimension-line.vue` | |
 | [x] | canon-drop-zone | `canon-drop-zone.vue` | `paste` defaults to undefined, so an absent prop shows Paste (tested). |
 | [x] | canon-dual-list | `canon-dual-list.vue` | `CanonDualItem` is exported from a plain script block; ids from `useId()`. |
 | [x] | canon-empty-row | `canon-empty-row.vue` | |
@@ -88,7 +90,7 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-sidebar | `canon-sidebar.vue` | `collapsed` defaults to undefined, so an absent prop follows the window's width (tested). |
 | [x] | canon-sidebar-row | `canon-sidebar-row.vue` | `CanonSidebarLight` exported. |
 | [x] | canon-slider | `canon-slider.vue` | The drag modifier is `onMounted` listeners on template refs. |
-| [x] | canon-split | `canon-split.vue` | |
+| [x] | canon-split | `canon-split.vue` | Refits a collapsing picture on a new `data-canon-aspect` or `data-canon-height`, as Ember. |
 | [x] | canon-status | `canon-status.vue` | `CanonStatusTone` exported. |
 | [x] | canon-stepper | `canon-stepper.vue` | |
 | [x] | canon-swatch | `canon-swatch.vue` | |

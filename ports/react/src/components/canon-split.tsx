@@ -74,9 +74,15 @@ function collapse(split: HTMLElement, collapsesTo: number) {
   body.addEventListener('scroll', update, { passive: true });
   const size = new ResizeObserver(update);
   size.observe(split);
+  const shape = new MutationObserver(update);
+  shape.observe(body, {
+    subtree: true,
+    attributeFilter: ['data-canon-aspect', 'data-canon-height'],
+  });
   return () => {
     body.removeEventListener('scroll', update);
     size.disconnect();
+    shape.disconnect();
   };
 }
 

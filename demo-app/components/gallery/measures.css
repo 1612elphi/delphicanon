@@ -1,0 +1,18 @@
+.gallery-dimensions {
+  position: absolute;
+  inset: 0;
+}
+
+.gallery-dimensions-area {
+  position: absolute;
+  inset: 12px 16px;
+}
+
+.gallery-dimensions-sheet {
+  position: absolute;
+  background: repeating-conic-gradient(
+      var(--canon-card) 0 25%,
+      var(--canon-border) 0 50%
+    )
+    0 0 / 16px 16px;
+}

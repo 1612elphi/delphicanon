@@ -1,18 +1,12 @@
+import type { Rect, Size } from '#src/lib/dimension-line.ts';
+
 /** Red, green and blue, 0 to 255. */
 export type Bytes = readonly [r: number, g: number, b: number];
 
 export type MatteStyle = 0 | 1 | 2;
 export const [blurred, solid, gradient] = [0, 1, 2] as const;
 
-export interface Size {
-  width: number;
-  height: number;
-}
-
-export interface Rect extends Size {
-  x: number;
-  y: number;
-}
+export type { Rect, Size };
 
 /** Portrait presets as short and long side; Swap turns the chosen one landscape. */
 export const ratios: [number, number][] = [
@@ -119,51 +113,6 @@ export function rgbCss([r, g, b]: Bytes) {
  */
 export function diagonalAngle({ width, height }: Size) {
   return (Math.atan2(width, -height) * 180) / Math.PI;
-}
-
-/** Height and room of a dimension line: a pair takes this on the top and leading sides. */
-export const dimension = { height: 32, room: 44, gap: 12 } as const;
-
-/**
- * Frame for a picture of `size` fitted into `area`, leaving room for the
- * dimension lines on the top and leading sides, the group centred. Inline
- * offsets are from the leading edge, so they hold in either direction.
- */
-export function sheet(size: Size, area: Rect): Rect {
-  const room = {
-    width: area.width - dimension.room,
-    height: area.height - dimension.room,
-  };
-  if (
-    size.width <= 0 ||
-    size.height <= 0 ||
-    room.width <= 0 ||
-    room.height <= 0
-  )
-    return { x: 0, y: 0, width: 0, height: 0 };
-  const scale = Math.min(room.width / size.width, room.height / size.height);
-  const width = Math.max(1, size.width * scale);
-  const height = Math.max(1, size.height * scale);
-  return {
-    x: area.x + (area.width - width - dimension.room) / 2 + dimension.room,
-    y: area.y + (area.height - height - dimension.room) / 2 + dimension.room,
-    width,
-    height,
-  };
-}
-
-/** The across line over `span` and the down line, before its quarter turn, beside its leading side. */
-export function dimensionLines(span: Rect): { across: Rect; down: Rect } {
-  const { height, gap } = dimension;
-  return {
-    across: { x: span.x, y: span.y - gap - height, width: span.width, height },
-    down: {
-      x: span.x - gap - height / 2 - span.height / 2,
-      y: span.y + span.height / 2 - height / 2,
-      width: span.height,
-      height,
-    },
-  };
 }
 
 type Context = CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;

@@ -36,9 +36,9 @@ Svelte 5 port of the Ember addon in the repository root. The Ember sources (`src
 | Jump grid | CanonJumpGrid renders CanonDialog with a fade as `keyframes`, as CanonSheet does. The window width is read only when `window` exists; the grid's ResizeObserver sets the columns once it mounts. The lit tile's `autofocus` carries a `svelte-ignore a11y_autofocus`, and the holder's click a `svelte-ignore` for the static-element warnings, as the Ember template disables the same lint rules. | Ember's CanonJumpGrid subclasses CanonDialog; `window` is undefined in a server render. |
 | Jump heading | Every open lights the group then in view. The Ember component lights the first open's group again on later opens. | Ember's `current` is an untracked field, and Glimmer caches the first value it read; here it is `$state`. |
 | Dialog content | The implicit children of CanonDialog and CanonSheet are the default block; `header`, `children` and `footer` get `close` as their parameter. | Blocks with parameters are snippets. |
-| Server render | `tests/ssr.server.test.ts` renders each of the 11 menus, shell and command components and the 2 jump components with `svelte/server` `render()` in a Node Vitest project (`server` in `vite.config.ts`), so a `window` or `document` read during setup fails the run. | SvelteKit renders components on the server. |
+| Server render | `tests/ssr.server.test.ts` renders each of the 11 menus, shell and command components, the 2 jump components and the 2 kit parts (CanonCompressionScale, CanonDimensionLine) with `svelte/server` `render()` in a Node Vitest project (`server` in `vite.config.ts`), so a `window` or `document` read during setup fails the run. | SvelteKit renders components on the server. |
 | Window test | The window test's fixture gives its three boxes `flex: none`. | The Vitest browser viewport is narrower than the Ember test container, and the boxes shrank below the 640 px rail break. |
-| Checks | 71 test files, 134 tests: in the browser project the 97 Ember tests of the first port, one for a consumer's `pointerdown` on the slider, the 20 Ember tests of the menus, shell and command groups, the compact sidebar test and the 2 Ember tests of the jump group; in the server project 13 server renders. The jump group matches the Ember demo pixel for pixel, closed and open, light and dark. The gallery was compared with the Ember demo pixel for pixel at 1400 x 1000 and 1400 x 8000, light and dark, and the new widgets were driven in both demos with the same puppeteer steps. | |
+| Checks | 73 test files, 139 tests: in the browser project the 97 Ember tests of the first port, one for a consumer's `pointerdown` on the slider, the 20 Ember tests of the menus, shell and command groups, the compact sidebar test, the 2 Ember tests of the jump group, the 2 kit part tests and the split refit test; in the server project 15 server renders. The measures group (kit parts) matches the Ember demo pixel for pixel in all five scale states, light and dark. The jump group matches the Ember demo pixel for pixel, closed and open, light and dark. The gallery was compared with the Ember demo pixel for pixel at 1400 x 1000 and 1400 x 8000, light and dark, and the new widgets were driven in both demos with the same puppeteer steps. | |
 
 ## Tracker
 
@@ -58,11 +58,13 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-colour-strip | |
 | [x] | canon-colour-well | |
 | [x] | canon-command | |
+| [x] | canon-compression-scale | The label placement is an attachment factory on the share and the label text. |
 | [x] | canon-context-menu | |
 | [x] | canon-decimal-field | |
 | [x] | canon-detent-wheel | |
 | [x] | canon-detent-wheel-row | Tested by the detent wheel test. |
 | [x] | canon-dialog | |
+| [x] | canon-dimension-line | |
 | [x] | canon-drop-zone | |
 | [x] | canon-dual-list | |
 | [x] | canon-empty-row | |
@@ -106,7 +108,7 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-sidebar | |
 | [x] | canon-sidebar-row | |
 | [x] | canon-slider | |
-| [x] | canon-split | |
+| [x] | canon-split | Refits a collapsing picture on a new `data-canon-aspect` or `data-canon-height`, as Ember. The test waits two frames before the change, as the ResizeObserver's first notification otherwise lands after it and refits on its own. |
 | [x] | canon-status | |
 | [x] | canon-stepper | |
 | [x] | canon-swatch | |
