@@ -112,7 +112,7 @@ Web references are `~/GitRepos/delphitools` at `cb327df`. All five components pl
 
 ## Jump group
 
-Reference: `Core/Canon/CanonJumpGrid.swift` and its CANON.md row in `~/GitRepos/delphitools-ios` at `2fa933f`. Ember only; the React, Vue and Svelte ports of both components are pending.
+Reference: `Core/Canon/CanonJumpGrid.swift` and its CANON.md row in `~/GitRepos/delphitools-ios` at `2fa933f`. Ember and React (`ports/react`); the Vue and Svelte ports of both components are pending.
 
 | Component | Reference | Deviations |
 |---|---|---|

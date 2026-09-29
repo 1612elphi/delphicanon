@@ -50,6 +50,8 @@ The Ember addon in `../../src` is the reference; the Swift sources behind it whe
 | canon-window | The `<:toolbar>`, `<:menubar>`, `<:sidebar>` and `<:main>` blocks are node props of the same names. The props omit the HTML `title` attribute. | Named blocks become props. |
 | canon-dialog | `header`, `children` and `footer` are a node or a function of `close`. `showModal` and `close` run in a layout effect on `open`; the listeners are a ref callback that reads the props through `useLatest`. The block functions run inside a `react-hooks/refs` lint exception: `close` reads refs, but only when a block's handler calls it. | React has no modifier with a positional argument; the lint cannot tell a callback from a read during render. |
 | canon-sheet | CanonSheet and CanonDialog both render `CanonDialogBase` (exported from `canon-dialog.tsx`), which takes `kindClasses` and `keyframes(dialog)`; Ember's CanonSheet subclasses CanonDialog and overrides `classNames` and `keyframes`. | Function components do not subclass. |
+| canon-jump-grid | Renders `CanonDialogBase` with `kindClasses` `canon-dialog` and a fade for `keyframes`, where Ember subclasses CanonDialog. The props omit CanonDialog's `title`, `message`, `alert`, `dismissable` and blocks. Each tile is a local `Tile` component, so its `press` and appear ref callbacks keep their identity; the appear callback sets the `autofocus` attribute on the lit tile. | React's `autoFocus` calls `focus()` at commit, before `showModal`, and writes no attribute, so `showModal` would focus the first tile. |
+| canon-jump-heading | The lit index is state beside the sections; the headings found on open are a ref. Every open lights the group then in view; the Ember component lights the first open's group again on later opens. | Ember's `current` is an untracked field, and Glimmer caches the first value it read. |
 | canon-command | The field is controlled (`value` from state, `onChange`), since the component owns the query. | React's form of the one-way binding plus the `input` listener. |
 
 ## Tracker
@@ -86,6 +88,8 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-heading | |
 | [x] | canon-icon | No Ember test; covered through the components that draw icons. |
 | [x] | canon-image-compare | |
+| [x] | canon-jump-grid | Renders `CanonDialogBase`, see Deviations. |
+| [x] | canon-jump-heading | |
 | [x] | canon-lamps | |
 | [x] | canon-loader | |
 | [x] | canon-loupe | |
