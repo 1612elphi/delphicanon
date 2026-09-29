@@ -26,7 +26,7 @@ module('Unit | lib/timecode', function () {
   test('a blank counter shows hyphens in the same shape', function (assert) {
     const runs = timecodeRuns('01:02:03:04', true);
     assert.strictEqual(text(runs), '--:--:--:--');
-    assert.strictEqual(dimmed(runs), '');
+    assert.strictEqual(dimmed(runs), '--:--:--:--');
   });
 
   test('SMPTE drop frame shows its semicolon as a kerned stop', function (assert) {

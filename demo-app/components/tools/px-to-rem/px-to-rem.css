@@ -47,11 +47,6 @@
   inset-inline-end: var(--canon-panel-padding);
 }
 
-/* CanonFigure lays its digit spans out in the page direction, so RTL reverses 84 to 48 */
-.px-to-rem-result > .canon-figure {
-  direction: ltr;
-}
-
 /* the quick reference */
 .px-to-rem-row {
   display: grid;

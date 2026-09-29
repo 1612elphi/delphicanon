@@ -14,13 +14,14 @@ export function hundredths(seconds: number): string {
 
 /**
  * The counter's text split into runs. A blank counter shows hyphens in the
- * shape of `shape`; otherwise leading zeros that carry no value are dimmed,
+ * shape of `shape`, all dimmed; otherwise leading zeros that carry no value are dimmed,
  * the last four characters never. The segment font has no semicolon, so a
  * drop-frame separator shows as a full stop.
  */
 export function timecodeRuns(shape: string, blank: boolean): TimecodeRun[] {
   let text = shape.replaceAll(';', '.');
-  let dimmed = 0;
+  // the iOS counter dims a blank one whole
+  let dimmed = blank ? text.length : 0;
   if (blank) {
     text = text.replace(/\d/g, '-');
   } else {

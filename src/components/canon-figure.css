@@ -1,4 +1,6 @@
 .canon-figure {
+  /* digits and unit keep reading order in RTL */
+  direction: ltr;
   display: inline-flex;
   align-items: baseline;
   gap: calc(var(--canon-figure-size) * 0.08);
