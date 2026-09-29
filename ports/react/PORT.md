@@ -72,11 +72,13 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-colour-strip | |
 | [x] | canon-colour-well | |
 | [x] | canon-command | |
+| [x] | canon-compression-scale | Each bar's label placement is a ref callback on the share and the label text. |
 | [x] | canon-context-menu | |
 | [x] | canon-decimal-field | |
 | [x] | canon-detent-wheel-row | No Ember test; covered by the canon-detent-wheel test. |
 | [x] | canon-detent-wheel | |
 | [x] | canon-dialog | |
+| [x] | canon-dimension-line | |
 | [x] | canon-drop-zone | |
 | [x] | canon-dual-list | |
 | [x] | canon-empty-row | |
@@ -119,7 +121,7 @@ Tick when the component renders in the demo, has its test, and passes lint.
 | [x] | canon-sidebar | |
 | [x] | canon-sidebar-row | |
 | [x] | canon-slider | |
-| [x] | canon-split | |
+| [x] | canon-split | Refits a collapsing picture on a new `data-canon-aspect` or `data-canon-height`, as Ember. |
 | [x] | canon-status | |
 | [x] | canon-stepper | |
 | [x] | canon-swatch | |

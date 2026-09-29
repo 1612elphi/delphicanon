@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import CanonCanvas from '../../src/components/canon-canvas.tsx';
 import CanonSplit from '../../src/components/canon-split.tsx';
-import { find, render } from '../helpers/render.tsx';
+import { find, render, settle } from '../helpers/render.tsx';
 
 const layout = () =>
   getComputedStyle(find('.canon-split-body'))
@@ -83,6 +83,27 @@ describe('canon-split', () => {
     const picture = find('.halves .canon-split-sidebar .canon-canvas');
     expect(picture.offsetWidth).toBe(500);
     expect(picture.offsetHeight).toBe(600);
+  });
+
+  test('a collapsing picture refits to a new aspect', async () => {
+    const at = (aspect: number) => (
+      <div style={{ width: 500, height: 800 }}>
+        <CanonSplit
+          halves
+          collapsesTo={100}
+          sidebar={<CanonCanvas aspect={aspect} />}
+          main={<div>Main</div>}
+        />
+      </div>
+    );
+    const { rerender } = await render(at(1));
+    const split = find('.canon-split');
+    const full = () => split.style.getPropertyValue('--canon-split-full');
+    expect(split.hasAttribute('data-collapsing')).toBe(true);
+    expect(full()).toBe('480px');
+    await rerender(at(2));
+    await settle();
+    expect(full(), 'half the width and the frame').toBe('254px');
   });
 
   test('footerHidden takes the footer away', async () => {
