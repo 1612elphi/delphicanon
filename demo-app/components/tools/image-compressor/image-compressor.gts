@@ -4,6 +4,7 @@ import { registerDestructor } from '@ember/destroyable';
 import type Owner from '@ember/owner';
 import CanonButton from '#src/components/canon-button.gts';
 import CanonCanvas from '#src/components/canon-canvas.gts';
+import CanonCompressionScale from '#src/components/canon-compression-scale.gts';
 import CanonDropZone from '#src/components/canon-drop-zone.gts';
 import CanonEmptyRow from '#src/components/canon-empty-row.gts';
 import CanonHeading from '#src/components/canon-heading.gts';
@@ -13,17 +14,15 @@ import CanonRows from '#src/components/canon-rows.gts';
 import CanonSegmented from '#src/components/canon-segmented.gts';
 import CanonSlider from '#src/components/canon-slider.gts';
 import CanonSplit from '#src/components/canon-split.gts';
+import { formatBytes } from '#src/lib/compression.ts';
 import { accepts } from '#src/lib/files.ts';
 import {
   availableFormats,
   Encoder,
   exportName,
-  formatBytes,
   type EncodeReply,
 } from './compress.ts';
-import Scale from './scale.gts';
 import Icon from '../../icon.gts';
-import './image-compressor.css';
 import shrink from 'lucide-static/icons/shrink.svg?raw';
 import download from 'lucide-static/icons/download.svg?raw';
 import trash from 'lucide-static/icons/trash-2.svg?raw';
@@ -258,7 +257,7 @@ export default class ImageCompressor extends Component {
     <CanonSplit class="image-compressor">
       <:banner>
         <CanonCanvas @height={{176}}>
-          <Scale
+          <CanonCompressionScale
             @before={{if this.source this.source.file.size 0}}
             @after={{this.resultBytes}}
             @format={{if this.source this.format.label "Compressed"}}

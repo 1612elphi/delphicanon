@@ -3,20 +3,19 @@ import { tracked } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
 import CanonLoader from '#src/components/canon-loader.gts';
-import DimensionLine from './dimension-line.gts';
+import CanonDimensionLine from '#src/components/canon-dimension-line.gts';
+import { dimensionLines, sheet } from '#src/lib/dimension-line.ts';
 import {
   blur,
   blurred,
   cover,
   diagonalAngle,
-  dimensionLines,
   falloff,
   fit,
   gradient,
   heightOf,
   overscan,
   rgbCss,
-  sheet,
   shifted,
   solid,
   type MatteSpec,
@@ -189,14 +188,16 @@ export default class Picture extends Component<PictureSignature> {
             ></span>
           {{/each}}
         </span>
-        <DimensionLine
+        <CanonDimensionLine
+          class="matte-dimension"
           @pixels={{this.size.width}}
-          @frame={{this.lines.across}}
+          style={{this.lines.across}}
         />
-        <DimensionLine
+        <CanonDimensionLine
+          class="matte-dimension"
           @pixels={{this.size.height}}
-          @frame={{this.lines.down}}
           @down={{true}}
+          style={{this.lines.down}}
         />
       {{/if}}
       {{#if @busy}}

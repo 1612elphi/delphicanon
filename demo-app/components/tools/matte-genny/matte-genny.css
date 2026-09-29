@@ -74,50 +74,6 @@
   transition-duration: 150ms, 500ms, 500ms, 500ms, 500ms;
 }
 
-.matte-dimension {
-  pointer-events: none;
-  background: linear-gradient(var(--canon-primary), var(--canon-primary)) 0
-    calc(100% - 4px) / 100% var(--canon-hairline) no-repeat;
-}
-
-.matte-dimension::before,
-.matte-dimension::after {
-  position: absolute;
-  inset-block-end: 0;
-  inline-size: var(--canon-hairline);
-  block-size: 9px;
-  background: var(--canon-primary);
-  content: "";
-}
-
-.matte-dimension::before {
-  inset-inline-start: 0;
-}
-
-.matte-dimension::after {
-  inset-inline-end: 0;
-}
-
-.matte-dimension--down {
-  rotate: -90deg;
-}
-
-.matte-dimension--down:dir(rtl) {
-  rotate: 90deg;
-}
-
-.matte-dimension-figure {
-  position: absolute;
-  inset-block-end: 5px;
-  inset-inline-start: 50%;
-  translate: -50% 0;
-  white-space: nowrap;
-}
-
-.matte-dimension-figure:dir(rtl) {
-  translate: 50% 0;
-}
-
 .matte-loader {
   position: absolute;
   inset-block-end: var(--canon-panel-padding);

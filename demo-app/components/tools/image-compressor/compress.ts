@@ -21,25 +21,6 @@ export function availableFormats(): CompressFormat[] {
   );
 }
 
-export function formatBytes(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-/** Negative means smaller than the original. */
-export function savingsPercent(before: number, after: number): number {
-  if (before <= 0) return 0;
-  return Math.round(((after - before) / before) * 100);
-}
-
-/** The saving without its unit: −60, +50, ±0. */
-export function savingsFigure(before: number, after: number): string {
-  const saving = savingsPercent(before, after);
-  if (saving === 0) return '±0';
-  return `${saving < 0 ? '−' : '+'}${Math.abs(saving)}`;
-}
-
 export function exportName(name: string, format: CompressFormat): string {
   const dot = name.lastIndexOf('.');
   const stem = dot > 0 ? name.slice(0, dot) : name;
