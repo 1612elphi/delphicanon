@@ -1,4 +1,4 @@
-import { sidewaysJudgement } from '@canon/lib/motion.ts';
+import { capture, sidewaysJudgement } from '@canon/lib/motion.ts';
 import { elementDirective } from './directive.ts';
 
 export interface PanHandlers {
@@ -35,7 +35,7 @@ export const vSidewaysPan = elementDirective<PanHandlers>(
           return;
         }
         began = true;
-        element.setPointerCapture?.(event.pointerId);
+        capture(element, event.pointerId);
         handlers().onBegin?.(event);
       }
       handlers().onMove?.(event);

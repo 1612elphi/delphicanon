@@ -9,6 +9,7 @@ import {
   type MouseEvent,
   type PointerEvent,
 } from 'react';
+import { afterPress, isOpen } from '@canon/lib/popover.ts';
 import { cx } from '../lib/class-names.ts';
 import '@canon/styles/tokens.css';
 import '@canon/components/canon-page-strip.css';
@@ -274,17 +275,21 @@ export default function CanonPageStrip({
     if (files.length > 0) onDrop?.(at, files);
   };
 
-  const openMenu = (index: number, x: number, y: number) => {
+  const openMenu = (index: number, x: number, y: number, held: boolean) => {
     const items = menu?.(index);
     const element = menuElement.current;
     if (!items?.length || !element) return false;
-    setMenuItems(items);
-    element.style.left = `${x}px`;
-    element.style.top = `${y}px`;
-    element.showPopover();
-    requestAnimationFrame(() =>
-      element.querySelector<HTMLElement>('[role=menuitem]')?.focus(),
-    );
+    afterPress(held, () => {
+      // a touch long press can also fire contextmenu
+      if (isOpen(element)) return;
+      setMenuItems(items);
+      element.style.left = `${x}px`;
+      element.style.top = `${y}px`;
+      element.showPopover();
+      requestAnimationFrame(() =>
+        element.querySelector<HTMLElement>('[role=menuitem]')?.focus(),
+      );
+    });
     return true;
   };
 
@@ -296,7 +301,7 @@ export default function CanonPageStrip({
       x = box.left;
       y = box.bottom;
     }
-    if (openMenu(index, x, y)) event.preventDefault();
+    if (openMenu(index, x, y, event.buttons !== 0)) event.preventDefault();
   };
 
   const onPointerDown = (index: number, event: PointerEvent) => {
@@ -304,7 +309,7 @@ export default function CanonPageStrip({
     const { clientX: x, clientY: y } = event;
     cancelPress();
     pressTimer.current = window.setTimeout(
-      () => openMenu(index, x, y),
+      () => openMenu(index, x, y, true),
       longPressMs,
     );
   };

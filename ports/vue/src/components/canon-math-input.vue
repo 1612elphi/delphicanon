@@ -31,7 +31,7 @@ function still(): boolean {
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue';
-import { capture } from '@canon/lib/math/draw.ts';
+import { capture } from '@canon/lib/motion.ts';
 import { Expression, type Key } from '@canon/lib/math/expression.ts';
 import { keyForKeyboard } from '@canon/lib/math/keypad.ts';
 import { springEasing } from '@canon/lib/motion.ts';

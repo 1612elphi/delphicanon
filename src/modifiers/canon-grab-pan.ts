@@ -1,4 +1,5 @@
 import { modifier } from 'ember-modifier';
+import { capture } from '../lib/motion.ts';
 import type { PanHandlers } from './canon-sideways-pan.ts';
 
 export interface GrabPanHandlers extends PanHandlers {
@@ -37,7 +38,7 @@ export default modifier(
       if (pointer !== undefined || event.button !== 0) return;
       if (!grabs(local(event.clientX, event.clientY))) return;
       pointer = event.pointerId;
-      element.setPointerCapture?.(event.pointerId);
+      capture(element, event.pointerId);
       onBegin?.(event);
     };
     const onPointerMove = (event: PointerEvent) => {

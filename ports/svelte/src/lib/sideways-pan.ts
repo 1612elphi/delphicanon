@@ -1,5 +1,5 @@
 import type { Attachment } from 'svelte/attachments';
-import { sidewaysJudgement } from '@canon/lib/motion.ts';
+import { capture, sidewaysJudgement } from '@canon/lib/motion.ts';
 
 export interface PanHandlers {
   onBegin?: (event: PointerEvent) => void;
@@ -40,7 +40,7 @@ export function sidewaysPan({
           return;
         }
         began = true;
-        element.setPointerCapture?.(event.pointerId);
+        capture(element, event.pointerId);
         onBegin?.(event);
       }
       onMove?.(event);

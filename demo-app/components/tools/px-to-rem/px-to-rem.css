@@ -11,8 +11,9 @@
 .px-to-rem-grid {
   position: absolute;
   inset: 0 0 var(--px-to-rem-baseline);
+  /* Firefox 155 fills the gaps of a repeating gradient interpolated in oklab, the default for color() stops */
   background: repeating-linear-gradient(
-    to top,
+    to top in srgb,
     transparent 0 calc(var(--px-to-rem-line) - var(--canon-hairline)),
     var(--canon-border) calc(var(--px-to-rem-line) - var(--canon-hairline))
       var(--px-to-rem-line)

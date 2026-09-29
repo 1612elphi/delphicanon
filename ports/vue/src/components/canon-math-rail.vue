@@ -34,7 +34,7 @@ const arrows: { key: Key; label: string; icon: FunctionalComponent }[] = [
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue';
 import CanonButton from './canon-button.vue';
-import { capture } from '@canon/lib/math/draw.ts';
+import { capture } from '@canon/lib/motion.ts';
 import '@canon/styles/tokens.css';
 import '@canon/components/canon-math-rail.css';
 

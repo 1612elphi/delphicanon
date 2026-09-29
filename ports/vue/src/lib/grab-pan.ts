@@ -1,3 +1,4 @@
+import { capture } from '@canon/lib/motion.ts';
 import { elementDirective } from './directive.ts';
 import type { PanHandlers } from './sideways-pan.ts';
 
@@ -33,7 +34,7 @@ export const vGrabPan = elementDirective<GrabPanHandlers>(
       if (pointer !== undefined || event.button !== 0) return;
       if (!handlers().grabs(local(event.clientX, event.clientY))) return;
       pointer = event.pointerId;
-      element.setPointerCapture?.(event.pointerId);
+      capture(element, event.pointerId);
       handlers().onBegin?.(event);
     };
     const onPointerMove = (event: PointerEvent) => {

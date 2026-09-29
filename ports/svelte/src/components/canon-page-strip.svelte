@@ -37,6 +37,7 @@
   import { onDestroy } from 'svelte';
   import type { Attachment } from 'svelte/attachments';
   import type { HTMLAttributes } from 'svelte/elements';
+  import { afterPress, isOpen } from '@canon/lib/popover.ts';
   import '@canon/styles/tokens.css';
   import '@canon/components/canon-page-strip.css';
 
@@ -267,17 +268,21 @@
     if (files.length > 0) onDrop?.(at, files);
   }
 
-  function openMenu(index: number, x: number, y: number) {
+  function openMenu(index: number, x: number, y: number, held: boolean) {
     const items = menu?.(index);
     const element = menuElement;
     if (!items?.length || !element) return false;
-    menuItems = items;
-    element.style.left = `${x}px`;
-    element.style.top = `${y}px`;
-    element.showPopover();
-    requestAnimationFrame(() =>
-      element.querySelector<HTMLElement>('[role=menuitem]')?.focus(),
-    );
+    afterPress(held, () => {
+      // a touch long press can also fire contextmenu
+      if (isOpen(element)) return;
+      menuItems = items;
+      element.style.left = `${x}px`;
+      element.style.top = `${y}px`;
+      element.showPopover();
+      requestAnimationFrame(() =>
+        element.querySelector<HTMLElement>('[role=menuitem]')?.focus(),
+      );
+    });
     return true;
   }
 
@@ -289,7 +294,7 @@
       x = box.left;
       y = box.bottom;
     }
-    if (openMenu(index, x, y)) event.preventDefault();
+    if (openMenu(index, x, y, event.buttons !== 0)) event.preventDefault();
   }
 
   function cancelPress() {
@@ -304,7 +309,10 @@
         button.closest<HTMLElement>('[data-page-index]')?.dataset['pageIndex'],
       );
       cancelPress();
-      pressTimer = window.setTimeout(() => openMenu(index, x, y), longPressMs);
+      pressTimer = window.setTimeout(
+        () => openMenu(index, x, y, true),
+        longPressMs,
+      );
     };
     const ends = ['pointerup', 'pointercancel', 'pointerleave'] as const;
     button.addEventListener('pointerdown', start);

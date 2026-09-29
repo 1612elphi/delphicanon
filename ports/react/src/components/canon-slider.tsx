@@ -7,6 +7,7 @@ import {
   type Ref,
 } from 'react';
 import { flushSync } from 'react-dom';
+import { capture } from '@canon/lib/motion.ts';
 import { clamp, dragSpeed, snap } from '@canon/lib/number.ts';
 import { cx } from '../lib/class-names.ts';
 import { useLatest, useRefs } from '../lib/refs.ts';
@@ -102,7 +103,7 @@ export default function CanonSlider({
         pointer = event.pointerId;
         start = { x: event.clientX, y: event.clientY };
         dragging.current = false;
-        slider.setPointerCapture?.(pointer);
+        capture(slider, pointer);
         slider.dataset['active'] = '';
       };
       const move = (event: PointerEvent) => {

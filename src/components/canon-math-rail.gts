@@ -4,7 +4,7 @@ import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { modifier } from 'ember-modifier';
 import CanonButton from './canon-button.gts';
-import { capture } from '../lib/math/draw.ts';
+import { capture } from '../lib/motion.ts';
 import type { Key } from '../lib/math/expression.ts';
 import '../styles/tokens.css';
 import './canon-math-rail.css';

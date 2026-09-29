@@ -1,5 +1,5 @@
 import { modifier } from 'ember-modifier';
-import { sidewaysJudgement } from '../lib/motion.ts';
+import { capture, sidewaysJudgement } from '../lib/motion.ts';
 
 export interface PanHandlers {
   onBegin?: (event: PointerEvent) => void;
@@ -35,7 +35,7 @@ export default modifier(
           return;
         }
         began = true;
-        element.setPointerCapture?.(event.pointerId);
+        capture(element, event.pointerId);
         onBegin?.(event);
       }
       onMove?.(event);

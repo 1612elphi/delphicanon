@@ -7,7 +7,7 @@
     type CanonMenuEntry,
     type CanonMenuItem,
   } from './canon-menu-list.svelte';
-  import { attach, isOpen } from '@canon/lib/popover.ts';
+  import { afterPress, attach, isOpen } from '@canon/lib/popover.ts';
   import '@canon/styles/tokens.css';
   import '@canon/components/canon-menu.css';
   import '@canon/components/canon-context-menu.css';
@@ -57,7 +57,10 @@
       // a context menu key the keydown did not see reports no position
       if (event.clientX === 0 && event.clientY === 0)
         below(event.target as Element);
-      else openAt(event.clientX, event.clientY);
+      else {
+        const { clientX, clientY } = event;
+        afterPress(event.buttons !== 0, () => openAt(clientX, clientY));
+      }
     };
     const keydown = (event: KeyboardEvent) => {
       const key =

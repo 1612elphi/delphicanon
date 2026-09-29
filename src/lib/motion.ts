@@ -116,3 +116,29 @@ export function popIn(panel: HTMLElement) {
     { duration: popover.ms, easing: 'ease-out' },
   );
 }
+
+/**
+ * Captures the pointer for a drag and keeps a text selection from starting
+ * until the press ends: WebKit selects the text a captured drag crosses and
+ * scrolls to follow it. A pointer already gone, as a synthetic event's is,
+ * makes Firefox throw, so it is not captured.
+ */
+export function capture(element: Element, pointerId: number): void {
+  try {
+    element.setPointerCapture(pointerId);
+  } catch {
+    // the pointer ended before the capture
+  }
+  const done = new AbortController();
+  document.addEventListener('selectstart', (event) => event.preventDefault(), {
+    signal: done.signal,
+  });
+  const release = (event: PointerEvent) => {
+    if (event.pointerId === pointerId) done.abort();
+  };
+  for (const type of ['pointerup', 'pointercancel'] as const)
+    window.addEventListener(type, release, {
+      capture: true,
+      signal: done.signal,
+    });
+}

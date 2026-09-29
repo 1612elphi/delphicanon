@@ -6,7 +6,7 @@ import {
   type CanonMenuEntry,
   type CanonMenuItem,
 } from './canon-menu.gts';
-import { attach, isOpen } from '../lib/popover.ts';
+import { afterPress, attach, isOpen } from '../lib/popover.ts';
 import '../styles/tokens.css';
 import './canon-context-menu.css';
 
@@ -56,7 +56,10 @@ export default class CanonContextMenu extends Component<CanonContextMenuSignatur
       // a context menu key the keydown did not see reports no position
       if (event.clientX === 0 && event.clientY === 0)
         below(event.target as Element);
-      else openAt(event.clientX, event.clientY);
+      else {
+        const { clientX, clientY } = event;
+        afterPress(event.buttons !== 0, () => openAt(clientX, clientY));
+      }
     };
     const keydown = (event: KeyboardEvent) => {
       const key =

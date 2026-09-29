@@ -7,7 +7,7 @@ import {
   type DialogHTMLAttributes,
   type Ref,
 } from 'react';
-import { capture } from '@canon/lib/math/draw.ts';
+import { capture } from '@canon/lib/motion.ts';
 import { Expression, type Key } from '@canon/lib/math/expression.ts';
 import { keyForKeyboard, keypadHeight } from '@canon/lib/math/keypad.ts';
 import { springEasing } from '@canon/lib/motion.ts';

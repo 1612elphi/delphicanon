@@ -51,5 +51,10 @@ module('Component | canon-popover', function (hooks) {
     assert.false(panel.matches(':popover-open'));
     await waitUntil(() => document.activeElement === trigger);
     assert.dom(trigger).hasAttribute('aria-expanded', 'false');
+
+    panel.showPopover();
+    assert.dom(trigger).hasAttribute('aria-expanded', 'true', 'as it opens');
+    panel.hidePopover();
+    assert.dom(trigger).hasAttribute('aria-expanded', 'false', 'as it closes');
   });
 });

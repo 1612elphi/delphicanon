@@ -33,7 +33,12 @@ module('Component | canon-context-menu', function (hooks) {
       '.canon-context-menu-point',
     )!;
 
-    await triggerEvent('.area', 'contextmenu', { clientX: 40, clientY: 30 });
+    // after the release, as on Windows
+    await triggerEvent('.area', 'contextmenu', {
+      clientX: 40,
+      clientY: 30,
+      buttons: 0,
+    });
     assert.true(menu.matches(':popover-open'));
     assert.strictEqual(point.style.left, '40px');
     assert.strictEqual(point.style.top, '30px');
@@ -49,5 +54,16 @@ module('Component | canon-context-menu', function (hooks) {
     menu.hidePopover();
     await waitUntil(() => document.activeElement?.matches('.area'));
     assert.dom('.area').isFocused('focus goes back');
+
+    // macOS: contextmenu arrives while the button is still down
+    await triggerEvent('.area', 'contextmenu', {
+      clientX: 60,
+      clientY: 50,
+      buttons: 2,
+    });
+    assert.false(menu.matches(':popover-open'), 'not while pressed');
+    await triggerEvent('.area', 'pointerup', { button: 2 });
+    await waitUntil(() => menu.matches(':popover-open'));
+    assert.strictEqual(point.style.left, '60px', 'at the press');
   });
 });

@@ -7,6 +7,7 @@ import {
   type Overlays,
 } from '../lib/colour-solid/solid.ts';
 import { hex, takesBlackInk, type Rgb } from '../lib/colour.ts';
+import { capture } from '../lib/motion.ts';
 import {
   colourAt,
   pointFor,
@@ -202,11 +203,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
         picks: false,
         samples: [{ t: e.timeStamp, ...at }],
       };
-      try {
-        if (grabbed) root.setPointerCapture(e.pointerId);
-      } catch {
-        // synthetic events have no active pointer to capture
-      }
+      if (grabbed) capture(root, e.pointerId);
     };
     const move = (e: PointerEvent) => {
       if (!drag || e.pointerId !== drag.id) return;

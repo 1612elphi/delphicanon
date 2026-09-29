@@ -7,7 +7,7 @@ import CanonMathEditor from './canon-math-editor.gts';
 import CanonMathKeypad from './canon-math-keypad.gts';
 import CanonMathRail, { railHeights } from './canon-math-rail.gts';
 import CanonRows from './canon-rows.gts';
-import { capture } from '../lib/math/draw.ts';
+import { capture } from '../lib/motion.ts';
 import { MathEditing } from '../lib/math/editing.ts';
 import { Expression, type Key } from '../lib/math/expression.ts';
 import { keyForKeyboard, keypadHeight } from '../lib/math/keypad.ts';

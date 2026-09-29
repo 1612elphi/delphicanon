@@ -6,6 +6,9 @@ import { playwright } from '@vitest/browser-playwright';
 const chrome =
   process.env.CHROME_PATH ??
   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+// CANON_BROWSER=webkit or firefox runs Playwright's own build instead
+const browser = (process.env.CANON_BROWSER ?? 'chromium') as
+  'chromium' | 'webkit' | 'firefox';
 
 export default defineConfig({
   plugins: [react()],
@@ -19,10 +22,12 @@ export default defineConfig({
     browser: {
       enabled: true,
       headless: true,
-      provider: playwright({ launchOptions: { executablePath: chrome } }),
-      instances: [
-        { browser: 'chromium', viewport: { width: 1440, height: 900 } },
-      ],
+      provider: playwright(
+        browser === 'chromium'
+          ? { launchOptions: { executablePath: chrome } }
+          : {},
+      ),
+      instances: [{ browser, viewport: { width: 1440, height: 900 } }],
     },
   },
 });

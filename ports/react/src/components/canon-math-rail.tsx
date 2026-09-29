@@ -5,7 +5,7 @@ import {
   type HTMLAttributes,
   type Ref,
 } from 'react';
-import { capture } from '@canon/lib/math/draw.ts';
+import { capture } from '@canon/lib/motion.ts';
 import type { Key } from '@canon/lib/math/expression.ts';
 import CanonButton from './canon-button.tsx';
 import { cx } from '../lib/class-names.ts';

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { placementStyle } from '#src/lib/popover.ts';
+import { afterPress, placementStyle } from '#src/lib/popover.ts';
 
 module('Unit | lib/popover', function () {
   test('placements become position areas with a gap towards the anchor', function (assert) {
@@ -19,5 +19,21 @@ module('Unit | lib/popover', function () {
       gap: 'margin-inline-start',
     });
     assert.strictEqual(placementStyle('left').gap, 'margin-inline-end');
+  });
+
+  test('a popover opened during a press waits for its release', async function (assert) {
+    const opened: string[] = [];
+    afterPress(false, () => opened.push('free'));
+    assert.deepEqual(opened, ['free'], 'no press: now');
+    afterPress(true, () => opened.push('held'));
+    await new Promise((resolve) => setTimeout(resolve));
+    assert.deepEqual(opened, ['free'], 'held: not yet');
+    window.dispatchEvent(new PointerEvent('pointerup'));
+    assert.deepEqual(opened, ['free'], 'after the release, not during it');
+    await new Promise((resolve) => setTimeout(resolve));
+    assert.deepEqual(opened, ['free', 'held']);
+    window.dispatchEvent(new PointerEvent('pointerup'));
+    await new Promise((resolve) => setTimeout(resolve));
+    assert.deepEqual(opened, ['free', 'held'], 'once');
   });
 });
