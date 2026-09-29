@@ -1,9 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
+import { tracked } from '@glimmer/tracking';
 import CanonCanvas from '#src/components/canon-canvas.gts';
 import CanonSplit from '#src/components/canon-split.gts';
 import { css } from '../helpers/css.ts';
+
+class Shape {
+  @tracked aspect = 1;
+}
 
 const layout = () =>
   getComputedStyle(document.querySelector('.canon-split-body')!)
@@ -96,6 +101,27 @@ module('Component | canon-split', function (hooks) {
     )!;
     assert.strictEqual(picture.offsetWidth, 500);
     assert.strictEqual(picture.offsetHeight, 600, 'the picture fills its pane');
+  });
+
+  test('a collapsing picture refits to a new aspect', async function (assert) {
+    const state = new Shape();
+    await render(
+      <template>
+        <div style={{css "width: 500px; height: 800px"}}>
+          <CanonSplit @halves={{true}} @collapsesTo={{100}}>
+            <:sidebar><CanonCanvas @aspect={{state.aspect}} /></:sidebar>
+            <:main><div>Main</div></:main>
+          </CanonSplit>
+        </div>
+      </template>,
+    );
+    const split = document.querySelector<HTMLElement>('.canon-split')!;
+    const full = () => split.style.getPropertyValue('--canon-split-full');
+    assert.dom(split).hasAttribute('data-collapsing');
+    assert.strictEqual(full(), '480px');
+    state.aspect = 2;
+    await settled();
+    assert.strictEqual(full(), '254px', 'half the width and the frame');
   });
 
   test('footerHidden takes the footer away', async function (assert) {

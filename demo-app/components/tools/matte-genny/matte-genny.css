@@ -137,10 +137,3 @@
 .matte-ratios .canon-button {
   padding-inline: 4px;
 }
-
-.matte-genny.matte-refit[data-collapsing] > .canon-split-body,
-.matte-genny.matte-refit[data-collapsing] .canon-split-sidebar > .canon-canvas {
-  transition-duration: 500ms;
-  transition-property: padding-block-start, block-size;
-  transition-timing-function: var(--matte-spring);
-}

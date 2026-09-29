@@ -3,7 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { registerDestructor } from '@ember/destroyable';
 import { on } from '@ember/modifier';
 import { htmlSafe } from '@ember/template';
-import { modifier } from 'ember-modifier';
 import type Owner from '@ember/owner';
 import CanonButton from '#src/components/canon-button.gts';
 import CanonCanvas from '#src/components/canon-canvas.gts';
@@ -85,26 +84,6 @@ const pixelsText = (value: number) => `${value} px`;
 const Download = <template><Icon @svg={{download}} /></template>;
 const Swap = <template><Icon @svg={{swapIcon}} /></template>;
 const Trash = <template><Icon @svg={{trash}} /></template>;
-
-/**
- * CanonSplit's collapsing picture measures the canvas aspect only on scroll
- * and resize; a scroll event makes it take a new ratio, eased for 500 ms.
- */
-const refit = modifier((canvas: HTMLElement, [aspect]: [number]) => {
-  const split = canvas.closest<HTMLElement>('.canon-split');
-  const body = split?.querySelector('.canon-split-body');
-  if (!split || !body || split.dataset['aspect'] === String(aspect)) return;
-  const first = split.dataset['aspect'] === undefined;
-  split.dataset['aspect'] = String(aspect);
-  if (first) return;
-  split.classList.add('matte-refit');
-  body.dispatchEvent(new Event('scroll'));
-  const timer = window.setTimeout(
-    () => split.classList.remove('matte-refit'),
-    500,
-  );
-  return () => window.clearTimeout(timer);
-});
 
 interface Source {
   url: string;
@@ -384,7 +363,6 @@ export default class MatteGenny extends Component {
           @aspect={{this.aspect}}
           @background="var(--canon-muted)"
           @pattern={{true}}
-          {{refit this.aspect}}
         >
           <Picture
             @spec={{this.spec}}
