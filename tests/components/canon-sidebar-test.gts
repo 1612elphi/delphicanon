@@ -55,4 +55,26 @@ module('Component | canon-sidebar', function (hooks) {
       .dom('.rail .canon-sidebar-row')
       .hasText('Toolbox', 'the title stays as the accessible name');
   });
+
+  test('compact rows are shorter and keep a square icon cell', async function (assert) {
+    await render(
+      <template>
+        <div style={{css "display: flex; height: 400px"}}>
+          <CanonSidebar class="regular">
+            <CanonSidebarRow @title="Toolbox" />
+          </CanonSidebar>
+          <CanonSidebar class="compact" @compact={{true}}>
+            <CanonSidebarRow @title="Toolbox" />
+          </CanonSidebar>
+        </div>
+      </template>,
+    );
+    const row = (side: string) =>
+      document.querySelector<HTMLElement>(`.${side} .canon-sidebar-row`)!;
+    const cell = document.querySelector<HTMLElement>(
+      '.compact .canon-sidebar-row-icon',
+    )!;
+    assert.true(row('compact').offsetHeight < row('regular').offsetHeight);
+    assert.strictEqual(cell.offsetWidth, row('compact').offsetHeight);
+  });
 });

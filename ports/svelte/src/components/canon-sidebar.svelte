@@ -10,6 +10,8 @@
      * inside a `canon-window` container narrower than 640 px.
      */
     collapsed?: boolean;
+    /** 32 px rows at subheadline size, for dense navigation. */
+    compact?: boolean;
     /** A picture above the rows that does not scroll with them. */
     hero?: Snippet;
     /** CanonSidebarRows, and CanonHeadings between groups. */
@@ -18,6 +20,7 @@
 
   let {
     collapsed,
+    compact,
     hero,
     children,
     class: className,
@@ -36,6 +39,7 @@
     'canon-sidebar',
     collapsed === true && 'canon-sidebar--collapsed',
     collapsed === false && 'canon-sidebar--expanded',
+    compact && 'canon-sidebar--compact',
     className,
   ]}
   {...rest}

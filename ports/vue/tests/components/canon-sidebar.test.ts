@@ -52,3 +52,24 @@ test('collapses to the icon rail', async () => {
     'the title stays as the accessible name',
   ).toHaveTextContent('Toolbox');
 });
+
+test('compact rows are shorter and keep a square icon cell', async () => {
+  await render(
+    `<div style="display: flex; height: 400px">
+      <CanonSidebar class="regular">
+        <CanonSidebarRow title="Toolbox" />
+      </CanonSidebar>
+      <CanonSidebar class="compact" compact>
+        <CanonSidebarRow title="Toolbox" />
+      </CanonSidebar>
+    </div>`,
+    { CanonSidebar, CanonSidebarRow },
+  );
+  const compact = find('.compact .canon-sidebar-row');
+  expect(compact.offsetHeight).toBeLessThan(
+    find('.regular .canon-sidebar-row').offsetHeight,
+  );
+  expect(find('.compact .canon-sidebar-row-icon').offsetWidth).toBe(
+    compact.offsetHeight,
+  );
+});

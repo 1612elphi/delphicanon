@@ -9,6 +9,8 @@ export interface CanonSidebarSignature {
      * inside a `canon-window` container narrower than 640 px.
      */
     collapsed?: boolean;
+    /** 32 px rows at subheadline size, for dense navigation. */
+    compact?: boolean;
   };
   Blocks: {
     /** A picture above the rows that does not scroll with them. */
@@ -31,7 +33,12 @@ function state(collapsed: boolean | undefined) {
  * colour, a frame-width rule on the trailing edge.
  */
 const CanonSidebar: TOC<CanonSidebarSignature> = <template>
-  <nav class="canon-sidebar {{state @collapsed}}" ...attributes>
+  <nav
+    class="canon-sidebar
+      {{state @collapsed}}
+      {{if @compact 'canon-sidebar--compact'}}"
+    ...attributes
+  >
     {{#if (has-block "hero")}}
       <div class="canon-sidebar-hero">{{yield to="hero"}}</div>
     {{/if}}

@@ -3,7 +3,7 @@
   import CanonSidebar from '../../src/components/canon-sidebar.svelte';
   import CanonSidebarRow from '../../src/components/canon-sidebar-row.svelte';
 
-  let { scene }: { scene: 'parts' | 'rail' } = $props();
+  let { scene }: { scene: 'parts' | 'rail' | 'compact' } = $props();
 </script>
 
 {#if scene === 'parts'}
@@ -13,6 +13,15 @@
       <CanonHeading text="Modules" />
       <CanonSidebarRow title="Toolbox" />
       <CanonSidebarRow title="General" />
+    </CanonSidebar>
+  </div>
+{:else if scene === 'compact'}
+  <div style="display: flex; height: 400px">
+    <CanonSidebar class="regular">
+      <CanonSidebarRow title="Toolbox" />
+    </CanonSidebar>
+    <CanonSidebar class="compact" compact>
+      <CanonSidebarRow title="Toolbox" />
     </CanonSidebar>
   </div>
 {:else}

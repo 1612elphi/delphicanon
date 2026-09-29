@@ -1643,12 +1643,18 @@ class Pick extends Component {
 
 class Sidebar extends Pick {
   @tracked collapsed = false;
+  @tracked compact = false;
 
   collapse = (on: boolean) => (this.collapsed = on);
+  compactOn = (on: boolean) => (this.compact = on);
 
   <template>
     <div class="showcase-sidebar-box">
-      <CanonSidebar @collapsed={{this.collapsed}} aria-label="Showcase">
+      <CanonSidebar
+        @collapsed={{this.collapsed}}
+        @compact={{this.compact}}
+        aria-label="Showcase"
+      >
         <:hero><div class="gallery-shell-hero"><GalleryArt
               @label="Hero"
             /></div></:hero>
@@ -1661,6 +1667,13 @@ class Sidebar extends Pick {
       <CanonSwitch
         @on={{this.collapsed}}
         @onChange={{this.collapse}}
+        aria-labelledby={{titleId}}
+      />
+    </CanonRow>
+    <CanonRow @title="Compact" as |titleId|>
+      <CanonSwitch
+        @on={{this.compact}}
+        @onChange={{this.compactOn}}
         aria-labelledby={{titleId}}
       />
     </CanonRow>

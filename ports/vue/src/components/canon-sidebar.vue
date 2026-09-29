@@ -10,6 +10,8 @@ const props = withDefaults(
      * inside a `canon-window` container narrower than 640 px.
      */
     collapsed?: boolean;
+    /** 32 px rows at subheadline size, for dense navigation. */
+    compact?: boolean;
   }>(),
   { collapsed: undefined },
 );
@@ -34,7 +36,10 @@ const state = computed(() => {
   colour, a frame-width rule on the trailing edge.
 -->
 <template>
-  <nav class="canon-sidebar" :class="state">
+  <nav
+    class="canon-sidebar"
+    :class="[state, { 'canon-sidebar--compact': compact }]"
+  >
     <div v-if="$slots.hero" class="canon-sidebar-hero">
       <slot name="hero" />
     </div>

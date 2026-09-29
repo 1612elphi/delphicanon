@@ -1,4 +1,8 @@
 .canon-sidebar {
+  --canon-sidebar-row: var(--canon-control-height);
+  --canon-sidebar-inset: 10px;
+  --canon-sidebar-text: var(--canon-text-callout);
+
   display: flex;
   flex: none;
   flex-direction: column;
@@ -40,9 +44,20 @@
   background: var(--canon-border);
 }
 
+/* the web app's nav link: 16 px icon, 6/8 px padding, sm text */
+.canon-sidebar--compact {
+  --canon-sidebar-row: var(--canon-sidebar-row-compact);
+  --canon-sidebar-inset: 8px;
+  --canon-sidebar-text: var(--canon-text-subheadline);
+}
+
+.canon-sidebar--compact > .canon-sidebar-hero {
+  padding: 8px 12px;
+}
+
 /* title cells shrink to zero and the rows clip them, so the accessible names remain */
 .canon-sidebar--collapsed {
-  inline-size: calc(var(--canon-control-height) + var(--canon-frame));
+  inline-size: calc(var(--canon-sidebar-row) + var(--canon-frame));
 }
 
 .canon-sidebar--collapsed > .canon-sidebar-hero,
@@ -52,7 +67,7 @@
 
 @container canon-window (width < 640px) {
   .canon-sidebar:not(.canon-sidebar--expanded) {
-    inline-size: calc(var(--canon-control-height) + var(--canon-frame));
+    inline-size: calc(var(--canon-sidebar-row) + var(--canon-frame));
   }
 
   .canon-sidebar:not(.canon-sidebar--expanded) > .canon-sidebar-hero,

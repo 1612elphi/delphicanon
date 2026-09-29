@@ -49,4 +49,24 @@ describe('canon-sidebar', () => {
       'the title stays as the accessible name',
     ).toBe('Toolbox');
   });
+
+  test('compact rows are shorter and keep a square icon cell', async () => {
+    await render(
+      <div style={{ display: 'flex', height: 400 }}>
+        <CanonSidebar className="regular">
+          <CanonSidebarRow title="Toolbox" />
+        </CanonSidebar>
+        <CanonSidebar className="compact" compact>
+          <CanonSidebarRow title="Toolbox" />
+        </CanonSidebar>
+      </div>,
+    );
+    const compact = find('.compact .canon-sidebar-row');
+    expect(compact.offsetHeight).toBeLessThan(
+      find('.regular .canon-sidebar-row').offsetHeight,
+    );
+    expect(find('.compact .canon-sidebar-row-icon').offsetWidth).toBe(
+      compact.offsetHeight,
+    );
+  });
 });

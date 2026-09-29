@@ -437,6 +437,7 @@ export default class Showcase extends Component {
           <CanonSidebar
             class="showcase-nav"
             @collapsed={{false}}
+            @compact={{true}}
             aria-label="Components"
           >
             <Nav @current={{this.page}} />

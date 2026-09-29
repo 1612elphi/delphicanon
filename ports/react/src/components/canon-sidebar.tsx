@@ -9,6 +9,8 @@ export interface CanonSidebarProps extends HTMLAttributes<HTMLElement> {
    * inside a `canon-window` container narrower than 640 px.
    */
   collapsed?: boolean;
+  /** 32 px rows at subheadline size, for dense navigation. */
+  compact?: boolean;
   /** A picture above the rows that does not scroll with them. */
   hero?: ReactNode;
   /** CanonSidebarRows, and CanonHeadings between groups. */
@@ -28,13 +30,22 @@ function state(collapsed: boolean | undefined) {
  */
 export default function CanonSidebar({
   collapsed,
+  compact,
   hero,
   children,
   className,
   ...rest
 }: CanonSidebarProps) {
   return (
-    <nav className={cx('canon-sidebar', state(collapsed), className)} {...rest}>
+    <nav
+      className={cx(
+        'canon-sidebar',
+        state(collapsed),
+        compact && 'canon-sidebar--compact',
+        className,
+      )}
+      {...rest}
+    >
       {hero !== undefined && hero !== null && (
         <div className="canon-sidebar-hero">{hero}</div>
       )}
