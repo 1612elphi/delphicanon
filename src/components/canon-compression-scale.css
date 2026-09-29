@@ -1,0 +1,69 @@
+.canon-compression-scale {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  block-size: 100%;
+  padding: var(--canon-panel-padding);
+  background: var(--canon-card);
+  font-family: var(--canon-font);
+}
+
+.canon-compression-scale-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-block-end: 10px;
+}
+
+.canon-compression-scale-loader {
+  color: var(--canon-muted-foreground);
+}
+
+.canon-compression-scale-bar {
+  --canon-compression-scale-spring: 600ms
+    var(--canon-compression-scale-easing, ease-out);
+
+  position: relative;
+  block-size: 32px;
+}
+
+.canon-compression-scale-bar + .canon-compression-scale-bar {
+  margin-block-start: var(--canon-hairline);
+}
+
+.canon-compression-scale-bar .canon-bar {
+  block-size: 100%;
+}
+
+.canon-compression-scale-bar .canon-bar-fill {
+  transition:
+    inline-size var(--canon-compression-scale-spring),
+    background-color 200ms ease-out;
+}
+
+.canon-compression-scale-label {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(var(--canon-compression-scale-share) * 100% + 10px);
+  display: flex;
+  align-items: center;
+  color: var(--canon-foreground);
+  font-size: var(--canon-text-footnote);
+  font-weight: var(--canon-weight-semibold);
+  white-space: pre;
+  transition: inset-inline-start var(--canon-compression-scale-spring);
+}
+
+.canon-compression-scale-bar[data-inside] .canon-compression-scale-label {
+  inset-inline-start: 10px;
+  color: var(--canon-compression-scale-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canon-compression-scale-bar .canon-bar-fill,
+  .canon-compression-scale-label {
+    transition: none;
+  }
+}
