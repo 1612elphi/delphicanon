@@ -50,5 +50,18 @@ module('Component | canon-jump-heading', function (hooks) {
     );
     await settled();
     assert.dom(target.querySelector('button')).isFocused();
+
+    // the smooth scroll ends inside the 1 px litIndex allows
+    await waitUntil(
+      () =>
+        Math.abs(
+          target.getBoundingClientRect().top - list.getBoundingClientRect().top,
+        ) < 0.5,
+      { timeout: 3000 },
+    );
+    await click(target.querySelector('button')!);
+    assert
+      .dom('.canon-jump-grid-tile--lit')
+      .hasText('Delta 3', 'a second open lights the group now in view');
   });
 });

@@ -35,7 +35,7 @@ function scroller(element: HTMLElement): HTMLElement {
  */
 export default class CanonJumpHeading extends Component<CanonJumpHeadingSignature> {
   @tracked sections?: CanonJumpSection[];
-  current = 0;
+  @tracked current = 0;
   headings: HTMLElement[] = [];
 
   show = (event: MouseEvent) => {
