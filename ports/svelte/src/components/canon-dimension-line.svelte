@@ -1,3 +1,13 @@
+<script lang="ts" module>
+  export {
+    dimensionLine,
+    dimensionLines,
+    sheet,
+    type Rect,
+    type Size,
+  } from '@canon/lib/dimension-line.ts';
+</script>
+
 <script lang="ts">
   import type { HTMLAttributes } from 'svelte/elements';
   import CanonFigure from './canon-figure.svelte';

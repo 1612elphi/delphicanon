@@ -1,3 +1,13 @@
+<script lang="ts">
+export {
+  dimensionLine,
+  dimensionLines,
+  sheet,
+  type Rect,
+  type Size,
+} from '@canon/lib/dimension-line.ts';
+</script>
+
 <script setup lang="ts">
 import CanonFigure from './canon-figure.vue';
 import '@canon/styles/tokens.css';

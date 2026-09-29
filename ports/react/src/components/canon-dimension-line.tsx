@@ -4,6 +4,14 @@ import { cx } from '../lib/class-names.ts';
 import '@canon/styles/tokens.css';
 import '@canon/components/canon-dimension-line.css';
 
+export {
+  dimensionLine,
+  dimensionLines,
+  sheet,
+  type Rect,
+  type Size,
+} from '@canon/lib/dimension-line.ts';
+
 export interface CanonDimensionLineProps extends Omit<
   HTMLAttributes<HTMLSpanElement>,
   'children'
