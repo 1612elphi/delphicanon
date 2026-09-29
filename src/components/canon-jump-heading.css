@@ -1,0 +1,36 @@
+.canon-heading.canon-jump-heading {
+  padding: 0;
+}
+
+.canon-jump-heading-button {
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  margin: 0;
+  padding: 8px var(--canon-panel-padding);
+  border: 0;
+  border-radius: 0;
+  background: var(--canon-heading-background);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+.canon-jump-heading-chevron {
+  margin-inline-start: 0.4em;
+}
+
+.canon-jump-heading-button:focus-visible {
+  outline: 2px solid var(--canon-primary);
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .canon-jump-heading-button:hover {
+    background: var(--canon-accent-bg);
+  }
+}

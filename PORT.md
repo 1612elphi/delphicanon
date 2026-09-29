@@ -110,6 +110,15 @@ Web references are `~/GitRepos/delphitools` at `cb327df`. All five components pl
 | CanonGrid | change | `place()` skips `[popover]` children, so a menu or popover rendered beside its trigger inside a grid is not counted as a cell. |
 | Tokens | new | `--canon-popover-gap` 4 px, `--canon-popover-shadow` (the web app's `0 8px 28px rgb(0 0 0 / 25%)`, all three blocks), `--canon-menu-min-inline` 200 px, `--canon-tooltip-max-inline` 240 px. |
 
+## Jump group
+
+Reference: `Core/Canon/CanonJumpGrid.swift` and its CANON.md row in `~/GitRepos/delphitools-ios` at `2fa933f`. Ember only; the React, Vue and Svelte ports of both components are pending.
+
+| Component | Reference | Deviations |
+|---|---|---|
+| CanonJumpGrid (`canon-jump-grid`, `<dialog>`) | `CanonJumpGridViewController` | A CanonDialog subclass that fades in and out (iOS crossDissolve; no scale), full window at 94 % of the background, the page `inert` under it. `@open`, `@sections` (`title`, `detail`), `@current`, `@label` (default Sections), `@onPick(index)`, `@onClose()`. `@onPick` runs after the grid has closed and focus has returned, so the owner can move focus. Tiles are a boxed CanonGrid, 3 columns from 560 px of window width, else 2, at most 640 px wide; the lit tile is primary with `aria-current` and takes focus through `autofocus`, which also scrolls it into view (the iOS `revealedCurrent`). Tiles appear with the iOS stagger (scale 0.8, turn -0.05 rad, spring 0.7, 450 ms, 30 ms per step up to 24 steps, from the lit tile past 30 tiles) on the Web Animations API, none with reduced motion. A click beside the tiles or Escape closes without a pick. No arrow keys between tiles; Tab moves. `present(_:headings:from:)`, `scroll(to:)` and `scroll(_:toTop:)` are not ported as functions: CanonJumpHeading does the heading case, and a consumer with other targets passes `@onPick` and scrolls itself. `lib/jump.ts`: `litIndex`, `jumpColumns`, `appearDelay`. |
+| CanonJumpHeading (`canon-jump-heading`, `<h3>` holding a `<button>`) | `CanonJumpHeading` | `@text`, `@detail` (the count shown under the title in the grid). The chevron is a `›` after the text, hidden from assistive technology; the button carries `aria-haspopup="dialog"` and `aria-expanded` in place of the iOS hint. A click gathers every CanonJumpHeading in the nearest scrolling ancestor (a `display: contents` pane skipped), lights the last one at or above that box's top, and opens a CanonJumpGrid; a pick runs `scrollIntoView({ block: 'start' })` (smooth, instant with reduced motion) and focuses that heading's button. `init(content:label:)` is not ported: no web caller wraps another view. Press tilt through `canon-press`, hover `--canon-accent-bg`. |
+
 ## Phases
 
 A. Scaffold and foundation, one agent, sequential. Blocks everything else.
@@ -150,3 +159,4 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | C2 | CanonTextFilePicker.swift (new, e1db1b8) | `pickTextFile(accept)` in `lib/files.ts`, with `decodeText` | A function, not a component: it has no view. Encoding: UTF-16 by byte order mark, else UTF-8, else Windows-1252. |
 | [ ] | C2 | CanonTextArea scroll on begin editing and keyboardDidShow; CanonCanvasContent `canvasOverscroll` (e1db1b8) | not ported | The browser scrolls a focused field into view itself. The overscroll stretch follows the iOS bounce, which a web page does not have. |
 | [x] | shell | Shell/MainWindow.swift (delphitools-mac `1551018`): Sidebar, SidebarRow, EdgeLight, Hero, MainWindow | canon-sidebar, canon-sidebar-row, canon-window | See Shell group above. |
+| [x] | jump | CanonJumpGrid.swift (delphitools-ios `2fa933f`): CanonJumpHeading, CanonJumpGridViewController | canon-jump-heading, canon-jump-grid, `lib/jump.ts` | See Jump group above. React, Vue and Svelte pending. |
