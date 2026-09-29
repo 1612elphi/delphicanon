@@ -42,27 +42,72 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.showcase-header {
-  max-inline-size: 720px;
+.showcase {
+  block-size: 100dvh;
+  container: showcase / inline-size;
 }
 
-.showcase-grid-box {
-  container-type: inline-size;
-}
-
-.showcase-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
-  grid-auto-flow: row dense;
-  gap: var(--canon-panel-padding);
-  align-items: start;
-}
-
-/* two 340 px columns and the gap */
-@container (min-width: 696px) {
-  .showcase-tile--wide {
-    grid-column: span 2;
+/* the sidebar's 240 px beside a 528 px page */
+@container showcase (width >= 768px) {
+  .showcase-menu {
+    display: none;
   }
+}
+
+/* the framework picker takes a second line of the bar */
+@container showcase (width < 768px) {
+  .showcase-nav {
+    display: none;
+  }
+
+  .showcase .canon-window-bar {
+    flex-wrap: wrap;
+    row-gap: 4px;
+    padding-block: 4px;
+  }
+
+  .showcase .canon-window-toolbar {
+    display: contents;
+  }
+
+  .showcase-menu {
+    order: -1;
+  }
+
+  .showcase-frameworks {
+    flex: 1 1 100%;
+  }
+}
+
+.showcase-note {
+  margin: 0;
+  padding: var(--canon-panel-padding);
+  background: var(--canon-card);
+  color: var(--canon-secondary-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-subheadline);
+  line-height: 1.45;
+}
+
+.showcase-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--canon-frame);
+}
+
+/* the row's cell gap shows its own background, as between sidebar rows */
+.showcase-pager > .canon-sidebar-row {
+  background: var(--canon-border);
+}
+
+.showcase-next {
+  grid-column: 2;
+  flex-direction: row-reverse;
+}
+
+.showcase-next > .canon-sidebar-row-title {
+  justify-content: flex-end;
+  padding-inline: 0 10px;
 }
 
 .showcase-stage {
