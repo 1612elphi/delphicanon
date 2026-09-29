@@ -137,6 +137,8 @@
       "./components/canon-heading.js": "./dist/_app_/components/canon-heading.js",
       "./components/canon-icon.js": "./dist/_app_/components/canon-icon.js",
       "./components/canon-image-compare.js": "./dist/_app_/components/canon-image-compare.js",
+      "./components/canon-jump-grid.js": "./dist/_app_/components/canon-jump-grid.js",
+      "./components/canon-jump-heading.js": "./dist/_app_/components/canon-jump-heading.js",
       "./components/canon-lamps.js": "./dist/_app_/components/canon-lamps.js",
       "./components/canon-loader.js": "./dist/_app_/components/canon-loader.js",
       "./components/canon-loupe.js": "./dist/_app_/components/canon-loupe.js",
