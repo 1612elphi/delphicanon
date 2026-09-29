@@ -1760,8 +1760,6 @@ class Window extends Pick {
 export interface Tile {
   /** The registry item name and the addon module, `canon-<name>`. */
   name: string;
-  /** Spans two columns where the grid has them. */
-  wide?: boolean;
   Live: ComponentLike;
 }
 
@@ -1772,7 +1770,7 @@ export const tiles: Tile[] = [
   { name: 'canon-canvas', Live: Canvas },
   { name: 'canon-code-block', Live: CodeBlock },
   { name: 'canon-colour-card', Live: ColourCard },
-  { name: 'canon-colour-controls', wide: true, Live: ColourControls },
+  { name: 'canon-colour-controls', Live: ColourControls },
   { name: 'canon-colour-notation-input', Live: ColourNotation },
   { name: 'canon-colour-solid', Live: ColourSolid },
   { name: 'canon-colour-strip', Live: ColourStrip },
@@ -1801,7 +1799,7 @@ export const tiles: Tile[] = [
   { name: 'canon-math-field', Live: MathField },
   { name: 'canon-math-input', Live: MathInput },
   { name: 'canon-math-key', Live: MathKeys },
-  { name: 'canon-math-keypad', wide: true, Live: MathKeypad },
+  { name: 'canon-math-keypad', Live: MathKeypad },
   { name: 'canon-math-rail', Live: MathRail },
   { name: 'canon-math-tabs', Live: MathTabs },
   { name: 'canon-math-view', Live: MathView },
@@ -1810,7 +1808,7 @@ export const tiles: Tile[] = [
   { name: 'canon-menu-cell', Live: MenuCell },
   { name: 'canon-number-field', Live: NumberField },
   { name: 'canon-page', Live: Page },
-  { name: 'canon-page-strip', wide: true, Live: PageStrip },
+  { name: 'canon-page-strip', Live: PageStrip },
   { name: 'canon-palette-card', Live: PaletteCard },
   { name: 'canon-popover', Live: Popover },
   { name: 'canon-preview-panel', Live: PreviewPanel },
@@ -1823,7 +1821,7 @@ export const tiles: Tile[] = [
   { name: 'canon-sidebar', Live: Sidebar },
   { name: 'canon-sidebar-row', Live: SidebarRow },
   { name: 'canon-slider', Live: Slider },
-  { name: 'canon-split', wide: true, Live: Split },
+  { name: 'canon-split', Live: Split },
   { name: 'canon-status', Live: Status },
   { name: 'canon-stepper', Live: Stepper },
   { name: 'canon-swatch', Live: Swatches },
@@ -1837,5 +1835,5 @@ export const tiles: Tile[] = [
   { name: 'canon-toast', Live: Toast },
   { name: 'canon-tooltip', Live: Tooltips },
   { name: 'canon-value-line', Live: ValueLines },
-  { name: 'canon-window', wide: true, Live: Window },
+  { name: 'canon-window', Live: Window },
 ];
