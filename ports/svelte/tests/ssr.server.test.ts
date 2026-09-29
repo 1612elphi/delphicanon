@@ -1,8 +1,10 @@
 import { render } from 'svelte/server';
 import { describe, expect, test } from 'vitest';
 import CanonCommand from '../src/components/canon-command.svelte';
+import CanonCompressionScale from '../src/components/canon-compression-scale.svelte';
 import CanonContextMenu from '../src/components/canon-context-menu.svelte';
 import CanonDialog from '../src/components/canon-dialog.svelte';
+import CanonDimensionLine from '../src/components/canon-dimension-line.svelte';
 import CanonJumpGrid from '../src/components/canon-jump-grid.svelte';
 import CanonJumpHeading from '../src/components/canon-jump-heading.svelte';
 import CanonMenuBar from '../src/components/canon-menu-bar.svelte';
@@ -80,6 +82,17 @@ const cases: [string, () => { body: string }][] = [
           items: [{ id: 'a', title: 'A', group: 'G', icon, shortcut: ['⌘'] }],
         },
       }),
+  ],
+  [
+    'canon-compression-scale',
+    () =>
+      render(CanonCompressionScale, {
+        props: { before: 2000, after: 1000, format: 'JPEG', working: true },
+      }),
+  ],
+  [
+    'canon-dimension-line',
+    () => render(CanonDimensionLine, { props: { pixels: 1080, down: true } }),
   ],
 ];
 

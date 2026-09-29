@@ -1,12 +1,13 @@
 import { describe, expect, test } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Scenes from './fixtures/canon-split-scenes.svelte';
-import { find } from './helpers.ts';
+import { find, settled } from './helpers.ts';
 
 const layout = () =>
   getComputedStyle(find('.canon-split-body'))
     .getPropertyValue('--canon-split-layout')
     .trim();
+const frame = () => new Promise(requestAnimationFrame);
 const box = (selector: string) => find(selector).getBoundingClientRect();
 
 describe('canon-split', () => {
@@ -43,6 +44,20 @@ describe('canon-split', () => {
     expect(picture.offsetWidth).toBe(500);
     // the picture fills its pane
     expect(picture.offsetHeight).toBe(600);
+  });
+
+  test('a collapsing picture refits to a new aspect', async () => {
+    const { rerender } = await render(Scenes, { scene: 'collapsing' });
+    const split = find('.canon-split');
+    const full = () => split.style.getPropertyValue('--canon-split-full');
+    expect(split.hasAttribute('data-collapsing')).toBe(true);
+    expect(full()).toBe('480px');
+    // the ResizeObserver's first notification would refit on its own
+    await frame();
+    await frame();
+    await rerender({ aspect: 2 });
+    await settled();
+    expect(full(), 'half the width and the frame').toBe('254px');
   });
 
   test('footerHidden takes the footer away', async () => {

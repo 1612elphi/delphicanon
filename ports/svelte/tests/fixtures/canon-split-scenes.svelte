@@ -4,8 +4,16 @@
 
   let {
     scene,
+    aspect = 1,
   }: {
-    scene: 'wide' | 'narrow' | 'one-column' | 'leads-halves' | 'footer-hidden';
+    scene:
+      | 'wide'
+      | 'narrow'
+      | 'one-column'
+      | 'leads-halves'
+      | 'collapsing'
+      | 'footer-hidden';
+    aspect?: number;
   } = $props();
 </script>
 
@@ -34,6 +42,12 @@
   <div class="halves" style="width: 1001px; height: 600px">
     <CanonSplit halves {main}>
       {#snippet sidebar()}<CanonCanvas aspect={1} />{/snippet}
+    </CanonSplit>
+  </div>
+{:else if scene === 'collapsing'}
+  <div style="width: 500px; height: 800px">
+    <CanonSplit halves collapsesTo={100} {main}>
+      {#snippet sidebar()}<CanonCanvas {aspect} />{/snippet}
     </CanonSplit>
   </div>
 {:else}
