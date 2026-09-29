@@ -3,6 +3,8 @@ import { describe, expect, test } from 'vitest';
 import CanonCommand from '../src/components/canon-command.svelte';
 import CanonContextMenu from '../src/components/canon-context-menu.svelte';
 import CanonDialog from '../src/components/canon-dialog.svelte';
+import CanonJumpGrid from '../src/components/canon-jump-grid.svelte';
+import CanonJumpHeading from '../src/components/canon-jump-heading.svelte';
 import CanonMenuBar from '../src/components/canon-menu-bar.svelte';
 import CanonMenu, {
   type CanonMenuEntry,
@@ -58,6 +60,17 @@ const cases: [string, () => { body: string }][] = [
     'canon-sheet',
     () =>
       render(CanonSheet, { props: { open: true, edge: 'end', title: 'T' } }),
+  ],
+  [
+    'canon-jump-heading',
+    () => render(CanonJumpHeading, { props: { text: 'Rows', detail: '2' } }),
+  ],
+  [
+    'canon-jump-grid',
+    () =>
+      render(CanonJumpGrid, {
+        props: { open: true, sections: [{ title: 'Rows' }], current: 0 },
+      }),
   ],
   [
     'canon-command',

@@ -33,10 +33,12 @@ Svelte 5 port of the Ember addon in the repository root. The Ember sources (`src
 | Stable attachments | CanonMenuBar's `anchor(index)` and CanonMenuList's `submenu(index)` return the same function per index. | A new function re-attaches through the spread, which clears `popoverTargetElement` and `aria-expanded` on an open menu. |
 | Menu list | `CanonMenuList` and `showMenu` are `canon-menu-list.svelte` (default export and module export); `canon-menu.svelte` re-exports `CanonMenuEntry` and `CanonMenuItem`. The list imports `canon-popover.css` only; CanonMenu, CanonContextMenu and CanonMenuBar import `canon-menu.css`. A submenu is the list importing itself. | A `.svelte` file has one component. The registry makes an item of every file, and `canon-menu.css` belongs to the `canon-menu` item, so the list importing it would make the cycle canon-menu, canon-menu-list, canon-menu. |
 | Sheet | CanonSheet renders CanonDialog with its classes and a `keyframes(dialog)` prop, the slide from its edge. `keyframes` is a public CanonDialog prop, default the centred scale. | Ember's CanonSheet subclasses CanonDialog and overrides `classNames` and `keyframes()`; a Svelte component cannot be subclassed. |
+| Jump grid | CanonJumpGrid renders CanonDialog with a fade as `keyframes`, as CanonSheet does. The window width is read only when `window` exists; the grid's ResizeObserver sets the columns once it mounts. The lit tile's `autofocus` carries a `svelte-ignore a11y_autofocus`, and the holder's click a `svelte-ignore` for the static-element warnings, as the Ember template disables the same lint rules. | Ember's CanonJumpGrid subclasses CanonDialog; `window` is undefined in a server render. |
+| Jump heading | Every open lights the group then in view. The Ember component lights the first open's group again on later opens. | Ember's `current` is an untracked field, and Glimmer caches the first value it read; here it is `$state`. |
 | Dialog content | The implicit children of CanonDialog and CanonSheet are the default block; `header`, `children` and `footer` get `close` as their parameter. | Blocks with parameters are snippets. |
-| Server render | `tests/ssr.server.test.ts` renders each of the 11 menus, shell and command components with `svelte/server` `render()` in a Node Vitest project (`server` in `vite.config.ts`), so a `window` or `document` read during setup fails the run. | SvelteKit renders components on the server. |
+| Server render | `tests/ssr.server.test.ts` renders each of the 11 menus, shell and command components and the 2 jump components with `svelte/server` `render()` in a Node Vitest project (`server` in `vite.config.ts`), so a `window` or `document` read during setup fails the run. | SvelteKit renders components on the server. |
 | Window test | The window test's fixture gives its three boxes `flex: none`. | The Vitest browser viewport is narrower than the Ember test container, and the boxes shrank below the 640 px rail break. |
-| Checks | 69 test files, 129 tests: in the browser project the 97 Ember tests of the first port, one for a consumer's `pointerdown` on the slider and the 20 Ember tests of the menus, shell and command groups; in the server project 11 server renders. The gallery was compared with the Ember demo pixel for pixel at 1400 x 1000 and 1400 x 8000, light and dark, and the new widgets were driven in both demos with the same puppeteer steps. | |
+| Checks | 71 test files, 134 tests: in the browser project the 97 Ember tests of the first port, one for a consumer's `pointerdown` on the slider, the 20 Ember tests of the menus, shell and command groups, the compact sidebar test and the 2 Ember tests of the jump group; in the server project 13 server renders. The jump group matches the Ember demo pixel for pixel, closed and open, light and dark. The gallery was compared with the Ember demo pixel for pixel at 1400 x 1000 and 1400 x 8000, light and dark, and the new widgets were driven in both demos with the same puppeteer steps. | |
 
 ## Tracker
 
@@ -72,6 +74,8 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-heading | |
 | [x] | canon-icon | No test, as in Ember. |
 | [x] | canon-image-compare | |
+| [x] | canon-jump-grid | |
+| [x] | canon-jump-heading | |
 | [x] | canon-lamps | |
 | [x] | canon-loader | |
 | [x] | canon-loupe | |
