@@ -42,6 +42,9 @@ import {
 } from './paper.ts';
 import Picture from './picture.gts';
 import './paper-sizes.css';
+import ruler from 'lucide-static/icons/ruler.svg?raw';
+
+export const tool = { title: 'Paper sizes', group: 'Typography', icon: ruler };
 
 // ?paperCompare=A4,A3 ?paperUnit=<0-4> ?paperFind=<text> ?paperArrange=<0-2>: the iOS -pscompare, -psunit, -psfind, -psarrange flags
 const query = new URLSearchParams(window.location.search);
