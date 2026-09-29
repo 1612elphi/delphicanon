@@ -57,6 +57,8 @@ Tick when the component renders in the gallery, has its test, and passes lint.
 | [x] | canon-heading | `canon-heading.vue` | |
 | [x] | canon-icon | `canon-icon.vue` | No test of its own, as in Ember; every icon test covers it. |
 | [x] | canon-image-compare | `canon-image-compare.vue` | `v-sideways-pan`. |
+| [x] | canon-jump-grid | `canon-jump-grid.vue` | Wraps CanonDialog with a fade as `keyframes`, as CanonSheet does, where Ember subclasses it; class and `aria-label` fall through to the `<dialog>`. `CanonJumpSection` exported. The appear and measure modifiers are local directives on `elementDirective`; the appear runs once per tile, when it mounts, where the Ember modifier runs again when its index, count or current change. |
+| [x] | canon-jump-heading | `canon-jump-heading.vue` | Two roots, so `inheritAttrs: false` and `$attrs` on the `<h3>`. The lit index is a `shallowRef`, so every open lights the group then in view; the Ember component lights the first open's group again on later opens, since its `current` is an untracked field that Glimmer caches. |
 | [x] | canon-lamps | `canon-lamps.vue` | The blink is reactive state set by a watch on the flash counts: Vue's class patch would drop a class added by hand. Same 120 ms timing. |
 | [x] | canon-loader | `canon-loader.vue` | `CanonLoaderMode` exported. |
 | [x] | canon-loupe | `canon-loupe.vue` | |
