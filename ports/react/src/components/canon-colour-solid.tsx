@@ -16,6 +16,7 @@ import {
   type Overlays,
 } from '@canon/lib/colour-solid/solid.ts';
 import { hex, takesBlackInk, type Rgb } from '@canon/lib/colour.ts';
+import { capture } from '@canon/lib/motion.ts';
 import {
   colourAt,
   pointFor,
@@ -225,11 +226,7 @@ class SolidView {
         picks: false,
         samples: [{ t: e.timeStamp, ...at }],
       };
-      try {
-        if (grabbed) root.setPointerCapture(e.pointerId);
-      } catch {
-        // synthetic events have no active pointer to capture
-      }
+      if (grabbed) capture(root, e.pointerId);
     };
     const move = (e: PointerEvent) => {
       if (!drag || e.pointerId !== drag.id) return;

@@ -6,6 +6,9 @@ import { defineConfig } from 'vitest/config';
 const chrome =
   process.env['CHROME_PATH'] ??
   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+// CANON_BROWSER=webkit or firefox runs Playwright's own build instead
+const browser = (process.env['CANON_BROWSER'] ?? 'chromium') as
+  'chromium' | 'webkit' | 'firefox';
 
 export default defineConfig({
   plugins: [svelte()],
@@ -25,8 +28,12 @@ export default defineConfig({
           browser: {
             enabled: true,
             headless: true,
-            provider: playwright({ launchOptions: { executablePath: chrome } }),
-            instances: [{ browser: 'chromium' }],
+            provider: playwright(
+              browser === 'chromium'
+                ? { launchOptions: { executablePath: chrome } }
+                : {},
+            ),
+            instances: [{ browser }],
           },
         },
       },

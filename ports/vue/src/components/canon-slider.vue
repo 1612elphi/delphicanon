@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue';
+import { capture } from '@canon/lib/motion.ts';
 import { clamp, dragSpeed, snap } from '@canon/lib/number.ts';
 import '@canon/styles/tokens.css';
 import '@canon/components/canon-slider.css';
@@ -93,7 +94,7 @@ onMounted(() => {
     pointer = event.pointerId;
     start = { x: event.clientX, y: event.clientY };
     dragging = false;
-    element.setPointerCapture?.(pointer);
+    capture(element, pointer);
     element.dataset['active'] = '';
   };
   const move = (event: PointerEvent) => {

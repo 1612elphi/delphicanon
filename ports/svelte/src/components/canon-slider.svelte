@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Attachment } from 'svelte/attachments';
   import type { HTMLAttributes } from 'svelte/elements';
+  import { capture } from '@canon/lib/motion.ts';
   import { clamp, dragSpeed, snap } from '@canon/lib/number.ts';
   import '@canon/styles/tokens.css';
   import '@canon/components/canon-slider.css';
@@ -95,7 +96,7 @@
       pointer = event.pointerId;
       start = { x: event.clientX, y: event.clientY };
       dragging = false;
-      slider.setPointerCapture?.(pointer);
+      capture(slider, pointer);
       slider.dataset['active'] = '';
     };
     const move = (event: PointerEvent) => {

@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
+import { capture } from '../lib/motion.ts';
 import { clamp, dragSpeed, snap } from '../lib/number.ts';
 import '../styles/tokens.css';
 import './canon-slider.css';
@@ -111,7 +112,7 @@ export default class CanonSlider extends Component<CanonSliderSignature> {
       pointer = event.pointerId;
       start = { x: event.clientX, y: event.clientY };
       this.dragging = false;
-      slider.setPointerCapture?.(pointer);
+      capture(slider, pointer);
       slider.dataset['active'] = '';
     };
     const move = (event: PointerEvent) => {

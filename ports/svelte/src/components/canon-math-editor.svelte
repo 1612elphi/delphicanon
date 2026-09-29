@@ -13,7 +13,7 @@
   import type { Attachment } from 'svelte/attachments';
   import type { HTMLAttributes } from 'svelte/elements';
   import type { MathEditing } from '../lib/math-editing.svelte.ts';
-  import { capture } from '@canon/lib/math/draw.ts';
+  import { capture } from '@canon/lib/motion.ts';
   import { layoutRow, type Row } from '@canon/lib/math/expression.ts';
   import { canvasMetrics } from '@canon/lib/math/measure.ts';
   import { keyed } from '@canon/lib/math/morph.ts';

@@ -90,14 +90,15 @@ export function attach(
   }
 
   let hadFocus = false;
+  // synchronous: Firefox returns focus to the invoker before toggle fires
   const before = (event: ToggleEvent) => {
-    if (event.newState === 'open') return popIn(panel);
+    const open = event.newState === 'open';
+    button?.setAttribute('aria-expanded', String(open));
+    if (open) return popIn(panel);
     hadFocus = panel.contains(document.activeElement);
   };
   const toggle = (event: ToggleEvent) => {
-    const open = event.newState === 'open';
-    button?.setAttribute('aria-expanded', String(open));
-    if (open || !hadFocus) return;
+    if (event.newState === 'open' || !hadFocus) return;
     const focused = document.activeElement;
     if (focused && focused !== document.body && !panel.contains(focused))
       return;
@@ -150,6 +151,26 @@ export function focusLeaves(panel: HTMLElement, event: FocusEvent): boolean {
     next instanceof HTMLButtonElement &&
     next.popoverTargetElement === panel
   );
+}
+
+/**
+ * Runs `open` now, or once a press still `held` ends. WebKit and Firefox
+ * light-dismiss an auto popover shown during a press when its pointerup
+ * lands outside it, and macOS fires `contextmenu` while the button is down.
+ */
+export function afterPress(held: boolean, open: () => void): void {
+  if (!held) return open();
+  const done = new AbortController();
+  const release = () => {
+    done.abort();
+    // the pointerup's own light dismiss has run by then
+    setTimeout(open);
+  };
+  for (const type of ['pointerup', 'pointercancel'])
+    window.addEventListener(type, release, {
+      capture: true,
+      signal: done.signal,
+    });
 }
 
 export function isOpen(panel: Element): boolean {

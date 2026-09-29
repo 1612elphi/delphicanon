@@ -10,7 +10,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import CanonButton from './canon-button.svelte';
   import { iconSnippet } from '../lib/control-icons.ts';
-  import { capture } from '@canon/lib/math/draw.ts';
+  import { capture } from '@canon/lib/motion.ts';
   import type { Key } from '@canon/lib/math/expression.ts';
   import '@canon/styles/tokens.css';
   import '@canon/components/canon-math-rail.css';

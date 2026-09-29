@@ -1,5 +1,5 @@
 import { useCallback, type RefObject } from 'react';
-import { sidewaysJudgement } from '@canon/lib/motion.ts';
+import { capture, sidewaysJudgement } from '@canon/lib/motion.ts';
 import { useLatest } from './refs.ts';
 
 export interface PanHandlers {
@@ -55,7 +55,7 @@ export function useSidewaysPan(handlers: PanHandlers) {
           return;
         }
         began = true;
-        element.setPointerCapture?.(event.pointerId);
+        capture(element, event.pointerId);
         latest.current.onBegin?.(event);
       }
       latest.current.onMove?.(event);
@@ -109,7 +109,7 @@ export function useGrabPan(handlers: GrabPanHandlers) {
       if (pointer !== undefined || event.button !== 0) return;
       if (!latest.current.grabs(local(event.clientX, event.clientY))) return;
       pointer = event.pointerId;
-      element.setPointerCapture?.(event.pointerId);
+      capture(element, event.pointerId);
       latest.current.onBegin?.(event);
     };
     const onPointerMove = (event: PointerEvent) => {

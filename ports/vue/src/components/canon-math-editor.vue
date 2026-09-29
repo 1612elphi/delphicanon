@@ -23,7 +23,7 @@ const groupMorphs = new WeakMap<SVGGElement, MathMorph>();
 
 <script setup lang="ts">
 import { computed, useTemplateRef, watch } from 'vue';
-import { capture } from '@canon/lib/math/draw.ts';
+import { capture } from '@canon/lib/motion.ts';
 import { layoutRow, type Row } from '@canon/lib/math/expression.ts';
 import { canvasMetrics } from '@canon/lib/math/measure.ts';
 import { keyed } from '@canon/lib/math/morph.ts';

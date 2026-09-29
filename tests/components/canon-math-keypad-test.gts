@@ -26,6 +26,7 @@ module('Component | canon-math-keypad', function (hooks) {
       </template>,
     );
     assert.strictEqual(all('.canon-math-keypad-page').length, 4);
+    const firstPage = all('.canon-math-keypad-page')[0];
     assert.strictEqual(
       all('.canon-math-keypad-page')[0]!.children.length,
       23,
@@ -52,6 +53,11 @@ module('Component | canon-math-keypad', function (hooks) {
     assert
       .dom('.canon-math-tab:nth-child(2)')
       .hasAttribute('aria-current', 'true');
+    assert.strictEqual(
+      all('.canon-math-keypad-page')[0],
+      firstPage,
+      'scrolling keeps the page elements, whose replacement resets the scroll in WebKit',
+    );
 
     await click('[data-canon-math-key="1-0-3"]');
     assert.dom('.canon-math-submenu .canon-math-key').exists({ count: 6 });

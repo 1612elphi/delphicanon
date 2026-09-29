@@ -90,6 +90,7 @@ function wholeRect(page: CanonPage): PageRect {
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, useTemplateRef } from 'vue';
+import { afterPress, isOpen } from '@canon/lib/popover.ts';
 import '@canon/styles/tokens.css';
 import '@canon/components/canon-page-strip.css';
 
@@ -255,17 +256,21 @@ function onDropFiles(event: DragEvent) {
   if (files.length > 0) props.onDrop?.(at, files);
 }
 
-function openMenu(index: number, x: number, y: number) {
+function openMenu(index: number, x: number, y: number, held: boolean) {
   const items = props.menu?.(index);
   const menu = menuElement.value;
   if (!items?.length || !menu) return false;
-  menuItems.value = items;
-  menu.style.left = `${x}px`;
-  menu.style.top = `${y}px`;
-  menu.showPopover();
-  requestAnimationFrame(() =>
-    menu.querySelector<HTMLElement>('[role=menuitem]')?.focus(),
-  );
+  afterPress(held, () => {
+    // a touch long press can also fire contextmenu
+    if (isOpen(menu)) return;
+    menuItems.value = items;
+    menu.style.left = `${x}px`;
+    menu.style.top = `${y}px`;
+    menu.showPopover();
+    requestAnimationFrame(() =>
+      menu.querySelector<HTMLElement>('[role=menuitem]')?.focus(),
+    );
+  });
   return true;
 }
 
@@ -277,14 +282,14 @@ function onContextMenu(index: number, event: MouseEvent) {
     x = box.left;
     y = box.bottom;
   }
-  if (openMenu(index, x, y)) event.preventDefault();
+  if (openMenu(index, x, y, event.buttons !== 0)) event.preventDefault();
 }
 
 function startPress(index: number, event: PointerEvent) {
   if (event.pointerType !== 'touch' || !props.menu) return;
   const { clientX: x, clientY: y } = event;
   cancelPress();
-  press = window.setTimeout(() => openMenu(index, x, y), longPressMs);
+  press = window.setTimeout(() => openMenu(index, x, y, true), longPressMs);
 }
 
 function cancelPress() {

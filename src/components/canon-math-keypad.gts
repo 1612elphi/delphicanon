@@ -326,7 +326,7 @@ export default class CanonMathKeypad extends Component<CanonMathKeypadSignature>
     <div class="canon-math-keypad" style={{this.style}} ...attributes>
       <CanonMathTabs @progress={{this.progress}} @onSelect={{this.show}} />
       <div class="canon-math-keypad-pager" {{this.pager}}>
-        {{#each this.pages as |page|}}
+        {{#each this.pages key="index" as |page|}}
           <div
             class="canon-math-keypad-page"
             style={{page.style}}

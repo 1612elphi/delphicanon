@@ -4,6 +4,7 @@ import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
+import { afterPress, isOpen } from '../lib/popover.ts';
 import '../styles/tokens.css';
 import './canon-page-strip.css';
 
@@ -285,17 +286,21 @@ export default class CanonPageStrip extends Component<CanonPageStripSignature> {
     if (files.length > 0) this.args.onDrop?.(destination, files);
   };
 
-  openMenu(index: number, x: number, y: number) {
+  openMenu(index: number, x: number, y: number, held: boolean) {
     const items = this.args.menu?.(index);
     const menu = this.#menu;
     if (!items?.length || !menu) return false;
-    this.menuItems = items;
-    menu.style.left = `${x}px`;
-    menu.style.top = `${y}px`;
-    menu.showPopover();
-    requestAnimationFrame(() =>
-      menu.querySelector<HTMLElement>('[role=menuitem]')?.focus(),
-    );
+    afterPress(held, () => {
+      // a touch long press can also fire contextmenu
+      if (isOpen(menu)) return;
+      this.menuItems = items;
+      menu.style.left = `${x}px`;
+      menu.style.top = `${y}px`;
+      menu.showPopover();
+      requestAnimationFrame(() =>
+        menu.querySelector<HTMLElement>('[role=menuitem]')?.focus(),
+      );
+    });
     return true;
   }
 
@@ -307,7 +312,7 @@ export default class CanonPageStrip extends Component<CanonPageStripSignature> {
       x = box.left;
       y = box.bottom;
     }
-    if (this.openMenu(index, x, y)) event.preventDefault();
+    if (this.openMenu(index, x, y, event.buttons !== 0)) event.preventDefault();
   };
 
   // template-lint forbids binding pointerdown; a touch long press starts there
@@ -317,7 +322,7 @@ export default class CanonPageStrip extends Component<CanonPageStripSignature> {
       const { clientX: x, clientY: y } = event;
       this.cancelPress();
       this.#press = window.setTimeout(
-        () => this.openMenu(index, x, y),
+        () => this.openMenu(index, x, y, true),
         longPressMs,
       );
     };

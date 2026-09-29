@@ -1,3 +1,4 @@
+import { capture } from '@canon/lib/motion.ts';
 import type { Attachment } from 'svelte/attachments';
 import type { PanHandlers } from './sideways-pan.ts';
 
@@ -38,7 +39,7 @@ export function grabPan({
       if (pointer !== undefined || event.button !== 0) return;
       if (!grabs(local(event.clientX, event.clientY))) return;
       pointer = event.pointerId;
-      element.setPointerCapture?.(event.pointerId);
+      capture(element, event.pointerId);
       onBegin?.(event);
     };
     const onPointerMove = (event: PointerEvent) => {

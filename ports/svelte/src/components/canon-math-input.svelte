@@ -34,7 +34,7 @@
   import CanonMathRail from './canon-math-rail.svelte';
   import CanonRows from './canon-rows.svelte';
   import { MathEditing } from '../lib/math-editing.svelte.ts';
-  import { capture } from '@canon/lib/math/draw.ts';
+  import { capture } from '@canon/lib/motion.ts';
   import { Expression, type Key } from '@canon/lib/math/expression.ts';
   import { keyForKeyboard } from '@canon/lib/math/keypad.ts';
   import { springEasing } from '@canon/lib/motion.ts';

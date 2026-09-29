@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { Overlays } from '@canon/lib/colour-solid/solid.ts';
 import { takesBlackInk, type Rgb } from '@canon/lib/colour.ts';
+import { capture } from '@canon/lib/motion.ts';
 
 /** Travel in px before a press becomes a drag, as UIPanGestureRecognizer's slop. */
 const dragSlop = 10;
@@ -304,11 +305,7 @@ function down(e: PointerEvent) {
     picks: false,
     samples: [{ t: e.timeStamp, ...at }],
   };
-  try {
-    if (grabbed) root.setPointerCapture(e.pointerId);
-  } catch {
-    // synthetic events have no active pointer to capture
-  }
+  if (grabbed) capture(root, e.pointerId);
 }
 
 function move(e: PointerEvent) {

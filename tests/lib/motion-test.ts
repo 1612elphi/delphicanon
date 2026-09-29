@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { pressedTransform, springEasing } from '#src/lib/motion.ts';
+import { capture, pressedTransform, springEasing } from '#src/lib/motion.ts';
 
 const angle = (transform: string, axis: 'X' | 'Y') =>
   Number(new RegExp(`rotate${axis}\\((-?[\\d.]+)rad\\)`).exec(transform)?.[1]);
@@ -30,5 +30,19 @@ module('Unit | lib/motion', function () {
     assert.strictEqual(points[0], 0);
     assert.strictEqual(points.at(-1), 1);
     assert.true(Math.max(...points) > 1, 'underdamped: it overshoots');
+  });
+
+  test('a capture blocks text selection until its pointer is released', function (assert) {
+    const selects = () =>
+      document.dispatchEvent(new Event('selectstart', { cancelable: true }));
+    const element = document.createElement('div');
+    document.body.append(element);
+    capture(element, 7);
+    assert.false(selects(), 'blocked while held, a synthetic pointer too');
+    window.dispatchEvent(new PointerEvent('pointerup', { pointerId: 8 }));
+    assert.false(selects(), 'another pointer does not release it');
+    window.dispatchEvent(new PointerEvent('pointerup', { pointerId: 7 }));
+    assert.true(selects());
+    element.remove();
   });
 });

@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { modifier } from 'ember-modifier';
-import { capture, MathMorph } from '../lib/math/draw.ts';
+import { MathMorph } from '../lib/math/draw.ts';
+import { capture } from '../lib/motion.ts';
 import { layoutRow, type Row } from '../lib/math/expression.ts';
 import type { MathEditing } from '../lib/math/editing.ts';
 import { canvasMetrics } from '../lib/math/measure.ts';

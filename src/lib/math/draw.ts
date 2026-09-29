@@ -261,12 +261,3 @@ export class MathMorph {
       el.getAnimations().forEach((a) => a.finish());
   }
 }
-
-/** Pointer capture that tolerates a pointer already gone, as a synthetic event's is. */
-export function capture(element: Element, pointerId: number): void {
-  try {
-    element.setPointerCapture(pointerId);
-  } catch {
-    // the pointer ended before the capture
-  }
-}
