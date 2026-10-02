@@ -1,0 +1,1402 @@
+[
+ {
+  "id": "emma",
+  "name": "Emma",
+  "colours": {
+   "background": {
+    "light": "#FAF5E6",
+    "dark": "#120915"
+   },
+   "card": {
+    "light": "#FCFAE8",
+    "dark": "#1C121B"
+   },
+   "foreground": {
+    "light": "#2F182B",
+    "dark": "#EAD5EF"
+   },
+   "mutedForeground": {
+    "light": "#705A68",
+    "dark": "#92759A"
+   },
+   "muted": {
+    "light": "#EEE8DA",
+    "dark": "#231926"
+   },
+   "border": {
+    "light": "#DFD5CD",
+    "dark": "#2E2133"
+   },
+   "primary": {
+    "light": "#661E67",
+    "dark": "#AD61C2"
+   },
+   "primaryForeground": {
+    "light": "#FAF5E6",
+    "dark": "#160A1A"
+   },
+   "accentBG": {
+    "light": "#E9DBD8",
+    "dark": "#291C2E"
+   },
+   "secondaryForeground": {
+    "light": "#4A1F48",
+    "dark": "#DCCDE1"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "vito",
+  "name": "Vito",
+  "colours": {
+   "background": {
+    "light": "#FAF5E6",
+    "dark": "#151209"
+   },
+   "card": {
+    "light": "#FBF7EA",
+    "dark": "#1E1910"
+   },
+   "foreground": {
+    "light": "#2C2411",
+    "dark": "#EAE5D3"
+   },
+   "mutedForeground": {
+    "light": "#6A6053",
+    "dark": "#989075"
+   },
+   "muted": {
+    "light": "#ECE8DA",
+    "dark": "#262219"
+   },
+   "border": {
+    "light": "#DFD8C7",
+    "dark": "#322E21"
+   },
+   "primary": {
+    "light": "#8F6419",
+    "dark": "#C2AD61"
+   },
+   "primaryForeground": {
+    "light": "#FAF5E6",
+    "dark": "#1B160A"
+   },
+   "accentBG": {
+    "light": "#EEE4CF",
+    "dark": "#2D291C"
+   },
+   "secondaryForeground": {
+    "light": "#59421A",
+    "dark": "#DCD8CA"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "madeline",
+  "name": "Madeline",
+  "colours": {
+   "background": {
+    "light": "#F3EEF8",
+    "dark": "#1A1530"
+   },
+   "card": {
+    "light": "#F2F1FB",
+    "dark": "#261D38"
+   },
+   "foreground": {
+    "light": "#350E1A",
+    "dark": "#FFE6ED"
+   },
+   "mutedForeground": {
+    "light": "#79555F",
+    "dark": "#B3889E"
+   },
+   "muted": {
+    "light": "#E5E0EA",
+    "dark": "#2C2641"
+   },
+   "border": {
+    "light": "#DDCFD9",
+    "dark": "#3C2F4A"
+   },
+   "primary": {
+    "light": "#B83B5E",
+    "dark": "#F27BA5"
+   },
+   "primaryForeground": {
+    "light": "#F3EEF8",
+    "dark": "#221733"
+   },
+   "accentBG": {
+    "light": "#F0DAE5",
+    "dark": "#372A45"
+   },
+   "secondaryForeground": {
+    "light": "#6F253A",
+    "dark": "#F7DDE3"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "bureau",
+  "name": "Bureau",
+  "colours": {
+   "background": {
+    "light": "#E7E5E1",
+    "dark": "#111213"
+   },
+   "card": {
+    "light": "#E5E8E4",
+    "dark": "#1D1819"
+   },
+   "foreground": {
+    "light": "#310303",
+    "dark": "#FFD8D4"
+   },
+   "mutedForeground": {
+    "light": "#744B45",
+    "dark": "#AC7774"
+   },
+   "muted": {
+    "light": "#D9D7D3",
+    "dark": "#232223"
+   },
+   "border": {
+    "light": "#D3C6C1",
+    "dark": "#342929"
+   },
+   "primary": {
+    "light": "#C62828",
+    "dark": "#E5484D"
+   },
+   "primaryForeground": {
+    "light": "#E7E5E1",
+    "dark": "#191212"
+   },
+   "accentBG": {
+    "light": "#E8D2CC",
+    "dark": "#2E2424"
+   },
+   "secondaryForeground": {
+    "light": "#721614",
+    "dark": "#F4D1CE"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "exagryph",
+  "name": "Exagryph",
+  "colours": {
+   "background": {
+    "light": "#F4EBDD",
+    "dark": "#140A0A"
+   },
+   "card": {
+    "light": "#F4EFE1",
+    "dark": "#1F1110"
+   },
+   "foreground": {
+    "light": "#340C05",
+    "dark": "#FAD4C8"
+   },
+   "mutedForeground": {
+    "light": "#775246",
+    "dark": "#A87769"
+   },
+   "muted": {
+    "light": "#E7DED0",
+    "dark": "#251A19"
+   },
+   "border": {
+    "light": "#DDCCBE",
+    "dark": "#35221F"
+   },
+   "primary": {
+    "light": "#A3261E",
+    "dark": "#E8643A"
+   },
+   "primaryForeground": {
+    "light": "#F4EBDD",
+    "dark": "#1B0B09"
+   },
+   "accentBG": {
+    "light": "#EED5C6",
+    "dark": "#301D1A"
+   },
+   "secondaryForeground": {
+    "light": "#661B12",
+    "dark": "#E7CBC2"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "murtaugh",
+  "name": "Murtaugh",
+  "colours": {
+   "background": {
+    "light": "#E8E2D3",
+    "dark": "#12110E"
+   },
+   "card": {
+    "light": "#EBE3D4",
+    "dark": "#1C1A14"
+   },
+   "foreground": {
+    "light": "#071813",
+    "dark": "#F0E1CE"
+   },
+   "mutedForeground": {
+    "light": "#4C584F",
+    "dark": "#9D8A71"
+   },
+   "muted": {
+    "light": "#DAD4C6",
+    "dark": "#23211D"
+   },
+   "border": {
+    "light": "#C8C7B9",
+    "dark": "#312C24"
+   },
+   "primary": {
+    "light": "#2F6F67",
+    "dark": "#D19A4E"
+   },
+   "primaryForeground": {
+    "light": "#E8E2D3",
+    "dark": "#18150E"
+   },
+   "accentBG": {
+    "light": "#D3D5C6",
+    "dark": "#2C271F"
+   },
+   "secondaryForeground": {
+    "light": "#1B3F38",
+    "dark": "#E1D5C7"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "letztes-jahr",
+  "name": "Letztes Jahr",
+  "colours": {
+   "background": {
+    "light": "#F2F1ED",
+    "dark": "#0A0A0A"
+   },
+   "card": {
+    "light": "#EFF4F0",
+    "dark": "#161111"
+   },
+   "foreground": {
+    "light": "#111111",
+    "dark": "#EDEDED"
+   },
+   "mutedForeground": {
+    "light": "#5E5554",
+    "dark": "#A77D81"
+   },
+   "muted": {
+    "light": "#DFE3DF",
+    "dark": "#1A1C1C"
+   },
+   "border": {
+    "light": "#D7D1CE",
+    "dark": "#2D2324"
+   },
+   "primary": {
+    "light": "#D11A45",
+    "dark": "#FF3B6B"
+   },
+   "primaryForeground": {
+    "light": "#F2F1ED",
+    "dark": "#140A0B"
+   },
+   "accentBG": {
+    "light": "#F4DCD9",
+    "dark": "#281D1E"
+   },
+   "secondaryForeground": {
+    "light": "#64232B",
+    "dark": "#D6E4E4"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "revachol",
+  "name": "Revachol",
+  "colours": {
+   "background": {
+    "light": "#E9E1D0",
+    "dark": "#1A2226"
+   },
+   "card": {
+    "light": "#E9E4D3",
+    "dark": "#262A2C"
+   },
+   "foreground": {
+    "light": "#260A00",
+    "dark": "#FFF4E4"
+   },
+   "mutedForeground": {
+    "light": "#694D3C",
+    "dark": "#B29684"
+   },
+   "muted": {
+    "light": "#DBD3C3",
+    "dark": "#2D3337"
+   },
+   "border": {
+    "light": "#D1C3B2",
+    "dark": "#3D3D3C"
+   },
+   "primary": {
+    "light": "#9E4520",
+    "dark": "#E08A4E"
+   },
+   "primaryForeground": {
+    "light": "#E9E1D0",
+    "dark": "#212425"
+   },
+   "accentBG": {
+    "light": "#E2CFBC",
+    "dark": "#373737"
+   },
+   "secondaryForeground": {
+    "light": "#5B260C",
+    "dark": "#FEEBDF"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "blueprint",
+  "name": "Blueprint",
+  "colours": {
+   "background": {
+    "light": "#F5F0E0",
+    "dark": "#1E3A5F"
+   },
+   "card": {
+    "light": "#FAF4E2",
+    "dark": "#2B4363"
+   },
+   "foreground": {
+    "light": "#161F28",
+    "dark": "#FFFCDF"
+   },
+   "mutedForeground": {
+    "light": "#585E63",
+    "dark": "#B6AC9A"
+   },
+   "muted": {
+    "light": "#E8E4D5",
+    "dark": "#334B6C"
+   },
+   "border": {
+    "light": "#D4D2C7",
+    "dark": "#43566F"
+   },
+   "primary": {
+    "light": "#1E3A5F",
+    "dark": "#E8B04A"
+   },
+   "primaryForeground": {
+    "light": "#F5F0E0",
+    "dark": "#273E5D"
+   },
+   "accentBG": {
+    "light": "#DAD9D1",
+    "dark": "#3D516B"
+   },
+   "secondaryForeground": {
+    "light": "#1D2D42",
+    "dark": "#FFF3DF"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#FF9A8C"
+   }
+  }
+ },
+ {
+  "id": "manila",
+  "name": "Manila",
+  "colours": {
+   "background": {
+    "light": "#EAD8A4",
+    "dark": "#231C12"
+   },
+   "card": {
+    "light": "#EADBA6",
+    "dark": "#2D2417"
+   },
+   "foreground": {
+    "light": "#220200",
+    "dark": "#FFF1DF"
+   },
+   "mutedForeground": {
+    "light": "#67442A",
+    "dark": "#AC8E73"
+   },
+   "muted": {
+    "light": "#DCCA98",
+    "dark": "#352D23"
+   },
+   "border": {
+    "light": "#D1BA8B",
+    "dark": "#423628"
+   },
+   "primary": {
+    "light": "#963232",
+    "dark": "#C97A2A"
+   },
+   "primaryForeground": {
+    "light": "#EAD8A4",
+    "dark": "#281D0F"
+   },
+   "accentBG": {
+    "light": "#E2C596",
+    "dark": "#3D3022"
+   },
+   "secondaryForeground": {
+    "light": "#55180F",
+    "dark": "#F9E8DA"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "dmg-01",
+  "name": "DMG-01",
+  "colours": {
+   "background": {
+    "light": "#9BBC0F",
+    "dark": "#0F380F"
+   },
+   "card": {
+    "light": "#9EBE0A",
+    "dark": "#1B4115"
+   },
+   "foreground": {
+    "light": "#000000",
+    "dark": "#FDFFE5"
+   },
+   "mutedForeground": {
+    "light": "#1A3000",
+    "dark": "#98B077"
+   },
+   "muted": {
+    "light": "#8FAF00",
+    "dark": "#264A23"
+   },
+   "border": {
+    "light": "#80A000",
+    "dark": "#315427"
+   },
+   "primary": {
+    "light": "#0F380F",
+    "dark": "#9BBC0F"
+   },
+   "primaryForeground": {
+    "light": "#9BBC0F",
+    "dark": "#133B09"
+   },
+   "accentBG": {
+    "light": "#8AAC14",
+    "dark": "#2B4F21"
+   },
+   "secondaryForeground": {
+    "light": "#001300",
+    "dark": "#F1F8DF"
+   },
+   "destructive": {
+    "light": "#7A0E0E",
+    "dark": "#FF7A6A"
+   }
+  }
+ },
+ {
+  "id": "great-northern",
+  "name": "Great Northern",
+  "colours": {
+   "background": {
+    "light": "#F4EEE1",
+    "dark": "#2B0A10"
+   },
+   "card": {
+    "light": "#F4F2E5",
+    "dark": "#351416"
+   },
+   "foreground": {
+    "light": "#340F0D",
+    "dark": "#F4ECD5"
+   },
+   "mutedForeground": {
+    "light": "#76544C",
+    "dark": "#AA9074"
+   },
+   "muted": {
+    "light": "#E7E1D4",
+    "dark": "#3D1D20"
+   },
+   "border": {
+    "light": "#DCCEC2",
+    "dark": "#4A2926"
+   },
+   "primary": {
+    "light": "#8E1B26",
+    "dark": "#D4A847"
+   },
+   "primaryForeground": {
+    "light": "#F4EEE1",
+    "dark": "#310F10"
+   },
+   "accentBG": {
+    "light": "#EBD6CA",
+    "dark": "#452421"
+   },
+   "secondaryForeground": {
+    "light": "#5D191A",
+    "dark": "#E6DFCD"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "macrodata",
+  "name": "Macrodata",
+  "colours": {
+   "background": {
+    "light": "#E8E0C8",
+    "dark": "#173F3F"
+   },
+   "card": {
+    "light": "#ECE2CA",
+    "dark": "#224845"
+   },
+   "foreground": {
+    "light": "#091611",
+    "dark": "#FEFFEA"
+   },
+   "mutedForeground": {
+    "light": "#4C554A",
+    "dark": "#9EB295"
+   },
+   "muted": {
+    "light": "#DBD3BC",
+    "dark": "#2D504E"
+   },
+   "border": {
+    "light": "#C8C4AF",
+    "dark": "#395A53"
+   },
+   "primary": {
+    "light": "#1F5454",
+    "dark": "#A8C065"
+   },
+   "primaryForeground": {
+    "light": "#E8E0C8",
+    "dark": "#1B433E"
+   },
+   "accentBG": {
+    "light": "#D0CFBA",
+    "dark": "#33554F"
+   },
+   "secondaryForeground": {
+    "light": "#163330",
+    "dark": "#F3F8E6"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#FF9A7A"
+   }
+  }
+ },
+ {
+  "id": "sottsass",
+  "name": "Sottsass",
+  "colours": {
+   "background": {
+    "light": "#F4EAD8",
+    "dark": "#1A1A1A"
+   },
+   "card": {
+    "light": "#F3EDD9",
+    "dark": "#202424"
+   },
+   "foreground": {
+    "light": "#350417",
+    "dark": "#DAF8F7"
+   },
+   "mutedForeground": {
+    "light": "#7B4E55",
+    "dark": "#7CA1A1"
+   },
+   "muted": {
+    "light": "#E6DCCB",
+    "dark": "#2A2B2B"
+   },
+   "border": {
+    "light": "#DFCABE",
+    "dark": "#303938"
+   },
+   "primary": {
+    "light": "#C21F72",
+    "dark": "#3AC8C8"
+   },
+   "primaryForeground": {
+    "light": "#F4EAD8",
+    "dark": "#1A2020"
+   },
+   "accentBG": {
+    "light": "#F2D5CC",
+    "dark": "#2C3333"
+   },
+   "secondaryForeground": {
+    "light": "#731440",
+    "dark": "#D3E9E9"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "hotdog-stand",
+  "name": "Hotdog Stand",
+  "colours": {
+   "background": {
+    "light": "#FFEE00",
+    "dark": "#3A0006"
+   },
+   "card": {
+    "light": "#FCF100",
+    "dark": "#460F0B"
+   },
+   "foreground": {
+    "light": "#000000",
+    "dark": "#F3F5CF"
+   },
+   "mutedForeground": {
+    "light": "#433601",
+    "dark": "#BBA06D"
+   },
+   "muted": {
+    "light": "#E8DC00",
+    "dark": "#4C1716"
+   },
+   "border": {
+    "light": "#DCC802",
+    "dark": "#5B291C"
+   },
+   "primary": {
+    "light": "#C8001A",
+    "dark": "#FFE500"
+   },
+   "primaryForeground": {
+    "light": "#FFEE00",
+    "dark": "#430904"
+   },
+   "accentBG": {
+    "light": "#FDD80C",
+    "dark": "#562317"
+   },
+   "secondaryForeground": {
+    "light": "#440303",
+    "dark": "#E5E4C7"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "ceefax",
+  "name": "Ceefax",
+  "colours": {
+   "background": {
+    "light": "#FFFFFF",
+    "dark": "#000000"
+   },
+   "card": {
+    "light": "#FFFFFC",
+    "dark": "#010100"
+   },
+   "foreground": {
+    "light": "#000000",
+    "dark": "#FFFFFF"
+   },
+   "mutedForeground": {
+    "light": "#373B43",
+    "dark": "#9A9C79"
+   },
+   "muted": {
+    "light": "#EEECE7",
+    "dark": "#030303"
+   },
+   "border": {
+    "light": "#D4D7DC",
+    "dark": "#10110A"
+   },
+   "primary": {
+    "light": "#0000D0",
+    "dark": "#FFFF00"
+   },
+   "primaryForeground": {
+    "light": "#FFFFFF",
+    "dark": "#000000"
+   },
+   "accentBG": {
+    "light": "#DDE8FF",
+    "dark": "#0B0B05"
+   },
+   "secondaryForeground": {
+    "light": "#000447",
+    "dark": "#E8E7F2"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#FF3030"
+   }
+  }
+ },
+ {
+  "id": "naica",
+  "name": "Naica",
+  "colours": {
+   "background": {
+    "light": "#D4B8E8",
+    "dark": "#2E1A47"
+   },
+   "card": {
+    "light": "#D7BBEB",
+    "dark": "#372350"
+   },
+   "foreground": {
+    "light": "#070011",
+    "dark": "#FFFBFF"
+   },
+   "mutedForeground": {
+    "light": "#433153",
+    "dark": "#AB96BE"
+   },
+   "muted": {
+    "light": "#C7ACDB",
+    "dark": "#402E58"
+   },
+   "border": {
+    "light": "#B69CCA",
+    "dark": "#4B3764"
+   },
+   "primary": {
+    "light": "#2E1A47",
+    "dark": "#B88BD4"
+   },
+   "primaryForeground": {
+    "light": "#D4B8E8",
+    "dark": "#321B4B"
+   },
+   "accentBG": {
+    "light": "#BFA4D4",
+    "dark": "#45315F"
+   },
+   "secondaryForeground": {
+    "light": "#1A092A",
+    "dark": "#FAF1FF"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "dracula",
+  "name": "Dracula",
+  "colours": {
+   "background": {
+    "light": "#F8F8F2",
+    "dark": "#282A36"
+   },
+   "card": {
+    "light": "#FBFBF1",
+    "dark": "#313241"
+   },
+   "foreground": {
+    "light": "#221C42",
+    "dark": "#F8F8F2"
+   },
+   "mutedForeground": {
+    "light": "#646282",
+    "dark": "#A49CB5"
+   },
+   "muted": {
+    "light": "#EBEBE5",
+    "dark": "#393B45"
+   },
+   "border": {
+    "light": "#DADADE",
+    "dark": "#454454"
+   },
+   "primary": {
+    "light": "#644AC9",
+    "dark": "#BD93F9"
+   },
+   "primaryForeground": {
+    "light": "#F8F8F2",
+    "dark": "#2D2C3E"
+   },
+   "accentBG": {
+    "light": "#E5E5F0",
+    "dark": "#403F50"
+   },
+   "secondaryForeground": {
+    "light": "#40337E",
+    "dark": "#ECEEE2"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#FF5555"
+   }
+  }
+ },
+ {
+  "id": "nord",
+  "name": "Nord",
+  "colours": {
+   "background": {
+    "light": "#ECEFF4",
+    "dark": "#2E3440"
+   },
+   "card": {
+    "light": "#EFF1F5",
+    "dark": "#353D49"
+   },
+   "foreground": {
+    "light": "#2E3440",
+    "dark": "#ECEFF4"
+   },
+   "mutedForeground": {
+    "light": "#69707C",
+    "dark": "#96A6B0"
+   },
+   "muted": {
+    "light": "#E1E4E8",
+    "dark": "#3E444F"
+   },
+   "border": {
+    "light": "#D1D6DD",
+    "dark": "#464F5B"
+   },
+   "primary": {
+    "light": "#4A6A94",
+    "dark": "#88C0D0"
+   },
+   "primaryForeground": {
+    "light": "#ECEFF4",
+    "dark": "#2F3845"
+   },
+   "accentBG": {
+    "light": "#D8DFE9",
+    "dark": "#414A56"
+   },
+   "secondaryForeground": {
+    "light": "#3D4E67",
+    "dark": "#E4E4E9"
+   },
+   "destructive": {
+    "light": "#A94F58",
+    "dark": "#E0848C"
+   }
+  }
+ },
+ {
+  "id": "olivia",
+  "name": "Olivia",
+  "colours": {
+   "background": {
+    "light": "#F5DCE0",
+    "dark": "#1A1A1A"
+   },
+   "card": {
+    "light": "#F5DFE2",
+    "dark": "#252323"
+   },
+   "foreground": {
+    "light": "#2A0611",
+    "dark": "#FEEBEF"
+   },
+   "mutedForeground": {
+    "light": "#704951",
+    "dark": "#AB959A"
+   },
+   "muted": {
+    "light": "#E7CED2",
+    "dark": "#2C2B2B"
+   },
+   "border": {
+    "light": "#DCBEC3",
+    "dark": "#3B3637"
+   },
+   "primary": {
+    "light": "#A33D5A",
+    "dark": "#E8A8B8"
+   },
+   "primaryForeground": {
+    "light": "#F5DCE0",
+    "dark": "#211E1F"
+   },
+   "accentBG": {
+    "light": "#EDCAD0",
+    "dark": "#363132"
+   },
+   "secondaryForeground": {
+    "light": "#602032",
+    "dark": "#EDDFE2"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "team-zissou",
+  "name": "Team Zissou",
+  "colours": {
+   "background": {
+    "light": "#F5F0E6",
+    "dark": "#0B2E42"
+   },
+   "card": {
+    "light": "#FAF3E8",
+    "dark": "#1B3847"
+   },
+   "foreground": {
+    "light": "#112029",
+    "dark": "#FFFDDD"
+   },
+   "mutedForeground": {
+    "light": "#556166",
+    "dark": "#B1AB8E"
+   },
+   "muted": {
+    "light": "#E8E3DA",
+    "dark": "#234051"
+   },
+   "border": {
+    "light": "#D4D3CD",
+    "dark": "#354C55"
+   },
+   "primary": {
+    "light": "#0D4A6B",
+    "dark": "#F0C040"
+   },
+   "primaryForeground": {
+    "light": "#F5F0E6",
+    "dark": "#173341"
+   },
+   "accentBG": {
+    "light": "#DADCD8",
+    "dark": "#2F4751"
+   },
+   "secondaryForeground": {
+    "light": "#153548",
+    "dark": "#FCF1DB"
+   },
+   "destructive": {
+    "light": "#C40000",
+    "dark": "#FF5A4A"
+   }
+  }
+ },
+ {
+  "id": "voight-kampff",
+  "name": "Voight-Kampff",
+  "colours": {
+   "background": {
+    "light": "#FFFFFF",
+    "dark": "#40318D"
+   },
+   "card": {
+    "light": "#FFFFFF",
+    "dark": "#483B94"
+   },
+   "foreground": {
+    "light": "#262443",
+    "dark": "#FFFFFF"
+   },
+   "mutedForeground": {
+    "light": "#676782",
+    "dark": "#ACACDD"
+   },
+   "muted": {
+    "light": "#F3F3F3",
+    "dark": "#4F4699"
+   },
+   "border": {
+    "light": "#E0E0E7",
+    "dark": "#5851A2"
+   },
+   "primary": {
+    "light": "#40318D",
+    "dark": "#B4B4FF"
+   },
+   "primaryForeground": {
+    "light": "#FFFFFF",
+    "dark": "#433492"
+   },
+   "accentBG": {
+    "light": "#E6E6F3",
+    "dark": "#544B9F"
+   },
+   "secondaryForeground": {
+    "light": "#332E66",
+    "dark": "#F5F5F7"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#FF9A9A"
+   }
+  }
+ },
+ {
+  "id": "munch",
+  "name": "Munch",
+  "colours": {
+   "background": {
+    "light": "#F5F5DC",
+    "dark": "#2E2E2E"
+   },
+   "card": {
+    "light": "#F3F8E0",
+    "dark": "#3B3533"
+   },
+   "foreground": {
+    "light": "#3B1000",
+    "dark": "#FFF4E4"
+   },
+   "mutedForeground": {
+    "light": "#7F5942",
+    "dark": "#C99582"
+   },
+   "muted": {
+    "light": "#E7E7CF",
+    "dark": "#413F3E"
+   },
+   "border": {
+    "light": "#E0D6BC",
+    "dark": "#524642"
+   },
+   "primary": {
+    "light": "#C83A00",
+    "dark": "#FF6A2A"
+   },
+   "primaryForeground": {
+    "light": "#F5F5DC",
+    "dark": "#372E2B"
+   },
+   "accentBG": {
+    "light": "#F4E1C5",
+    "dark": "#4D413C"
+   },
+   "secondaryForeground": {
+    "light": "#792601",
+    "dark": "#FFEDE1"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#FF8A80"
+   }
+  }
+ },
+ {
+  "id": "vincent",
+  "name": "Vincent",
+  "colours": {
+   "background": {
+    "light": "#F5E6A3",
+    "dark": "#0C1445"
+   },
+   "card": {
+    "light": "#FAE9A3",
+    "dark": "#17214B"
+   },
+   "foreground": {
+    "light": "#111817",
+    "dark": "#FFF1CF"
+   },
+   "mutedForeground": {
+    "light": "#545646",
+    "dark": "#A79E8D"
+   },
+   "muted": {
+    "light": "#E8DA99",
+    "dark": "#1D2854"
+   },
+   "border": {
+    "light": "#D3C992",
+    "dark": "#2D3759"
+   },
+   "primary": {
+    "light": "#1E3A5F",
+    "dark": "#F0C14B"
+   },
+   "primaryForeground": {
+    "light": "#F5E6A3",
+    "dark": "#131C45"
+   },
+   "accentBG": {
+    "light": "#DAD19D",
+    "dark": "#283255"
+   },
+   "secondaryForeground": {
+    "light": "#1A2A38",
+    "dark": "#EDE3CD"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "klimt",
+  "name": "Klimt",
+  "colours": {
+   "background": {
+    "light": "#F0D060",
+    "dark": "#1A1A0F"
+   },
+   "card": {
+    "light": "#F3D260",
+    "dark": "#242315"
+   },
+   "foreground": {
+    "light": "#110800",
+    "dark": "#F9EFD5"
+   },
+   "mutedForeground": {
+    "light": "#554500",
+    "dark": "#A29570"
+   },
+   "muted": {
+    "light": "#E2C356",
+    "dark": "#2B2B1F"
+   },
+   "border": {
+    "light": "#D0B44E",
+    "dark": "#393624"
+   },
+   "primary": {
+    "light": "#4A4528",
+    "dark": "#C9A227"
+   },
+   "primaryForeground": {
+    "light": "#F0D060",
+    "dark": "#201D0D"
+   },
+   "accentBG": {
+    "light": "#DBBF5A",
+    "dark": "#33311F"
+   },
+   "secondaryForeground": {
+    "light": "#2C2401",
+    "dark": "#EBE3CF"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "hopper",
+  "name": "Hopper",
+  "colours": {
+   "background": {
+    "light": "#F5F0E6",
+    "dark": "#1A2634"
+   },
+   "card": {
+    "light": "#F5F4EB",
+    "dark": "#252F3B"
+   },
+   "foreground": {
+    "light": "#370F08",
+    "dark": "#FFFEEB"
+   },
+   "mutedForeground": {
+    "light": "#79544A",
+    "dark": "#A9A293"
+   },
+   "muted": {
+    "light": "#E9E3DA",
+    "dark": "#2D3844"
+   },
+   "border": {
+    "light": "#DED0C5",
+    "dark": "#3B434B"
+   },
+   "primary": {
+    "light": "#8B0000",
+    "dark": "#C9A86C"
+   },
+   "primaryForeground": {
+    "light": "#F5F0E6",
+    "dark": "#202934"
+   },
+   "accentBG": {
+    "light": "#ECD7CB",
+    "dark": "#353D46"
+   },
+   "secondaryForeground": {
+    "light": "#5E130B",
+    "dark": "#FAF3E6"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "force-push",
+  "name": "Force Push",
+  "colours": {
+   "background": {
+    "light": "#F0F6FC",
+    "dark": "#0D1117"
+   },
+   "card": {
+    "light": "#F4F8FA",
+    "dark": "#141A23"
+   },
+   "foreground": {
+    "light": "#1F2328",
+    "dark": "#F0F6FC"
+   },
+   "mutedForeground": {
+    "light": "#5E6671",
+    "dark": "#8196AE"
+   },
+   "muted": {
+    "light": "#E4E8EB",
+    "dark": "#1F2328"
+   },
+   "border": {
+    "light": "#D2DAE3",
+    "dark": "#262E39"
+   },
+   "primary": {
+    "light": "#0969DA",
+    "dark": "#58A6FF"
+   },
+   "primaryForeground": {
+    "light": "#F0F6FC",
+    "dark": "#0D1520"
+   },
+   "accentBG": {
+    "light": "#D7E7FB",
+    "dark": "#212934"
+   },
+   "secondaryForeground": {
+    "light": "#234676",
+    "dark": "#E7E9E9"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ },
+ {
+  "id": "laser",
+  "name": "Laser",
+  "colours": {
+   "background": {
+    "light": "#F5F0FA",
+    "dark": "#1A0A2E"
+   },
+   "card": {
+    "light": "#F5F4FA",
+    "dark": "#26103A"
+   },
+   "foreground": {
+    "light": "#350835",
+    "dark": "#FFD6FF"
+   },
+   "mutedForeground": {
+    "light": "#785378",
+    "dark": "#B671BB"
+   },
+   "muted": {
+    "light": "#E8E2EC",
+    "dark": "#2C1C40"
+   },
+   "border": {
+    "light": "#DED0E2",
+    "dark": "#3D214F"
+   },
+   "primary": {
+    "light": "#A600A6",
+    "dark": "#FF00FF"
+   },
+   "primaryForeground": {
+    "light": "#F5F0FA",
+    "dark": "#230736"
+   },
+   "accentBG": {
+    "light": "#EFD9F2",
+    "dark": "#381C4A"
+   },
+   "secondaryForeground": {
+    "light": "#681068",
+    "dark": "#F5CEF2"
+   },
+   "destructive": {
+    "light": "#CC272E",
+    "dark": "#D74745"
+   }
+  }
+ }
+]
