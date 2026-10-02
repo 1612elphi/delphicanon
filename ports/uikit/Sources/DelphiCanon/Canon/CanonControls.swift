@@ -1,5 +1,12 @@
 import UIKit
 
+extension UIImage {
+    /// An SF Symbol, else a custom symbol of that name in the main bundle's asset catalogue.
+    public static func canonSymbol(_ name: String, _ configuration: UIImage.Configuration? = nil) -> UIImage? {
+        UIImage(systemName: name, withConfiguration: configuration) ?? UIImage(named: name, in: nil, with: configuration)
+    }
+}
+
 public final class CanonButton: UIButton {
 
     public enum Kind {
@@ -40,7 +47,7 @@ public final class CanonButton: UIButton {
     public func titleFits(in width: CGFloat) -> Bool {
         guard !text.isEmpty, let systemImage, watermark == nil, kind == .primary || kind == .secondary, width > 0 else { return true }
         let title = (text as NSString).size(withAttributes: [.font: UIFont.delphi(.body, weight: .semibold)]).width
-        let symbol = UIImage(systemName: systemImage, withConfiguration: UIImage.SymbolConfiguration(textStyle: .footnote))?.size.width ?? 0
+        let symbol = UIImage.canonSymbol(systemImage, UIImage.SymbolConfiguration(textStyle: .footnote))?.size.width ?? 0
         // insets, padding, slack: 38
         return title + symbol + 38 <= width
     }
@@ -86,7 +93,7 @@ public final class CanonButton: UIButton {
         super.init(frame: .zero)
         if !title.isEmpty { accessibilityLabel = title }
         if icon == .oversized, let systemImage,
-           let symbol = UIImage(systemName: systemImage, withConfiguration: UIImage.SymbolConfiguration(pointSize: 96, weight: .bold)) {
+           let symbol = UIImage.canonSymbol(systemImage, UIImage.SymbolConfiguration(pointSize: 96, weight: .bold)) {
             let watermark = UIImageView(image: symbol)
             watermark.contentMode = .scaleAspectFit
             clipsToBounds = true
@@ -105,7 +112,7 @@ public final class CanonButton: UIButton {
             guard let button = button as? CanonButton, var config = button.configuration else { return }
             let titled = button.showsTitle
             config.title = titled ? button.text : nil
-            config.image = button.watermark == nil ? button.systemImage.flatMap { UIImage(systemName: $0) } : nil
+            config.image = button.watermark == nil ? button.systemImage.flatMap { UIImage.canonSymbol($0) } : nil
             config.preferredSymbolConfigurationForImage = titled
                 ? UIImage.SymbolConfiguration(textStyle: .footnote)
                 : UIImage.SymbolConfiguration(textStyle: .body, scale: .medium).applying(UIImage.SymbolConfiguration(weight: .semibold))
@@ -181,7 +188,7 @@ public final class CanonButton: UIButton {
             } else {
                 return
             }
-            watermark?.image = systemImage.flatMap { UIImage(systemName: $0, withConfiguration: UIImage.SymbolConfiguration(pointSize: 96, weight: .bold)) }
+            watermark?.image = systemImage.flatMap { UIImage.canonSymbol($0, UIImage.SymbolConfiguration(pointSize: 96, weight: .bold)) }
         }
     }
 

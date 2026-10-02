@@ -4,12 +4,17 @@ import UIKit
 // MARK: - Presenter
 
 public enum ColourPickerPresenter {
-    /// Present UIColorPickerViewController from the topmost view controller.
+    /// An app's own colour picker, used in place of the system one when set: it takes the initial colour, whether alpha
+    /// is wanted, and the callback for each colour picked, and returns false to fall back to the system picker.
+    public static var redirect: ((_ initial: UIColor, _ supportsAlpha: Bool, _ onChange: @escaping (Color) -> Void) -> Bool)?
+
+    /// Present UIColorPickerViewController from the topmost view controller, or the app's picker when `redirect` takes it.
     public static func present(
         initialColour: Color,
         supportsAlpha: Bool = false,
         onChange: @escaping (Color) -> Void
     ) {
+        if let redirect, redirect(UIColor(initialColour), supportsAlpha, onChange) { return }
         let picker = UIColorPickerViewController()
         picker.selectedColor = UIColor(initialColour)
         picker.supportsAlpha = supportsAlpha
