@@ -23,6 +23,7 @@ public final class CanonSplit: UIView {
     private let bannerSticks: Bool
     private let mainLeadsStacked: Bool
     private let halves: Bool
+    private let pictureShare: CGFloat
     private let collapsesTo: CGFloat?
     private let oneColumn: Bool
     private let footer: UIView?
@@ -85,6 +86,7 @@ public final class CanonSplit: UIView {
     /// - Parameter mainLeadsStacked: in one column the main sections come before the sidebar's, for a sidebar that holds reference material.
     /// - Parameter halves: beside each other the panes are always equal, meeting at the middle when there is no crease, and a sidebar
     ///   of one canvas fills its whole pane. In one column that canvas is an ordinary first section.
+    /// - Parameter pictureShare: with `halves` and no crease, the share of the width the sidebar takes; a crease still splits equally.
     /// - Parameter collapsesTo: band height a one-column picture shrinks to before the page scrolls under it.
     /// - Parameter oneColumn: never splits: the sections stack at every width, sidebar first.
     public init(
@@ -95,6 +97,7 @@ public final class CanonSplit: UIView {
         bannerSticks: Bool = false,
         mainLeadsStacked: Bool = false,
         halves: Bool = false,
+        pictureShare: CGFloat = 0.5,
         collapsesTo: CGFloat? = nil,
         oneColumn: Bool = false,
         footer: UIView? = nil
@@ -107,6 +110,7 @@ public final class CanonSplit: UIView {
         self.bannerSticks = bannerSticks
         self.mainLeadsStacked = mainLeadsStacked
         self.halves = halves
+        self.pictureShare = pictureShare
         self.collapsesTo = collapsesTo
         self.oneColumn = oneColumn
         self.footer = footer
@@ -254,7 +258,8 @@ public final class CanonSplit: UIView {
             if let crease {
                 seam = (crease.midX - hairline / 2, hairline)
             } else if halves {
-                seam = ((bounds.width - hairline) / 2, hairline)
+                let leading = ((bounds.width - hairline) * pictureShare).rounded()
+                seam = (flipped ? bounds.width - hairline - leading : leading, hairline)
             } else {
                 let width = min(sidebarWidth, bounds.width * 0.4)
                 seam = (flipped ? bounds.width - width - hairline : width, hairline)
