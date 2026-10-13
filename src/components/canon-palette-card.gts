@@ -114,7 +114,7 @@ export default class CanonPaletteCard extends Component<CanonPaletteCardSignatur
       <CanonHeading @text={{@title}} />
       {{yield to="picker"}}
       <div class="canon-palette-card-strip" style={{this.stripStyle}}>
-        {{#each this.swatches as |swatch|}}
+        {{#each this.swatches key="@index" as |swatch|}}
           <button
             type="button"
             class="canon-palette-card-swatch
