@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { afterPress, placementStyle } from '#src/lib/popover.ts';
+import { afterPress, attach, placementStyle } from '#src/lib/popover.ts';
 
 module('Unit | lib/popover', function () {
   test('placements become position areas with a gap towards the anchor', function (assert) {
@@ -35,5 +35,24 @@ module('Unit | lib/popover', function () {
     window.dispatchEvent(new PointerEvent('pointerup'));
     await new Promise((resolve) => setTimeout(resolve));
     assert.deepEqual(opened, ['free', 'held'], 'once');
+  });
+
+  test('an anchor keeps its name when its style attribute is rewritten', async function (assert) {
+    const anchor = document.createElement('button');
+    const panel = document.createElement('div');
+    panel.popover = 'auto';
+    document.body.append(anchor, panel);
+    const detach = attach(panel, anchor, { placement: 'bottom-start' });
+    const name = panel.style.getPropertyValue('position-anchor');
+    anchor.setAttribute('style', 'left: 4px');
+    await Promise.resolve();
+    assert.strictEqual(anchor.style.getPropertyValue('anchor-name'), name);
+    assert.strictEqual(anchor.style.left, '4px');
+    detach();
+    anchor.setAttribute('style', 'left: 8px');
+    await Promise.resolve();
+    assert.strictEqual(anchor.style.getPropertyValue('anchor-name'), '');
+    anchor.remove();
+    panel.remove();
   });
 });

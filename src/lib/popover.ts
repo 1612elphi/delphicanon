@@ -72,7 +72,17 @@ export function attach(
 ): () => void {
   const name = `--canon-anchor-${++anchors}`;
   // one element can anchor a tooltip and a menu
-  anchor.style.setProperty('anchor-name', [...names(anchor), name].join(', '));
+  const claim = () => {
+    if (names(anchor).includes(name)) return;
+    anchor.style.setProperty(
+      'anchor-name',
+      [...names(anchor), name].join(', '),
+    );
+  };
+  claim();
+  // a consumer's bound style attribute replaces the whole inline style
+  const restyled = new MutationObserver(claim);
+  restyled.observe(anchor, { attributes: true, attributeFilter: ['style'] });
   const { area, fallbacks, gap } = placementStyle(options.placement);
   panel.style.setProperty('position-anchor', name);
   panel.style.setProperty('position-area', area);
@@ -109,6 +119,7 @@ export function attach(
   panel.addEventListener('toggle', toggle);
 
   return () => {
+    restyled.disconnect();
     panel.removeEventListener('beforetoggle', before);
     panel.removeEventListener('toggle', toggle);
     const rest = names(anchor).filter((other) => other !== name);
