@@ -55,7 +55,8 @@
   --canon-canvas-cap: 45cqh;
 
   position: sticky;
-  inset-block-start: 0;
+  /* sticky offsets count from inside the body padding the margin undoes */
+  inset-block-start: calc(-1 * var(--canon-panel-padding));
   z-index: 2;
 }
 
