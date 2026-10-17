@@ -15,6 +15,8 @@ export interface CanonMenuCellSignature {
     labelledBy?: string;
     label?: string;
     disabled?: boolean;
+    /** Every choice sends onChange, the one shown too, and the system menu marks none: for a list of places to go. */
+    repicks?: boolean;
     onChange?: (index: number) => void;
   };
   Element: HTMLDivElement;
@@ -40,17 +42,24 @@ export default class CanonMenuCell extends Component<CanonMenuCellSignature> {
     return this.args.placeholder ?? '\u2014';
   }
 
+  get blank() {
+    return this.args.repicks === true || !this.title;
+  }
+
   get options() {
     return this.args.items.map((title, index) => ({
       title,
       value: String(index),
-      selected: index === this.selected,
+      selected: !this.args.repicks && index === this.selected,
     }));
   }
 
   pick = (event: Event) => {
-    const index = Number((event.target as HTMLSelectElement).value);
-    if (index === this.selected) return;
+    const select = event.target as HTMLSelectElement;
+    const index = Number(select.value);
+    // a native select sends no change for the option it already holds
+    if (this.args.repicks) select.value = '';
+    else if (index === this.selected) return;
     this.hold.set(index);
     this.args.onChange?.(index);
   };
@@ -75,14 +84,13 @@ export default class CanonMenuCell extends Component<CanonMenuCellSignature> {
         disabled={{@disabled}}
         {{on "change" this.pick}}
       >
-        {{#unless this.title}}
-          <option
-            value=""
-            disabled
-            selected
-            hidden
-          >{{this.placeholder}}</option>
-        {{/unless}}
+        {{#if this.blank}}
+          <option value="" disabled selected hidden>{{if
+              this.title
+              this.title
+              this.placeholder
+            }}</option>
+        {{/if}}
         {{#each this.options as |choice|}}
           <option
             value={{choice.value}}

@@ -66,6 +66,28 @@ module('Component | canon-menu-cell', function (hooks) {
     assert.dom('.canon-menu-cell-title').hasText('Three');
   });
 
+  test('repicks sends the choice it shows', async function (assert) {
+    const state = new State();
+    await render(
+      <template>
+        <CanonMenuCell
+          @items={{items}}
+          @selected={{state.selected}}
+          @repicks={{true}}
+          @label="Count"
+          @onChange={{state.pick}}
+        />
+      </template>,
+    );
+    assert.dom('.canon-menu-cell-title').hasText('One');
+    assert.dom('select').hasValue('', 'no choice is the select value');
+    await select('select', '0');
+    await select('select', '0');
+    assert.deepEqual(state.picks, [0, 0]);
+    assert.dom('select').hasValue('');
+    assert.dom('.canon-menu-cell-title').hasText('One');
+  });
+
   test('no selection shows the placeholder', async function (assert) {
     await render(
       <template><CanonMenuCell @items={{items}} @label="Count" /></template>,
