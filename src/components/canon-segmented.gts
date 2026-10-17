@@ -8,7 +8,7 @@ import '../styles/tokens.css';
 
 export interface CanonSegmentedSignature {
   Args: {
-    /** Titles; with `icons`, what assistive technology reads. */
+    /** Titles; with `icons`, what assistive technology reads. A new array drops a pick. */
     items: string[];
     /** Cells that show a symbol instead of the title, one per item. */
     icons?: ComponentLike[];
@@ -28,7 +28,11 @@ export default class CanonSegmented extends Component<CanonSegmentedSignature> {
   hold = new Hold<number>();
 
   get selected(): number {
-    return this.hold.read(this.args.selected) ?? this.args.selected ?? 0;
+    return (
+      this.hold.read(this.args.selected, this.args.items) ??
+      this.args.selected ??
+      0
+    );
   }
 
   get cells() {

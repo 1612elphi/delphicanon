@@ -16,6 +16,10 @@ class State {
   };
 }
 
+class Choices {
+  @tracked items = modes;
+}
+
 module('Component | canon-segmented', function (hooks) {
   setupRenderingTest(hooks);
 
@@ -62,6 +66,22 @@ module('Component | canon-segmented', function (hooks) {
     assert
       .dom('[role=radio]:nth-child(2)')
       .hasAttribute('aria-checked', 'true');
+  });
+
+  test('new items drop a pick', async function (assert) {
+    const state = new Choices();
+    await render(
+      <template><CanonSegmented @items={{state.items}} /></template>,
+    );
+    await click('[role=radio]:nth-child(3)');
+    state.items = ['Square', 'Portrait', 'Story'];
+    await rerender();
+    assert
+      .dom('[role=radio]:nth-child(1)')
+      .hasAttribute('aria-checked', 'true');
+    assert
+      .dom('[role=radio]:nth-child(3)')
+      .hasAttribute('aria-checked', 'false');
   });
 
   test('greys single choices and shows symbols', async function (assert) {
