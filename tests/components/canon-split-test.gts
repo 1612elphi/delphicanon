@@ -124,6 +124,60 @@ module('Component | canon-split', function (hooks) {
     assert.strictEqual(full(), '254px', 'half the width and the frame');
   });
 
+  test('the end piece follows the main sections', async function (assert) {
+    await render(
+      <template>
+        <div class="wide" style={{css "width: 1000px; height: 600px"}}>
+          <CanonSplit>
+            <:sidebar><div class="side">Side</div></:sidebar>
+            <:main><div class="main">Main</div></:main>
+            <:end><div class="piece">End</div></:end>
+          </CanonSplit>
+        </div>
+        <div class="stacked" style={{css "width: 500px; height: 800px"}}>
+          <CanonSplit>
+            <:sidebar><div class="side">Side</div></:sidebar>
+            <:main><div class="main">Main</div></:main>
+            <:end><div class="piece">End</div></:end>
+          </CanonSplit>
+        </div>
+        <div class="leads" style={{css "width: 500px; height: 800px"}}>
+          <CanonSplit @mainLeadsStacked={{true}}>
+            <:sidebar><div class="side">Side</div></:sidebar>
+            <:main><div class="main">Main</div></:main>
+            <:end><div class="piece">End</div></:end>
+          </CanonSplit>
+        </div>
+      </template>,
+    );
+    assert.dom('.wide .canon-split-main > .canon-split-end .piece').exists();
+    assert.true(box('.wide .piece').top > box('.wide .main').top);
+    assert.true(box('.wide .piece').left > box('.wide .side').right);
+    assert.true(box('.stacked .piece').top > box('.stacked .main').top);
+    assert.true(box('.leads .main').top < box('.leads .side').top);
+    assert.true(
+      box('.leads .piece').top > box('.leads .side').top,
+      'after the sidebar when main leads',
+    );
+  });
+
+  test('an empty end piece takes no room', async function (assert) {
+    await render(
+      <template>
+        <div style={{css "width: 500px; height: 800px"}}>
+          <CanonSplit>
+            <:main><div class="main">Main</div></:main>
+          </CanonSplit>
+        </div>
+      </template>,
+    );
+    const body = document.querySelector<HTMLElement>('.canon-split-body')!;
+    const end = document.querySelector<HTMLElement>('.canon-split-end')!;
+    assert.strictEqual(end.getBoundingClientRect().height, 0);
+    assert.strictEqual(getComputedStyle(end).display, 'none', 'no gap either');
+    assert.true(body.contains(end));
+  });
+
   test('footerHidden takes the footer away', async function (assert) {
     await render(
       <template>

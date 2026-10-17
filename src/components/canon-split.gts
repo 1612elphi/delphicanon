@@ -30,6 +30,8 @@ export interface CanonSplitSignature {
     banner: [];
     /** A framed strip floating over the bottom of the main pane. */
     footer: [];
+    /** Follows the main sections: after them in the main pane, last in one column. Collapses when empty. */
+    end: [];
   };
   Element: HTMLDivElement;
 }
@@ -127,6 +129,7 @@ export default class CanonSplit extends Component<CanonSplitSignature> {
         <div class="canon-split-rule"></div>
         <div class="canon-split-pane canon-split-main canon-page">
           {{yield to="main"}}
+          <div class="canon-split-end">{{yield to="end"}}</div>
           {{#if (has-block "footer")}}
             {{#unless @footerHidden}}
               <div class="canon-split-footer">{{yield to="footer"}}</div>

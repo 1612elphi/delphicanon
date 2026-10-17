@@ -60,8 +60,15 @@
   z-index: 2;
 }
 
-.canon-split--main-leads .canon-split-main > :not(.canon-split-footer) {
+/* the end piece stays after the sidebar's sections */
+.canon-split--main-leads
+  .canon-split-main
+  > :not(.canon-split-footer, .canon-split-end) {
   order: -1;
+}
+
+.canon-split-end:empty {
+  display: none;
 }
 
 /* only the first section on screen reaches the top edge */
@@ -180,7 +187,9 @@
     margin: 0;
   }
 
-  .canon-split--main-leads .canon-split-main > :not(.canon-split-footer) {
+  .canon-split--main-leads
+    .canon-split-main
+    > :not(.canon-split-footer, .canon-split-end) {
     order: 0;
   }
 
