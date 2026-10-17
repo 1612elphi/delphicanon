@@ -76,7 +76,8 @@
 }
 
 .canon-button--filled:disabled {
-  color: color-mix(in srgb, var(--canon-primary-foreground) 40%, transparent);
+  background: var(--canon-muted);
+  color: var(--canon-muted-foreground);
 }
 
 .canon-button-title {

@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, render, triggerEvent } from '@ember/test-helpers';
 import CanonButton from '#src/components/canon-button.gts';
 import Dot from '../helpers/dot.gts';
+import { css } from '../helpers/css.ts';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -31,6 +32,32 @@ module('Component | canon-button', function (hooks) {
     assert.dom('.primary').hasClass('canon-button--filled');
     assert.dom('.segment').hasClass('canon-button--filled');
     assert.dom('.cell').doesNotHaveClass('canon-button--filled');
+  });
+
+  test('a disabled primary drops its fill', async function (assert) {
+    await render(
+      <template>
+        <CanonButton
+          class="off"
+          @text="Go"
+          @kind="primary"
+          @disabled={{true}}
+        />
+        <span
+          class="muted"
+          style={{css "background: var(--canon-muted)"}}
+        ></span>
+        <span
+          class="ink"
+          style={{css "background: var(--canon-muted-foreground)"}}
+        ></span>
+      </template>,
+    );
+    const paint = (s: string) =>
+      getComputedStyle(document.querySelector(s)!).backgroundColor;
+    const off = getComputedStyle(document.querySelector('.off')!);
+    assert.strictEqual(off.backgroundColor, paint('.muted'));
+    assert.strictEqual(off.color, paint('.ink'));
   });
 
   test('runs onClick unless disabled', async function (assert) {
