@@ -28,4 +28,32 @@ module('Component | canon-tooltip', function (hooks) {
     await triggerEvent('.target', 'pointerdown');
     assert.false(tip.matches(':popover-open'), 'a press hides it');
   });
+  test('keeps its look when the popover sheet loads later', async function (assert) {
+    const later = document.createElement('style');
+    later.textContent = [...document.styleSheets]
+      .flatMap((sheet) => [...sheet.cssRules])
+      .filter(
+        (rule) =>
+          rule instanceof CSSStyleRule &&
+          rule.selectorText === '.canon-popover',
+      )
+      .map((rule) => rule.cssText)
+      .join('\n');
+    document.head.append(later);
+    try {
+      await render(
+        <template>
+          <CanonTooltip @text="Copy" as |tip|>
+            <button type="button" {{tip.trigger}}>C</button>
+          </CanonTooltip>
+        </template>,
+      );
+      assert.notStrictEqual(later.textContent, '', 'the popover rule exists');
+      const style = getComputedStyle(document.querySelector('[role=tooltip]')!);
+      assert.strictEqual(style.paddingTop, '6px');
+      assert.strictEqual(style.borderTopStyle, 'none');
+    } finally {
+      later.remove();
+    }
+  });
 });

@@ -1,4 +1,5 @@
-.canon-tooltip {
+/* two classes, so the tooltip wins over .canon-popover whichever sheet loads last */
+.canon-popover.canon-tooltip {
   max-inline-size: var(--canon-tooltip-max-inline);
   padding: 6px 12px;
   border: 0;
