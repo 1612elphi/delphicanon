@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import CanonStepper from './canon-stepper.gts';
+import { Hold } from '../lib/hold.ts';
 import { clamp, parseInteger } from '../lib/number.ts';
 import '../styles/tokens.css';
 
@@ -17,6 +18,7 @@ export interface CanonNumberFieldSignature {
     labelledBy?: string;
     label?: string;
     disabled?: boolean;
+    /** The field then shows `value`: a change the consumer does not take reverts when typing ends. Without it the field keeps its own. */
     onChange?: (value: number) => void;
   };
   Element: HTMLDivElement;
@@ -24,8 +26,7 @@ export interface CanonNumberFieldSignature {
 
 /** Integer with step buttons either side. Arrow keys step too. */
 export default class CanonNumberField extends Component<CanonNumberFieldSignature> {
-  // a change holds until the value arg changes
-  @tracked held?: { value: number; over: number };
+  hold = new Hold<number>();
   @tracked draft?: string;
 
   get min() {
@@ -37,10 +38,10 @@ export default class CanonNumberField extends Component<CanonNumberFieldSignatur
   }
 
   get value(): number {
-    const { held } = this;
-    const value =
-      held && held.over === this.args.value ? held.value : this.args.value;
-    return clamp(value, this.min, this.max);
+    const held = this.args.onChange
+      ? undefined
+      : this.hold.read(this.args.value);
+    return clamp(held ?? this.args.value, this.min, this.max);
   }
 
   get text() {
@@ -49,7 +50,7 @@ export default class CanonNumberField extends Component<CanonNumberFieldSignatur
 
   commit(value: number) {
     if (value === this.value) return;
-    this.held = { value, over: this.args.value };
+    this.hold.set(value);
     this.args.onChange?.(value);
   }
 
