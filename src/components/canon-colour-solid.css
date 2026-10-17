@@ -90,6 +90,22 @@
   display: none;
 }
 
+.canon-colour-solid-hint {
+  position: absolute;
+  inset-block-end: 8px;
+  inset-inline-end: 8px;
+  color: var(--canon-muted-foreground);
+  font-family: var(--canon-font);
+  font-size: var(--canon-text-caption);
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity var(--canon-colour-solid-fade);
+}
+
+.canon-colour-solid--flat .canon-colour-solid-hint {
+  opacity: 0;
+}
+
 .canon-colour-solid-value {
   position: absolute;
   inline-size: 1px;
@@ -101,7 +117,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .canon-colour-solid-wire,
-  .canon-colour-solid-axis--depth {
+  .canon-colour-solid-axis--depth,
+  .canon-colour-solid-hint {
     transition: none;
   }
 }

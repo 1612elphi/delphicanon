@@ -20,7 +20,7 @@ import './canon-colour-solid.css';
 
 export interface CanonColourSolidSignature {
   Args: {
-    /** Default `hsl`. */
+    /** Default `rgb`. */
     space?: Space;
     /**
      * The picked colour's channels, each 0...1 (chroma may pass 1), in
@@ -74,6 +74,10 @@ interface Synced {
 const dragSlop = 10;
 /** Pointer history in ms used for the fling speed. */
 const flingWindow = 100;
+/** Ms without input before the solid starts to drift. */
+const idleDelay = 4000;
+/** Drift speed in radians per second. */
+const driftRate = 0.08;
 
 const reducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -93,9 +97,9 @@ const css = (c: Rgb) => `color(srgb ${c.map((v) => v.toFixed(4)).join(' ')})`;
  */
 export default class CanonColourSolid extends Component<CanonColourSolidSignature> {
   state = new SolidState(
-    this.args.space ?? 'hsl',
+    this.args.space ?? 'rgb',
     (this.args.point as Vec4 | undefined) ??
-      pointFor(this.args.space ?? 'hsl', [0.12, 0.4, 0.15]),
+      pointFor(this.args.space ?? 'rgb', [0.12, 0.4, 0.15]),
     () => this.redraw(),
   );
 
@@ -105,9 +109,10 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
   #frame = 0;
   #last?: number;
   #valueText = '';
+  #drifts = false;
 
   get label() {
-    return spaceNames[this.args.space ?? 'hsl'];
+    return spaceNames[this.args.space ?? 'rgb'];
   }
 
   redraw() {
@@ -121,7 +126,11 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
     const dt =
       this.#last === undefined ? 0 : Math.max(0, now - this.#last) / 1000;
     this.state.tick(dt);
-    this.#last = this.state.animating ? now : undefined;
+    if (this.#drifts && this.state.dragsTurn) {
+      // a hidden tab pauses frames
+      this.state.turn(driftRate * Math.min(dt, 0.1), 0);
+    }
+    this.#last = this.state.animating || this.#drifts ? now : undefined;
     this.paint();
   };
 
@@ -145,6 +154,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
       this.#renderer?.draw(this.state.uniforms(...pixels), ...pixels);
     }
     place(root, this.state.overlays(), this.state.showsWhole);
+    root.classList.toggle('canon-colour-solid--flat', !this.state.dragsTurn);
     const colour = colourAt(this.state.space, this.state.point);
     const name = this.args.closestName?.(colour);
     const text = name ? `${name}, ${hex(colour)}` : hex(colour);
@@ -168,7 +178,33 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
     const resize = new ResizeObserver(() => this.redraw());
     resize.observe(root);
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const motionChanged = () => (state.animates = !motion.matches);
+
+    let onScreen = false;
+    let idle = 0;
+    const rest = () => {
+      this.#drifts = false;
+      clearTimeout(idle);
+      if (!onScreen || document.hidden || motion.matches) return;
+      idle = window.setTimeout(() => {
+        if (drag) {
+          rest();
+          return;
+        }
+        this.#drifts = true;
+        this.redraw();
+      }, idleDelay);
+    };
+    const seen = new IntersectionObserver((entries) => {
+      onScreen = entries.some((e) => e.isIntersecting);
+      rest();
+    });
+    seen.observe(root);
+    document.addEventListener('visibilitychange', rest);
+
+    const motionChanged = () => {
+      state.animates = !motion.matches;
+      rest();
+    };
     motion.addEventListener('change', motionChanged);
 
     const local = (e: PointerEvent) => {
@@ -191,6 +227,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
       | undefined;
 
     const down = (e: PointerEvent) => {
+      rest();
       if (e.button !== 0 || drag) return;
       const at = local(e);
       const grabbed = state.grabs(at);
@@ -206,6 +243,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
       if (grabbed) capture(root, e.pointerId);
     };
     const move = (e: PointerEvent) => {
+      rest();
       if (!drag || e.pointerId !== drag.id) return;
       const at = local(e);
       drag.samples.push({ t: e.timeStamp, ...at });
@@ -231,6 +269,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
       drag.last = at;
     };
     const up = (e: PointerEvent) => {
+      rest();
       if (!drag || e.pointerId !== drag.id) return;
       const at = local(e);
       if (drag.active && !drag.picks) {
@@ -255,6 +294,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
     };
     const cancel = () => (drag = undefined);
     const key = (e: KeyboardEvent) => {
+      rest();
       const turns: Record<string, [number, number]> = {
         ArrowLeft: [-solidMotion.keyTurn, 0],
         ArrowRight: [solidMotion.keyTurn, 0],
@@ -279,6 +319,10 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
       cancelAnimationFrame(this.#frame);
       this.#frame = 0;
       this.#root = undefined;
+      this.#drifts = false;
+      clearTimeout(idle);
+      seen.disconnect();
+      document.removeEventListener('visibilitychange', rest);
       resize.disconnect();
       motion.removeEventListener('change', motionChanged);
       root.removeEventListener('pointerdown', down);
@@ -311,7 +355,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
       const synced = this.#synced;
       // first arguments: no motion
       state.animates = synced !== undefined && !reducedMotion();
-      const space = named.space ?? 'hsl';
+      const space = named.space ?? 'rgb';
       const pointChanged = !sameValues(named.point, synced?.point);
       if (space !== state.space) {
         state.setSpace(space);
@@ -365,6 +409,7 @@ export default class CanonColourSolid extends Component<CanonColourSolidSignatur
         ></span>
       </div>
       <output class="canon-colour-solid-value" aria-live="polite"></output>
+      <span class="canon-colour-solid-hint" aria-hidden="true">Drag to orbit</span>
     </div>
   </template>
 }
