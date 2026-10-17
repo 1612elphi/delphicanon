@@ -109,6 +109,7 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
+      "./components/canon-aspect-popover.js": "./dist/_app_/components/canon-aspect-popover.js",
       "./components/canon-bar.js": "./dist/_app_/components/canon-bar.js",
       "./components/canon-big-number-field.js": "./dist/_app_/components/canon-big-number-field.js",
       "./components/canon-button.js": "./dist/_app_/components/canon-button.js",
