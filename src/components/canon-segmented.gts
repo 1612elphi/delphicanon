@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
 import type { ComponentLike } from '@glint/template';
 import CanonButton from './canon-button.gts';
 import CanonGrid from './canon-grid.gts';
+import { Hold } from '../lib/hold.ts';
 import '../styles/tokens.css';
 
 export interface CanonSegmentedSignature {
@@ -25,14 +25,10 @@ export interface CanonSegmentedSignature {
 
 /** Single selection from a flush grid of cells. */
 export default class CanonSegmented extends Component<CanonSegmentedSignature> {
-  // a pick holds until the selected arg changes
-  @tracked picked?: { index: number; over: number | undefined };
+  hold = new Hold<number>();
 
   get selected(): number {
-    const { picked } = this;
-    return picked && picked.over === this.args.selected
-      ? picked.index
-      : (this.args.selected ?? 0);
+    return this.hold.read(this.args.selected) ?? this.args.selected ?? 0;
   }
 
   get cells() {
@@ -49,7 +45,7 @@ export default class CanonSegmented extends Component<CanonSegmentedSignature> {
 
   pick = (index: number) => {
     if (index === this.selected) return;
-    this.picked = { index, over: this.args.selected };
+    this.hold.set(index);
     this.args.onChange?.(index);
   };
 

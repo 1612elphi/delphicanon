@@ -1,10 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render } from '@ember/test-helpers';
+import { click, render, rerender } from '@ember/test-helpers';
+import { tracked } from '@glimmer/tracking';
 import CanonSegmented from '#src/components/canon-segmented.gts';
 import Dot from '../helpers/dot.gts';
 
 const modes = ['Region', 'Window', 'Screen'];
+
+class State {
+  @tracked selected = 0;
+  picks: number[] = [];
+  pick = (index: number) => {
+    this.picks.push(index);
+    this.selected = index;
+  };
+}
 
 module('Component | canon-segmented', function (hooks) {
   setupRenderingTest(hooks);
@@ -28,6 +38,30 @@ module('Component | canon-segmented', function (hooks) {
       .hasAttribute('aria-checked', 'false');
     await click('[role=radio]:nth-child(2)');
     assert.deepEqual(picks, [1], 'the selected choice sends nothing');
+  });
+
+  test('follows a value set elsewhere after a pick', async function (assert) {
+    const state = new State();
+    await render(
+      <template>
+        <CanonSegmented
+          @items={{modes}}
+          @selected={{state.selected}}
+          @onChange={{state.pick}}
+        />
+      </template>,
+    );
+    await click('[role=radio]:nth-child(2)');
+    state.selected = 0;
+    await rerender();
+    assert
+      .dom('[role=radio]:nth-child(1)')
+      .hasAttribute('aria-checked', 'true', 'an undo shows the old choice');
+    await click('[role=radio]:nth-child(2)');
+    assert.deepEqual(state.picks, [1, 1], 'the same pick is sent again');
+    assert
+      .dom('[role=radio]:nth-child(2)')
+      .hasAttribute('aria-checked', 'true');
   });
 
   test('greys single choices and shows symbols', async function (assert) {

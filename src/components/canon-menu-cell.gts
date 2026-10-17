@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { ChevronsUpDown } from '../lib/control-icons.gts';
+import { Hold } from '../lib/hold.ts';
 import '../styles/tokens.css';
 import './canon-menu-cell.css';
 
@@ -25,13 +25,10 @@ export interface CanonMenuCellSignature {
  * them: a native select laid invisibly over the cell.
  */
 export default class CanonMenuCell extends Component<CanonMenuCellSignature> {
-  @tracked picked?: { index: number; over: number | undefined };
+  hold = new Hold<number>();
 
   get selected(): number | undefined {
-    const { picked } = this;
-    return picked && picked.over === this.args.selected
-      ? picked.index
-      : this.args.selected;
+    return this.hold.read(this.args.selected) ?? this.args.selected;
   }
 
   get title(): string | undefined {
@@ -54,7 +51,7 @@ export default class CanonMenuCell extends Component<CanonMenuCellSignature> {
   pick = (event: Event) => {
     const index = Number((event.target as HTMLSelectElement).value);
     if (index === this.selected) return;
-    this.picked = { index, over: this.args.selected };
+    this.hold.set(index);
     this.args.onChange?.(index);
   };
 

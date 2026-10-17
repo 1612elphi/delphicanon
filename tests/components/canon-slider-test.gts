@@ -1,10 +1,25 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
+import {
+  render,
+  rerender,
+  triggerEvent,
+  triggerKeyEvent,
+} from '@ember/test-helpers';
+import { tracked } from '@glimmer/tracking';
 import CanonSlider from '#src/components/canon-slider.gts';
 import { css } from '../helpers/css.ts';
 
 const whole = (value: number) => String(Math.round(value));
+
+class State {
+  @tracked value = 50;
+  values: number[] = [];
+  set = (value: number) => {
+    this.values.push(value);
+    this.value = value;
+  };
+}
 
 module('Component | canon-slider', function (hooks) {
   setupRenderingTest(hooks);
@@ -55,6 +70,32 @@ module('Component | canon-slider', function (hooks) {
     await triggerEvent('.canon-slider', 'pointerdown', at);
     await triggerEvent('.canon-slider', 'pointerup', at);
     assert.dom('.canon-slider-readout').hasText('75%');
+  });
+
+  test('follows a value set elsewhere after a change', async function (assert) {
+    const state = new State();
+    await render(
+      <template>
+        <CanonSlider
+          @value={{state.value}}
+          @min={{0}}
+          @max={{100}}
+          @step={{10}}
+          @readout={{whole}}
+          @label="Level"
+          @onChange={{state.set}}
+        />
+      </template>,
+    );
+    await triggerKeyEvent('.canon-slider', 'keydown', 'ArrowRight');
+    state.value = 50;
+    await rerender();
+    assert
+      .dom('.canon-slider-readout')
+      .hasText('50', 'an undo shows the old value');
+    await triggerKeyEvent('.canon-slider', 'keydown', 'ArrowRight');
+    assert.deepEqual(state.values, [60, 60], 'the same step is sent again');
+    assert.dom('.canon-slider').hasAttribute('aria-valuenow', '60');
   });
 
   test('a new range clamps the value', async function (assert) {

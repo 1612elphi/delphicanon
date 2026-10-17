@@ -4,6 +4,7 @@ import { on } from '@ember/modifier';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
 import { capture } from '../lib/motion.ts';
+import { Hold } from '../lib/hold.ts';
 import { clamp, dragSpeed, snap } from '../lib/number.ts';
 import '../styles/tokens.css';
 import './canon-slider.css';
@@ -36,7 +37,7 @@ const percent = (value: number) => `${Math.round(value * 100)}%`;
  * moves it, finer the further the pointer is pulled from the track.
  */
 export default class CanonSlider extends Component<CanonSliderSignature> {
-  @tracked held?: { value: number; over: number };
+  hold = new Hold<number>();
   @tracked dragging = false;
 
   get min() {
@@ -52,9 +53,7 @@ export default class CanonSlider extends Component<CanonSliderSignature> {
   }
 
   get value(): number {
-    const { held } = this;
-    const value =
-      held && held.over === this.args.value ? held.value : this.args.value;
+    const value = this.hold.read(this.args.value) ?? this.args.value;
     return clamp(value, this.min, this.max);
   }
 
@@ -70,7 +69,7 @@ export default class CanonSlider extends Component<CanonSliderSignature> {
   apply(raw: number) {
     const next = snap(raw, this.min, this.max, this.args.step);
     if (next === this.value) return;
-    this.held = { value: next, over: this.args.value };
+    this.hold.set(next);
     this.args.onChange?.(next, this.dragging);
   }
 
