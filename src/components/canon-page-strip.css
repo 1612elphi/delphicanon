@@ -225,3 +225,12 @@
 .canon-page-strip-menu-item--destructive {
   color: var(--canon-destructive);
 }
+
+.canon-page-strip-list--blank {
+  overflow: hidden;
+}
+
+.canon-page-strip-paper--blank {
+  background: var(--canon-muted);
+  box-shadow: none;
+}

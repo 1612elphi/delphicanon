@@ -76,4 +76,44 @@ module('Component | canon-page-strip', function (hooks) {
     await render(<template><CanonPageStrip @pages={{(array)}} /></template>);
     assert.dom('.canon-page-strip-empty').hasText('Pages');
   });
+  test('blank draws sheets with nothing to reach', async function (assert) {
+    const landscape = [{ size: { width: 842, height: 595 } }];
+    await render(
+      <template>
+        <div style={{css "width: 600px; height: 192px"}}>
+          <CanonPageStrip @pages={{landscape}} @blank={{true}} />
+        </div>
+      </template>,
+    );
+    assert.dom('.canon-page-strip').hasAttribute('aria-hidden', 'true');
+    assert.dom('.canon-page-strip-empty').doesNotExist();
+    assert.dom('.canon-page-strip-number').doesNotExist();
+    assert.dom('button, [tabindex]').doesNotExist();
+    const sheets = document.querySelectorAll<HTMLElement>(
+      '.canon-page-strip-paper',
+    );
+    assert.true(sheets.length > 1, 'sheets fill the strip');
+    const last = sheets[sheets.length - 1]!.getBoundingClientRect();
+    const strip = document
+      .querySelector('.canon-page-strip')!
+      .getBoundingClientRect();
+    assert.true(last.left > strip.right, 'the last sheet runs past the edge');
+    const first = sheets[0]!;
+    assert.true(first.offsetWidth > first.offsetHeight, 'shaped as the page');
+  });
+
+  test('blank without pages draws A4 sheets', async function (assert) {
+    await render(
+      <template>
+        <div style={{css "width: 600px; height: 192px"}}>
+          <CanonPageStrip @pages={{(array)}} @blank={{true}} />
+        </div>
+      </template>,
+    );
+    assert.dom('.canon-page-strip-empty').doesNotExist();
+    const first = document.querySelector<HTMLElement>(
+      '.canon-page-strip-paper',
+    )!;
+    assert.true(first.offsetHeight > first.offsetWidth);
+  });
 });

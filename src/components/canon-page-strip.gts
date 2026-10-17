@@ -56,6 +56,8 @@ export interface CanonPageStripSignature {
     selected?: number;
     /** Shown when there are no pages; default Pages. */
     empty?: string;
+    /** Grey sheets with no number or name across the whole strip, hidden from assistive technology: the strip before a file. Shaped as the first page, default A4. */
+    blank?: boolean;
   };
   Element: HTMLDivElement;
 }
@@ -65,6 +67,9 @@ export const pageStripHeight = 196;
 const sheetOffset = 4;
 const longPressMs = 500;
 const dragType = 'application/x-canon-page';
+const A4 = { width: 595, height: 842 };
+// ponytail: covers about 2700 px of A4 at the canvas height; count by width if a strip outgrows it
+const blankSheets = 24;
 
 // farthest sheet first, so the nearer ones paint over it
 function sheets(depth: number) {
@@ -131,6 +136,11 @@ export default class CanonPageStrip extends Component<CanonPageStripSignature> {
   #dragFrom?: number;
   #press?: number;
   #menu?: HTMLElement;
+
+  get blankSheets() {
+    const page = { size: this.args.pages[0]?.size ?? A4 };
+    return Array.from({ length: blankSheets }, () => paperStyle(page));
+  }
 
   get dropTypes() {
     return this.args.dropTypes ?? ['image/*'];
@@ -357,8 +367,26 @@ export default class CanonPageStrip extends Component<CanonPageStripSignature> {
   }
 
   <template>
-    <div class="canon-page-strip" ...attributes>
-      {{#if @pages.length}}
+    <div
+      class="canon-page-strip"
+      aria-hidden={{if @blank "true"}}
+      ...attributes
+    >
+      {{#if @blank}}
+        <ol class="canon-page-strip-list canon-page-strip-list--blank">
+          {{#each this.blankSheets as |style|}}
+            <li class="canon-page-strip-cell" style={{style}}>
+              <span class="canon-page-strip-art">
+                <span class="canon-page-strip-stack">
+                  <span
+                    class="canon-page-strip-paper canon-page-strip-paper--blank"
+                  ></span>
+                </span>
+              </span>
+            </li>
+          {{/each}}
+        </ol>
+      {{else if @pages.length}}
         <ol
           class="canon-page-strip-list"
           {{on "dragover" this.onDragOver}}
