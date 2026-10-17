@@ -68,6 +68,26 @@ module('Component | canon-segmented', function (hooks) {
       .hasAttribute('aria-checked', 'true');
   });
 
+  test('null picks none', async function (assert) {
+    const picks: number[] = [];
+    const pick = (index: number) => picks.push(index);
+    await render(
+      <template>
+        <CanonSegmented
+          @items={{modes}}
+          @selected={{null}}
+          @onChange={{pick}}
+        />
+      </template>,
+    );
+    assert.dom('[aria-checked=true]').doesNotExist();
+    await click('[role=radio]:nth-child(1)');
+    assert.deepEqual(picks, [0], 'the first cell is a new pick');
+    assert
+      .dom('[role=radio]:nth-child(1)')
+      .hasAttribute('aria-checked', 'true');
+  });
+
   test('new items drop a pick', async function (assert) {
     const state = new Choices();
     await render(

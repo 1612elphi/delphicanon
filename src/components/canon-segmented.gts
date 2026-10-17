@@ -12,7 +12,8 @@ export interface CanonSegmentedSignature {
     items: string[];
     /** Cells that show a symbol instead of the title, one per item. */
     icons?: ComponentLike[];
-    selected?: number;
+    /** Default the first cell; null picks none. */
+    selected?: number | null;
     columns?: number;
     boxed?: boolean;
     disabled?: boolean;
@@ -28,10 +29,10 @@ export default class CanonSegmented extends Component<CanonSegmentedSignature> {
   hold = new Hold<number>();
 
   get selected(): number {
+    const { selected, items } = this.args;
     return (
-      this.hold.read(this.args.selected, this.args.items) ??
-      this.args.selected ??
-      0
+      this.hold.read(selected, items) ??
+      (selected === null ? -1 : (selected ?? 0))
     );
   }
 
