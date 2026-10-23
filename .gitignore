@@ -18,3 +18,35 @@ node_modules/
 
 # potentially containing secrets
 *.local
+
+# macOS noise
+.DS_Store
+
+# claude / local-only working notes
+AGENTS.md
+CLAUDE.md
+/.claude/
+/.superpowers/
+
+# agent worktrees and scratch clones
+/.delta/
+/.emdash/
+/.context/
+
+# editors
+/.cursor/
+/.vscode/
+/.idea/
+/.zed/
+
+# wheelybin: local-only scratch
+/wheelybin/
+
+# session scratch (one-off debug/repro rigs land as root dot-files;
+# anything worth keeping graduates into scripts/verify/)
+/.*.mjs
+!/.prettierrc.mjs
+!/.template-lintrc.mjs
+
+# port log: local-only working notes
+/PORT.md

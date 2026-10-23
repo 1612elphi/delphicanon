@@ -1,5 +1,9 @@
 {
-  "singleQuote": true,
-  "plugins": ["prettier-plugin-svelte"],
-  "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
+	"singleQuote": true,
+	"useTabs": true,
+	"tabWidth": 8,
+	"plugins": ["prettier-plugin-svelte"],
+	"overrides": [
+		{ "files": "*.svelte", "options": { "parser": "svelte" } }
+	]
 }

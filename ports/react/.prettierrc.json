@@ -1,1 +1,1 @@
-{ "singleQuote": true }
+{ "singleQuote": true, "useTabs": true, "tabWidth": 8 }

@@ -1,40 +1,132 @@
-# delphicanon
+<h1 align="center">delphicanon</h1>
 
-[Short description of the addon.]
+# Overview
 
-## Compatibility
+# Rationale
 
-- Ember.js v5.8 or above
-- Embroider or ember-auto-import v2
+# Installation
 
-## Installation
+## Ember
 
+```bash
+npm install delphicanon
 ```
-ember install delphicanon
+
+```ts
+import CanonSlider from 'delphicanon/components/canon-slider';
 ```
 
-## Usage
+## React, Vue and Svelte
 
-[Longer description of how to use the addon in apps.]
+## UIKit
 
-> TODO: Document the package's public API.
->
-> For each public api (including components, helpers, modifiers, and other apis) include:
->
-> - The import path for a consumer (e.g. `import MyAddonsComponent from 'my-addon/components/my-addons-component'`)
-> - What it does
-> - Parameters/options
-> - Return value
-> - Example usage
+# Development
 
-## Framework ports
+```bash
+bun install
+bun run build      # addon build (dist/)
+bun run start      # gallery dev server
+bun run showcase   # component docs dev server
+bun run test       # QUnit, headless Chrome
+```
 
-`ports/react`, `ports/vue` and `ports/svelte` are distributed as shadcn-compatible registries; see [registry/README.md](registry/README.md) for the install command per framework and how to build and serve the registry.
+# Included Components
 
-## Contributing
+## Layout (10)
 
-See the [Contributing](CONTRIBUTING.md) guide for details.
+- CanonBar
+- CanonCanvas
+- CanonEmptyRow
+- CanonGrid
+- CanonHeading
+- CanonPage
+- CanonRow
+- CanonRows
+- CanonRule
+- CanonSplit
 
-## License
+## Controls (18)
 
-This project is licensed under the [MIT License](LICENSE.md).
+- CanonBigNumberField
+- CanonButton
+- CanonDecimalField
+- CanonDropZone
+- CanonDualList
+- CanonFigure
+- CanonFileCell
+- CanonFromTo
+- CanonLoader
+- CanonMenuCell
+- CanonNumberField
+- CanonSegmented
+- CanonSlider
+- CanonStatus
+- CanonStepper
+- CanonSwitch
+- CanonTextArea
+- CanonTextCell
+
+## Text (4)
+
+- CanonCodeBlock
+- CanonGlyphFlow
+- CanonTextInput
+- CanonTextOutput
+
+## Colour (12)
+
+- CanonColourCard
+- CanonColourControls
+- CanonColourNotationInput
+- CanonColourSolid
+- CanonColourStrip
+- CanonColourWell
+- CanonDetentWheel
+- CanonDetentWheelRow
+- CanonLoupe
+- CanonPaletteCard
+- CanonSwatch
+- CanonValueLine
+
+## Maths (8)
+
+- CanonMathEditor
+- CanonMathField
+- CanonMathInput
+- CanonMathKey
+- CanonMathKeypad
+- CanonMathRail
+- CanonMathTabs
+- CanonMathView
+
+## Display (9)
+
+- CanonIcon
+- CanonImageCompare
+- CanonLamps
+- CanonPageStrip
+- CanonPreviewPanel
+- CanonReadoutBand
+- CanonTiles
+- CanonTimecode
+- CanonToast
+
+## Overlays (3)
+
+- CanonCommand
+- CanonDialog
+- CanonSheet
+
+## Menus (5)
+
+- CanonContextMenu
+- CanonMenu
+- CanonMenuBar
+- CanonPopover
+- CanonTooltip
+
+## Shell (3)
+
+- CanonSidebar
+- CanonSidebarRow
+- CanonWindow
