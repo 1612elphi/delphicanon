@@ -7,20 +7,20 @@ import './showcase.css';
 // ?theme=dark or ?theme=light forces the class the web app writes on <html>
 const theme = new URLSearchParams(window.location.search).get('theme');
 if (theme === 'dark' || theme === 'light') {
-  document.documentElement.classList.add(theme);
+	document.documentElement.classList.add(theme);
 }
 
 class Router extends EmberRouter {
-  // the page is served from any directory beside the registry
-  location = 'none';
+	// the page is served from any directory beside the registry
+	location = 'none';
 }
 
 export class App extends EmberApp {
-  modules = {
-    './router': Router,
-    './services/canon-toast': CanonToastService,
-    './templates/application': Showcase,
-  };
+	modules = {
+		'./router': Router,
+		'./services/canon-toast': CanonToastService,
+		'./templates/application': Showcase,
+	};
 }
 
 Router.map(function () {});

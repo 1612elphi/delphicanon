@@ -1,15 +1,18 @@
 .canon-grid {
-  display: grid;
-  grid-template-columns: repeat(var(--canon-grid-columns, 1), minmax(0, 1fr));
-  grid-auto-rows: 1fr;
-  gap: var(--canon-hairline);
-  background: var(--canon-border);
+	display: grid;
+	grid-template-columns: repeat(
+		var(--canon-grid-columns, 1),
+		minmax(0, 1fr)
+	);
+	grid-auto-rows: 1fr;
+	gap: var(--canon-hairline);
+	background: var(--canon-border);
 }
 
 .canon-grid--boxed {
-  padding: var(--canon-hairline);
+	padding: var(--canon-hairline);
 }
 
 .canon-grid > * {
-  min-inline-size: 0;
+	min-inline-size: 0;
 }

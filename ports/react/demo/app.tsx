@@ -6,19 +6,19 @@ const ColourPage = lazy(() => import('./colour-page.tsx'));
 
 // ?page=colour: the colour page, as CanonColourGalleryViewController
 const colour =
-  new URLSearchParams(window.location.search).get('page') === 'colour';
+	new URLSearchParams(window.location.search).get('page') === 'colour';
 
 export default function App() {
-  return (
-    <>
-      {colour ? (
-        <Suspense>
-          <ColourPage />
-        </Suspense>
-      ) : (
-        <Gallery />
-      )}
-      <CanonToast />
-    </>
-  );
+	return (
+		<>
+			{colour ? (
+				<Suspense>
+					<ColourPage />
+				</Suspense>
+			) : (
+				<Gallery />
+			)}
+			<CanonToast />
+		</>
+	);
 }

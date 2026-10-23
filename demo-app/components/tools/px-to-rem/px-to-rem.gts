@@ -32,9 +32,9 @@ const query = new URLSearchParams(window.location.search);
 const startValue = query.get('pxValue') ?? '16';
 const startRemToPixel = query.get('pxDirection') === '1';
 const startBase = clamp(
-  parseInteger(query.get('pxBase') ?? '') ?? baseRange.start,
-  baseRange.min,
-  baseRange.max,
+	parseInteger(query.get('pxBase') ?? '') ?? baseRange.start,
+	baseRange.min,
+	baseRange.max,
 );
 
 const directions = ['PX → REM', 'REM → PX'];
@@ -43,188 +43,216 @@ const typingDelayMs = 400;
 const CopyIcon = <template><Icon @svg={{copySvg}} /></template>;
 
 interface ReferenceRowSignature {
-  Args: { px: number; rem: string; current: boolean; onPick: () => void };
+	Args: { px: number; rem: string; current: boolean; onPick: () => void };
 }
 
 const ReferenceRow: TOC<ReferenceRowSignature> = <template>
-  <button
-    type="button"
-    class="px-to-rem-row"
-    aria-label="{{@px}}px, {{@rem}}rem"
-    aria-current={{if @current "true"}}
-    {{press}}
-    {{on "click" @onPick}}
-  >
-    <span>{{@px}}px</span>
-    <span class="px-to-rem-row-rem">{{@rem}}</span>
-  </button>
+	<button
+		type="button"
+		class="px-to-rem-row"
+		aria-label="{{@px}}px, {{@rem}}rem"
+		aria-current={{if @current "true"}}
+		{{press}}
+		{{on "click" @onPick}}
+	>
+		<span>{{@px}}px</span>
+		<span class="px-to-rem-row-rem">{{@rem}}</span>
+	</button>
 </template>;
 
 /** The port of PxToRemViewController. */
 export default class PxToRem extends Component {
-  @service('canon-toast') declare toast: CanonToastService;
+	@service('canon-toast') declare toast: CanonToastService;
 
-  @tracked text = startValue;
-  /** The text the picture, the table and Copy follow: the typed text after the debounce. */
-  @tracked settled = startValue;
-  @tracked remToPixel = startRemToPixel;
-  @tracked base: number = startBase;
-  #timer?: number;
+	@tracked text = startValue;
+	/** The text the picture, the table and Copy follow: the typed text after the debounce. */
+	@tracked settled = startValue;
+	@tracked remToPixel = startRemToPixel;
+	@tracked base: number = startBase;
+	#timer?: number;
 
-  constructor(owner: Owner, args: object) {
-    super(owner, args);
-    registerDestructor(this, () => window.clearTimeout(this.#timer));
-  }
+	constructor(owner: Owner, args: object) {
+		super(owner, args);
+		registerDestructor(this, () =>
+			window.clearTimeout(this.#timer),
+		);
+	}
 
-  get inputUnit() {
-    return this.remToPixel ? 'rem' : 'px';
-  }
+	get inputUnit() {
+		return this.remToPixel ? 'rem' : 'px';
+	}
 
-  get outputUnit() {
-    return this.remToPixel ? 'px' : 'rem';
-  }
+	get outputUnit() {
+		return this.remToPixel ? 'px' : 'rem';
+	}
 
-  resultOf(text: string) {
-    return convert(parse(text, this.inputUnit), this.base, this.remToPixel);
-  }
+	resultOf(text: string) {
+		return convert(
+			parse(text, this.inputUnit),
+			this.base,
+			this.remToPixel,
+		);
+	}
 
-  get result() {
-    return this.resultOf(this.settled);
-  }
+	get result() {
+		return this.resultOf(this.settled);
+	}
 
-  get pixels() {
-    const typed = parse(this.settled, this.inputUnit);
-    if (typed === undefined) return undefined;
-    return this.remToPixel ? typed * this.base : typed;
-  }
+	get pixels() {
+		const typed = parse(this.settled, this.inputUnit);
+		if (typed === undefined) return undefined;
+		return this.remToPixel ? typed * this.base : typed;
+	}
 
-  get figure() {
-    const { result } = this;
-    return result === undefined
-      ? { text: '—', unit: '' }
-      : { text: format(result), unit: this.outputUnit };
-  }
+	get figure() {
+		const { result } = this;
+		return result === undefined
+			? { text: '—', unit: '' }
+			: { text: format(result), unit: this.outputUnit };
+	}
 
-  get copyDisabled() {
-    return this.result === undefined;
-  }
+	get copyDisabled() {
+		return this.result === undefined;
+	}
 
-  get rows() {
-    return commonPx.map((px) => ({
-      px,
-      rem: format(px / this.base),
-      current: px === this.pixels,
-    }));
-  }
+	get rows() {
+		return commonPx.map((px) => ({
+			px,
+			rem: format(px / this.base),
+			current: px === this.pixels,
+		}));
+	}
 
-  #show(text: string) {
-    window.clearTimeout(this.#timer);
-    this.text = text;
-    this.settled = text;
-  }
+	#show(text: string) {
+		window.clearTimeout(this.#timer);
+		this.text = text;
+		this.settled = text;
+	}
 
-  refresh = () => this.#show(this.text);
+	refresh = () => this.#show(this.text);
 
-  typed = (text: string) => {
-    this.text = text;
-    window.clearTimeout(this.#timer);
-    this.#timer = window.setTimeout(this.refresh, typingDelayMs);
-  };
+	typed = (text: string) => {
+		this.text = text;
+		window.clearTimeout(this.#timer);
+		this.#timer = window.setTimeout(this.refresh, typingDelayMs);
+	};
 
-  nudge = (direction: -1 | 1) =>
-    this.#show(
-      nudged(parse(this.text, this.inputUnit), direction, this.remToPixel),
-    );
+	nudge = (direction: -1 | 1) =>
+		this.#show(
+			nudged(
+				parse(this.text, this.inputUnit),
+				direction,
+				this.remToPixel,
+			),
+		);
 
-  // the result becomes the input, so the pair on screen stays
-  pickDirection = (index: number) => {
-    const result = this.resultOf(this.text);
-    this.remToPixel = index === 1;
-    this.#show(result === undefined ? this.text : format(result));
-  };
+	// the result becomes the input, so the pair on screen stays
+	pickDirection = (index: number) => {
+		const result = this.resultOf(this.text);
+		this.remToPixel = index === 1;
+		this.#show(result === undefined ? this.text : format(result));
+	};
 
-  pickBase = (base: number) => {
-    this.base = base;
-    this.refresh();
-  };
+	pickBase = (base: number) => {
+		this.base = base;
+		this.refresh();
+	};
 
-  use = (px: number) =>
-    this.#show(format(this.remToPixel ? px / this.base : px));
+	use = (px: number) =>
+		this.#show(format(this.remToPixel ? px / this.base : px));
 
-  copy = () => {
-    const result = this.resultOf(this.text);
-    if (result === undefined) return;
-    this.toast.write(`${format(result)}${this.outputUnit}`).catch(() => {});
-  };
+	copy = () => {
+		const result = this.resultOf(this.text);
+		if (result === undefined) return;
+		this.toast
+			.write(`${format(result)}${this.outputUnit}`)
+			.catch(() => {});
+	};
 
-  <template>
-    <CanonSplit class="px-to-rem">
-      <:banner>
-        <CanonCanvas @height={{200}}>
-          <Specimen
-            @pixels={{this.pixels}}
-            @base={{this.base}}
-            @result={{this.figure.text}}
-            @unit={{this.figure.unit}}
-          />
-        </CanonCanvas>
-      </:banner>
-      <:sidebar>
-        <CanonRows @framed={{true}}>
-          <CanonSegmented
-            @items={{directions}}
-            @selected={{if this.remToPixel 1 0}}
-            @onChange={{this.pickDirection}}
-          />
-          <CanonBigNumberField
-            @value={{this.text}}
-            @placeholder="0"
-            @unit={{upper this.inputUnit}}
-            @label="Value"
-            @onStep={{this.nudge}}
-            @onInput={{this.typed}}
-            @onEndEditing={{this.refresh}}
-          />
-          <CanonRow @title="Base" @form="flush" as |titleId|>
-            <CanonNumberField
-              @value={{this.base}}
-              @min={{baseRange.min}}
-              @max={{baseRange.max}}
-              @unit="px"
-              @labelledBy={{titleId}}
-              @onChange={{this.pickBase}}
-            />
-          </CanonRow>
-          <CanonButton
-            @text="Copy"
-            @icon={{CopyIcon}}
-            @disabled={{this.copyDisabled}}
-            @flashesCopied={{true}}
-            @onClick={{this.copy}}
-          />
-        </CanonRows>
-      </:sidebar>
-      <:main>
-        <CanonRows @framed={{true}}>
-          <CanonHeading @text="Quick Reference" />
-          <div class="px-to-rem-row px-to-rem-row--header" aria-hidden="true">
-            <span>Pixels</span>
-            <span class="px-to-rem-row-rem">REM</span>
-          </div>
-          {{#each this.rows key="px" as |row|}}
-            <ReferenceRow
-              @px={{row.px}}
-              @rem={{row.rem}}
-              @current={{row.current}}
-              @onPick={{fn this.use row.px}}
-            />
-          {{/each}}
-        </CanonRows>
-      </:main>
-    </CanonSplit>
-  </template>
+	<template>
+		<CanonSplit class="px-to-rem">
+			<:banner>
+				<CanonCanvas @height={{200}}>
+					<Specimen
+						@pixels={{this.pixels}}
+						@base={{this.base}}
+						@result={{this.figure.text}}
+						@unit={{this.figure.unit}}
+					/>
+				</CanonCanvas>
+			</:banner>
+			<:sidebar>
+				<CanonRows @framed={{true}}>
+					<CanonSegmented
+						@items={{directions}}
+						@selected={{if
+							this.remToPixel
+							1
+							0
+						}}
+						@onChange={{this.pickDirection}}
+					/>
+					<CanonBigNumberField
+						@value={{this.text}}
+						@placeholder="0"
+						@unit={{upper this.inputUnit}}
+						@label="Value"
+						@onStep={{this.nudge}}
+						@onInput={{this.typed}}
+						@onEndEditing={{this.refresh}}
+					/>
+					<CanonRow
+						@title="Base"
+						@form="flush"
+						as |titleId|
+					>
+						<CanonNumberField
+							@value={{this.base}}
+							@min={{baseRange.min}}
+							@max={{baseRange.max}}
+							@unit="px"
+							@labelledBy={{titleId}}
+							@onChange={{this.pickBase}}
+						/>
+					</CanonRow>
+					<CanonButton
+						@text="Copy"
+						@icon={{CopyIcon}}
+						@disabled={{this.copyDisabled}}
+						@flashesCopied={{true}}
+						@onClick={{this.copy}}
+					/>
+				</CanonRows>
+			</:sidebar>
+			<:main>
+				<CanonRows @framed={{true}}>
+					<CanonHeading @text="Quick Reference" />
+					<div
+						class="px-to-rem-row px-to-rem-row--header"
+						aria-hidden="true"
+					>
+						<span>Pixels</span>
+						<span
+							class="px-to-rem-row-rem"
+						>REM</span>
+					</div>
+					{{#each this.rows key="px" as |row|}}
+						<ReferenceRow
+							@px={{row.px}}
+							@rem={{row.rem}}
+							@current={{row.current}}
+							@onPick={{fn
+								this.use
+								row.px
+							}}
+						/>
+					{{/each}}
+				</CanonRows>
+			</:main>
+		</CanonSplit>
+	</template>
 }
 
 function upper(text: string) {
-  return text.toUpperCase();
+	return text.toUpperCase();
 }

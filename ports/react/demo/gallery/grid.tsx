@@ -12,41 +12,69 @@ export const pane = 'sidebar';
 export const order = 30;
 
 export default function Grid() {
-  return (
-    <CanonRows framed>
-      <CanonHeading text="Grid" />
-      <CanonRow title="Actions" form="stacked">
-        <CanonGrid>
-          <CanonButton text="Cancel" />
-          <CanonButton text="Apply" kind="primary" />
-        </CanonGrid>
-      </CanonRow>
-      <CanonRow title="Inline actions" form="flush">
-        <CanonGrid>
-          <CanonButton text="Cancel" kind="cell" />
-          <CanonButton text="Apply" kind="cell" />
-          <CanonButton text="Disabled" kind="cell" disabled />
-        </CanonGrid>
-      </CanonRow>
-      <CanonRow title="Icon actions" detail="3.60 – 6.00" form="flush">
-        <CanonGrid>
-          <CanonButton
-            kind="cell"
-            icon={<CanonIcon svg={zoomOut} />}
-            label="Zoom out"
-          />
-          <CanonButton
-            kind="cell"
-            icon={<CanonIcon svg={zoomIn} />}
-            label="Zoom in"
-          />
-          <CanonButton
-            kind="cell"
-            icon={<CanonIcon svg={moveHorizontal} />}
-            label="Fit width"
-          />
-        </CanonGrid>
-      </CanonRow>
-    </CanonRows>
-  );
+	return (
+		<CanonRows framed>
+			<CanonHeading text="Grid" />
+			<CanonRow title="Actions" form="stacked">
+				<CanonGrid>
+					<CanonButton text="Cancel" />
+					<CanonButton
+						text="Apply"
+						kind="primary"
+					/>
+				</CanonGrid>
+			</CanonRow>
+			<CanonRow title="Inline actions" form="flush">
+				<CanonGrid>
+					<CanonButton
+						text="Cancel"
+						kind="cell"
+					/>
+					<CanonButton text="Apply" kind="cell" />
+					<CanonButton
+						text="Disabled"
+						kind="cell"
+						disabled
+					/>
+				</CanonGrid>
+			</CanonRow>
+			<CanonRow
+				title="Icon actions"
+				detail="3.60 – 6.00"
+				form="flush"
+			>
+				<CanonGrid>
+					<CanonButton
+						kind="cell"
+						icon={
+							<CanonIcon
+								svg={zoomOut}
+							/>
+						}
+						label="Zoom out"
+					/>
+					<CanonButton
+						kind="cell"
+						icon={
+							<CanonIcon
+								svg={zoomIn}
+							/>
+						}
+						label="Zoom in"
+					/>
+					<CanonButton
+						kind="cell"
+						icon={
+							<CanonIcon
+								svg={
+									moveHorizontal
+								}
+							/>
+						}
+						label="Fit width"
+					/>
+				</CanonGrid>
+			</CanonRow>
+		</CanonRows>
+	);
 }

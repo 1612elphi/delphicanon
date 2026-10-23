@@ -10,16 +10,16 @@ import './canon-popover.css';
 export type CanonPopoverTrigger = ModifierLike<{ Element: HTMLButtonElement }>;
 
 export interface CanonPopoverSignature {
-  Args: {
-    /** Default bottom-start. The panel flips to the other side when it does not fit. */
-    placement?: CanonPlacement;
-  };
-  Blocks: {
-    /** Put `trigger` on the button that opens the panel. */
-    trigger: [{ trigger: CanonPopoverTrigger; close: () => void }];
-    content: [{ close: () => void }];
-  };
-  Element: HTMLDivElement;
+	Args: {
+		/** Default bottom-start. The panel flips to the other side when it does not fit. */
+		placement?: CanonPlacement;
+	};
+	Blocks: {
+		/** Put `trigger` on the button that opens the panel. */
+		trigger: [{ trigger: CanonPopoverTrigger; close: () => void }];
+		content: [{ close: () => void }];
+	};
+	Element: HTMLDivElement;
 }
 
 /**
@@ -29,26 +29,34 @@ export interface CanonPopoverSignature {
  * aria-label="…"`) and `autofocus` on what should take focus.
  */
 export default class CanonPopover extends Component<CanonPopoverSignature> {
-  id = `${guidFor(this)}-popover`;
-  #panel?: HTMLElement;
+	id = `${guidFor(this)}-popover`;
+	#panel?: HTMLElement;
 
-  trigger = modifier((button: HTMLButtonElement) => {
-    const panel = panelFor(button, this.id);
-    this.#panel = panel;
-    return attach(panel, button, {
-      placement: this.args.placement ?? 'bottom-start',
-      invokes: true,
-    });
-  });
+	trigger = modifier((button: HTMLButtonElement) => {
+		const panel = panelFor(button, this.id);
+		this.#panel = panel;
+		return attach(panel, button, {
+			placement: this.args.placement ?? 'bottom-start',
+			invokes: true,
+		});
+	});
 
-  close = () => {
-    if (this.#panel) hide(this.#panel);
-  };
+	close = () => {
+		if (this.#panel) hide(this.#panel);
+	};
 
-  <template>
-    {{yield (hash trigger=this.trigger close=this.close) to="trigger"}}
-    <div id={{this.id}} class="canon-popover" popover="auto" ...attributes>
-      {{yield (hash close=this.close) to="content"}}
-    </div>
-  </template>
+	<template>
+		{{yield
+			(hash trigger=this.trigger close=this.close)
+			to="trigger"
+		}}
+		<div
+			id={{this.id}}
+			class="canon-popover"
+			popover="auto"
+			...attributes
+		>
+			{{yield (hash close=this.close) to="content"}}
+		</div>
+	</template>
 }

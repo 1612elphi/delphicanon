@@ -4,21 +4,21 @@
  * (and linting)
  */
 {
-  "extends": "@ember/app-tsconfig",
-  "include": [
-    "src/**/*",
-    "tests/**/*",
-    "unpublished-development-types/**/*",
-    "demo-app/**/*",
-    "showcase/**/*"
-  ],
-  "compilerOptions": {
-    "rootDir": ".",
-    "types": [
-      "ember-source/types",
-      "vite/client",
-      "@embroider/core/virtual",
-      "@glint/ember-tsc/types"
-    ]
-  }
+	"extends": "@ember/app-tsconfig",
+	"include": [
+		"src/**/*",
+		"tests/**/*",
+		"unpublished-development-types/**/*",
+		"demo-app/**/*",
+		"showcase/**/*"
+	],
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": [
+			"ember-source/types",
+			"vite/client",
+			"@embroider/core/virtual",
+			"@glint/ember-tsc/types"
+		]
+	}
 }

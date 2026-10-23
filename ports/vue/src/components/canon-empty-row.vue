@@ -6,5 +6,5 @@ defineProps<{ text: string }>();
 </script>
 
 <template>
-  <div class="canon-empty-row">{{ text }}</div>
+	<div class="canon-empty-row">{{ text }}</div>
 </template>

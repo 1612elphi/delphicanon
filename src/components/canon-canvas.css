@@ -1,64 +1,64 @@
 .canon-canvas {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  padding-block: var(--canon-frame);
-  overflow: hidden;
-  background: var(--canon-border);
-  container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding-block: var(--canon-frame);
+	overflow: hidden;
+	background: var(--canon-border);
+	container-type: inline-size;
 }
 
 .canon-canvas-content {
-  position: relative;
-  flex: none;
-  block-size: calc(
-    min(
-        var(--canon-canvas-natural),
-        var(--canon-canvas-max, 100000px),
-        var(--canon-canvas-cap, 100000px)
-      ) -
-      2 * var(--canon-frame)
-  );
-  overflow: hidden;
-  isolation: isolate;
-  background: var(--canon-canvas-background, var(--canon-card));
+	position: relative;
+	flex: none;
+	block-size: calc(
+		min(
+				var(--canon-canvas-natural),
+				var(--canon-canvas-max, 100000px),
+				var(--canon-canvas-cap, 100000px)
+			) -
+			2 * var(--canon-frame)
+	);
+	overflow: hidden;
+	isolation: isolate;
+	background: var(--canon-canvas-background, var(--canon-card));
 }
 
 /* the tool's symbol, tiled faintly under whatever the content draws */
 .canon-canvas--pattern > .canon-canvas-content::before,
 .canon-split-banner .canon-canvas-content::before {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--canon-foreground);
-  opacity: 0.04;
-  content: "";
-  mask: var(--canon-pattern, linear-gradient(transparent, transparent)) 0 0 /
-    92px 92px repeat;
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: var(--canon-foreground);
+	opacity: 0.04;
+	content: "";
+	mask: var(--canon-pattern, linear-gradient(transparent, transparent)) 0
+		0 / 92px 92px repeat;
 }
 
 .canon-canvas--unless-wide {
-  padding-inline: var(--canon-frame);
+	padding-inline: var(--canon-frame);
 }
 
 .canon-canvas--fitting > .canon-canvas-content {
-  block-size: var(--canon-canvas-fitted, auto);
+	block-size: var(--canon-canvas-fitted, auto);
 }
 
 .canon-canvas--collapsed {
-  padding-block: 0;
+	padding-block: 0;
 }
 
 .canon-canvas--eases,
 .canon-canvas--eases > .canon-canvas-content {
-  transition-duration: var(--canon-canvas-refit);
-  transition-property: block-size, padding-block;
-  transition-timing-function: ease-in-out;
+	transition-duration: var(--canon-canvas-refit);
+	transition-property: block-size, padding-block;
+	transition-timing-function: ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .canon-canvas--eases,
-  .canon-canvas--eases > .canon-canvas-content {
-    transition: none;
-  }
+	.canon-canvas--eases,
+	.canon-canvas--eases > .canon-canvas-content {
+		transition: none;
+	}
 }

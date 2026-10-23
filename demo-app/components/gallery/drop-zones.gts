@@ -10,38 +10,42 @@ import file from 'lucide-static/icons/file.svg?raw';
 export const pane = 'main';
 export const order = 25;
 
-// ∑CG: gallery, prompt inside both drop zones
-//   spec: invites dropping a file onto the area; four to six words, sentence case, no period
-//   sample: "Drop an image here"
-const dropPrompt = '∑CG';
+const dropPrompt = 'Drop an image here';
 
 export default class DropZones extends Component {
-  @tracked imported = 'None';
+	@tracked imported = 'None';
 
-  showImages = (images: ImageBitmap[], names: string[]) => {
-    const [image] = images;
-    if (image)
-      this.imported =
-        `${names[0] ?? ''} ${image.width} x ${image.height}`.trim();
-  };
+	showImages = (images: ImageBitmap[], names: string[]) => {
+		const [image] = images;
+		if (image)
+			this.imported =
+				`${names[0] ?? ''} ${image.width} x ${image.height}`.trim();
+	};
 
-  showFiles = (files: File[]) => {
-    this.imported = files.map((f) => f.name).join(', ');
-  };
+	showFiles = (files: File[]) => {
+		this.imported = files.map((f) => f.name).join(', ');
+	};
 
-  <template>
-    <CanonRows @framed={{true}}>
-      <CanonHeading @text="Drop zones" />
-      <CanonDropZone @prompt={{dropPrompt}} @onImages={{this.showImages}} />
-      <CanonStatus @text={{this.imported}} @tone="muted" @row={{true}} />
-      <CanonDropZone
-        @prompt={{dropPrompt}}
-        @icon={{component Icon svg=file}}
-        @accept=""
-        @multiple={{true}}
-        @paste={{false}}
-        @onFiles={{this.showFiles}}
-      />
-    </CanonRows>
-  </template>
+	<template>
+		<CanonRows @framed={{true}}>
+			<CanonHeading @text="Drop zones" />
+			<CanonDropZone
+				@prompt={{dropPrompt}}
+				@onImages={{this.showImages}}
+			/>
+			<CanonStatus
+				@text={{this.imported}}
+				@tone="muted"
+				@row={{true}}
+			/>
+			<CanonDropZone
+				@prompt={{dropPrompt}}
+				@icon={{component Icon svg=file}}
+				@accept=""
+				@multiple={{true}}
+				@paste={{false}}
+				@onFiles={{this.showFiles}}
+			/>
+		</CanonRows>
+	</template>
 }

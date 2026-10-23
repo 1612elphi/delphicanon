@@ -1,38 +1,38 @@
 .canon-aspect-popover-trigger {
-  inline-size: 100%;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  text-align: start;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  appearance: none;
+	inline-size: 100%;
+	margin: 0;
+	border: 0;
+	border-radius: 0;
+	text-align: start;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 }
 
 .canon-aspect-popover-trigger:disabled {
-  cursor: default;
+	cursor: default;
 }
 
 .canon-aspect-popover-trigger:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -2px;
 }
 
 .canon-aspect-popover {
-  inline-size: 300px;
+	inline-size: 300px;
 }
 
 .canon-aspect-popover-preview {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  block-size: 128px;
-  border-block-end: var(--canon-hairline) solid var(--canon-border);
-  background: var(--canon-muted);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	block-size: 128px;
+	border-block-end: var(--canon-hairline) solid var(--canon-border);
+	background: var(--canon-muted);
 }
 
 .canon-aspect-popover-shape {
-  box-sizing: border-box;
-  border: var(--canon-frame) solid var(--canon-primary);
-  background: var(--canon-card);
+	box-sizing: border-box;
+	border: var(--canon-frame) solid var(--canon-primary);
+	background: var(--canon-card);
 }

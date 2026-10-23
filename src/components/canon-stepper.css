@@ -1,65 +1,65 @@
 .canon-stepper {
-  display: flex;
-  gap: var(--canon-hairline);
-  min-block-size: var(--canon-control-height);
-  background: var(--canon-border);
+	display: flex;
+	gap: var(--canon-hairline);
+	min-block-size: var(--canon-control-height);
+	background: var(--canon-border);
 }
 
 .canon-stepper > .canon-button {
-  flex: none;
+	flex: none;
 }
 
 .canon-stepper-centre {
-  display: flex;
-  flex: 1 1 auto;
-  align-items: center;
-  box-sizing: border-box;
-  min-inline-size: 0;
-  padding: 0 10px;
-  background: var(--canon-card);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  cursor: text;
+	display: flex;
+	flex: 1 1 auto;
+	align-items: center;
+	box-sizing: border-box;
+	min-inline-size: 0;
+	padding: 0 10px;
+	background: var(--canon-card);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	cursor: text;
 }
 
 .canon-stepper-centre:focus-within {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -2px;
 }
 
 .canon-stepper-value {
-  display: flex;
-  flex: 1 1 auto;
-  align-items: baseline;
-  gap: 4px;
-  min-inline-size: 0;
+	display: flex;
+	flex: 1 1 auto;
+	align-items: baseline;
+	gap: 4px;
+	min-inline-size: 0;
 }
 
 .canon-stepper-field {
-  flex: 1 1 auto;
-  min-inline-size: 48px;
-  inline-size: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  caret-color: var(--canon-primary);
-  font: inherit;
-  font-size: var(--canon-text-body);
-  font-weight: var(--canon-weight-semibold);
-  font-variant-numeric: tabular-nums;
-  text-align: end;
-  outline: none;
-  appearance: none;
+	flex: 1 1 auto;
+	min-inline-size: 48px;
+	inline-size: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	caret-color: var(--canon-primary);
+	font: inherit;
+	font-size: var(--canon-text-body);
+	font-weight: var(--canon-weight-semibold);
+	font-variant-numeric: tabular-nums;
+	text-align: end;
+	outline: none;
+	appearance: none;
 }
 
 .canon-stepper-unit {
-  flex: none;
-  color: var(--canon-muted-foreground);
-  font-size: var(--canon-text-caption);
+	flex: none;
+	color: var(--canon-muted-foreground);
+	font-size: var(--canon-text-caption);
 }
 
 .canon-decimal-field-input {
-  min-inline-size: 72px;
+	min-inline-size: 72px;
 }

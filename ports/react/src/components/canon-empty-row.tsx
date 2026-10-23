@@ -4,17 +4,17 @@ import '@canon/styles/tokens.css';
 import '@canon/components/canon-empty-row.css';
 
 export interface CanonEmptyRowProps extends HTMLAttributes<HTMLDivElement> {
-  text: string;
+	text: string;
 }
 
 export default function CanonEmptyRow({
-  text,
-  className,
-  ...rest
+	text,
+	className,
+	...rest
 }: CanonEmptyRowProps) {
-  return (
-    <div className={cx('canon-empty-row', className)} {...rest}>
-      {text}
-    </div>
-  );
+	return (
+		<div className={cx('canon-empty-row', className)} {...rest}>
+			{text}
+		</div>
+	);
 }

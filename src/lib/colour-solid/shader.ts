@@ -279,55 +279,61 @@ void main() {
 }`;
 
 export interface Renderer {
-  draw(uniforms: Float32Array, width: number, height: number): void;
-  destroy(): void;
+	draw(uniforms: Float32Array, width: number, height: number): void;
+	destroy(): void;
 }
 
 /** Undefined without WebGL2 or when the shader fails to compile. */
 export function createRenderer(
-  canvas: HTMLCanvasElement,
+	canvas: HTMLCanvasElement,
 ): Renderer | undefined {
-  // preserved so tests and screenshots can read pixels between draws
-  const gl = canvas.getContext('webgl2', {
-    premultipliedAlpha: true,
-    alpha: true,
-    antialias: false,
-    preserveDrawingBuffer: true,
-  });
-  if (!gl) return undefined;
-  const program = gl.createProgram();
-  for (const [type, source] of [
-    [gl.VERTEX_SHADER, vertex],
-    [gl.FRAGMENT_SHADER, fragment],
-  ] as const) {
-    const shader = gl.createShader(type)!;
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-      console.error('colour solid shader', gl.getShaderInfoLog(shader));
-    gl.attachShader(program, shader);
-    gl.deleteShader(shader);
-  }
-  gl.linkProgram(program);
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    console.error('colour solid shader', gl.getProgramInfoLog(program));
-    gl.deleteProgram(program);
-    gl.getExtension('WEBGL_lose_context')?.loseContext();
-    return undefined;
-  }
-  const slot = gl.getUniformLocation(program, 'u');
-  return {
-    draw(uniforms, width, height) {
-      gl.viewport(0, 0, width, height);
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.useProgram(program);
-      gl.uniform4fv(slot, uniforms);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-    },
-    destroy() {
-      gl.deleteProgram(program);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
-    },
-  };
+	// preserved so tests and screenshots can read pixels between draws
+	const gl = canvas.getContext('webgl2', {
+		premultipliedAlpha: true,
+		alpha: true,
+		antialias: false,
+		preserveDrawingBuffer: true,
+	});
+	if (!gl) return undefined;
+	const program = gl.createProgram();
+	for (const [type, source] of [
+		[gl.VERTEX_SHADER, vertex],
+		[gl.FRAGMENT_SHADER, fragment],
+	] as const) {
+		const shader = gl.createShader(type)!;
+		gl.shaderSource(shader, source);
+		gl.compileShader(shader);
+		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+			console.error(
+				'colour solid shader',
+				gl.getShaderInfoLog(shader),
+			);
+		gl.attachShader(program, shader);
+		gl.deleteShader(shader);
+	}
+	gl.linkProgram(program);
+	if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+		console.error(
+			'colour solid shader',
+			gl.getProgramInfoLog(program),
+		);
+		gl.deleteProgram(program);
+		gl.getExtension('WEBGL_lose_context')?.loseContext();
+		return undefined;
+	}
+	const slot = gl.getUniformLocation(program, 'u');
+	return {
+		draw(uniforms, width, height) {
+			gl.viewport(0, 0, width, height);
+			gl.clearColor(0, 0, 0, 0);
+			gl.clear(gl.COLOR_BUFFER_BIT);
+			gl.useProgram(program);
+			gl.uniform4fv(slot, uniforms);
+			gl.drawArrays(gl.TRIANGLES, 0, 3);
+		},
+		destroy() {
+			gl.deleteProgram(program);
+			gl.getExtension('WEBGL_lose_context')?.loseContext();
+		},
+	};
 }

@@ -4,14 +4,14 @@ import '@canon/styles/tokens.css';
 import '@canon/components/canon-page.css';
 
 const props = defineProps<{
-  /** Widest a section gets, in px; null for no cap. Default 720. */
-  maxWidth?: number | null;
+	/** Widest a section gets, in px; null for no cap. Default 720. */
+	maxWidth?: number | null;
 }>();
 
 const style = computed(() =>
-  props.maxWidth === null
-    ? undefined
-    : { '--canon-page-max-width': `${props.maxWidth ?? 720}px` },
+	props.maxWidth === null
+		? undefined
+		: { '--canon-page-max-width': `${props.maxWidth ?? 720}px` },
 );
 </script>
 
@@ -21,5 +21,5 @@ const style = computed(() =>
   (CanonPage and CanonPaddedSection).
 -->
 <template>
-  <div class="canon-page" :style="style"><slot /></div>
+	<div class="canon-page" :style="style"><slot /></div>
 </template>

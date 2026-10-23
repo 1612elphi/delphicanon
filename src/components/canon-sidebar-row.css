@@ -1,97 +1,97 @@
 .canon-sidebar-row {
-  --canon-sidebar-cell: var(--canon-card);
-  --canon-sidebar-glyph: var(--canon-foreground);
+	--canon-sidebar-cell: var(--canon-card);
+	--canon-sidebar-glyph: var(--canon-foreground);
 
-  position: relative;
-  display: flex;
-  gap: var(--canon-frame);
-  box-sizing: border-box;
-  inline-size: 100%;
-  block-size: var(--canon-sidebar-row, var(--canon-control-height));
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-sidebar-text, var(--canon-text-callout));
-  line-height: 1.3;
-  text-align: start;
-  text-decoration: none;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  appearance: none;
+	position: relative;
+	display: flex;
+	gap: var(--canon-frame);
+	box-sizing: border-box;
+	inline-size: 100%;
+	block-size: var(--canon-sidebar-row, var(--canon-control-height));
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-sidebar-text, var(--canon-text-callout));
+	line-height: 1.3;
+	text-align: start;
+	text-decoration: none;
+	cursor: pointer;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 }
 
 .canon-sidebar-row--off {
-  --canon-sidebar-glyph: var(--canon-muted-foreground);
+	--canon-sidebar-glyph: var(--canon-muted-foreground);
 }
 
 .canon-sidebar-row--on {
-  --canon-sidebar-glyph: var(--canon-primary);
-  --canon-sidebar-light: var(--canon-primary);
+	--canon-sidebar-glyph: var(--canon-primary);
+	--canon-sidebar-light: var(--canon-primary);
 }
 
 .canon-sidebar-row--warning {
-  --canon-sidebar-glyph: var(--canon-destructive);
-  --canon-sidebar-light: var(--canon-destructive);
+	--canon-sidebar-glyph: var(--canon-destructive);
+	--canon-sidebar-light: var(--canon-destructive);
 }
 
 @media (hover: hover) {
-  .canon-sidebar-row:hover {
-    --canon-sidebar-cell: var(--canon-accent-bg);
-  }
+	.canon-sidebar-row:hover {
+		--canon-sidebar-cell: var(--canon-accent-bg);
+	}
 }
 
 .canon-sidebar-row[aria-current="page"] {
-  --canon-sidebar-cell: var(--canon-primary);
-  --canon-sidebar-glyph: var(--canon-primary-foreground);
+	--canon-sidebar-cell: var(--canon-primary);
+	--canon-sidebar-glyph: var(--canon-primary-foreground);
 
-  color: var(--canon-primary-foreground);
+	color: var(--canon-primary-foreground);
 }
 
 .canon-sidebar-row:active {
-  opacity: 0.75;
+	opacity: 0.75;
 }
 
 .canon-sidebar-row:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -2px;
 }
 
 .canon-sidebar-row[aria-current="page"]:focus-visible {
-  outline-color: var(--canon-primary-foreground);
+	outline-color: var(--canon-primary-foreground);
 }
 
 .canon-sidebar-row-icon {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--canon-sidebar-row, var(--canon-control-height));
-  background: var(--canon-sidebar-cell);
-  color: var(--canon-sidebar-glyph);
+	display: flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	inline-size: var(--canon-sidebar-row, var(--canon-control-height));
+	background: var(--canon-sidebar-cell);
+	color: var(--canon-sidebar-glyph);
 }
 
 .canon-sidebar-row-icon svg {
-  inline-size: var(--canon-icon-row);
-  block-size: var(--canon-icon-row);
-  stroke-width: 2.5;
+	inline-size: var(--canon-icon-row);
+	block-size: var(--canon-icon-row);
+	stroke-width: 2.5;
 }
 
 .canon-sidebar-row-title {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  min-inline-size: 0;
-  padding-inline-start: var(--canon-sidebar-inset, 10px);
-  overflow: hidden;
-  background: var(--canon-sidebar-cell);
-  white-space: nowrap;
-  text-overflow: ellipsis;
+	display: flex;
+	flex: 1;
+	align-items: center;
+	min-inline-size: 0;
+	padding-inline-start: var(--canon-sidebar-inset, 10px);
+	overflow: hidden;
+	background: var(--canon-sidebar-cell);
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 /* EdgeLight: bloom, then capsule, over both cells */
@@ -99,47 +99,47 @@
 .canon-sidebar-row--warning::before,
 .canon-sidebar-row--on::after,
 .canon-sidebar-row--warning::after {
-  content: "";
-  position: absolute;
-  inset-inline-start: 0;
-  pointer-events: none;
+	content: "";
+	position: absolute;
+	inset-inline-start: 0;
+	pointer-events: none;
 }
 
 .canon-sidebar-row--on::before,
 .canon-sidebar-row--warning::before {
-  inset-block: 0;
-  inline-size: calc(var(--canon-edge-light-bloom) + 20px);
-  background: radial-gradient(
-    var(--canon-edge-light-bloom) at 0 50%,
-    color-mix(
-      in srgb,
-      var(--canon-sidebar-light) var(--canon-edge-light-wash),
-      transparent
-    ),
-    transparent
-  );
+	inset-block: 0;
+	inline-size: calc(var(--canon-edge-light-bloom) + 20px);
+	background: radial-gradient(
+		var(--canon-edge-light-bloom) at 0 50%,
+		color-mix(
+			in srgb,
+			var(--canon-sidebar-light) var(--canon-edge-light-wash),
+			transparent
+		),
+		transparent
+	);
 }
 
 .canon-sidebar-row--on:dir(rtl)::before,
 .canon-sidebar-row--warning:dir(rtl)::before {
-  scale: -1 1;
+	scale: -1 1;
 }
 
 .canon-sidebar-row--on::after,
 .canon-sidebar-row--warning::after {
-  inset-block-start: calc(50% - 8px);
-  inline-size: 3px;
-  block-size: 16px;
-  border-radius: 1.5px;
-  background: var(--canon-sidebar-light);
-  box-shadow: 0 0 10px
-    color-mix(
-      in srgb,
-      var(--canon-sidebar-light) var(--canon-edge-light-glow),
-      transparent
-    );
+	inset-block-start: calc(50% - 8px);
+	inline-size: 3px;
+	block-size: 16px;
+	border-radius: 1.5px;
+	background: var(--canon-sidebar-light);
+	box-shadow: 0 0 10px
+		color-mix(
+			in srgb,
+			var(--canon-sidebar-light) var(--canon-edge-light-glow),
+			transparent
+		);
 }
 
 .canon-sidebar-row[aria-current="page"]::after {
-  background: var(--canon-primary-foreground);
+	background: var(--canon-primary-foreground);
 }

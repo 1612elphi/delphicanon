@@ -8,28 +8,28 @@ import { setTesting } from '@embroider/macros';
 import CanonToastService from '#src/services/canon-toast.ts';
 
 class Router extends EmberRouter {
-  location = 'none';
-  rootURL = '/';
+	location = 'none';
+	rootURL = '/';
 }
 
 class TestApp extends EmberApp {
-  modules = {
-    './router': Router,
-    './services/canon-toast': CanonToastService,
-  };
+	modules = {
+		'./router': Router,
+		'./services/canon-toast': CanonToastService,
+	};
 }
 
 Router.map(function () {});
 
 export function start() {
-  setTesting(true);
-  setApplication(
-    TestApp.create({
-      autoboot: false,
-      rootElement: '#ember-testing',
-    }),
-  );
-  setup(QUnit.assert);
-  setupEmberOnerrorValidation();
-  qunitStart();
+	setTesting(true);
+	setApplication(
+		TestApp.create({
+			autoboot: false,
+			rootElement: '#ember-testing',
+		}),
+	);
+	setup(QUnit.assert);
+	setupEmberOnerrorValidation();
+	qunitStart();
 }

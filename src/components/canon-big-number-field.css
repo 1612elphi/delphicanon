@@ -1,42 +1,42 @@
 .canon-big-number-field > .canon-stepper-centre {
-  padding: 20px 16px 16px;
+	padding: 20px 16px 16px;
 }
 
 .canon-big-number-field-stack {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: 4px;
-  min-inline-size: 0;
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 4px;
+	min-inline-size: 0;
 }
 
 .canon-big-number-field-input {
-  inline-size: 100%;
-  min-inline-size: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--canon-foreground);
-  caret-color: var(--canon-primary);
-  font: inherit;
-  font-size: var(--canon-text-big-number);
-  font-weight: var(--canon-weight-bold);
-  font-variant-numeric: tabular-nums;
-  line-height: 1.2;
-  text-align: center;
-  outline: none;
-  appearance: none;
+	inline-size: 100%;
+	min-inline-size: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--canon-foreground);
+	caret-color: var(--canon-primary);
+	font: inherit;
+	font-size: var(--canon-text-big-number);
+	font-weight: var(--canon-weight-bold);
+	font-variant-numeric: tabular-nums;
+	line-height: 1.2;
+	text-align: center;
+	outline: none;
+	appearance: none;
 }
 
 .canon-big-number-field-input::placeholder {
-  color: var(--canon-muted-foreground);
-  opacity: 1;
+	color: var(--canon-muted-foreground);
+	opacity: 1;
 }
 
 .canon-big-number-field-unit {
-  color: var(--canon-muted-foreground);
-  font-size: var(--canon-text-footnote);
-  font-weight: var(--canon-weight-bold);
-  text-align: center;
+	color: var(--canon-muted-foreground);
+	font-size: var(--canon-text-footnote);
+	font-weight: var(--canon-weight-bold);
+	text-align: center;
 }

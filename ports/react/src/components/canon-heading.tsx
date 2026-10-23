@@ -4,17 +4,17 @@ import '@canon/styles/tokens.css';
 import '@canon/components/canon-heading.css';
 
 export interface CanonHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
-  text: string;
+	text: string;
 }
 
 export default function CanonHeading({
-  text,
-  className,
-  ...rest
+	text,
+	className,
+	...rest
 }: CanonHeadingProps) {
-  return (
-    <h3 className={cx('canon-heading', className)} {...rest}>
-      {text}
-    </h3>
-  );
+	return (
+		<h3 className={cx('canon-heading', className)} {...rest}>
+			{text}
+		</h3>
+	);
 }

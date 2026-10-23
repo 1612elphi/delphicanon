@@ -23,49 +23,53 @@ const modes = ['Region', 'Window', 'Screen', 'Timed'];
 const five = ['One', 'Two', 'Three', 'Four', 'Five'];
 const sizes = ['Tiny', 'Base', 'Small', 'Large'];
 const labels = [
-  'Top left',
-  'Top',
-  'Top right',
-  'Left',
-  'Centre',
-  'Right',
-  'Bottom left',
-  'Bottom',
-  'Bottom right',
+	'Top left',
+	'Top',
+	'Top right',
+	'Left',
+	'Centre',
+	'Right',
+	'Bottom left',
+	'Bottom',
+	'Bottom right',
 ];
 const arrows = [
-  arrowUpLeft,
-  arrowUp,
-  arrowUpRight,
-  arrowLeft,
-  circleDot,
-  arrowRight,
-  arrowDownLeft,
-  arrowDown,
-  arrowDownRight,
+	arrowUpLeft,
+	arrowUp,
+	arrowUpRight,
+	arrowLeft,
+	circleDot,
+	arrowRight,
+	arrowDownLeft,
+	arrowDown,
+	arrowDownRight,
 ].map(icon);
 </script>
 
 <template>
-  <CanonRows :framed="true">
-    <CanonHeading text="Segmented" />
-    <CanonRow title="Mode" form="stacked">
-      <CanonSegmented :items="modes" />
-    </CanonRow>
-    <CanonRow title="Six in three" form="stacked">
-      <CanonSegmented :items="five" :columns="3" />
-    </CanonRow>
-    <CanonRow title="Inline picker" form="flush">
-      <CanonSegmented :items="modes" />
-    </CanonRow>
-    <CanonSegmented :items="sizes" :selected="1" :disabled-indices="[2, 3]" />
-    <CanonRow title="Symbols" form="stacked">
-      <CanonSegmented
-        :items="labels"
-        :icons="arrows"
-        :selected="7"
-        :columns="3"
-      />
-    </CanonRow>
-  </CanonRows>
+	<CanonRows :framed="true">
+		<CanonHeading text="Segmented" />
+		<CanonRow title="Mode" form="stacked">
+			<CanonSegmented :items="modes" />
+		</CanonRow>
+		<CanonRow title="Six in three" form="stacked">
+			<CanonSegmented :items="five" :columns="3" />
+		</CanonRow>
+		<CanonRow title="Inline picker" form="flush">
+			<CanonSegmented :items="modes" />
+		</CanonRow>
+		<CanonSegmented
+			:items="sizes"
+			:selected="1"
+			:disabled-indices="[2, 3]"
+		/>
+		<CanonRow title="Symbols" form="stacked">
+			<CanonSegmented
+				:items="labels"
+				:icons="arrows"
+				:selected="7"
+				:columns="3"
+			/>
+		</CanonRow>
+	</CanonRows>
 </template>

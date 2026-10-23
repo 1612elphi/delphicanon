@@ -7,19 +7,19 @@ import '@canon/styles/tokens.css';
 import '@canon/components/canon-swatch.css';
 
 const props = defineProps<{
-  colour: Rgb;
-  /** Nearest colour name for a hex, read by assistive technology. */
-  nameOf?: (hex: string) => string;
+	colour: Rgb;
+	/** Nearest colour name for a hex, read by assistive technology. */
+	nameOf?: (hex: string) => string;
 }>();
 
 const code = computed(() => hex(props.colour));
 const label = computed(() => {
-  const name = props.nameOf?.(code.value);
-  return name ? `${name} ${code.value}` : code.value;
+	const name = props.nameOf?.(code.value);
+	return name ? `${name} ${code.value}` : code.value;
 });
 const style = computed(() => ({
-  background: code.value,
-  color: takesBlackInk(props.colour) ? 'black' : 'white',
+	background: code.value,
+	color: takesBlackInk(props.colour) ? 'black' : 'white',
 }));
 
 const copy = () => void toast.copy(code.value);
@@ -31,14 +31,16 @@ const copy = () => void toast.copy(code.value);
   a flex item that grows): it measures itself for the hex.
 -->
 <template>
-  <button
-    v-press
-    type="button"
-    class="canon-swatch"
-    :style="style"
-    :aria-label="label"
-    @click="copy"
-  >
-    <span class="canon-swatch-hex" aria-hidden="true">{{ code }}</span>
-  </button>
+	<button
+		v-press
+		type="button"
+		class="canon-swatch"
+		:style="style"
+		:aria-label="label"
+		@click="copy"
+	>
+		<span class="canon-swatch-hex" aria-hidden="true">{{
+			code
+		}}</span>
+	</button>
 </template>

@@ -1,20 +1,20 @@
 .canon-colour-notation-input {
-  display: flex;
-  min-block-size: var(--canon-control-height);
-  background: var(--canon-card);
+	display: flex;
+	min-block-size: var(--canon-control-height);
+	background: var(--canon-card);
 }
 
 .canon-colour-notation-input-field {
-  flex: 1;
-  inline-size: auto;
-  font-variant-numeric: tabular-nums;
+	flex: 1;
+	inline-size: auto;
+	font-variant-numeric: tabular-nums;
 }
 
 .canon-colour-notation-input--fails {
-  color: var(--canon-destructive);
+	color: var(--canon-destructive);
 }
 
 .canon-colour-notation-input > .canon-button {
-  flex: none;
-  inline-size: var(--canon-control-height);
+	flex: none;
+	inline-size: var(--canon-control-height);
 }

@@ -1,156 +1,157 @@
 .canon-button {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  box-sizing: border-box;
-  min-inline-size: 0;
-  min-block-size: var(--canon-control-height);
-  margin: 0;
-  padding: 8px 12px;
-  border: 0;
-  border-radius: 0;
-  background: var(--canon-card);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-body);
-  font-weight: var(--canon-weight-medium);
-  line-height: 1.3;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  appearance: none;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	box-sizing: border-box;
+	min-inline-size: 0;
+	min-block-size: var(--canon-control-height);
+	margin: 0;
+	padding: 8px 12px;
+	border: 0;
+	border-radius: 0;
+	background: var(--canon-card);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-body);
+	font-weight: var(--canon-weight-medium);
+	line-height: 1.3;
+	cursor: pointer;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 }
 
 .canon-button--primary,
 .canon-button--secondary {
-  display: flex;
-  inline-size: 100%;
+	display: flex;
+	inline-size: 100%;
 }
 
 .canon-button--primary {
-  min-block-size: var(--canon-primary-height);
+	min-block-size: var(--canon-primary-height);
 }
 
 .canon-button--secondary {
-  min-block-size: var(--canon-secondary-height);
+	min-block-size: var(--canon-secondary-height);
 }
 
 .canon-button--segment {
-  font-size: var(--canon-text-subheadline);
+	font-size: var(--canon-text-subheadline);
 }
 
 .canon-button--filled {
-  background: var(--canon-primary);
-  color: var(--canon-primary-foreground);
-  font-weight: var(--canon-weight-semibold);
+	background: var(--canon-primary);
+	color: var(--canon-primary-foreground);
+	font-weight: var(--canon-weight-semibold);
 }
 
 @media (hover: hover) {
-  .canon-button:hover:enabled {
-    background: var(--canon-accent-bg);
-  }
+	.canon-button:hover:enabled {
+		background: var(--canon-accent-bg);
+	}
 
-  .canon-button--filled:hover:enabled {
-    background: color-mix(
-      in srgb,
-      var(--canon-primary),
-      var(--canon-primary-foreground) var(--canon-filled-hover-mix)
-    );
-  }
+	.canon-button--filled:hover:enabled {
+		background: color-mix(
+			in srgb,
+			var(--canon-primary),
+			var(--canon-primary-foreground)
+				var(--canon-filled-hover-mix)
+		);
+	}
 }
 
 .canon-button:active:enabled {
-  opacity: 0.75;
+	opacity: 0.75;
 }
 
 .canon-button:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -2px;
 }
 
 .canon-button:disabled {
-  color: color-mix(in srgb, var(--canon-foreground) 40%, transparent);
-  cursor: default;
+	color: color-mix(in srgb, var(--canon-foreground) 40%, transparent);
+	cursor: default;
 }
 
 .canon-button--filled:disabled {
-  background: var(--canon-muted);
-  color: var(--canon-muted-foreground);
+	background: var(--canon-muted);
+	color: var(--canon-muted-foreground);
 }
 
 .canon-button-title {
-  position: relative;
-  min-inline-size: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+	position: relative;
+	min-inline-size: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .canon-button-icon {
-  position: relative;
-  display: flex;
-  flex: none;
-  inline-size: var(--canon-icon-inline);
-  block-size: var(--canon-icon-inline);
+	position: relative;
+	display: flex;
+	flex: none;
+	inline-size: var(--canon-icon-inline);
+	block-size: var(--canon-icon-inline);
 }
 
 .canon-button-icon svg,
 .canon-button-watermark svg {
-  inline-size: 100%;
-  block-size: 100%;
+	inline-size: 100%;
+	block-size: 100%;
 }
 
 .canon-button--symbol .canon-button-icon,
 .canon-grid[data-symbol-only] > .canon-button--has-icon .canon-button-icon {
-  inline-size: var(--canon-icon-alone);
-  block-size: var(--canon-icon-alone);
+	inline-size: var(--canon-icon-alone);
+	block-size: var(--canon-icon-alone);
 }
 
 .canon-button--symbol .canon-button-icon svg,
 .canon-grid[data-symbol-only] > .canon-button--has-icon .canon-button-icon svg {
-  stroke-width: 2.5;
+	stroke-width: 2.5;
 }
 
 .canon-grid[data-symbol-only]
-  > .canon-button--has-icon:not(.canon-button--oversized)
-  .canon-button-title {
-  display: none;
+	> .canon-button--has-icon:not(.canon-button--oversized)
+	.canon-button-title {
+	display: none;
 }
 
 .canon-button--oversized {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 /* side 1.5 x height, centre 0.34 side in from the trailing edge and 0.62 height down, turned -14 degrees */
 .canon-button-watermark {
-  position: absolute;
-  inset-block-start: -13%;
-  inset-inline-end: 0;
-  block-size: 150%;
-  aspect-ratio: 1;
-  translate: 16% 0;
-  rotate: -14deg;
-  opacity: 0.06;
-  pointer-events: none;
+	position: absolute;
+	inset-block-start: -13%;
+	inset-inline-end: 0;
+	block-size: 150%;
+	aspect-ratio: 1;
+	translate: 16% 0;
+	rotate: -14deg;
+	opacity: 0.06;
+	pointer-events: none;
 }
 
 .canon-button-watermark svg {
-  stroke-width: 3;
+	stroke-width: 3;
 }
 
 .canon-button-watermark:dir(rtl) {
-  translate: -16% 0;
-  rotate: 14deg;
+	translate: -16% 0;
+	rotate: 14deg;
 }
 
 .canon-button--filled .canon-button-watermark {
-  opacity: 0.12;
+	opacity: 0.12;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .canon-button {
-    transform: none !important;
-  }
+	.canon-button {
+		transform: none !important;
+	}
 }

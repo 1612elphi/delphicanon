@@ -1,52 +1,57 @@
 <script lang="ts" module>
-  import type { Attachment } from 'svelte/attachments';
+	import type { Attachment } from 'svelte/attachments';
 
-  export type CanonPopoverTrigger = Attachment<HTMLButtonElement>;
+	export type CanonPopoverTrigger = Attachment<HTMLButtonElement>;
 </script>
 
 <script lang="ts">
-  import type { Snippet } from 'svelte';
-  import type { HTMLAttributes } from 'svelte/elements';
-  import {
-    attach,
-    hide,
-    panelFor,
-    type CanonPlacement,
-  } from '@canon/lib/popover.ts';
-  import '@canon/styles/tokens.css';
-  import '@canon/components/canon-popover.css';
+	import type { Snippet } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import {
+		attach,
+		hide,
+		panelFor,
+		type CanonPlacement,
+	} from '@canon/lib/popover.ts';
+	import '@canon/styles/tokens.css';
+	import '@canon/components/canon-popover.css';
 
-  interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'content'> {
-    /** Default bottom-start. The panel flips to the other side when it does not fit. */
-    placement?: CanonPlacement;
-    /** Put `{@attach trigger}` on the button that opens the panel. */
-    trigger?: Snippet<[{ trigger: CanonPopoverTrigger; close: () => void }]>;
-    content?: Snippet<[{ close: () => void }]>;
-  }
+	interface Props extends Omit<
+		HTMLAttributes<HTMLDivElement>,
+		'content'
+	> {
+		/** Default bottom-start. The panel flips to the other side when it does not fit. */
+		placement?: CanonPlacement;
+		/** Put `{@attach trigger}` on the button that opens the panel. */
+		trigger?: Snippet<
+			[{ trigger: CanonPopoverTrigger; close: () => void }]
+		>;
+		content?: Snippet<[{ close: () => void }]>;
+	}
 
-  let {
-    placement,
-    trigger: triggerBlock,
-    content,
-    class: className,
-    ...rest
-  }: Props = $props();
+	let {
+		placement,
+		trigger: triggerBlock,
+		content,
+		class: className,
+		...rest
+	}: Props = $props();
 
-  const uid = $props.id();
-  const id = `${uid}-popover`;
-  let panel: HTMLElement | undefined;
+	const uid = $props.id();
+	const id = `${uid}-popover`;
+	let panel: HTMLElement | undefined;
 
-  const trigger: CanonPopoverTrigger = (button) => {
-    panel = panelFor(button, id);
-    return attach(panel, button, {
-      placement: placement ?? 'bottom-start',
-      invokes: true,
-    });
-  };
+	const trigger: CanonPopoverTrigger = (button) => {
+		panel = panelFor(button, id);
+		return attach(panel, button, {
+			placement: placement ?? 'bottom-start',
+			invokes: true,
+		});
+	};
 
-  const close = () => {
-    if (panel) hide(panel);
-  };
+	const close = () => {
+		if (panel) hide(panel);
+	};
 </script>
 
 <!--
@@ -58,5 +63,5 @@
 -->
 {@render triggerBlock?.({ trigger, close })}
 <div {id} class={['canon-popover', className]} popover="auto" {...rest}>
-  {@render content?.({ close })}
+	{@render content?.({ close })}
 </div>

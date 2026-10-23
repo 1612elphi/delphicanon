@@ -1,64 +1,64 @@
 .canon-math-view {
-  display: inline-block;
-  flex: none;
-  inline-size: min(var(--canon-math-width, 0px), 100%);
-  block-size: var(--canon-math-height, 0px);
-  max-block-size: 100%;
-  overflow: visible;
-  color: var(--canon-foreground);
-  font-family: var(--canon-math-font);
-  vertical-align: middle;
+	display: inline-block;
+	flex: none;
+	inline-size: min(var(--canon-math-width, 0px), 100%);
+	block-size: var(--canon-math-height, 0px);
+	max-block-size: 100%;
+	overflow: visible;
+	color: var(--canon-foreground);
+	font-family: var(--canon-math-font);
+	vertical-align: middle;
 }
 
 .canon-math-view--morph {
-  position: relative;
-  display: block;
-  inline-size: 100%;
-  block-size: auto;
-  max-block-size: none;
+	position: relative;
+	display: block;
+	inline-size: 100%;
+	block-size: auto;
+	max-block-size: none;
 }
 
 .canon-math-view--morph > svg {
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  overflow: visible;
+	position: absolute;
+	inset: 0;
+	inline-size: 100%;
+	block-size: 100%;
+	overflow: visible;
 }
 
 .canon-math-view--morph g > * {
-  transform-box: view-box;
-  transform-origin: 0 0;
+	transform-box: view-box;
+	transform-origin: 0 0;
 }
 
 .canon-math-view text,
 .canon-math-editor text {
-  fill: currentcolor;
-  white-space: pre;
+	fill: currentcolor;
+	white-space: pre;
 }
 
 .canon-math-view rect:not([fill]),
 .canon-math-editor rect:not([fill]) {
-  fill: currentcolor;
+	fill: currentcolor;
 }
 
 .canon-math-view--faint {
-  opacity: 0.35;
+	opacity: 0.35;
 }
 
 .canon-math-ink--input {
-  color: var(--canon-muted-foreground);
+	color: var(--canon-muted-foreground);
 }
 
 .canon-math-ink--result {
-  color: var(--canon-foreground);
+	color: var(--canon-foreground);
 }
 
 .canon-math-ink--accent {
-  color: var(--canon-primary);
+	color: var(--canon-primary);
 }
 
 .canon-math-view--mono,
 .canon-math-view--mono [class^="canon-math-ink"] {
-  color: inherit;
+	color: inherit;
 }

@@ -1,26 +1,26 @@
 /* demo only: the consumer supplies the segment font */
 @font-face {
-  font-family: FluoWrite;
-  font-style: normal;
-  font-weight: 400;
-  src: url("/fonts/fluoWrite-Regular.otf") format("opentype");
-  font-display: swap;
+	font-family: FluoWrite;
+	font-style: normal;
+	font-weight: 400;
+	src: url("/fonts/fluoWrite-Regular.otf") format("opentype");
+	font-display: swap;
 }
 
 .gallery-swatch {
-  aspect-ratio: 16 / 9;
-  background: var(--canon-primary);
+	aspect-ratio: 16 / 9;
+	background: var(--canon-primary);
 }
 
 .gallery-glyph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  block-size: 100%;
-  border: var(--canon-hairline) solid var(--canon-border);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-title3);
-  font-weight: var(--canon-weight-bold);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	block-size: 100%;
+	border: var(--canon-hairline) solid var(--canon-border);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-title3);
+	font-weight: var(--canon-weight-bold);
 }

@@ -12,37 +12,34 @@ import CanonStatus from '../../../src/components/canon-status.vue';
 import { icon } from '../icon.ts';
 import file from 'lucide-static/icons/file.svg?raw';
 
-// ∑CG: gallery, prompt inside both drop zones
-//   spec: invites dropping a file onto the area; four to six words, sentence case, no period
-//   sample: "Drop an image here"
-const dropPrompt = '∑CG';
+const dropPrompt = 'Drop an image here';
 
 const imported = ref('None');
 
 function showImages(images: ImageBitmap[], names: string[]) {
-  const [image] = images;
-  if (image)
-    imported.value =
-      `${names[0] ?? ''} ${image.width} x ${image.height}`.trim();
+	const [image] = images;
+	if (image)
+		imported.value =
+			`${names[0] ?? ''} ${image.width} x ${image.height}`.trim();
 }
 
 function showFiles(files: File[]) {
-  imported.value = files.map((f) => f.name).join(', ');
+	imported.value = files.map((f) => f.name).join(', ');
 }
 </script>
 
 <template>
-  <CanonRows :framed="true">
-    <CanonHeading text="Drop zones" />
-    <CanonDropZone :prompt="dropPrompt" :on-images="showImages" />
-    <CanonStatus :text="imported" tone="muted" :row="true" />
-    <CanonDropZone
-      :prompt="dropPrompt"
-      :icon="icon(file)"
-      accept=""
-      :multiple="true"
-      :paste="false"
-      :on-files="showFiles"
-    />
-  </CanonRows>
+	<CanonRows :framed="true">
+		<CanonHeading text="Drop zones" />
+		<CanonDropZone :prompt="dropPrompt" :on-images="showImages" />
+		<CanonStatus :text="imported" tone="muted" :row="true" />
+		<CanonDropZone
+			:prompt="dropPrompt"
+			:icon="icon(file)"
+			accept=""
+			:multiple="true"
+			:paste="false"
+			:on-files="showFiles"
+		/>
+	</CanonRows>
 </template>

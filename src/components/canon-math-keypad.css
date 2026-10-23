@@ -1,86 +1,90 @@
 /* six page columns and the spine at 1.15 columns */
 .canon-math-keypad {
-  position: relative;
-  display: grid;
-  grid-template-rows:
-    var(--canon-math-tab-height)
-    calc(4 * var(--canon-math-key-height) + 3 * var(--canon-hairline));
-  grid-template-columns: minmax(0, 6fr) minmax(0, 1.15fr);
-  gap: var(--canon-hairline);
-  background: var(--canon-border);
-  font-family: var(--canon-font);
+	position: relative;
+	display: grid;
+	grid-template-rows:
+		var(--canon-math-tab-height)
+		calc(
+			4 * var(--canon-math-key-height) + 3 *
+				var(--canon-hairline)
+		);
+	grid-template-columns: minmax(0, 6fr) minmax(0, 1.15fr);
+	gap: var(--canon-hairline);
+	background: var(--canon-border);
+	font-family: var(--canon-font);
 }
 
 .canon-math-keypad > .canon-math-tabs {
-  grid-column: 1 / -1;
+	grid-column: 1 / -1;
 }
 
 .canon-math-keypad-pager {
-  display: flex;
-  overflow: auto hidden;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  touch-action: pan-x;
+	display: flex;
+	overflow: auto hidden;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	touch-action: pan-x;
 }
 
 .canon-math-keypad-pager::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 .canon-math-keypad-pager--gliding {
-  scroll-snap-type: none;
+	scroll-snap-type: none;
 }
 
 .canon-math-keypad-page {
-  display: grid;
-  flex: 0 0 100%;
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: var(--canon-hairline);
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+	display: grid;
+	flex: 0 0 100%;
+	grid-template-rows: repeat(4, minmax(0, 1fr));
+	grid-template-columns: repeat(6, minmax(0, 1fr));
+	gap: var(--canon-hairline);
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
 }
 
 .canon-math-keypad-page > .canon-math-key {
-  --canon-math-column: calc(
-    var(--canon-math-lead) * var(--canon-math-x) +
-      (1 - var(--canon-math-lead)) *
-      (6 - var(--canon-math-x) - var(--canon-math-w))
-  );
-  --canon-math-drift: calc(
-    var(--canon-math-offset-px) * (0.05 + 0.035 * var(--canon-math-column))
-  );
+	--canon-math-column: calc(
+		var(--canon-math-lead) * var(--canon-math-x) +
+			(1 - var(--canon-math-lead)) *
+			(6 - var(--canon-math-x) - var(--canon-math-w))
+	);
+	--canon-math-drift: calc(
+		var(--canon-math-offset-px) *
+			(0.05 + 0.035 * var(--canon-math-column))
+	);
 
-  min-block-size: 0;
+	min-block-size: 0;
 }
 
 .canon-math-keypad-spine {
-  display: grid;
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-  gap: var(--canon-hairline);
+	display: grid;
+	grid-template-rows: repeat(4, minmax(0, 1fr));
+	gap: var(--canon-hairline);
 }
 
 .canon-math-keypad-spine > .canon-math-key {
-  min-block-size: 0;
+	min-block-size: 0;
 }
 
 .canon-math-keypad-done {
-  grid-row: span 2;
+	grid-row: span 2;
 }
 
 /* frame in the family's colour, hairline seams between the keys */
 .canon-math-submenu {
-  position: absolute;
-  z-index: 3;
-  display: grid;
-  grid-template-columns: repeat(3, var(--canon-math-menu-cell));
-  gap: var(--canon-hairline);
-  border: 2px solid var(--canon-math-accent);
-  background: var(--canon-border);
-  box-shadow: 0 6px 14px rgb(0 0 0 / 20%);
+	position: absolute;
+	z-index: 3;
+	display: grid;
+	grid-template-columns: repeat(3, var(--canon-math-menu-cell));
+	gap: var(--canon-hairline);
+	border: 2px solid var(--canon-math-accent);
+	background: var(--canon-border);
+	box-shadow: 0 6px 14px rgb(0 0 0 / 20%);
 }
 
 .canon-math-submenu > .canon-math-key {
-  min-block-size: 0;
+	min-block-size: 0;
 }

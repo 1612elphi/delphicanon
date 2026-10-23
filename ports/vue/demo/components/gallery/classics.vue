@@ -25,42 +25,66 @@ const showToast = () => toast.show('#3B82F6');
 </script>
 
 <template>
-  <CanonRows :framed="true">
-    <CanonHeading text="Classics" />
-    <CanonButton text="Generate" :icon="icon(rotateCw)" kind="primary" />
-    <CanonGrid>
-      <CanonButton text="Copy" :icon="icon(copy)" />
-      <CanonButton text="Export" :icon="icon(share)" kind="primary" />
-    </CanonGrid>
-    <CanonButton
-      text="Generate"
-      :icon="icon(rotateCw)"
-      icon-style="oversized"
-      kind="primary"
-    />
-    <CanonGrid>
-      <CanonButton text="Wipe" :icon="icon(eraser)" icon-style="oversized" />
-      <CanonButton text="Copy" :icon="icon(copy)" icon-style="oversized" />
-      <CanonButton
-        text="Export"
-        :icon="icon(share)"
-        icon-style="oversized"
-        kind="primary"
-      />
-    </CanonGrid>
-    <CanonGrid>
-      <CanonButton text="Loop" :icon="icon(repeat)" />
-      <CanonButton text="Play" :icon="icon(play)" kind="primary" />
-      <CanonButton text="Stop" :icon="icon(square)" />
-      <CanonButton text="Shuffle" :icon="icon(shuffle)" />
-      <CanonButton text="Export" :icon="icon(share)" />
-      <CanonButton text="Delete" :icon="icon(trash)" />
-    </CanonGrid>
-    <CanonButton
-      text="Toast"
-      :icon="icon(messageSquareCheck)"
-      :on-click="showToast"
-    />
-    <CanonButton text="Copy" :icon="icon(copy)" :flashes-copied="true" />
-  </CanonRows>
+	<CanonRows :framed="true">
+		<CanonHeading text="Classics" />
+		<CanonButton
+			text="Generate"
+			:icon="icon(rotateCw)"
+			kind="primary"
+		/>
+		<CanonGrid>
+			<CanonButton text="Copy" :icon="icon(copy)" />
+			<CanonButton
+				text="Export"
+				:icon="icon(share)"
+				kind="primary"
+			/>
+		</CanonGrid>
+		<CanonButton
+			text="Generate"
+			:icon="icon(rotateCw)"
+			icon-style="oversized"
+			kind="primary"
+		/>
+		<CanonGrid>
+			<CanonButton
+				text="Wipe"
+				:icon="icon(eraser)"
+				icon-style="oversized"
+			/>
+			<CanonButton
+				text="Copy"
+				:icon="icon(copy)"
+				icon-style="oversized"
+			/>
+			<CanonButton
+				text="Export"
+				:icon="icon(share)"
+				icon-style="oversized"
+				kind="primary"
+			/>
+		</CanonGrid>
+		<CanonGrid>
+			<CanonButton text="Loop" :icon="icon(repeat)" />
+			<CanonButton
+				text="Play"
+				:icon="icon(play)"
+				kind="primary"
+			/>
+			<CanonButton text="Stop" :icon="icon(square)" />
+			<CanonButton text="Shuffle" :icon="icon(shuffle)" />
+			<CanonButton text="Export" :icon="icon(share)" />
+			<CanonButton text="Delete" :icon="icon(trash)" />
+		</CanonGrid>
+		<CanonButton
+			text="Toast"
+			:icon="icon(messageSquareCheck)"
+			:on-click="showToast"
+		/>
+		<CanonButton
+			text="Copy"
+			:icon="icon(copy)"
+			:flashes-copied="true"
+		/>
+	</CanonRows>
 </template>

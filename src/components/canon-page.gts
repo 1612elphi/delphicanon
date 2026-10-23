@@ -4,18 +4,18 @@ import '../styles/tokens.css';
 import './canon-page.css';
 
 export interface CanonPageSignature {
-  Args: {
-    /** Widest a section gets, in px; null for no cap. Default 720. */
-    maxWidth?: number | null;
-  };
-  Blocks: { default: [] };
-  Element: HTMLDivElement;
+	Args: {
+		/** Widest a section gets, in px; null for no cap. Default 720. */
+		maxWidth?: number | null;
+	};
+	Blocks: { default: [] };
+	Element: HTMLDivElement;
 }
 
 function style(maxWidth: number | null | undefined) {
-  return maxWidth === null
-    ? undefined
-    : htmlSafe(`--canon-page-max-width: ${maxWidth ?? 720}px`);
+	return maxWidth === null
+		? undefined
+		: htmlSafe(`--canon-page-max-width: ${maxWidth ?? 720}px`);
 }
 
 /**
@@ -24,9 +24,9 @@ function style(maxWidth: number | null | undefined) {
  * (CanonPage and CanonPaddedSection).
  */
 const CanonPage: TOC<CanonPageSignature> = <template>
-  <div class="canon-page" style={{style @maxWidth}} ...attributes>
-    {{yield}}
-  </div>
+	<div class="canon-page" style={{style @maxWidth}} ...attributes>
+		{{yield}}
+	</div>
 </template>;
 
 export default CanonPage;

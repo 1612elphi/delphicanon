@@ -6,5 +6,5 @@ defineProps<{ text: string }>();
 </script>
 
 <template>
-  <h3 class="canon-heading">{{ text }}</h3>
+	<h3 class="canon-heading">{{ text }}</h3>
 </template>

@@ -1,235 +1,236 @@
 /* colours from the iOS asset catalog (delphi*.colorset, sRGB floats) at 4628b8d */
 :root {
-  --canon-background: color(srgb 0.98 0.961 0.902);
-  --canon-foreground: color(srgb 0.078 0.153 0.059);
-  --canon-card: color(srgb 0.988 0.973 0.929);
-  --canon-muted: color(srgb 0.929 0.91 0.851);
-  --canon-muted-foreground: color(srgb 0.341 0.412 0.325);
-  --canon-secondary-foreground: color(srgb 0.106 0.271 0.118);
-  --canon-accent-bg: color(srgb 0.914 0.886 0.769);
-  --canon-border: color(srgb 0.867 0.847 0.761);
-  --canon-primary: color(srgb 0.118 0.4 0.149);
-  --canon-primary-foreground: color(srgb 0.98 0.961 0.902);
-  --canon-destructive: color(srgb 0.8 0.153 0.18);
-  --canon-heading-background: var(--canon-muted);
+	--canon-background: color(srgb 0.98 0.961 0.902);
+	--canon-foreground: color(srgb 0.078 0.153 0.059);
+	--canon-card: color(srgb 0.988 0.973 0.929);
+	--canon-muted: color(srgb 0.929 0.91 0.851);
+	--canon-muted-foreground: color(srgb 0.341 0.412 0.325);
+	--canon-secondary-foreground: color(srgb 0.106 0.271 0.118);
+	--canon-accent-bg: color(srgb 0.914 0.886 0.769);
+	--canon-border: color(srgb 0.867 0.847 0.761);
+	--canon-primary: color(srgb 0.118 0.4 0.149);
+	--canon-primary-foreground: color(srgb 0.98 0.961 0.902);
+	--canon-destructive: color(srgb 0.8 0.153 0.18);
+	--canon-heading-background: var(--canon-muted);
 
-  /* DelphiMetrics; 1 pt = 1 px */
-  --canon-hairline: 1px;
-  --canon-frame: 2px;
-  --canon-control-height: 44px;
-  --canon-row-height: 52px;
-  --canon-primary-height: 68px;
-  --canon-secondary-height: 60px;
-  --canon-panel-padding: 16px;
-  --canon-panel-spacing: 12px;
+	/* DelphiMetrics; 1 pt = 1 px */
+	--canon-hairline: 1px;
+	--canon-frame: 2px;
+	--canon-control-height: 44px;
+	--canon-row-height: 52px;
+	--canon-primary-height: 68px;
+	--canon-secondary-height: 60px;
+	--canon-panel-padding: 16px;
+	--canon-panel-spacing: 12px;
 
-  /* the consumer supplies the @font-face */
-  --canon-font:
-    "iA Writer Quattro", ui-monospace, "Cascadia Mono", menlo, monaco, consolas,
-    monospace;
+	/* the consumer supplies the @font-face */
+	--canon-font:
+		"iA Writer Quattro", ui-monospace, "Cascadia Mono", menlo,
+		monaco, consolas, monospace;
 
-  /*
+	/*
    * iOS text styles, scaled: Quattro is about a third wider than SF
    * Condensed, so the iOS point sizes truncate segment titles
    */
-  --canon-text-title2: 20px;
-  --canon-text-title3: 18px;
-  --canon-text-body: 15px;
-  --canon-text-subheadline: 13px;
-  --canon-text-footnote: 12px;
-  --canon-text-caption: 11px;
-  --canon-weight-regular: 400;
-  --canon-weight-medium: 500;
-  --canon-weight-semibold: 600;
-  --canon-weight-bold: 700;
+	--canon-text-title2: 20px;
+	--canon-text-title3: 18px;
+	--canon-text-body: 15px;
+	--canon-text-subheadline: 13px;
+	--canon-text-footnote: 12px;
+	--canon-text-caption: 11px;
+	--canon-weight-regular: 400;
+	--canon-weight-medium: 500;
+	--canon-weight-semibold: 600;
+	--canon-weight-bold: 700;
 
-  --canon-icon-inline: 14px;
-  --canon-icon-alone: 20px;
+	--canon-icon-inline: 14px;
+	--canon-icon-alone: 20px;
 
-  /* CanonMotion */
-  --canon-press-duration: 80ms;
-  --canon-release-duration: 450ms;
-  --canon-filled-hover-mix: 15%;
+	/* CanonMotion */
+	--canon-press-duration: 80ms;
+	--canon-release-duration: 450ms;
+	--canon-filled-hover-mix: 15%;
 
-  /* display group */
-  --canon-segment-font:
-    "FluoWrite", ui-monospace, "Cascadia Mono", menlo, monaco, consolas,
-    monospace;
-  --canon-paper: #fff;
-  --canon-paper-shadow: rgb(0 0 0 / 12%);
-  --canon-copied: color(srgb 0.204 0.78 0.349);
-  /* controls */
-  --canon-row-shrink-basis: 64px;
-  --canon-switch-width: 40px;
-  --canon-switch-height: 22px;
-  --canon-text-area-height: 200px;
-  --canon-drop-height: 140px;
-  --canon-icon-large: 32px;
-  /* colour solid */
-  --canon-colour-solid-wire: color-mix(
-    in srgb,
-    var(--canon-foreground) 30%,
-    transparent
-  );
-  --canon-colour-solid-hollow: color-mix(
-    in srgb,
-    var(--canon-foreground) 50%,
-    transparent
-  );
-  --canon-colour-solid-shadow: rgb(0 0 0 / 25%);
-  --canon-colour-solid-ink-dark: black;
-  --canon-colour-solid-ink-light: white;
-  --canon-colour-solid-fade: 200ms;
-  /* math: CanonMathKeypad families after the Braun ET66 (math*.colorset) */
-  --canon-math-font:
-    ui-serif, "New York", "Iowan Old Style", georgia, "Times New Roman", serif;
-  --canon-math-umber: color(srgb 0.235 0.188 0.145);
-  --canon-math-cream: color(srgb 0.98 0.961 0.902);
-  --canon-math-green: color(srgb 0.118 0.4 0.149);
-  --canon-math-blue: color(srgb 0.125 0.333 0.561);
-  --canon-math-clay: color(srgb 0.659 0.275 0.133);
-  --canon-math-yellow: color(srgb 0.965 0.776 0.157);
-  --canon-math-tint-share: 13%;
+	/* display group */
+	--canon-segment-font:
+		"FluoWrite", ui-monospace, "Cascadia Mono", menlo, monaco,
+		consolas, monospace;
+	--canon-paper: #fff;
+	--canon-paper-shadow: rgb(0 0 0 / 12%);
+	--canon-copied: color(srgb 0.204 0.78 0.349);
+	/* controls */
+	--canon-row-shrink-basis: 64px;
+	--canon-switch-width: 40px;
+	--canon-switch-height: 22px;
+	--canon-text-area-height: 200px;
+	--canon-drop-height: 140px;
+	--canon-icon-large: 32px;
+	/* colour solid */
+	--canon-colour-solid-wire: color-mix(
+		in srgb,
+		var(--canon-foreground) 30%,
+		transparent
+	);
+	--canon-colour-solid-hollow: color-mix(
+		in srgb,
+		var(--canon-foreground) 50%,
+		transparent
+	);
+	--canon-colour-solid-shadow: rgb(0 0 0 / 25%);
+	--canon-colour-solid-ink-dark: black;
+	--canon-colour-solid-ink-light: white;
+	--canon-colour-solid-fade: 200ms;
+	/* math: CanonMathKeypad families after the Braun ET66 (math*.colorset) */
+	--canon-math-font:
+		ui-serif, "New York", "Iowan Old Style", georgia,
+		"Times New Roman", serif;
+	--canon-math-umber: color(srgb 0.235 0.188 0.145);
+	--canon-math-cream: color(srgb 0.98 0.961 0.902);
+	--canon-math-green: color(srgb 0.118 0.4 0.149);
+	--canon-math-blue: color(srgb 0.125 0.333 0.561);
+	--canon-math-clay: color(srgb 0.659 0.275 0.133);
+	--canon-math-yellow: color(srgb 0.965 0.776 0.157);
+	--canon-math-tint-share: 13%;
 
-  /* phase C */
-  --canon-loupe-frame: 6px;
-  --canon-loupe-side: 112px;
-  --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
-  --canon-loupe-ink-dark: black;
-  --canon-loupe-ink-light: white;
-  --canon-text-big-number: 32px;
-  --canon-value-line-fade: 250ms;
-  --canon-canvas-refit: 300ms;
+	/* phase C */
+	--canon-loupe-frame: 6px;
+	--canon-loupe-side: 112px;
+	--canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
+	--canon-loupe-ink-dark: black;
+	--canon-loupe-ink-light: white;
+	--canon-text-big-number: 32px;
+	--canon-value-line-fade: 250ms;
+	--canon-canvas-refit: 300ms;
 
-  /* shell: Sidebar, SidebarRow, EdgeLight in the Mac app's MainWindow.swift */
-  --canon-text-callout: 14px;
-  --canon-icon-row: 16px;
-  --canon-sidebar-width: 240px;
-  --canon-sidebar-row-compact: 32px;
-  --canon-sidebar-collapse: 200ms;
-  --canon-edge-light-bloom: 130px;
-  --canon-edge-light-wash: 45%;
-  --canon-edge-light-glow: 90%;
-  --canon-window-close: var(--canon-destructive);
-  --canon-window-minimise: color(srgb 0.965 0.776 0.157);
-  --canon-window-zoom: var(--canon-copied);
-  /* command group */
-  --canon-dialog-width: 480px;
-  --canon-sheet-width: 360px;
-  --canon-dialog-backdrop: rgb(0 0 0 / 35%);
-  --canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 18%);
-  --canon-command-list-height: 360px;
-  --canon-command-icon: 24px;
-  --canon-key-cap: 22px;
-  /* menus: shadow from the web app's .dt-popover */
-  --canon-popover-gap: 4px;
-  --canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
-  --canon-menu-min-inline: 200px;
-  --canon-tooltip-max-inline: 240px;
+	/* shell: Sidebar, SidebarRow, EdgeLight in the Mac app's MainWindow.swift */
+	--canon-text-callout: 14px;
+	--canon-icon-row: 16px;
+	--canon-sidebar-width: 240px;
+	--canon-sidebar-row-compact: 32px;
+	--canon-sidebar-collapse: 200ms;
+	--canon-edge-light-bloom: 130px;
+	--canon-edge-light-wash: 45%;
+	--canon-edge-light-glow: 90%;
+	--canon-window-close: var(--canon-destructive);
+	--canon-window-minimise: color(srgb 0.965 0.776 0.157);
+	--canon-window-zoom: var(--canon-copied);
+	/* command group */
+	--canon-dialog-width: 480px;
+	--canon-sheet-width: 360px;
+	--canon-dialog-backdrop: rgb(0 0 0 / 35%);
+	--canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 18%);
+	--canon-command-list-height: 360px;
+	--canon-command-icon: 24px;
+	--canon-key-cap: 22px;
+	/* menus: shadow from the web app's .dt-popover */
+	--canon-popover-gap: 4px;
+	--canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
+	--canon-menu-min-inline: 200px;
+	--canon-tooltip-max-inline: 240px;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --canon-background: color(srgb 0.035 0.082 0.035);
-    --canon-foreground: color(srgb 0.922 0.894 0.824);
-    --canon-card: color(srgb 0.063 0.122 0.063);
-    --canon-muted: color(srgb 0.094 0.149 0.098);
-    --canon-muted-foreground: color(srgb 0.584 0.565 0.455);
-    --canon-secondary-foreground: color(srgb 0.863 0.843 0.788);
-    --canon-accent-bg: color(srgb 0.11 0.18 0.11);
-    --canon-border: color(srgb 0.129 0.2 0.129);
-    --canon-primary: color(srgb 0.761 0.678 0.38);
-    --canon-primary-foreground: color(srgb 0.035 0.106 0.039);
-    --canon-destructive: color(srgb 0.843 0.278 0.271);
-    /* display group */
-    --canon-copied: color(srgb 0.188 0.82 0.345);
+	:root:not(.light) {
+		--canon-background: color(srgb 0.035 0.082 0.035);
+		--canon-foreground: color(srgb 0.922 0.894 0.824);
+		--canon-card: color(srgb 0.063 0.122 0.063);
+		--canon-muted: color(srgb 0.094 0.149 0.098);
+		--canon-muted-foreground: color(srgb 0.584 0.565 0.455);
+		--canon-secondary-foreground: color(srgb 0.863 0.843 0.788);
+		--canon-accent-bg: color(srgb 0.11 0.18 0.11);
+		--canon-border: color(srgb 0.129 0.2 0.129);
+		--canon-primary: color(srgb 0.761 0.678 0.38);
+		--canon-primary-foreground: color(srgb 0.035 0.106 0.039);
+		--canon-destructive: color(srgb 0.843 0.278 0.271);
+		/* display group */
+		--canon-copied: color(srgb 0.188 0.82 0.345);
 
-    /* colour solid */
-    --canon-colour-solid-wire: color-mix(
-      in srgb,
-      var(--canon-foreground) 30%,
-      transparent
-    );
-    --canon-colour-solid-hollow: color-mix(
-      in srgb,
-      var(--canon-foreground) 50%,
-      transparent
-    );
-    --canon-colour-solid-shadow: rgb(0 0 0 / 25%);
-    --canon-colour-solid-ink-dark: black;
-    --canon-colour-solid-ink-light: white;
-    /* math */
-    --canon-math-umber: color(srgb 0.251 0.204 0.157);
-    --canon-math-cream: color(srgb 0.922 0.894 0.824);
-    --canon-math-green: color(srgb 0.49 0.741 0.451);
-    --canon-math-blue: color(srgb 0.537 0.706 0.922);
-    --canon-math-clay: color(srgb 0.925 0.561 0.431);
-    --canon-math-yellow: color(srgb 0.914 0.741 0.2);
-    --canon-math-tint-share: 20%;
+		/* colour solid */
+		--canon-colour-solid-wire: color-mix(
+			in srgb,
+			var(--canon-foreground) 30%,
+			transparent
+		);
+		--canon-colour-solid-hollow: color-mix(
+			in srgb,
+			var(--canon-foreground) 50%,
+			transparent
+		);
+		--canon-colour-solid-shadow: rgb(0 0 0 / 25%);
+		--canon-colour-solid-ink-dark: black;
+		--canon-colour-solid-ink-light: white;
+		/* math */
+		--canon-math-umber: color(srgb 0.251 0.204 0.157);
+		--canon-math-cream: color(srgb 0.922 0.894 0.824);
+		--canon-math-green: color(srgb 0.49 0.741 0.451);
+		--canon-math-blue: color(srgb 0.537 0.706 0.922);
+		--canon-math-clay: color(srgb 0.925 0.561 0.431);
+		--canon-math-yellow: color(srgb 0.914 0.741 0.2);
+		--canon-math-tint-share: 20%;
 
-    /* phase C */
-    --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
-    --canon-loupe-ink-dark: black;
-    --canon-loupe-ink-light: white;
+		/* phase C */
+		--canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
+		--canon-loupe-ink-dark: black;
+		--canon-loupe-ink-light: white;
 
-    /* shell */
-    --canon-window-minimise: color(srgb 0.914 0.741 0.2);
-    /* command group */
-    --canon-dialog-backdrop: rgb(0 0 0 / 55%);
-    --canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 45%);
-    /* menus */
-    --canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
-  }
+		/* shell */
+		--canon-window-minimise: color(srgb 0.914 0.741 0.2);
+		/* command group */
+		--canon-dialog-backdrop: rgb(0 0 0 / 55%);
+		--canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 45%);
+		/* menus */
+		--canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
+	}
 }
 
 html.dark {
-  --canon-background: color(srgb 0.035 0.082 0.035);
-  --canon-foreground: color(srgb 0.922 0.894 0.824);
-  --canon-card: color(srgb 0.063 0.122 0.063);
-  --canon-muted: color(srgb 0.094 0.149 0.098);
-  --canon-muted-foreground: color(srgb 0.584 0.565 0.455);
-  --canon-secondary-foreground: color(srgb 0.863 0.843 0.788);
-  --canon-accent-bg: color(srgb 0.11 0.18 0.11);
-  --canon-border: color(srgb 0.129 0.2 0.129);
-  --canon-primary: color(srgb 0.761 0.678 0.38);
-  --canon-primary-foreground: color(srgb 0.035 0.106 0.039);
-  --canon-destructive: color(srgb 0.843 0.278 0.271);
-  /* display group */
-  --canon-copied: color(srgb 0.188 0.82 0.345);
+	--canon-background: color(srgb 0.035 0.082 0.035);
+	--canon-foreground: color(srgb 0.922 0.894 0.824);
+	--canon-card: color(srgb 0.063 0.122 0.063);
+	--canon-muted: color(srgb 0.094 0.149 0.098);
+	--canon-muted-foreground: color(srgb 0.584 0.565 0.455);
+	--canon-secondary-foreground: color(srgb 0.863 0.843 0.788);
+	--canon-accent-bg: color(srgb 0.11 0.18 0.11);
+	--canon-border: color(srgb 0.129 0.2 0.129);
+	--canon-primary: color(srgb 0.761 0.678 0.38);
+	--canon-primary-foreground: color(srgb 0.035 0.106 0.039);
+	--canon-destructive: color(srgb 0.843 0.278 0.271);
+	/* display group */
+	--canon-copied: color(srgb 0.188 0.82 0.345);
 
-  /* colour solid */
-  --canon-colour-solid-wire: color-mix(
-    in srgb,
-    var(--canon-foreground) 30%,
-    transparent
-  );
-  --canon-colour-solid-hollow: color-mix(
-    in srgb,
-    var(--canon-foreground) 50%,
-    transparent
-  );
-  --canon-colour-solid-shadow: rgb(0 0 0 / 25%);
-  --canon-colour-solid-ink-dark: black;
-  --canon-colour-solid-ink-light: white;
-  /* math */
-  --canon-math-umber: color(srgb 0.251 0.204 0.157);
-  --canon-math-cream: color(srgb 0.922 0.894 0.824);
-  --canon-math-green: color(srgb 0.49 0.741 0.451);
-  --canon-math-blue: color(srgb 0.537 0.706 0.922);
-  --canon-math-clay: color(srgb 0.925 0.561 0.431);
-  --canon-math-yellow: color(srgb 0.914 0.741 0.2);
-  --canon-math-tint-share: 20%;
+	/* colour solid */
+	--canon-colour-solid-wire: color-mix(
+		in srgb,
+		var(--canon-foreground) 30%,
+		transparent
+	);
+	--canon-colour-solid-hollow: color-mix(
+		in srgb,
+		var(--canon-foreground) 50%,
+		transparent
+	);
+	--canon-colour-solid-shadow: rgb(0 0 0 / 25%);
+	--canon-colour-solid-ink-dark: black;
+	--canon-colour-solid-ink-light: white;
+	/* math */
+	--canon-math-umber: color(srgb 0.251 0.204 0.157);
+	--canon-math-cream: color(srgb 0.922 0.894 0.824);
+	--canon-math-green: color(srgb 0.49 0.741 0.451);
+	--canon-math-blue: color(srgb 0.537 0.706 0.922);
+	--canon-math-clay: color(srgb 0.925 0.561 0.431);
+	--canon-math-yellow: color(srgb 0.914 0.741 0.2);
+	--canon-math-tint-share: 20%;
 
-  /* phase C */
-  --canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
-  --canon-loupe-ink-dark: black;
-  --canon-loupe-ink-light: white;
+	/* phase C */
+	--canon-loupe-shadow: 0 3px 16px rgb(0 0 0 / 35%);
+	--canon-loupe-ink-dark: black;
+	--canon-loupe-ink-light: white;
 
-  /* shell */
-  --canon-window-minimise: color(srgb 0.914 0.741 0.2);
-  /* command group */
-  --canon-dialog-backdrop: rgb(0 0 0 / 55%);
-  --canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 45%);
-  /* menus */
-  --canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
+	/* shell */
+	--canon-window-minimise: color(srgb 0.914 0.741 0.2);
+	/* command group */
+	--canon-dialog-backdrop: rgb(0 0 0 / 55%);
+	--canon-dialog-shadow: 0 8px 32px rgb(0 0 0 / 45%);
+	/* menus */
+	--canon-popover-shadow: 0 8px 28px rgb(0 0 0 / 25%);
 }

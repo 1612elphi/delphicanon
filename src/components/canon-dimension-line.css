@@ -1,55 +1,55 @@
 .canon-dimension-line {
-  --canon-dimension-line-ink: var(--canon-primary);
+	--canon-dimension-line-ink: var(--canon-primary);
 
-  position: absolute;
-  box-sizing: border-box;
-  block-size: 32px;
-  pointer-events: none;
-  background: linear-gradient(
-      var(--canon-dimension-line-ink),
-      var(--canon-dimension-line-ink)
-    )
-    0 calc(100% - 4px) / 100% var(--canon-hairline) no-repeat;
+	position: absolute;
+	box-sizing: border-box;
+	block-size: 32px;
+	pointer-events: none;
+	background: linear-gradient(
+			var(--canon-dimension-line-ink),
+			var(--canon-dimension-line-ink)
+		)
+		0 calc(100% - 4px) / 100% var(--canon-hairline) no-repeat;
 }
 
 .canon-dimension-line::before,
 .canon-dimension-line::after {
-  position: absolute;
-  inset-block-end: 0;
-  inline-size: var(--canon-hairline);
-  block-size: 9px;
-  background: var(--canon-dimension-line-ink);
-  content: "";
+	position: absolute;
+	inset-block-end: 0;
+	inline-size: var(--canon-hairline);
+	block-size: 9px;
+	background: var(--canon-dimension-line-ink);
+	content: "";
 }
 
 .canon-dimension-line::before {
-  inset-inline-start: 0;
+	inset-inline-start: 0;
 }
 
 .canon-dimension-line::after {
-  inset-inline-end: 0;
+	inset-inline-end: 0;
 }
 
 .canon-dimension-line--blank {
-  --canon-dimension-line-ink: var(--canon-muted-foreground);
+	--canon-dimension-line-ink: var(--canon-muted-foreground);
 }
 
 .canon-dimension-line--down {
-  rotate: -90deg;
+	rotate: -90deg;
 }
 
 .canon-dimension-line--down:dir(rtl) {
-  rotate: 90deg;
+	rotate: 90deg;
 }
 
 .canon-dimension-line-figure {
-  position: absolute;
-  inset-block-end: 5px;
-  inset-inline-start: 50%;
-  translate: -50% 0;
-  white-space: nowrap;
+	position: absolute;
+	inset-block-end: 5px;
+	inset-inline-start: 50%;
+	translate: -50% 0;
+	white-space: nowrap;
 }
 
 .canon-dimension-line-figure:dir(rtl) {
-  translate: 50% 0;
+	translate: 50% 0;
 }

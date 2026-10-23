@@ -12,13 +12,13 @@ const tools = page !== null && !colour;
 const start = page === 'tools' ? undefined : (page ?? undefined);
 
 <template>
-  {{pageTitle "Canon"}}
-  {{#if colour}}
-    <ColourPage />
-  {{else if tools}}
-    <Tools @start={{start}} />
-  {{else}}
-    <Gallery />
-  {{/if}}
-  <CanonToast />
+	{{pageTitle "Canon"}}
+	{{#if colour}}
+		<ColourPage />
+	{{else if tools}}
+		<Tools @start={{start}} />
+	{{else}}
+		<Gallery />
+	{{/if}}
+	<CanonToast />
 </template>

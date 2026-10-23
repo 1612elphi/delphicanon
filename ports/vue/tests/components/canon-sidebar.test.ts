@@ -5,8 +5,8 @@ import CanonSidebarRow from '../../src/components/canon-sidebar-row.vue';
 import { find, findAll, render } from '../helpers/render.ts';
 
 test('holds a hero, headings and rows', async () => {
-  await render(
-    `<div style="height: 400px">
+	await render(
+		`<div style="height: 400px">
       <CanonSidebar aria-label="Main">
         <template #hero><img alt="" /></template>
         <template #default>
@@ -16,17 +16,17 @@ test('holds a hero, headings and rows', async () => {
         </template>
       </CanonSidebar>
     </div>`,
-    { CanonHeading, CanonSidebar, CanonSidebarRow },
-  );
-  expect(find('nav.canon-sidebar')).toHaveAttribute('aria-label', 'Main');
-  expect(findAll('.canon-sidebar-hero img')).toHaveLength(1);
-  expect(find('.canon-sidebar-rows .canon-heading')).toBeVisible();
-  expect(findAll('.canon-sidebar-row')).toHaveLength(2);
+		{ CanonHeading, CanonSidebar, CanonSidebarRow },
+	);
+	expect(find('nav.canon-sidebar')).toHaveAttribute('aria-label', 'Main');
+	expect(findAll('.canon-sidebar-hero img')).toHaveLength(1);
+	expect(find('.canon-sidebar-rows .canon-heading')).toBeVisible();
+	expect(findAll('.canon-sidebar-row')).toHaveLength(2);
 });
 
 test('collapses to the icon rail', async () => {
-  await render(
-    `<div style="display: flex; height: 400px">
+	await render(
+		`<div style="display: flex; height: 400px">
       <CanonSidebar class="wide">
         <CanonHeading text="Modules" />
         <CanonSidebarRow title="Toolbox" />
@@ -36,26 +36,26 @@ test('collapses to the icon rail', async () => {
         <CanonSidebarRow title="Toolbox" />
       </CanonSidebar>
     </div>`,
-    { CanonHeading, CanonSidebar, CanonSidebarRow },
-  );
-  const wide = find('.wide');
-  const rail = find('.rail');
-  const cell = find('.rail .canon-sidebar-row-icon');
-  expect(wide).not.toHaveClass('canon-sidebar--expanded');
-  expect(rail.offsetWidth).toBeLessThan(wide.offsetWidth / 4);
-  expect(rail.offsetWidth, 'the rail keeps the cell').toBeGreaterThan(
-    cell.offsetWidth,
-  );
-  expect(find('.rail .canon-heading')).not.toBeVisible();
-  expect(
-    find('.rail .canon-sidebar-row'),
-    'the title stays as the accessible name',
-  ).toHaveTextContent('Toolbox');
+		{ CanonHeading, CanonSidebar, CanonSidebarRow },
+	);
+	const wide = find('.wide');
+	const rail = find('.rail');
+	const cell = find('.rail .canon-sidebar-row-icon');
+	expect(wide).not.toHaveClass('canon-sidebar--expanded');
+	expect(rail.offsetWidth).toBeLessThan(wide.offsetWidth / 4);
+	expect(rail.offsetWidth, 'the rail keeps the cell').toBeGreaterThan(
+		cell.offsetWidth,
+	);
+	expect(find('.rail .canon-heading')).not.toBeVisible();
+	expect(
+		find('.rail .canon-sidebar-row'),
+		'the title stays as the accessible name',
+	).toHaveTextContent('Toolbox');
 });
 
 test('compact rows are shorter and keep a square icon cell', async () => {
-  await render(
-    `<div style="display: flex; height: 400px">
+	await render(
+		`<div style="display: flex; height: 400px">
       <CanonSidebar class="regular">
         <CanonSidebarRow title="Toolbox" />
       </CanonSidebar>
@@ -63,13 +63,13 @@ test('compact rows are shorter and keep a square icon cell', async () => {
         <CanonSidebarRow title="Toolbox" />
       </CanonSidebar>
     </div>`,
-    { CanonSidebar, CanonSidebarRow },
-  );
-  const compact = find('.compact .canon-sidebar-row');
-  expect(compact.offsetHeight).toBeLessThan(
-    find('.regular .canon-sidebar-row').offsetHeight,
-  );
-  expect(find('.compact .canon-sidebar-row-icon').offsetWidth).toBe(
-    compact.offsetHeight,
-  );
+		{ CanonSidebar, CanonSidebarRow },
+	);
+	const compact = find('.compact .canon-sidebar-row');
+	expect(compact.offsetHeight).toBeLessThan(
+		find('.regular .canon-sidebar-row').offsetHeight,
+	);
+	expect(find('.compact .canon-sidebar-row-icon').offsetWidth).toBe(
+		compact.offsetHeight,
+	);
 });

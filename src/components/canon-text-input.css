@@ -1,6 +1,6 @@
 .canon-text-input {
-  display: flex;
-  flex-direction: column;
-  gap: var(--canon-hairline);
-  background: var(--canon-border);
+	display: flex;
+	flex-direction: column;
+	gap: var(--canon-hairline);
+	background: var(--canon-border);
 }

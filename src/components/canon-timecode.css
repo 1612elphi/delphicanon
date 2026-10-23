@@ -1,46 +1,47 @@
 .canon-timecode {
-  position: relative;
-  display: inline-grid;
-  justify-items: end;
-  font-family: var(--canon-segment-font);
-  font-size: var(--canon-timecode-size, 44px);
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  white-space: pre;
-  pointer-events: none;
+	position: relative;
+	display: inline-grid;
+	justify-items: end;
+	font-family: var(--canon-segment-font);
+	font-size: var(--canon-timecode-size, 44px);
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	white-space: pre;
+	pointer-events: none;
 }
 
 .canon-timecode-halo,
 .canon-timecode-digits {
-  grid-area: 1 / 1;
+	grid-area: 1 / 1;
 }
 
 /* stroke only, 12 % of the size, as NSAttributedString's positive strokeWidth */
 .canon-timecode-halo {
-  color: transparent;
-  -webkit-text-stroke: calc(var(--canon-timecode-size, 44px) * 0.12)
-    var(--canon-timecode-halo, var(--canon-muted));
-  text-shadow: 0 3px 5px var(--canon-timecode-halo, var(--canon-muted));
+	color: transparent;
+	-webkit-text-stroke: calc(var(--canon-timecode-size, 44px) * 0.12)
+		var(--canon-timecode-halo, var(--canon-muted));
+	text-shadow: 0 3px 5px var(--canon-timecode-halo, var(--canon-muted));
 }
 
 .canon-timecode-digits {
-  color: var(--canon-primary);
-  text-shadow: 0 0 7px color-mix(in srgb, var(--canon-primary) 55%, transparent);
+	color: var(--canon-primary);
+	text-shadow: 0 0 7px
+		color-mix(in srgb, var(--canon-primary) 55%, transparent);
 }
 
 .canon-timecode-dim {
-  color: color-mix(in srgb, var(--canon-primary) 28%, transparent);
+	color: color-mix(in srgb, var(--canon-primary) 28%, transparent);
 }
 
 .canon-timecode-stop {
-  margin-inline: var(--canon-timecode-stop);
+	margin-inline: var(--canon-timecode-stop);
 }
 
 .canon-timecode-spoken {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }

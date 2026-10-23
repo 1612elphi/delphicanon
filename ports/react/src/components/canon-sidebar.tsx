@@ -4,23 +4,23 @@ import '@canon/styles/tokens.css';
 import '@canon/components/canon-sidebar.css';
 
 export interface CanonSidebarProps extends HTMLAttributes<HTMLElement> {
-  /**
-   * true: the icon rail. false: full width at every size. Unset: the rail
-   * inside a `canon-window` container narrower than 640 px.
-   */
-  collapsed?: boolean;
-  /** 32 px rows at subheadline size, for dense navigation. */
-  compact?: boolean;
-  /** A picture above the rows that does not scroll with them. */
-  hero?: ReactNode;
-  /** CanonSidebarRows, and CanonHeadings between groups. */
-  children?: ReactNode;
+	/**
+	 * true: the icon rail. false: full width at every size. Unset: the rail
+	 * inside a `canon-window` container narrower than 640 px.
+	 */
+	collapsed?: boolean;
+	/** 32 px rows at subheadline size, for dense navigation. */
+	compact?: boolean;
+	/** A picture above the rows that does not scroll with them. */
+	hero?: ReactNode;
+	/** CanonSidebarRows, and CanonHeadings between groups. */
+	children?: ReactNode;
 }
 
 function state(collapsed: boolean | undefined) {
-  if (collapsed === true) return 'canon-sidebar--collapsed';
-  if (collapsed === false) return 'canon-sidebar--expanded';
-  return undefined;
+	if (collapsed === true) return 'canon-sidebar--collapsed';
+	if (collapsed === false) return 'canon-sidebar--expanded';
+	return undefined;
 }
 
 /**
@@ -29,29 +29,31 @@ function state(collapsed: boolean | undefined) {
  * colour, a frame-width rule on the trailing edge.
  */
 export default function CanonSidebar({
-  collapsed,
-  compact,
-  hero,
-  children,
-  className,
-  ...rest
+	collapsed,
+	compact,
+	hero,
+	children,
+	className,
+	...rest
 }: CanonSidebarProps) {
-  return (
-    <nav
-      className={cx(
-        'canon-sidebar',
-        state(collapsed),
-        compact && 'canon-sidebar--compact',
-        className,
-      )}
-      {...rest}
-    >
-      {hero !== undefined && hero !== null && (
-        <div className="canon-sidebar-hero">{hero}</div>
-      )}
-      <div className="canon-sidebar-scroll">
-        <div className="canon-sidebar-rows">{children}</div>
-      </div>
-    </nav>
-  );
+	return (
+		<nav
+			className={cx(
+				'canon-sidebar',
+				state(collapsed),
+				compact && 'canon-sidebar--compact',
+				className,
+			)}
+			{...rest}
+		>
+			{hero !== undefined && hero !== null && (
+				<div className="canon-sidebar-hero">{hero}</div>
+			)}
+			<div className="canon-sidebar-scroll">
+				<div className="canon-sidebar-rows">
+					{children}
+				</div>
+			</div>
+		</nav>
+	);
 }

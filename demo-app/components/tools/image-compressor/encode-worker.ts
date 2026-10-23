@@ -5,8 +5,8 @@ let queue = Promise.resolve();
 
 // one encode at a time; a job superseded while queued is skipped
 onmessage = ({ data }: MessageEvent<EncodeRequest>) => {
-  latest = data.job;
-  queue = queue.then(async () => {
-    if (data.job === latest) postMessage(await encode(data));
-  });
+	latest = data.job;
+	queue = queue.then(async () => {
+		if (data.job === latest) postMessage(await encode(data));
+	});
 };

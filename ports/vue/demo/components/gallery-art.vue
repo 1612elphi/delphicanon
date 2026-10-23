@@ -4,7 +4,7 @@ defineProps<{ label: string }>();
 
 <!-- Stand-in canvas content: a gradient with a centred label. -->
 <template>
-  <div class="gallery-art">
-    <span>{{ label }}</span>
-  </div>
+	<div class="gallery-art">
+		<span>{{ label }}</span>
+	</div>
 </template>

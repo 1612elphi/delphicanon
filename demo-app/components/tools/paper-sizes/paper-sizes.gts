@@ -23,22 +23,22 @@ import press from '#src/modifiers/canon-press.ts';
 import { reducedMotion, springEasing } from '#src/lib/motion.ts';
 import { allSeries, type PaperSize } from './data.ts';
 import {
-  allPicks,
-  closest,
-  dimensions,
-  dpis,
-  matches,
-  mediaBox,
-  named,
-  pageQuery,
-  parseQuery,
-  pixelUnit,
-  signed,
-  unitLabels,
-  unitNames,
-  type PaperPick,
-  type PaperQuery,
-  type PaperUnit,
+	allPicks,
+	closest,
+	dimensions,
+	dpis,
+	matches,
+	mediaBox,
+	named,
+	pageQuery,
+	parseQuery,
+	pixelUnit,
+	signed,
+	unitLabels,
+	unitNames,
+	type PaperPick,
+	type PaperQuery,
+	type PaperUnit,
 } from './paper.ts';
 import Picture from './picture.gts';
 import './paper-sizes.css';
@@ -61,355 +61,422 @@ const badgeSpring = springEasing(0.6);
 
 /** The badge pops when a cell takes a slot. */
 const pop = modifier((badge: HTMLElement, [mark]: [number | undefined]) => {
-  const before = badge.dataset['mark'];
-  badge.dataset['mark'] = String(mark ?? '');
-  if (
-    before === undefined ||
-    !mark ||
-    before === String(mark) ||
-    reducedMotion()
-  )
-    return;
-  badge.animate([{ transform: 'scale(0.3)' }, { transform: 'none' }], {
-    duration: 400,
-    easing: badgeSpring,
-  });
+	const before = badge.dataset['mark'];
+	badge.dataset['mark'] = String(mark ?? '');
+	if (
+		before === undefined ||
+		!mark ||
+		before === String(mark) ||
+		reducedMotion()
+	)
+		return;
+	badge.animate([{ transform: 'scale(0.3)' }, { transform: 'none' }], {
+		duration: 400,
+		easing: badgeSpring,
+	});
 });
 
 interface CellSignature {
-  Args: {
-    size: PaperSize;
-    text: string;
-    mark?: number;
-    detail?: string;
-    onPick: () => void;
-  };
+	Args: {
+		size: PaperSize;
+		text: string;
+		mark?: number;
+		detail?: string;
+		onPick: () => void;
+	};
 }
 
 /** The sheet's long side fills a 40 px box. */
 function glyph(size: PaperSize) {
-  const long = Math.max(size.widthMM, size.heightMM, 1);
-  return htmlSafe(
-    `inline-size: ${Math.round((40 * size.widthMM) / long)}px; block-size: ${Math.round((40 * size.heightMM) / long)}px`,
-  );
+	const long = Math.max(size.widthMM, size.heightMM, 1);
+	return htmlSafe(
+		`inline-size: ${Math.round((40 * size.widthMM) / long)}px; block-size: ${Math.round((40 * size.heightMM) / long)}px`,
+	);
 }
 
 const Cell: TOC<CellSignature> = <template>
-  <button
-    type="button"
-    class="paper-cell {{if @mark (concat 'paper-slot-' @mark)}}"
-    aria-current={{if @mark "true"}}
-    {{press}}
-    {{on "click" @onPick}}
-  >
-    <span class="paper-cell-box"><span
-        class="paper-cell-sheet"
-        style={{glyph @size}}
-      ></span></span>
-    <span class="paper-cell-name">{{@size.name}}</span>
-    <span class="paper-cell-dimensions">{{@text}}</span>
-    {{#if @detail}}
-      <span class="paper-cell-detail">{{@detail}}</span>
-    {{/if}}
-    <span class="paper-cell-badge" {{pop @mark}}>{{@mark}}</span>
-  </button>
+	<button
+		type="button"
+		class="paper-cell {{if @mark (concat 'paper-slot-' @mark)}}"
+		aria-current={{if @mark "true"}}
+		{{press}}
+		{{on "click" @onPick}}
+	>
+		<span class="paper-cell-box"><span
+				class="paper-cell-sheet"
+				style={{glyph @size}}
+			></span></span>
+		<span class="paper-cell-name">{{@size.name}}</span>
+		<span class="paper-cell-dimensions">{{@text}}</span>
+		{{#if @detail}}
+			<span class="paper-cell-detail">{{@detail}}</span>
+		{{/if}}
+		<span class="paper-cell-badge" {{pop @mark}}>{{@mark}}</span>
+	</button>
 </template>;
 
 function concat(...parts: unknown[]) {
-  return parts.join('');
+	return parts.join('');
 }
 
 async function pdfPoints(file: File): Promise<[number, number] | undefined> {
-  const bytes = new Uint8Array(await file.arrayBuffer());
-  // one code unit per byte, so indices are byte offsets
-  const source = new TextDecoder('windows-1252').decode(bytes);
-  const plain = mediaBox(source);
-  if (plain) return plain;
-  // PDF 1.5 keeps page objects in compressed object streams
-  for (const found of source.matchAll(/stream\r?\n/g)) {
-    const start = found.index + found[0].length;
-    const end = source.indexOf('endstream', start);
-    if (end < 0) break;
-    const box = mediaBox(await inflate(bytes.subarray(start, end)));
-    if (box) return box;
-  }
-  return undefined;
+	const bytes = new Uint8Array(await file.arrayBuffer());
+	// one code unit per byte, so indices are byte offsets
+	const source = new TextDecoder('windows-1252').decode(bytes);
+	const plain = mediaBox(source);
+	if (plain) return plain;
+	// PDF 1.5 keeps page objects in compressed object streams
+	for (const found of source.matchAll(/stream\r?\n/g)) {
+		const start = found.index + found[0].length;
+		const end = source.indexOf('endstream', start);
+		if (end < 0) break;
+		const box = mediaBox(await inflate(bytes.subarray(start, end)));
+		if (box) return box;
+	}
+	return undefined;
 }
 
 /** Inflates what it can; the bytes after the data make the stream fail, so keep what came before. */
 async function inflate(chunk: Uint8Array): Promise<string> {
-  const reader = new Blob([chunk as BlobPart])
-    .stream()
-    .pipeThrough(new DecompressionStream('deflate'))
-    .getReader();
-  const decoder = new TextDecoder('windows-1252');
-  let text = '';
-  try {
-    for (;;) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      text += decoder.decode(value, { stream: true });
-    }
-  } catch {
-    // trailing bytes or not deflate
-  }
-  return text;
+	const reader = new Blob([chunk as BlobPart])
+		.stream()
+		.pipeThrough(new DecompressionStream('deflate'))
+		.getReader();
+	const decoder = new TextDecoder('windows-1252');
+	let text = '';
+	try {
+		for (;;) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			text += decoder.decode(value, { stream: true });
+		}
+	} catch {
+		// trailing bytes or not deflate
+	}
+	return text;
 }
 
 /** The port of PaperSizesViewController. */
 export default class PaperSizes extends Component {
-  @tracked slots: (PaperPick | undefined)[] = [named('A4'), undefined];
-  /** Fills 1, 2, 1, 2 from slot 2. */
-  @tracked nextSlot = 1;
-  @tracked unit = startUnit as PaperUnit;
-  @tracked dpiIndex = 2;
-  @tracked text = startFind;
-  @tracked query: PaperQuery = parseQuery(startFind);
-  #timer?: number;
+	@tracked slots: (PaperPick | undefined)[] = [named('A4'), undefined];
+	/** Fills 1, 2, 1, 2 from slot 2. */
+	@tracked nextSlot = 1;
+	@tracked unit = startUnit as PaperUnit;
+	@tracked dpiIndex = 2;
+	@tracked text = startFind;
+	@tracked query: PaperQuery = parseQuery(startFind);
+	#timer?: number;
 
-  constructor(owner: Owner, args: object) {
-    super(owner, args);
-    if (compared.length) {
-      this.slots = [
-        named(compared[0]!),
-        compared[1] ? named(compared[1]) : undefined,
-      ];
-      this.nextSlot = 0;
-    }
-    registerDestructor(this, () => window.clearTimeout(this.#timer));
-  }
+	constructor(owner: Owner, args: object) {
+		super(owner, args);
+		if (compared.length) {
+			this.slots = [
+				named(compared[0]!),
+				compared[1] ? named(compared[1]) : undefined,
+			];
+			this.nextSlot = 0;
+		}
+		registerDestructor(this, () =>
+			window.clearTimeout(this.#timer),
+		);
+	}
 
-  get dpi(): number {
-    return this.query.kind === 'size' && this.query.dpi
-      ? this.query.dpi
-      : dpis[this.dpiIndex]!;
-  }
+	get dpi(): number {
+		return this.query.kind === 'size' && this.query.dpi
+			? this.query.dpi
+			: dpis[this.dpiIndex]!;
+	}
 
-  get pixelQuery() {
-    return this.query.kind === 'size' && this.query.pixels !== undefined;
-  }
+	get pixelQuery() {
+		return (
+			this.query.kind === 'size' &&
+			this.query.pixels !== undefined
+		);
+	}
 
-  get showsDpi() {
-    return this.unit === pixelUnit || this.pixelQuery;
-  }
+	get showsDpi() {
+		return this.unit === pixelUnit || this.pixelQuery;
+	}
 
-  get shownDpiIndex() {
-    const index = dpis.indexOf(this.dpi);
-    return index < 0 ? this.dpiIndex : index;
-  }
+	get shownDpiIndex() {
+		const index = dpis.indexOf(this.dpi);
+		return index < 0 ? this.dpiIndex : index;
+	}
 
-  get marks(): Map<string, number> {
-    const marks = new Map<string, number>();
-    this.slots.forEach((pick, index) => pick && marks.set(pick.key, index + 1));
-    return marks;
-  }
+	get marks(): Map<string, number> {
+		const marks = new Map<string, number>();
+		this.slots.forEach(
+			(pick, index) => pick && marks.set(pick.key, index + 1),
+		);
+		return marks;
+	}
 
-  dimensionsOf(size: PaperSize) {
-    return dimensions(size, this.unit, this.dpi);
-  }
+	dimensionsOf(size: PaperSize) {
+		return dimensions(size, this.unit, this.dpi);
+	}
 
-  get legend() {
-    return this.slots.map(
-      (pick, index) =>
-        pick &&
-        `${index + 1} · ${pick.size.name} · ${this.dimensionsOf(pick.size)}`,
-    );
-  }
+	get legend() {
+		return this.slots.map(
+			(pick, index) =>
+				pick &&
+				`${index + 1} · ${pick.size.name} · ${this.dimensionsOf(pick.size)}`,
+		);
+	}
 
-  get sizes() {
-    return this.slots.map((pick) => pick?.size);
-  }
+	get sizes() {
+		return this.slots.map((pick) => pick?.size);
+	}
 
-  cell = (pick: PaperPick, detail?: string) => ({
-    key: pick.key,
-    pick,
-    size: pick.size,
-    text: this.dimensionsOf(pick.size),
-    mark: this.marks.get(pick.key),
-    detail,
-  });
+	cell = (pick: PaperPick, detail?: string) => ({
+		key: pick.key,
+		pick,
+		size: pick.size,
+		text: this.dimensionsOf(pick.size),
+		mark: this.marks.get(pick.key),
+		detail,
+	});
 
-  get closest() {
-    const { query } = this;
-    if (query.kind !== 'size') return [];
-    return closest(query.width, query.height).map(({ pick, dw, dh }) =>
-      this.cell(pick, `${signed(dw)} × ${signed(dh)} mm`),
-    );
-  }
+	get closest() {
+		const { query } = this;
+		if (query.kind !== 'size') return [];
+		return closest(query.width, query.height).map(
+			({ pick, dw, dh }) =>
+				this.cell(
+					pick,
+					`${signed(dw)} × ${signed(dh)} mm`,
+				),
+		);
+	}
 
-  get series() {
-    return allSeries.flatMap((series) => {
-      const cells = allPicks
-        .filter(
-          (pick) => pick.series === series.id && matches(this.query, pick),
-        )
-        .map((pick) => this.cell(pick));
-      return cells.length
-        ? [
-            {
-              id: series.id,
-              name: series.name,
-              count: String(series.sizes.length),
-              cells,
-            },
-          ]
-        : [];
-    });
-  }
+	get series() {
+		return allSeries.flatMap((series) => {
+			const cells = allPicks
+				.filter(
+					(pick) =>
+						pick.series === series.id &&
+						matches(this.query, pick),
+				)
+				.map((pick) => this.cell(pick));
+			return cells.length
+				? [
+						{
+							id: series.id,
+							name: series.name,
+							count: String(
+								series.sizes
+									.length,
+							),
+							cells,
+						},
+					]
+				: [];
+		});
+	}
 
-  get sheets() {
-    return this.slots.flatMap((pick, index) =>
-      pick
-        ? [
-            {
-              title: `${index + 1} · ${pick.size.name}`,
-              tiles: unitNames.map((name, unit) => ({
-                label: unit === pixelUnit ? `${name} · ${this.dpi} DPI` : name,
-                value: dimensions(pick.size, unit as PaperUnit, this.dpi),
-              })),
-            },
-          ]
-        : [],
-    );
-  }
+	get sheets() {
+		return this.slots.flatMap((pick, index) =>
+			pick
+				? [
+						{
+							title: `${index + 1} · ${pick.size.name}`,
+							tiles: unitNames.map(
+								(
+									name,
+									unit,
+								) => ({
+									label:
+										unit ===
+										pixelUnit
+											? `${name} · ${this.dpi} DPI`
+											: name,
+									value: dimensions(
+										pick.size,
+										unit as PaperUnit,
+										this
+											.dpi,
+									),
+								}),
+							),
+						},
+					]
+				: [],
+		);
+	}
 
-  pick = (pick: PaperPick) => {
-    const slots = [...this.slots];
-    slots[this.nextSlot] = pick;
-    this.slots = slots;
-    this.nextSlot = this.nextSlot === 0 ? 1 : 0;
-  };
+	pick = (pick: PaperPick) => {
+		const slots = [...this.slots];
+		slots[this.nextSlot] = pick;
+		this.slots = slots;
+		this.nextSlot = this.nextSlot === 0 ? 1 : 0;
+	};
 
-  find = (text: string) => {
-    this.text = text;
-    window.clearTimeout(this.#timer);
-    this.#timer = window.setTimeout(() => (this.query = parseQuery(text)), 400);
-  };
+	find = (text: string) => {
+		this.text = text;
+		window.clearTimeout(this.#timer);
+		this.#timer = window.setTimeout(
+			() => (this.query = parseQuery(text)),
+			400,
+		);
+	};
 
-  #setQuery(text: string) {
-    window.clearTimeout(this.#timer);
-    this.text = text;
-    this.query = parseQuery(text);
-  }
+	#setQuery(text: string) {
+		window.clearTimeout(this.#timer);
+		this.text = text;
+		this.query = parseQuery(text);
+	}
 
-  pickUnit = (index: number) => (this.unit = index as PaperUnit);
+	pickUnit = (index: number) => (this.unit = index as PaperUnit);
 
-  pickDpi = (index: number) => {
-    this.dpiIndex = index;
-    const { query } = this;
-    if (query.kind === 'size' && query.pixels) {
-      const [w, h] = query.pixels;
-      this.#setQuery(`${w}x${h}@${dpis[index]}dpi`);
-    }
-  };
+	pickDpi = (index: number) => {
+		this.dpiIndex = index;
+		const { query } = this;
+		if (query.kind === 'size' && query.pixels) {
+			const [w, h] = query.pixels;
+			this.#setQuery(`${w}x${h}@${dpis[index]}dpi`);
+		}
+	};
 
-  open = async (file: File) => {
-    if (
-      file.type === 'application/pdf' ||
-      file.name.toLowerCase().endsWith('.pdf')
-    ) {
-      const points = await pdfPoints(file);
-      if (points) this.#setQuery(pageQuery(points));
-      return;
-    }
-    // ponytail: an unreadable image leaves the query as it was
-    const image = await createImageBitmap(file).catch(() => undefined);
-    if (!image) return;
-    this.#setQuery(`${image.width}x${image.height}@${dpis[this.dpiIndex]}dpi`);
-    image.close();
-  };
+	open = async (file: File) => {
+		if (
+			file.type === 'application/pdf' ||
+			file.name.toLowerCase().endsWith('.pdf')
+		) {
+			const points = await pdfPoints(file);
+			if (points) this.#setQuery(pageQuery(points));
+			return;
+		}
+		// ponytail: an unreadable image leaves the query as it was
+		const image = await createImageBitmap(file).catch(
+			() => undefined,
+		);
+		if (!image) return;
+		this.#setQuery(
+			`${image.width}x${image.height}@${dpis[this.dpiIndex]}dpi`,
+		);
+		image.close();
+	};
 
-  <template>
-    <CanonSplit class="gallery paper-sizes" @halves={{true}}>
-      <:sidebar>
-        <CanonCanvas
-          @aspect={{0.8}}
-          @maxHeight={{640}}
-          @background="var(--canon-muted)"
-        >
-          <Picture
-            @sizes={{this.sizes}}
-            @legend={{this.legend}}
-            @arrangement={{startArrangement}}
-          />
-        </CanonCanvas>
-      </:sidebar>
-      <:main>
-        <CanonRows @framed={{true}}>
-          <CanonHeading @text="Find" />
-          <CanonTextCell
-            class="paper-find"
-            aria-label="Find"
-            autocomplete="off"
-            autocapitalize="none"
-            spellcheck="false"
-            @value={{this.text}}
-            @placeholder={{findPlaceholder}}
-            @onChange={{this.find}}
-          />
-          <CanonRow @title="From file" @form="flush" as |titleId|>
-            <CanonFileCell
-              @accept="image/*,.pdf,application/pdf"
-              @labelledBy={{titleId}}
-              @onChange={{this.open}}
-            />
-          </CanonRow>
-        </CanonRows>
-        <CanonRows @framed={{true}}>
-          <CanonHeading @text="Units" />
-          <CanonSegmented
-            @items={{unitLabels}}
-            @selected={{this.unit}}
-            @onChange={{this.pickUnit}}
-          />
-          {{#if this.showsDpi}}
-            <CanonSegmented
-              @items={{dpiLabels}}
-              @selected={{this.shownDpiIndex}}
-              @onChange={{this.pickDpi}}
-            />
-          {{/if}}
-        </CanonRows>
-        <CanonRows @framed={{true}}>
-          {{#each this.sheets as |sheet|}}
-            <CanonHeading @text={{sheet.title}} />
-            <CanonTiles @items={{sheet.tiles}} />
-          {{/each}}
-        </CanonRows>
-        {{#if this.closest.length}}
-          <CanonRows @framed={{true}}>
-            <CanonHeading @text="Closest" />
-            <CanonGrid @columns={{columns}}>
-              {{#each this.closest key="key" as |cell|}}
-                <Cell
-                  @size={{cell.size}}
-                  @text={{cell.text}}
-                  @mark={{cell.mark}}
-                  @detail={{cell.detail}}
-                  @onPick={{fn this.pick cell.pick}}
-                />
-              {{/each}}
-            </CanonGrid>
-          </CanonRows>
-        {{/if}}
-        <CanonRows @framed={{true}}>
-          {{#each this.series key="id" as |series|}}
-            <CanonJumpHeading @text={{series.name}} @detail={{series.count}} />
-            <CanonGrid @columns={{columns}}>
-              {{#each series.cells key="key" as |cell|}}
-                <Cell
-                  @size={{cell.size}}
-                  @text={{cell.text}}
-                  @mark={{cell.mark}}
-                  @onPick={{fn this.pick cell.pick}}
-                />
-              {{/each}}
-            </CanonGrid>
-          {{else}}
-            <CanonEmptyRow @text="No match" />
-          {{/each}}
-        </CanonRows>
-      </:main>
-    </CanonSplit>
-  </template>
+	<template>
+		<CanonSplit class="gallery paper-sizes" @halves={{true}}>
+			<:sidebar>
+				<CanonCanvas
+					@aspect={{0.8}}
+					@maxHeight={{640}}
+					@background="var(--canon-muted)"
+				>
+					<Picture
+						@sizes={{this.sizes}}
+						@legend={{this.legend}}
+						@arrangement={{startArrangement}}
+					/>
+				</CanonCanvas>
+			</:sidebar>
+			<:main>
+				<CanonRows @framed={{true}}>
+					<CanonHeading @text="Find" />
+					<CanonTextCell
+						class="paper-find"
+						aria-label="Find"
+						autocomplete="off"
+						autocapitalize="none"
+						spellcheck="false"
+						@value={{this.text}}
+						@placeholder={{findPlaceholder}}
+						@onChange={{this.find}}
+					/>
+					<CanonRow
+						@title="From file"
+						@form="flush"
+						as |titleId|
+					>
+						<CanonFileCell
+							@accept="image/*,.pdf,application/pdf"
+							@labelledBy={{titleId}}
+							@onChange={{this.open}}
+						/>
+					</CanonRow>
+				</CanonRows>
+				<CanonRows @framed={{true}}>
+					<CanonHeading @text="Units" />
+					<CanonSegmented
+						@items={{unitLabels}}
+						@selected={{this.unit}}
+						@onChange={{this.pickUnit}}
+					/>
+					{{#if this.showsDpi}}
+						<CanonSegmented
+							@items={{dpiLabels}}
+							@selected={{this.shownDpiIndex}}
+							@onChange={{this.pickDpi}}
+						/>
+					{{/if}}
+				</CanonRows>
+				<CanonRows @framed={{true}}>
+					{{#each this.sheets as |sheet|}}
+						<CanonHeading
+							@text={{sheet.title}}
+						/>
+						<CanonTiles
+							@items={{sheet.tiles}}
+						/>
+					{{/each}}
+				</CanonRows>
+				{{#if this.closest.length}}
+					<CanonRows @framed={{true}}>
+						<CanonHeading @text="Closest" />
+						<CanonGrid @columns={{columns}}>
+							{{#each
+								this.closest
+								key="key"
+								as |cell|
+							}}
+								<Cell
+									@size={{cell.size}}
+									@text={{cell.text}}
+									@mark={{cell.mark}}
+									@detail={{cell.detail}}
+									@onPick={{fn
+										this.pick
+										cell.pick
+									}}
+								/>
+							{{/each}}
+						</CanonGrid>
+					</CanonRows>
+				{{/if}}
+				<CanonRows @framed={{true}}>
+					{{#each
+						this.series key="id"
+						as |series|
+					}}
+						<CanonJumpHeading
+							@text={{series.name}}
+							@detail={{series.count}}
+						/>
+						<CanonGrid @columns={{columns}}>
+							{{#each
+								series.cells
+								key="key"
+								as |cell|
+							}}
+								<Cell
+									@size={{cell.size}}
+									@text={{cell.text}}
+									@mark={{cell.mark}}
+									@onPick={{fn
+										this.pick
+										cell.pick
+									}}
+								/>
+							{{/each}}
+						</CanonGrid>
+					{{else}}
+						<CanonEmptyRow
+							@text="No match"
+						/>
+					{{/each}}
+				</CanonRows>
+			</:main>
+		</CanonSplit>
+	</template>
 }

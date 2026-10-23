@@ -1,25 +1,25 @@
 {
-  "name": "@delphicanon/registry",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "bun build.ts",
-    "site": "bun build.ts && bun run --cwd .. build:showcase && cp -R ../showcase/dist/. public/",
-    "serve": "python3 -m http.server 4330 --directory public",
-    "test": "bun test",
-    "lint": "eslint . && prettier . --check && tsc --noEmit",
-    "format": "prettier . --write"
-  },
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@types/bun": "latest",
-    "eslint": "^10.11.0",
-    "prettier": "^3.9.9",
-    "shadcn": "4.21.0",
-    "shadcn-svelte": "1.7.0",
-    "shadcn-vue": "2.8.2",
-    "typescript": "^6",
-    "typescript-eslint": "^8.70.1"
-  }
+	"name": "@delphicanon/registry",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "bun build.ts",
+		"site": "bun build.ts && bun run --cwd .. build:showcase && cp -R ../showcase/dist/. public/",
+		"serve": "python3 -m http.server 4330 --directory public",
+		"test": "bun test",
+		"lint": "eslint . && prettier . --check && tsc --noEmit",
+		"format": "prettier . --write"
+	},
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"@types/bun": "latest",
+		"eslint": "^10.11.0",
+		"prettier": "^3.9.9",
+		"shadcn": "4.21.0",
+		"shadcn-svelte": "1.7.0",
+		"shadcn-vue": "2.8.2",
+		"typescript": "^6",
+		"typescript-eslint": "^8.70.1"
+	}
 }

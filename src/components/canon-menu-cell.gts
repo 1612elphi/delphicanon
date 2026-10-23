@@ -6,20 +6,20 @@ import '../styles/tokens.css';
 import './canon-menu-cell.css';
 
 export interface CanonMenuCellSignature {
-  Args: {
-    items: string[];
-    /** Undefined shows the placeholder: a value set elsewhere that matches no choice. */
-    selected?: number;
-    /** Default an em dash. */
-    placeholder?: string;
-    labelledBy?: string;
-    label?: string;
-    disabled?: boolean;
-    /** Every choice sends onChange, the one shown too, and the system menu marks none: for a list of places to go. */
-    repicks?: boolean;
-    onChange?: (index: number) => void;
-  };
-  Element: HTMLDivElement;
+	Args: {
+		items: string[];
+		/** Undefined shows the placeholder: a value set elsewhere that matches no choice. */
+		selected?: number;
+		/** Default an em dash. */
+		placeholder?: string;
+		labelledBy?: string;
+		label?: string;
+		disabled?: boolean;
+		/** Every choice sends onChange, the one shown too, and the system menu marks none: for a list of places to go. */
+		repicks?: boolean;
+		onChange?: (index: number) => void;
+	};
+	Element: HTMLDivElement;
 }
 
 /**
@@ -27,77 +27,87 @@ export interface CanonMenuCellSignature {
  * them: a native select laid invisibly over the cell.
  */
 export default class CanonMenuCell extends Component<CanonMenuCellSignature> {
-  hold = new Hold<number>();
+	hold = new Hold<number>();
 
-  get selected(): number | undefined {
-    return this.hold.read(this.args.selected) ?? this.args.selected;
-  }
+	get selected(): number | undefined {
+		return this.hold.read(this.args.selected) ?? this.args.selected;
+	}
 
-  get title(): string | undefined {
-    const { selected } = this;
-    return selected === undefined ? undefined : this.args.items[selected];
-  }
+	get title(): string | undefined {
+		const { selected } = this;
+		return selected === undefined
+			? undefined
+			: this.args.items[selected];
+	}
 
-  get placeholder() {
-    return this.args.placeholder ?? '\u2014';
-  }
+	get placeholder() {
+		return this.args.placeholder ?? '\u2014';
+	}
 
-  get blank() {
-    return this.args.repicks === true || !this.title;
-  }
+	get blank() {
+		return this.args.repicks === true || !this.title;
+	}
 
-  get options() {
-    return this.args.items.map((title, index) => ({
-      title,
-      value: String(index),
-      selected: !this.args.repicks && index === this.selected,
-    }));
-  }
+	get options() {
+		return this.args.items.map((title, index) => ({
+			title,
+			value: String(index),
+			selected: !this.args.repicks && index === this.selected,
+		}));
+	}
 
-  pick = (event: Event) => {
-    const select = event.target as HTMLSelectElement;
-    const index = Number(select.value);
-    // a native select sends no change for the option it already holds
-    if (this.args.repicks) select.value = '';
-    else if (index === this.selected) return;
-    this.hold.set(index);
-    this.args.onChange?.(index);
-  };
+	pick = (event: Event) => {
+		const select = event.target as HTMLSelectElement;
+		const index = Number(select.value);
+		// a native select sends no change for the option it already holds
+		if (this.args.repicks) select.value = '';
+		else if (index === this.selected) return;
+		this.hold.set(index);
+		this.args.onChange?.(index);
+	};
 
-  <template>
-    <div
-      class="canon-menu-cell {{if @disabled 'canon-menu-cell--disabled'}}"
-      ...attributes
-    >
-      <span class="canon-menu-cell-title">{{if
-          this.title
-          this.title
-          this.placeholder
-        }}</span>
-      <span class="canon-menu-cell-icon" aria-hidden="true"><ChevronsUpDown
-        /></span>
-      {{! template-lint-disable require-input-label }}
-      <select
-        class="canon-menu-cell-select"
-        aria-labelledby={{@labelledBy}}
-        aria-label={{@label}}
-        disabled={{@disabled}}
-        {{on "change" this.pick}}
-      >
-        {{#if this.blank}}
-          <option value="" disabled selected hidden>{{if
-              this.title
-              this.title
-              this.placeholder
-            }}</option>
-        {{/if}}
-        {{#each this.options as |choice|}}
-          <option
-            value={{choice.value}}
-            selected={{choice.selected}}
-          >{{choice.title}}</option>
-        {{/each}}
-      </select>
-    </div>
-  </template>
+	<template>
+		<div
+			class="canon-menu-cell
+				{{if @disabled 'canon-menu-cell--disabled'}}"
+			...attributes
+		>
+			<span class="canon-menu-cell-title">{{if
+					this.title
+					this.title
+					this.placeholder
+				}}</span>
+			<span
+				class="canon-menu-cell-icon"
+				aria-hidden="true"
+			><ChevronsUpDown /></span>
+			{{! template-lint-disable require-input-label }}
+			<select
+				class="canon-menu-cell-select"
+				aria-labelledby={{@labelledBy}}
+				aria-label={{@label}}
+				disabled={{@disabled}}
+				{{on "change" this.pick}}
+			>
+				{{#if this.blank}}
+					<option
+						value=""
+						disabled
+						selected
+						hidden
+					>{{if
+							this.title
+							this.title
+							this.placeholder
+						}}</option>
+				{{/if}}
+				{{#each this.options as |choice|}}
+					<option
+						value={{choice.value}}
+						selected={{choice.selected}}
+					>{{choice.title}}</option>
+				{{/each}}
+			</select>
+		</div>
+	</template>
 }

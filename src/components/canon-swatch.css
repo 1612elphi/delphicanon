@@ -1,35 +1,35 @@
 .canon-swatch {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  min-inline-size: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  container-type: inline-size;
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-caption);
-  font-variant-numeric: tabular-nums;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  appearance: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	min-inline-size: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	container-type: inline-size;
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-caption);
+	font-variant-numeric: tabular-nums;
+	cursor: pointer;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 }
 
 .canon-swatch:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -2px;
 }
 
 .canon-swatch-hex {
-  white-space: nowrap;
+	white-space: nowrap;
 }
 
 /* the hex, 8 px of air, at the caption size */
 @container (max-width: 62px) {
-  .canon-swatch-hex {
-    display: none;
-  }
+	.canon-swatch-hex {
+		display: none;
+	}
 }

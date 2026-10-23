@@ -4,237 +4,237 @@
 
 /* relative, so the build carries the fonts beside its assets */
 @font-face {
-  font-family: "iA Writer Quattro";
-  font-style: normal;
-  font-weight: 400 700;
-  src: url("../public/fonts/iAWriterQuattroV.woff2") format("woff2");
-  font-display: swap;
+	font-family: "iA Writer Quattro";
+	font-style: normal;
+	font-weight: 400 700;
+	src: url("../public/fonts/iAWriterQuattroV.woff2") format("woff2");
+	font-display: swap;
 }
 
 @font-face {
-  font-family: FluoWrite;
-  font-style: normal;
-  font-weight: 400;
-  src: url("../public/fonts/fluoWrite-Regular.otf") format("opentype");
-  font-display: swap;
+	font-family: FluoWrite;
+	font-style: normal;
+	font-weight: 400;
+	src: url("../public/fonts/fluoWrite-Regular.otf") format("opentype");
+	font-display: swap;
 }
 
 html,
 body {
-  block-size: 100%;
-  margin: 0;
+	block-size: 100%;
+	margin: 0;
 }
 
 html {
-  color-scheme: light dark;
+	color-scheme: light dark;
 }
 
 html.light {
-  color-scheme: light;
+	color-scheme: light;
 }
 
 html.dark {
-  color-scheme: dark;
+	color-scheme: dark;
 }
 
 body {
-  background: var(--canon-background);
-  -webkit-font-smoothing: antialiased;
+	background: var(--canon-background);
+	-webkit-font-smoothing: antialiased;
 }
 
 .showcase {
-  block-size: 100dvh;
-  container: showcase / inline-size;
+	block-size: 100dvh;
+	container: showcase / inline-size;
 }
 
 /* the sidebar's 240 px beside a 528 px page */
 @container showcase (width >= 768px) {
-  .showcase-menu {
-    display: none;
-  }
+	.showcase-menu {
+		display: none;
+	}
 }
 
 /* the framework picker takes a second line of the bar */
 @container showcase (width < 768px) {
-  .showcase-nav {
-    display: none;
-  }
+	.showcase-nav {
+		display: none;
+	}
 
-  .showcase .canon-window-bar {
-    flex-wrap: wrap;
-    row-gap: 4px;
-    padding-block: 4px;
-  }
+	.showcase .canon-window-bar {
+		flex-wrap: wrap;
+		row-gap: 4px;
+		padding-block: 4px;
+	}
 
-  .showcase .canon-window-toolbar {
-    display: contents;
-  }
+	.showcase .canon-window-toolbar {
+		display: contents;
+	}
 
-  .showcase-menu {
-    order: -1;
-  }
+	.showcase-menu {
+		order: -1;
+	}
 
-  .showcase-frameworks {
-    flex: 1 1 100%;
-  }
+	.showcase-frameworks {
+		flex: 1 1 100%;
+	}
 }
 
 .showcase-note {
-  margin: 0;
-  padding: var(--canon-panel-padding);
-  background: var(--canon-card);
-  color: var(--canon-secondary-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-subheadline);
-  line-height: 1.45;
+	margin: 0;
+	padding: var(--canon-panel-padding);
+	background: var(--canon-card);
+	color: var(--canon-secondary-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-subheadline);
+	line-height: 1.45;
 }
 
 .showcase-pager {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--canon-frame);
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--canon-frame);
 }
 
 /* the row's cell gap shows its own background, as between sidebar rows */
 .showcase-pager > .canon-sidebar-row {
-  background: var(--canon-border);
+	background: var(--canon-border);
 }
 
 .showcase-next {
-  grid-column: 2;
-  flex-direction: row-reverse;
+	grid-column: 2;
+	flex-direction: row-reverse;
 }
 
 .showcase-next > .canon-sidebar-row-title {
-  justify-content: flex-end;
-  padding-inline: 0 10px;
+	justify-content: flex-end;
+	padding-inline: 0 10px;
 }
 
 .showcase-stage {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-  gap: 16px;
-  padding: var(--canon-panel-padding);
-  background: var(--canon-card);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
+	gap: 16px;
+	padding: var(--canon-panel-padding);
+	background: var(--canon-card);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
 }
 
 .showcase-icons svg {
-  inline-size: 24px;
-  block-size: 24px;
+	inline-size: 24px;
+	block-size: 24px;
 }
 
 .showcase-rules {
-  align-items: stretch;
-  justify-content: center;
+	align-items: stretch;
+	justify-content: center;
 }
 
 .showcase-rule-across {
-  inline-size: 100%;
+	inline-size: 100%;
 }
 
 .showcase-swatches {
-  display: flex;
-  block-size: 64px;
+	display: flex;
+	block-size: 64px;
 }
 
 .showcase-swatches > .canon-swatch {
-  flex: 1;
+	flex: 1;
 }
 
 .showcase-wheel-rows {
-  display: grid;
-  grid-auto-rows: 44px;
-  background: var(--canon-card);
+	display: grid;
+	grid-auto-rows: 44px;
+	background: var(--canon-card);
 }
 
 .showcase-editor {
-  display: flex;
-  block-size: 112px;
-  background: var(--canon-card);
+	display: flex;
+	block-size: 112px;
+	background: var(--canon-card);
 }
 
 .showcase-sidebar-box {
-  display: flex;
-  block-size: 400px;
-  background: var(--canon-card);
+	display: flex;
+	block-size: 400px;
+	background: var(--canon-card);
 }
 
 .showcase-sidebar-rows {
-  display: flex;
-  flex-direction: column;
-  gap: var(--canon-frame);
-  background: var(--canon-border);
+	display: flex;
+	flex-direction: column;
+	gap: var(--canon-frame);
+	background: var(--canon-border);
 }
 
 .showcase-box {
-  block-size: 220px;
+	block-size: 220px;
 }
 
 .showcase-box--split {
-  block-size: 320px;
+	block-size: 320px;
 }
 
 /* from demo-app/styles.css and gallery/display.css, which also set page-wide rules and root-relative font URLs */
 .gallery-bar {
-  inline-size: 100%;
-  max-inline-size: 120px;
-  block-size: 6px;
+	inline-size: 100%;
+	max-inline-size: 120px;
+	block-size: 6px;
 }
 
 .gallery-art {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  block-size: 100%;
-  background: linear-gradient(
-    to right,
-    var(--canon-primary),
-    var(--canon-destructive)
-  );
-  color: var(--canon-primary-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-title2);
-  font-weight: var(--canon-weight-bold);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	block-size: 100%;
+	background: linear-gradient(
+		to right,
+		var(--canon-primary),
+		var(--canon-destructive)
+	);
+	color: var(--canon-primary-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-title2);
+	font-weight: var(--canon-weight-bold);
 }
 
 .gallery-loupe {
-  position: absolute;
+	position: absolute;
 }
 
 .gallery-fit {
-  display: flex;
-  flex-direction: column;
-  inline-size: 100%;
-  margin: 0;
-  padding: 16px;
-  border: 0;
-  background: none;
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-title3);
-  font-weight: var(--canon-weight-semibold);
-  text-align: start;
-  cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	inline-size: 100%;
+	margin: 0;
+	padding: 16px;
+	border: 0;
+	background: none;
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-title3);
+	font-weight: var(--canon-weight-semibold);
+	text-align: start;
+	cursor: pointer;
 }
 
 .gallery-swatch {
-  aspect-ratio: 16 / 9;
-  background: var(--canon-primary);
+	aspect-ratio: 16 / 9;
+	background: var(--canon-primary);
 }
 
 .gallery-glyph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  block-size: 100%;
-  border: var(--canon-hairline) solid var(--canon-border);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-title3);
-  font-weight: var(--canon-weight-bold);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	block-size: 100%;
+	border: var(--canon-hairline) solid var(--canon-border);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-title3);
+	font-weight: var(--canon-weight-bold);
 }

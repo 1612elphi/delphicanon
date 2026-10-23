@@ -1,58 +1,60 @@
 .canon-switch {
-  position: relative;
-  flex: none;
-  box-sizing: border-box;
-  inline-size: var(--canon-switch-width);
-  block-size: var(--canon-switch-height);
-  margin: 0;
-  border: var(--canon-hairline) solid var(--canon-border);
-  background: var(--canon-muted);
-  cursor: pointer;
-  transition: background-color 200ms ease;
-  appearance: none;
-  -webkit-tap-highlight-color: transparent;
+	position: relative;
+	flex: none;
+	box-sizing: border-box;
+	inline-size: var(--canon-switch-width);
+	block-size: var(--canon-switch-height);
+	margin: 0;
+	border: var(--canon-hairline) solid var(--canon-border);
+	background: var(--canon-muted);
+	cursor: pointer;
+	transition: background-color 200ms ease;
+	appearance: none;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .canon-switch::before {
-  position: absolute;
-  inset-block: 2px;
-  inset-inline-start: 2px;
-  aspect-ratio: 1;
-  background: var(--canon-muted-foreground);
-  content: "";
-  transition: translate 200ms ease;
+	position: absolute;
+	inset-block: 2px;
+	inset-inline-start: 2px;
+	aspect-ratio: 1;
+	background: var(--canon-muted-foreground);
+	content: "";
+	transition: translate 200ms ease;
 }
 
 .canon-switch:checked {
-  border-color: var(--canon-primary);
-  background: var(--canon-primary);
+	border-color: var(--canon-primary);
+	background: var(--canon-primary);
 }
 
 .canon-switch:checked::before {
-  background: var(--canon-primary-foreground);
+	background: var(--canon-primary-foreground);
 }
 
 .canon-switch:checked::before {
-  translate: calc(var(--canon-switch-width) - var(--canon-switch-height)) 0;
+	translate: calc(var(--canon-switch-width) - var(--canon-switch-height))
+		0;
 }
 
 .canon-switch:checked:dir(rtl)::before {
-  translate: calc(var(--canon-switch-height) - var(--canon-switch-width)) 0;
+	translate: calc(var(--canon-switch-height) - var(--canon-switch-width))
+		0;
 }
 
 .canon-switch:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: 2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: 2px;
 }
 
 .canon-switch:disabled {
-  opacity: 0.4;
-  cursor: default;
+	opacity: 0.4;
+	cursor: default;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .canon-switch,
-  .canon-switch::before {
-    transition: none;
-  }
+	.canon-switch,
+	.canon-switch::before {
+		transition: none;
+	}
 }

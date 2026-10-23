@@ -7,188 +7,320 @@ import CanonSplit from '#src/components/canon-split.gts';
 import { css } from '../helpers/css.ts';
 
 class Shape {
-  @tracked aspect = 1;
+	@tracked aspect = 1;
 }
 
 const layout = () =>
-  getComputedStyle(document.querySelector('.canon-split-body')!)
-    .getPropertyValue('--canon-split-layout')
-    .trim();
+	getComputedStyle(document.querySelector('.canon-split-body')!)
+		.getPropertyValue('--canon-split-layout')
+		.trim();
 const box = (selector: string) =>
-  document.querySelector(selector)!.getBoundingClientRect();
+	document.querySelector(selector)!.getBoundingClientRect();
 
 module('Component | canon-split', function (hooks) {
-  setupRenderingTest(hooks);
+	setupRenderingTest(hooks);
 
-  test('wide: a 340 px sidebar beside the main pane, banner across both', async function (assert) {
-    await render(
-      <template>
-        <div style={{css "width: 1000px; height: 600px"}}>
-          <CanonSplit>
-            <:banner><CanonCanvas @height={{100}} /></:banner>
-            <:sidebar><div class="side">Side</div></:sidebar>
-            <:main><div class="main">Main</div></:main>
-            <:footer><div class="strip">Strip</div></:footer>
-          </CanonSplit>
-        </div>
-      </template>,
-    );
-    assert.strictEqual(layout(), 'wide');
-    const sidebar = document.querySelector<HTMLElement>(
-      '.canon-split-sidebar',
-    )!;
-    const main = document.querySelector<HTMLElement>('.canon-split-main')!;
-    assert.strictEqual(sidebar.offsetWidth, 340);
-    assert.strictEqual(main.offsetLeft, 341);
-    assert.strictEqual(
-      document.querySelector<HTMLElement>('.canon-split-banner')!.offsetWidth,
-      1000,
-    );
-    assert.dom('.canon-split-main .canon-split-footer').hasText('Strip');
-  });
+	test('wide: a 340 px sidebar beside the main pane, banner across both', async function (assert) {
+		await render(
+			<template>
+				<div
+					style={{css
+						"width: 1000px; height: 600px"
+					}}
+				>
+					<CanonSplit>
+						<:banner><CanonCanvas
+								@height={{100}}
+							/></:banner>
+						<:sidebar><div
+								class="side"
+							>Side</div></:sidebar>
+						<:main><div
+								class="main"
+							>Main</div></:main>
+						<:footer><div
+								class="strip"
+							>Strip</div></:footer>
+					</CanonSplit>
+				</div>
+			</template>,
+		);
+		assert.strictEqual(layout(), 'wide');
+		const sidebar = document.querySelector<HTMLElement>(
+			'.canon-split-sidebar',
+		)!;
+		const main =
+			document.querySelector<HTMLElement>(
+				'.canon-split-main',
+			)!;
+		assert.strictEqual(sidebar.offsetWidth, 340);
+		assert.strictEqual(main.offsetLeft, 341);
+		assert.strictEqual(
+			document.querySelector<HTMLElement>(
+				'.canon-split-banner',
+			)!.offsetWidth,
+			1000,
+		);
+		assert.dom('.canon-split-main .canon-split-footer').hasText(
+			'Strip',
+		);
+	});
 
-  test('narrow or portrait: one column, sidebar first', async function (assert) {
-    await render(
-      <template>
-        <div style={{css "width: 500px; height: 800px"}}>
-          <CanonSplit>
-            <:sidebar><div class="side">Side</div></:sidebar>
-            <:main><div class="main">Main</div></:main>
-          </CanonSplit>
-        </div>
-      </template>,
-    );
-    assert.strictEqual(layout(), 'stacked');
-    assert.true(box('.main').top > box('.side').top);
-    assert.strictEqual(box('.main').left, box('.side').left);
-  });
+	test('narrow or portrait: one column, sidebar first', async function (assert) {
+		await render(
+			<template>
+				<div
+					style={{css
+						"width: 500px; height: 800px"
+					}}
+				>
+					<CanonSplit>
+						<:sidebar><div
+								class="side"
+							>Side</div></:sidebar>
+						<:main><div
+								class="main"
+							>Main</div></:main>
+					</CanonSplit>
+				</div>
+			</template>,
+		);
+		assert.strictEqual(layout(), 'stacked');
+		assert.true(box('.main').top > box('.side').top);
+		assert.strictEqual(box('.main').left, box('.side').left);
+	});
 
-  test('oneColumn stacks at every width', async function (assert) {
-    await render(
-      <template>
-        <div style={{css "width: 1000px; height: 600px"}}>
-          <CanonSplit @oneColumn={{true}}>
-            <:sidebar><div class="side">Side</div></:sidebar>
-            <:main><div class="main">Main</div></:main>
-          </CanonSplit>
-        </div>
-      </template>,
-    );
-    assert.strictEqual(layout(), 'stacked');
-    assert.true(box('.main').top > box('.side').top);
-  });
+	test('oneColumn stacks at every width', async function (assert) {
+		await render(
+			<template>
+				<div
+					style={{css
+						"width: 1000px; height: 600px"
+					}}
+				>
+					<CanonSplit @oneColumn={{true}}>
+						<:sidebar><div
+								class="side"
+							>Side</div></:sidebar>
+						<:main><div
+								class="main"
+							>Main</div></:main>
+					</CanonSplit>
+				</div>
+			</template>,
+		);
+		assert.strictEqual(layout(), 'stacked');
+		assert.true(box('.main').top > box('.side').top);
+	});
 
-  test('mainLeadsStacked and halves', async function (assert) {
-    await render(
-      <template>
-        <div class="stacked" style={{css "width: 500px; height: 800px"}}>
-          <CanonSplit @mainLeadsStacked={{true}}>
-            <:sidebar><div class="side">Side</div></:sidebar>
-            <:main><div class="main">Main</div></:main>
-          </CanonSplit>
-        </div>
-        <div class="halves" style={{css "width: 1001px; height: 600px"}}>
-          <CanonSplit @halves={{true}}>
-            <:sidebar><CanonCanvas @aspect={{1}} /></:sidebar>
-            <:main><div>Main</div></:main>
-          </CanonSplit>
-        </div>
-      </template>,
-    );
-    assert.true(box('.stacked .side').top > box('.stacked .main').top);
-    const picture = document.querySelector<HTMLElement>(
-      '.halves .canon-split-sidebar .canon-canvas',
-    )!;
-    assert.strictEqual(picture.offsetWidth, 500);
-    assert.strictEqual(picture.offsetHeight, 600, 'the picture fills its pane');
-  });
+	test('mainLeadsStacked and halves', async function (assert) {
+		await render(
+			<template>
+				<div
+					class="stacked"
+					style={{css
+						"width: 500px; height: 800px"
+					}}
+				>
+					<CanonSplit @mainLeadsStacked={{true}}>
+						<:sidebar><div
+								class="side"
+							>Side</div></:sidebar>
+						<:main><div
+								class="main"
+							>Main</div></:main>
+					</CanonSplit>
+				</div>
+				<div
+					class="halves"
+					style={{css
+						"width: 1001px; height: 600px"
+					}}
+				>
+					<CanonSplit @halves={{true}}>
+						<:sidebar><CanonCanvas
+								@aspect={{1}}
+							/></:sidebar>
+						<:main><div>Main</div></:main>
+					</CanonSplit>
+				</div>
+			</template>,
+		);
+		assert.true(
+			box('.stacked .side').top > box('.stacked .main').top,
+		);
+		const picture = document.querySelector<HTMLElement>(
+			'.halves .canon-split-sidebar .canon-canvas',
+		)!;
+		assert.strictEqual(picture.offsetWidth, 500);
+		assert.strictEqual(
+			picture.offsetHeight,
+			600,
+			'the picture fills its pane',
+		);
+	});
 
-  test('a collapsing picture refits to a new aspect', async function (assert) {
-    const state = new Shape();
-    await render(
-      <template>
-        <div style={{css "width: 500px; height: 800px"}}>
-          <CanonSplit @halves={{true}} @collapsesTo={{100}}>
-            <:sidebar><CanonCanvas @aspect={{state.aspect}} /></:sidebar>
-            <:main><div>Main</div></:main>
-          </CanonSplit>
-        </div>
-      </template>,
-    );
-    const split = document.querySelector<HTMLElement>('.canon-split')!;
-    const full = () => split.style.getPropertyValue('--canon-split-full');
-    assert.dom(split).hasAttribute('data-collapsing');
-    assert.strictEqual(full(), '480px');
-    state.aspect = 2;
-    await settled();
-    assert.strictEqual(full(), '254px', 'half the width and the frame');
-  });
+	test('a collapsing picture refits to a new aspect', async function (assert) {
+		const state = new Shape();
+		await render(
+			<template>
+				<div
+					style={{css
+						"width: 500px; height: 800px"
+					}}
+				>
+					<CanonSplit
+						@halves={{true}}
+						@collapsesTo={{100}}
+					>
+						<:sidebar><CanonCanvas
+								@aspect={{state.aspect}}
+							/></:sidebar>
+						<:main><div>Main</div></:main>
+					</CanonSplit>
+				</div>
+			</template>,
+		);
+		const split =
+			document.querySelector<HTMLElement>('.canon-split')!;
+		const full = () =>
+			split.style.getPropertyValue('--canon-split-full');
+		assert.dom(split).hasAttribute('data-collapsing');
+		assert.strictEqual(full(), '480px');
+		state.aspect = 2;
+		await settled();
+		assert.strictEqual(
+			full(),
+			'254px',
+			'half the width and the frame',
+		);
+	});
 
-  test('the end piece follows the main sections', async function (assert) {
-    await render(
-      <template>
-        <div class="wide" style={{css "width: 1000px; height: 600px"}}>
-          <CanonSplit>
-            <:sidebar><div class="side">Side</div></:sidebar>
-            <:main><div class="main">Main</div></:main>
-            <:end><div class="piece">End</div></:end>
-          </CanonSplit>
-        </div>
-        <div class="stacked" style={{css "width: 500px; height: 800px"}}>
-          <CanonSplit>
-            <:sidebar><div class="side">Side</div></:sidebar>
-            <:main><div class="main">Main</div></:main>
-            <:end><div class="piece">End</div></:end>
-          </CanonSplit>
-        </div>
-        <div class="leads" style={{css "width: 500px; height: 800px"}}>
-          <CanonSplit @mainLeadsStacked={{true}}>
-            <:sidebar><div class="side">Side</div></:sidebar>
-            <:main><div class="main">Main</div></:main>
-            <:end><div class="piece">End</div></:end>
-          </CanonSplit>
-        </div>
-      </template>,
-    );
-    assert.dom('.wide .canon-split-main > .canon-split-end .piece').exists();
-    assert.true(box('.wide .piece').top > box('.wide .main').top);
-    assert.true(box('.wide .piece').left > box('.wide .side').right);
-    assert.true(box('.stacked .piece').top > box('.stacked .main').top);
-    assert.true(box('.leads .main').top < box('.leads .side').top);
-    assert.true(
-      box('.leads .piece').top > box('.leads .side').top,
-      'after the sidebar when main leads',
-    );
-  });
+	test('the end piece follows the main sections', async function (assert) {
+		await render(
+			<template>
+				<div
+					class="wide"
+					style={{css
+						"width: 1000px; height: 600px"
+					}}
+				>
+					<CanonSplit>
+						<:sidebar><div
+								class="side"
+							>Side</div></:sidebar>
+						<:main><div
+								class="main"
+							>Main</div></:main>
+						<:end><div
+								class="piece"
+							>End</div></:end>
+					</CanonSplit>
+				</div>
+				<div
+					class="stacked"
+					style={{css
+						"width: 500px; height: 800px"
+					}}
+				>
+					<CanonSplit>
+						<:sidebar><div
+								class="side"
+							>Side</div></:sidebar>
+						<:main><div
+								class="main"
+							>Main</div></:main>
+						<:end><div
+								class="piece"
+							>End</div></:end>
+					</CanonSplit>
+				</div>
+				<div
+					class="leads"
+					style={{css
+						"width: 500px; height: 800px"
+					}}
+				>
+					<CanonSplit @mainLeadsStacked={{true}}>
+						<:sidebar><div
+								class="side"
+							>Side</div></:sidebar>
+						<:main><div
+								class="main"
+							>Main</div></:main>
+						<:end><div
+								class="piece"
+							>End</div></:end>
+					</CanonSplit>
+				</div>
+			</template>,
+		);
+		assert.dom(
+			'.wide .canon-split-main > .canon-split-end .piece',
+		).exists();
+		assert.true(box('.wide .piece').top > box('.wide .main').top);
+		assert.true(
+			box('.wide .piece').left > box('.wide .side').right,
+		);
+		assert.true(
+			box('.stacked .piece').top > box('.stacked .main').top,
+		);
+		assert.true(box('.leads .main').top < box('.leads .side').top);
+		assert.true(
+			box('.leads .piece').top > box('.leads .side').top,
+			'after the sidebar when main leads',
+		);
+	});
 
-  test('an empty end piece takes no room', async function (assert) {
-    await render(
-      <template>
-        <div style={{css "width: 500px; height: 800px"}}>
-          <CanonSplit>
-            <:main><div class="main">Main</div></:main>
-          </CanonSplit>
-        </div>
-      </template>,
-    );
-    const body = document.querySelector<HTMLElement>('.canon-split-body')!;
-    const end = document.querySelector<HTMLElement>('.canon-split-end')!;
-    assert.strictEqual(end.getBoundingClientRect().height, 0);
-    assert.strictEqual(getComputedStyle(end).display, 'none', 'no gap either');
-    assert.true(body.contains(end));
-  });
+	test('an empty end piece takes no room', async function (assert) {
+		await render(
+			<template>
+				<div
+					style={{css
+						"width: 500px; height: 800px"
+					}}
+				>
+					<CanonSplit>
+						<:main><div
+								class="main"
+							>Main</div></:main>
+					</CanonSplit>
+				</div>
+			</template>,
+		);
+		const body =
+			document.querySelector<HTMLElement>(
+				'.canon-split-body',
+			)!;
+		const end =
+			document.querySelector<HTMLElement>(
+				'.canon-split-end',
+			)!;
+		assert.strictEqual(end.getBoundingClientRect().height, 0);
+		assert.strictEqual(
+			getComputedStyle(end).display,
+			'none',
+			'no gap either',
+		);
+		assert.true(body.contains(end));
+	});
 
-  test('footerHidden takes the footer away', async function (assert) {
-    await render(
-      <template>
-        <div style={{css "width: 1000px; height: 600px"}}>
-          <CanonSplit @footerHidden={{true}}>
-            <:main><div>Main</div></:main>
-            <:footer><div>Strip</div></:footer>
-          </CanonSplit>
-        </div>
-      </template>,
-    );
-    assert.dom('.canon-split-footer').doesNotExist();
-  });
+	test('footerHidden takes the footer away', async function (assert) {
+		await render(
+			<template>
+				<div
+					style={{css
+						"width: 1000px; height: 600px"
+					}}
+				>
+					<CanonSplit @footerHidden={{true}}>
+						<:main><div>Main</div></:main>
+						<:footer><div
+							>Strip</div></:footer>
+					</CanonSplit>
+				</div>
+			</template>,
+		);
+		assert.dom('.canon-split-footer').doesNotExist();
+	});
 });

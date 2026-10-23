@@ -1,42 +1,42 @@
 .canon-page {
-  display: flex;
-  flex-direction: column;
-  gap: var(--canon-panel-padding);
-  box-sizing: border-box;
-  block-size: 100%;
-  padding-block: var(--canon-panel-padding);
-  overflow-y: auto;
-  background: var(--canon-background);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
+	display: flex;
+	flex-direction: column;
+	gap: var(--canon-panel-padding);
+	box-sizing: border-box;
+	block-size: 100%;
+	padding-block: var(--canon-panel-padding);
+	overflow-y: auto;
+	background: var(--canon-background);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
 }
 
 /* a dialog child sits in the top layer; :where keeps the old specificity */
 .canon-page > :where(:not(dialog)) {
-  flex: none;
-  box-sizing: border-box;
-  inline-size: min(
-    100% - 2 * var(--canon-panel-padding),
-    var(--canon-page-max-width, 100000px)
-  );
-  margin-inline: auto;
+	flex: none;
+	box-sizing: border-box;
+	inline-size: min(
+		100% - 2 * var(--canon-panel-padding),
+		var(--canon-page-max-width, 100000px)
+	);
+	margin-inline: auto;
 }
 
 .canon-page > .canon-canvas {
-  inline-size: 100%;
+	inline-size: 100%;
 }
 
 /* a leading band reaches the top edge and drops its top rule */
 .canon-page > .canon-canvas:first-child {
-  margin-block-start: calc(-1 * var(--canon-panel-padding));
-  padding-block-start: 0;
+	margin-block-start: calc(-1 * var(--canon-panel-padding));
+	padding-block-start: 0;
 }
 
 .canon-page > .canon-canvas.canon-canvas--unless-wide {
-  inline-size: min(
-    100% - 2 * var(--canon-panel-padding),
-    var(--canon-page-max-width, 100000px)
-  );
-  margin-block-start: 0;
-  padding-block-start: var(--canon-frame);
+	inline-size: min(
+		100% - 2 * var(--canon-panel-padding),
+		var(--canon-page-max-width, 100000px)
+	);
+	margin-block-start: 0;
+	padding-block-start: var(--canon-frame);
 }

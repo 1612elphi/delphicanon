@@ -1,126 +1,126 @@
 .canon-math-key {
-  --canon-math-fill: var(--canon-card);
-  --canon-math-ink: var(--canon-foreground);
-  --canon-math-accent: var(--canon-foreground);
+	--canon-math-fill: var(--canon-card);
+	--canon-math-ink: var(--canon-foreground);
+	--canon-math-accent: var(--canon-foreground);
 
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  min-inline-size: 0;
-  min-block-size: var(--canon-math-key-height, 54px);
-  margin: 0;
-  padding: 6px;
-  overflow: hidden;
-  border: 0;
-  border-radius: 0;
-  background: var(--canon-math-fill);
-  color: var(--canon-math-ink);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-title3);
-  font-weight: var(--canon-weight-semibold);
-  cursor: pointer;
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  appearance: none;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	min-inline-size: 0;
+	min-block-size: var(--canon-math-key-height, 54px);
+	margin: 0;
+	padding: 6px;
+	overflow: hidden;
+	border: 0;
+	border-radius: 0;
+	background: var(--canon-math-fill);
+	color: var(--canon-math-ink);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-title3);
+	font-weight: var(--canon-weight-semibold);
+	cursor: pointer;
+	touch-action: manipulation;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 }
 
 .canon-math-key--operation {
-  --canon-math-fill: var(--canon-math-umber);
-  --canon-math-ink: var(--canon-math-cream);
+	--canon-math-fill: var(--canon-math-umber);
+	--canon-math-ink: var(--canon-math-cream);
 }
 
 .canon-math-key--structure {
-  --canon-math-ink: var(--canon-math-green);
-  --canon-math-accent: var(--canon-math-green);
+	--canon-math-ink: var(--canon-math-green);
+	--canon-math-accent: var(--canon-math-green);
 }
 
 .canon-math-key--calculus {
-  --canon-math-ink: var(--canon-math-blue);
-  --canon-math-accent: var(--canon-math-blue);
+	--canon-math-ink: var(--canon-math-blue);
+	--canon-math-accent: var(--canon-math-blue);
 }
 
 .canon-math-key--letter {
-  --canon-math-ink: var(--canon-math-clay);
-  --canon-math-accent: var(--canon-math-clay);
+	--canon-math-ink: var(--canon-math-clay);
+	--canon-math-accent: var(--canon-math-clay);
 }
 
 .canon-math-key--structure,
 .canon-math-key--calculus,
 .canon-math-key--letter {
-  --canon-math-fill: color-mix(
-    in srgb,
-    var(--canon-card),
-    var(--canon-math-ink) var(--canon-math-tint-share)
-  );
+	--canon-math-fill: color-mix(
+		in srgb,
+		var(--canon-card),
+		var(--canon-math-ink) var(--canon-math-tint-share)
+	);
 }
 
 .canon-math-key--clear {
-  --canon-math-ink: var(--canon-destructive);
+	--canon-math-ink: var(--canon-destructive);
 }
 
 .canon-math-key--done {
-  --canon-math-fill: var(--canon-math-yellow);
-  --canon-math-ink: var(--canon-math-umber);
-  --canon-math-accent: var(--canon-math-umber);
+	--canon-math-fill: var(--canon-math-yellow);
+	--canon-math-ink: var(--canon-math-umber);
+	--canon-math-accent: var(--canon-math-umber);
 }
 
 @media (hover: hover) {
-  .canon-math-key:hover {
-    background: color-mix(
-      in srgb,
-      var(--canon-math-fill),
-      var(--canon-math-ink) 14%
-    );
-  }
+	.canon-math-key:hover {
+		background: color-mix(
+			in srgb,
+			var(--canon-math-fill),
+			var(--canon-math-ink) 14%
+		);
+	}
 }
 
 .canon-math-key:active {
-  background: color-mix(
-    in srgb,
-    var(--canon-math-fill),
-    var(--canon-math-ink) 14%
-  );
+	background: color-mix(
+		in srgb,
+		var(--canon-math-fill),
+		var(--canon-math-ink) 14%
+	);
 }
 
 .canon-math-key:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -2px;
 }
 
 .canon-math-key-face {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-inline-size: 0;
-  block-size: 100%;
-  translate: var(--canon-math-drift, 0) 0;
-  opacity: var(--canon-math-fade, 1);
-  pointer-events: none;
+	display: flex;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	min-inline-size: 0;
+	block-size: 100%;
+	translate: var(--canon-math-drift, 0) 0;
+	opacity: var(--canon-math-fade, 1);
+	pointer-events: none;
 }
 
 .canon-math-key-face > .canon-math-view {
-  max-inline-size: 100%;
+	max-inline-size: 100%;
 }
 
 .canon-math-key-face > svg:not(.canon-math-view) {
-  flex: none;
-  inline-size: 22px;
-  block-size: 22px;
+	flex: none;
+	inline-size: 22px;
+	block-size: 22px;
 }
 
 .canon-math-key-face > .canon-math-key-chevron {
-  display: flex;
-  inline-size: 11px;
-  block-size: 11px;
-  opacity: 0.6;
+	display: flex;
+	inline-size: 11px;
+	block-size: 11px;
+	opacity: 0.6;
 }
 
 .canon-math-key-face > .canon-math-key-chevron svg {
-  inline-size: 100%;
-  block-size: 100%;
+	inline-size: 100%;
+	block-size: 100%;
 }

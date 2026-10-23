@@ -1,11 +1,11 @@
 .canon-rule {
-  flex: none;
-  align-self: stretch;
-  block-size: var(--canon-hairline);
-  background: var(--canon-border);
+	flex: none;
+	align-self: stretch;
+	block-size: var(--canon-hairline);
+	background: var(--canon-border);
 }
 
 .canon-rule--vertical {
-  block-size: auto;
-  inline-size: var(--canon-hairline);
+	block-size: auto;
+	inline-size: var(--canon-hairline);
 }

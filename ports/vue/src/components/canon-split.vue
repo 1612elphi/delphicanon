@@ -3,104 +3,113 @@
 export const collapseLimit = 0.6;
 
 function naturalHeight(canvas: HTMLElement, width: number): number {
-  const fixed = Number(canvas.dataset['canonHeight']);
-  if (fixed) return fixed;
-  const aspect = Number(canvas.dataset['canonAspect']) || 1;
-  const frame = parseFloat(
-    getComputedStyle(canvas).getPropertyValue('--canon-frame'),
-  );
-  return width / aspect + (frame || 0) * 2;
+	const fixed = Number(canvas.dataset['canonHeight']);
+	if (fixed) return fixed;
+	const aspect = Number(canvas.dataset['canonAspect']) || 1;
+	const frame = parseFloat(
+		getComputedStyle(canvas).getPropertyValue('--canon-frame'),
+	);
+	return width / aspect + (frame || 0) * 2;
 }
 </script>
 
 <script setup lang="ts">
 import {
-  computed,
-  onBeforeUnmount,
-  onMounted,
-  useTemplateRef,
-  watch,
+	computed,
+	onBeforeUnmount,
+	onMounted,
+	useTemplateRef,
+	watch,
 } from 'vue';
 import '@canon/styles/tokens.css';
 import '@canon/components/canon-page.css';
 import '@canon/components/canon-split.css';
 
 const props = defineProps<{
-  /** Never splits: the sections stack at every width, sidebar first. */
-  oneColumn?: boolean;
-  /** Sidebar width in px beside the main pane, at most 40 % of the split. Default 340. */
-  sidebarWidth?: number;
-  /** In one column the banner stays at the top and the page scrolls under it. */
-  bannerSticks?: boolean;
-  /** In one column the main sections come before the sidebar's. */
-  mainLeadsStacked?: boolean;
-  /** Side by side the panes are equal; a sidebar of one canvas fills its pane. */
-  halves?: boolean;
-  /** In one column the picture shrinks as the page scrolls, down to this band height in px. */
-  collapsesTo?: number;
-  /** Beside or above a crease, a halves picture runs into the crease band up to the rule. */
-  pictureMeetsCrease?: boolean;
-  footerHidden?: boolean;
+	/** Never splits: the sections stack at every width, sidebar first. */
+	oneColumn?: boolean;
+	/** Sidebar width in px beside the main pane, at most 40 % of the split. Default 340. */
+	sidebarWidth?: number;
+	/** In one column the banner stays at the top and the page scrolls under it. */
+	bannerSticks?: boolean;
+	/** In one column the main sections come before the sidebar's. */
+	mainLeadsStacked?: boolean;
+	/** Side by side the panes are equal; a sidebar of one canvas fills its pane. */
+	halves?: boolean;
+	/** In one column the picture shrinks as the page scrolls, down to this band height in px. */
+	collapsesTo?: number;
+	/** Beside or above a crease, a halves picture runs into the crease band up to the rule. */
+	pictureMeetsCrease?: boolean;
+	footerHidden?: boolean;
 }>();
 
 defineSlots<{
-  sidebar?: () => unknown;
-  main?: () => unknown;
-  /** A CanonCanvas across every column, above the panes. */
-  banner?: () => unknown;
-  /** A framed strip floating over the bottom of the main pane. */
-  footer?: () => unknown;
+	sidebar?: () => unknown;
+	main?: () => unknown;
+	/** A CanonCanvas across every column, above the panes. */
+	banner?: () => unknown;
+	/** A framed strip floating over the bottom of the main pane. */
+	footer?: () => unknown;
 }>();
 
 const style = computed(() =>
-  props.sidebarWidth === undefined
-    ? undefined
-    : { '--canon-split-sidebar': `${props.sidebarWidth}px` },
+	props.sidebarWidth === undefined
+		? undefined
+		: { '--canon-split-sidebar': `${props.sidebarWidth}px` },
 );
 
 const split = useTemplateRef<HTMLElement>('split');
 let stop: (() => void) | undefined;
 
 function collapse() {
-  stop?.();
-  stop = undefined;
-  const element = split.value;
-  const collapsesTo = props.collapsesTo;
-  if (!element || collapsesTo === undefined) return;
-  const body = element.querySelector<HTMLElement>(':scope > .canon-split-body');
-  if (!body) return;
-  const update = () => {
-    const stacked =
-      getComputedStyle(body).getPropertyValue('--canon-split-layout').trim() !==
-      'wide';
-    const picture = element.querySelector<HTMLElement>(
-      ':scope > .canon-split-body > .canon-split-banner .canon-canvas, .canon-split--halves > .canon-split-body > .canon-split-sidebar > .canon-canvas:only-child',
-    );
-    element.toggleAttribute('data-collapsing', stacked && !!picture);
-    if (!stacked || !picture) return;
-    const full = Math.min(
-      naturalHeight(picture, element.clientWidth),
-      element.clientHeight * collapseLimit,
-    );
-    // stretches when pulled down
-    const band = Math.max(Math.min(collapsesTo, full), full - body.scrollTop);
-    element.style.setProperty('--canon-split-full', `${full}px`);
-    element.style.setProperty('--canon-split-band', `${band}px`);
-  };
-  update();
-  body.addEventListener('scroll', update, { passive: true });
-  const size = new ResizeObserver(update);
-  size.observe(element);
-  const shape = new MutationObserver(update);
-  shape.observe(body, {
-    subtree: true,
-    attributeFilter: ['data-canon-aspect', 'data-canon-height'],
-  });
-  stop = () => {
-    body.removeEventListener('scroll', update);
-    size.disconnect();
-    shape.disconnect();
-  };
+	stop?.();
+	stop = undefined;
+	const element = split.value;
+	const collapsesTo = props.collapsesTo;
+	if (!element || collapsesTo === undefined) return;
+	const body = element.querySelector<HTMLElement>(
+		':scope > .canon-split-body',
+	);
+	if (!body) return;
+	const update = () => {
+		const stacked =
+			getComputedStyle(body)
+				.getPropertyValue('--canon-split-layout')
+				.trim() !== 'wide';
+		const picture = element.querySelector<HTMLElement>(
+			':scope > .canon-split-body > .canon-split-banner .canon-canvas, .canon-split--halves > .canon-split-body > .canon-split-sidebar > .canon-canvas:only-child',
+		);
+		element.toggleAttribute(
+			'data-collapsing',
+			stacked && !!picture,
+		);
+		if (!stacked || !picture) return;
+		const full = Math.min(
+			naturalHeight(picture, element.clientWidth),
+			element.clientHeight * collapseLimit,
+		);
+		// stretches when pulled down
+		const band = Math.max(
+			Math.min(collapsesTo, full),
+			full - body.scrollTop,
+		);
+		element.style.setProperty('--canon-split-full', `${full}px`);
+		element.style.setProperty('--canon-split-band', `${band}px`);
+	};
+	update();
+	body.addEventListener('scroll', update, { passive: true });
+	const size = new ResizeObserver(update);
+	size.observe(element);
+	const shape = new MutationObserver(update);
+	shape.observe(body, {
+		subtree: true,
+		attributeFilter: ['data-canon-aspect', 'data-canon-height'],
+	});
+	stop = () => {
+		body.removeEventListener('scroll', update);
+		size.disconnect();
+		shape.disconnect();
+	};
 }
 
 onMounted(collapse);
@@ -116,35 +125,40 @@ onBeforeUnmount(() => stop?.());
   fills its parent's height.
 -->
 <template>
-  <div
-    ref="split"
-    class="canon-split"
-    :class="{
-      'canon-split--halves': halves,
-      'canon-split--sticks': bannerSticks,
-      'canon-split--main-leads': mainLeadsStacked,
-      'canon-split--meets-crease': pictureMeetsCrease,
-      'canon-split--one-column': oneColumn,
-    }"
-    :style="style"
-  >
-    <div class="canon-split-body">
-      <div v-if="$slots.banner" class="canon-split-banner">
-        <slot name="banner" />
-      </div>
-      <div
-        v-if="$slots.sidebar"
-        class="canon-split-pane canon-split-sidebar canon-page"
-      >
-        <slot name="sidebar" />
-      </div>
-      <div class="canon-split-rule" />
-      <div class="canon-split-pane canon-split-main canon-page">
-        <slot name="main" />
-        <div v-if="$slots.footer && !footerHidden" class="canon-split-footer">
-          <slot name="footer" />
-        </div>
-      </div>
-    </div>
-  </div>
+	<div
+		ref="split"
+		class="canon-split"
+		:class="{
+			'canon-split--halves': halves,
+			'canon-split--sticks': bannerSticks,
+			'canon-split--main-leads': mainLeadsStacked,
+			'canon-split--meets-crease': pictureMeetsCrease,
+			'canon-split--one-column': oneColumn,
+		}"
+		:style="style"
+	>
+		<div class="canon-split-body">
+			<div v-if="$slots.banner" class="canon-split-banner">
+				<slot name="banner" />
+			</div>
+			<div
+				v-if="$slots.sidebar"
+				class="canon-split-pane canon-split-sidebar canon-page"
+			>
+				<slot name="sidebar" />
+			</div>
+			<div class="canon-split-rule" />
+			<div
+				class="canon-split-pane canon-split-main canon-page"
+			>
+				<slot name="main" />
+				<div
+					v-if="$slots.footer && !footerHidden"
+					class="canon-split-footer"
+				>
+					<slot name="footer" />
+				</div>
+			</div>
+		</div>
+	</div>
 </template>

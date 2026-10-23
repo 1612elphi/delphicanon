@@ -9,7 +9,7 @@ import '../../../../../demo-app/components/gallery/display.css';
 </script>
 
 <template>
-  <CanonPreviewPanel caption="Preview" detail="1600 x 900">
-    <div class="gallery-swatch"></div>
-  </CanonPreviewPanel>
+	<CanonPreviewPanel caption="Preview" detail="1600 x 900">
+		<div class="gallery-swatch"></div>
+	</CanonPreviewPanel>
 </template>

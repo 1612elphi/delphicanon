@@ -6,10 +6,10 @@ defineProps<{ vertical?: boolean }>();
 </script>
 
 <template>
-  <div
-    class="canon-rule"
-    :class="{ 'canon-rule--vertical': vertical }"
-    role="separator"
-    :aria-orientation="vertical ? 'vertical' : 'horizontal'"
-  />
+	<div
+		class="canon-rule"
+		:class="{ 'canon-rule--vertical': vertical }"
+		role="separator"
+		:aria-orientation="vertical ? 'vertical' : 'horizontal'"
+	/>
 </template>

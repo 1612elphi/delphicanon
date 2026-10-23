@@ -1,36 +1,36 @@
 {
-  "name": "@delphicanon/svelte",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "start": "vite",
-    "build": "vite build",
-    "test": "vitest run",
-    "lint": "eslint . && prettier --check . && svelte-check --fail-on-warnings",
-    "format": "prettier --write ."
-  },
-  "dependencies": {
-    "svelte": "^5.57.1"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9",
-    "@sveltejs/vite-plugin-svelte": "^7.3.1",
-    "@types/node": "^26.6.3",
-    "@vitest/browser": "^5.0.2",
-    "@vitest/browser-playwright": "^5.0.2",
-    "eslint": "^9",
-    "eslint-plugin-svelte": "^3.23.0",
-    "globals": "^17.12.0",
-    "lucide-static": "^1.48.0",
-    "playwright": "^1.63.0",
-    "prettier": "^3.9.9",
-    "prettier-plugin-svelte": "^4.1.1",
-    "svelte-check": "^4.7.6",
-    "typescript": "^6",
-    "typescript-eslint": "^8.70.1",
-    "vite": "^8.3.1",
-    "vitest": "^5.0.2",
-    "vitest-browser-svelte": "^3.1.0"
-  }
+	"name": "@delphicanon/svelte",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"start": "vite",
+		"build": "vite build",
+		"test": "vitest run",
+		"lint": "eslint . && prettier --check . && svelte-check --fail-on-warnings",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"svelte": "^5.57.1"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"@types/node": "^26.6.3",
+		"@vitest/browser": "^5.0.2",
+		"@vitest/browser-playwright": "^5.0.2",
+		"eslint": "^9",
+		"eslint-plugin-svelte": "^3.23.0",
+		"globals": "^17.12.0",
+		"lucide-static": "^1.48.0",
+		"playwright": "^1.63.0",
+		"prettier": "^3.9.9",
+		"prettier-plugin-svelte": "^4.1.1",
+		"svelte-check": "^4.7.6",
+		"typescript": "^6",
+		"typescript-eslint": "^8.70.1",
+		"vite": "^8.3.1",
+		"vitest": "^5.0.2",
+		"vitest-browser-svelte": "^3.1.0"
+	}
 }

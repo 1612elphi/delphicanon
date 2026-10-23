@@ -8,19 +8,19 @@ import '@canon/styles/tokens.css';
 import '@canon/components/canon-loader.css';
 
 const props = defineProps<{
-  /** Default snake. thinking swings back and forth. */
-  mode?: CanonLoaderMode;
-  /** Runs anticlockwise; thinking ignores it. */
-  reverse?: boolean;
-  /** Cell side in px; default 8. */
-  cell?: number;
-  /** Gap between cells in px; default 2. */
-  gap?: number;
+	/** Default snake. thinking swings back and forth. */
+	mode?: CanonLoaderMode;
+	/** Runs anticlockwise; thinking ignores it. */
+	reverse?: boolean;
+	/** Cell side in px; default 8. */
+	cell?: number;
+	/** Gap between cells in px; default 2. */
+	gap?: number;
 }>();
 
 const style = computed(() => ({
-  '--canon-loader-cell': `${props.cell ?? 8}px`,
-  '--canon-loader-gap': `${props.gap ?? 2}px`,
+	'--canon-loader-cell': `${props.cell ?? 8}px`,
+	'--canon-loader-gap': `${props.gap ?? 2}px`,
 }));
 </script>
 
@@ -29,24 +29,24 @@ const style = computed(() => ({
   runs clockwise round the eight outer cells over a lit centre.
 -->
 <template>
-  <div
-    class="canon-loader"
-    :class="[
-      `canon-loader--${mode ? mode : 'snake'}`,
-      { 'canon-loader--reverse': reverse },
-    ]"
-    role="status"
-    aria-label="Loading"
-    :style="style"
-  >
-    <span style="--i: 0"></span>
-    <span style="--i: 1"></span>
-    <span style="--i: 2"></span>
-    <span style="--i: 7"></span>
-    <i></i>
-    <span style="--i: 3"></span>
-    <span style="--i: 6"></span>
-    <span style="--i: 5"></span>
-    <span style="--i: 4"></span>
-  </div>
+	<div
+		class="canon-loader"
+		:class="[
+			`canon-loader--${mode ? mode : 'snake'}`,
+			{ 'canon-loader--reverse': reverse },
+		]"
+		role="status"
+		aria-label="Loading"
+		:style="style"
+	>
+		<span style="--i: 0"></span>
+		<span style="--i: 1"></span>
+		<span style="--i: 2"></span>
+		<span style="--i: 7"></span>
+		<i></i>
+		<span style="--i: 3"></span>
+		<span style="--i: 6"></span>
+		<span style="--i: 5"></span>
+		<span style="--i: 4"></span>
+	</div>
 </template>

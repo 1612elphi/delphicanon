@@ -1,171 +1,175 @@
 .canon-command {
-  gap: var(--canon-frame);
-  min-block-size: 0;
+	gap: var(--canon-frame);
+	min-block-size: 0;
 }
 
 .canon-command-bar {
-  display: flex;
-  flex: none;
-  align-items: center;
-  gap: 12px;
-  box-sizing: border-box;
-  min-block-size: var(--canon-row-height);
-  padding-inline: var(--canon-panel-padding);
-  background: var(--canon-card);
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: 12px;
+	box-sizing: border-box;
+	min-block-size: var(--canon-row-height);
+	padding-inline: var(--canon-panel-padding);
+	background: var(--canon-card);
 }
 
 .canon-command-bar:has(:focus-visible) {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -2px;
 }
 
 .canon-command-search {
-  display: flex;
-  flex: none;
-  inline-size: 18px;
-  block-size: 18px;
-  color: var(--canon-muted-foreground);
+	display: flex;
+	flex: none;
+	inline-size: 18px;
+	block-size: 18px;
+	color: var(--canon-muted-foreground);
 }
 
 .canon-command-search svg,
 .canon-command-icon svg {
-  inline-size: 100%;
-  block-size: 100%;
+	inline-size: 100%;
+	block-size: 100%;
 }
 
 .canon-command-input {
-  flex: 1 1 auto;
-  min-inline-size: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: none;
-  background: transparent;
-  color: inherit;
-  caret-color: var(--canon-primary);
-  font-family: inherit;
-  font-size: var(--canon-text-title3);
-  appearance: none;
+	flex: 1 1 auto;
+	min-inline-size: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: none;
+	background: transparent;
+	color: inherit;
+	caret-color: var(--canon-primary);
+	font-family: inherit;
+	font-size: var(--canon-text-title3);
+	appearance: none;
 }
 
 .canon-command-input::placeholder {
-  color: var(--canon-muted-foreground);
-  opacity: 1;
+	color: var(--canon-muted-foreground);
+	opacity: 1;
 }
 
 .canon-command-list,
 .canon-command-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--canon-hairline);
+	display: flex;
+	flex-direction: column;
+	gap: var(--canon-hairline);
 }
 
 .canon-command-list {
-  flex: 0 1 auto;
-  max-block-size: var(--canon-command-list-height);
-  min-block-size: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
+	flex: 0 1 auto;
+	max-block-size: var(--canon-command-list-height);
+	min-block-size: 0;
+	overflow: auto;
+	overscroll-behavior: contain;
 }
 
 .canon-command-list[hidden] {
-  display: none;
+	display: none;
 }
 
 .canon-command-item {
-  display: flex;
-  flex: none;
-  align-items: center;
-  gap: 12px;
-  box-sizing: border-box;
-  min-block-size: var(--canon-control-height);
-  padding: 4px var(--canon-panel-padding);
-  background: var(--canon-card);
-  color: var(--canon-foreground);
-  cursor: pointer;
-  user-select: none;
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: 12px;
+	box-sizing: border-box;
+	min-block-size: var(--canon-control-height);
+	padding: 4px var(--canon-panel-padding);
+	background: var(--canon-card);
+	color: var(--canon-foreground);
+	cursor: pointer;
+	user-select: none;
 }
 
 .canon-command-item[data-active] {
-  background: var(--canon-primary);
-  color: var(--canon-primary-foreground);
+	background: var(--canon-primary);
+	color: var(--canon-primary-foreground);
 }
 
 .canon-command-item[aria-disabled="true"] {
-  color: color-mix(in srgb, var(--canon-foreground) 40%, transparent);
-  cursor: default;
+	color: color-mix(in srgb, var(--canon-foreground) 40%, transparent);
+	cursor: default;
 }
 
 .canon-command-icon {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--canon-command-icon);
-  block-size: var(--canon-command-icon);
-  padding: 3px;
-  box-sizing: border-box;
+	display: flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	inline-size: var(--canon-command-icon);
+	block-size: var(--canon-command-icon);
+	padding: 3px;
+	box-sizing: border-box;
 }
 
 .canon-command-text {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: 1px;
-  min-inline-size: 0;
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 1px;
+	min-inline-size: 0;
 }
 
 .canon-command-title,
 .canon-command-detail {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .canon-command-title {
-  font-size: var(--canon-text-subheadline);
-  font-weight: var(--canon-weight-semibold);
-  line-height: 1.3;
+	font-size: var(--canon-text-subheadline);
+	font-weight: var(--canon-weight-semibold);
+	line-height: 1.3;
 }
 
 .canon-command-detail {
-  color: var(--canon-muted-foreground);
-  font-size: var(--canon-text-caption);
-  line-height: 1.3;
+	color: var(--canon-muted-foreground);
+	font-size: var(--canon-text-caption);
+	line-height: 1.3;
 }
 
 .canon-command-item[data-active] .canon-command-detail {
-  color: color-mix(in srgb, var(--canon-primary-foreground) 80%, transparent);
+	color: color-mix(
+		in srgb,
+		var(--canon-primary-foreground) 80%,
+		transparent
+	);
 }
 
 .canon-command-keys {
-  display: flex;
-  flex: none;
-  gap: 3px;
+	display: flex;
+	flex: none;
+	gap: 3px;
 }
 
 .canon-command-key {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  min-inline-size: var(--canon-key-cap);
-  block-size: var(--canon-key-cap);
-  padding-inline: 6px;
-  border: var(--canon-hairline) solid var(--canon-border);
-  background: var(--canon-card);
-  color: var(--canon-foreground);
-  font-family: inherit;
-  font-size: var(--canon-text-caption);
-  font-weight: var(--canon-weight-semibold);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	min-inline-size: var(--canon-key-cap);
+	block-size: var(--canon-key-cap);
+	padding-inline: 6px;
+	border: var(--canon-hairline) solid var(--canon-border);
+	background: var(--canon-card);
+	color: var(--canon-foreground);
+	font-family: inherit;
+	font-size: var(--canon-text-caption);
+	font-weight: var(--canon-weight-semibold);
 }
 
 .canon-command-enter {
-  flex: none;
-  font-size: var(--canon-text-caption);
-  font-weight: var(--canon-weight-semibold);
+	flex: none;
+	font-size: var(--canon-text-caption);
+	font-weight: var(--canon-weight-semibold);
 }
 
 .canon-command-empty {
-  flex: 1 1 auto;
+	flex: 1 1 auto;
 }

@@ -1,43 +1,43 @@
 .canon-preview-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--canon-hairline);
-  padding: var(--canon-frame);
-  background: var(--canon-border);
-  font-family: var(--canon-font);
-  line-height: 1.3;
+	display: flex;
+	flex-direction: column;
+	gap: var(--canon-hairline);
+	padding: var(--canon-frame);
+	background: var(--canon-border);
+	font-family: var(--canon-font);
+	line-height: 1.3;
 }
 
 /* below the .canon-page child rule, which centres the panel in a page */
 :where(.canon-preview-panel) {
-  margin: 0;
+	margin: 0;
 }
 
 .canon-preview-panel-header {
-  display: flex;
-  gap: 8px;
-  align-items: baseline;
-  padding: 8px var(--canon-panel-padding);
-  background: var(--canon-heading-background);
+	display: flex;
+	gap: 8px;
+	align-items: baseline;
+	padding: 8px var(--canon-panel-padding);
+	background: var(--canon-heading-background);
 }
 
 .canon-preview-panel-caption {
-  flex: 1 1 auto;
-  min-inline-size: 0;
-  color: var(--canon-muted-foreground);
-  font-size: var(--canon-text-footnote);
-  font-weight: var(--canon-weight-semibold);
+	flex: 1 1 auto;
+	min-inline-size: 0;
+	color: var(--canon-muted-foreground);
+	font-size: var(--canon-text-footnote);
+	font-weight: var(--canon-weight-semibold);
 }
 
 .canon-preview-panel-detail {
-  flex: none;
-  color: var(--canon-muted-foreground);
-  font-size: var(--canon-text-footnote);
-  text-align: end;
+	flex: none;
+	color: var(--canon-muted-foreground);
+	font-size: var(--canon-text-footnote);
+	text-align: end;
 }
 
 .canon-preview-panel-content {
-  display: flex;
-  flex-direction: column;
-  background: var(--canon-card);
+	display: flex;
+	flex-direction: column;
+	background: var(--canon-card);
 }

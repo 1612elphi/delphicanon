@@ -3,28 +3,28 @@ import '../styles/tokens.css';
 import './canon-sidebar.css';
 
 export interface CanonSidebarSignature {
-  Args: {
-    /**
-     * true: the icon rail. false: full width at every size. Unset: the rail
-     * inside a `canon-window` container narrower than 640 px.
-     */
-    collapsed?: boolean;
-    /** 32 px rows at subheadline size, for dense navigation. */
-    compact?: boolean;
-  };
-  Blocks: {
-    /** A picture above the rows that does not scroll with them. */
-    hero: [];
-    /** CanonSidebarRows, and CanonHeadings between groups. */
-    default: [];
-  };
-  Element: HTMLElement;
+	Args: {
+		/**
+		 * true: the icon rail. false: full width at every size. Unset: the rail
+		 * inside a `canon-window` container narrower than 640 px.
+		 */
+		collapsed?: boolean;
+		/** 32 px rows at subheadline size, for dense navigation. */
+		compact?: boolean;
+	};
+	Blocks: {
+		/** A picture above the rows that does not scroll with them. */
+		hero: [];
+		/** CanonSidebarRows, and CanonHeadings between groups. */
+		default: [];
+	};
+	Element: HTMLElement;
 }
 
 function state(collapsed: boolean | undefined) {
-  if (collapsed === true) return 'canon-sidebar--collapsed';
-  if (collapsed === false) return 'canon-sidebar--expanded';
-  return undefined;
+	if (collapsed === true) return 'canon-sidebar--collapsed';
+	if (collapsed === false) return 'canon-sidebar--expanded';
+	return undefined;
 }
 
 /**
@@ -33,19 +33,21 @@ function state(collapsed: boolean | undefined) {
  * colour, a frame-width rule on the trailing edge.
  */
 const CanonSidebar: TOC<CanonSidebarSignature> = <template>
-  <nav
-    class="canon-sidebar
-      {{state @collapsed}}
-      {{if @compact 'canon-sidebar--compact'}}"
-    ...attributes
-  >
-    {{#if (has-block "hero")}}
-      <div class="canon-sidebar-hero">{{yield to="hero"}}</div>
-    {{/if}}
-    <div class="canon-sidebar-scroll">
-      <div class="canon-sidebar-rows">{{yield}}</div>
-    </div>
-  </nav>
+	<nav
+		class="canon-sidebar
+			{{state @collapsed}}
+			{{if @compact 'canon-sidebar--compact'}}"
+		...attributes
+	>
+		{{#if (has-block "hero")}}
+			<div class="canon-sidebar-hero">{{yield
+					to="hero"
+				}}</div>
+		{{/if}}
+		<div class="canon-sidebar-scroll">
+			<div class="canon-sidebar-rows">{{yield}}</div>
+		</div>
+	</nav>
 </template>;
 
 export default CanonSidebar;

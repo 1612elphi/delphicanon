@@ -1,20 +1,20 @@
 import { h, type FunctionalComponent } from 'vue';
 import CanonIcon from '../components/canon-icon.vue';
 import {
-  arrowRight,
-  chevronsUpDown,
-  clipboard,
-  folder,
-  image,
-  minus,
-  pipette,
-  plus,
+	arrowRight,
+	chevronsUpDown,
+	clipboard,
+	folder,
+	image,
+	minus,
+	pipette,
+	plus,
 } from './lucide.ts';
 
 const icon =
-  (svg: string): FunctionalComponent =>
-  () =>
-    h(CanonIcon, { svg });
+	(svg: string): FunctionalComponent =>
+	() =>
+		h(CanonIcon, { svg });
 
 export const Minus = icon(minus);
 export const Plus = icon(plus);

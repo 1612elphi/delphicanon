@@ -19,103 +19,110 @@ export const order = 16;
 const picture = { width: 1600, height: 1200 };
 
 const scales = [
-  { title: 'Saved', before: 2_400_000, after: 1_700_000, working: false },
-  { title: 'Grew', before: 2_400_000, after: 3_100_000, working: false },
-  { title: 'Even', before: 2_400_000, after: 2_400_000, working: false },
-  { title: 'Working', before: 2_400_000, after: 0, working: true },
-  { title: 'Empty', before: 0, after: 0, working: false },
+	{ title: 'Saved', before: 2_400_000, after: 1_700_000, working: false },
+	{ title: 'Grew', before: 2_400_000, after: 3_100_000, working: false },
+	{ title: 'Even', before: 2_400_000, after: 2_400_000, working: false },
+	{ title: 'Working', before: 2_400_000, after: 0, working: true },
+	{ title: 'Empty', before: 0, after: 0, working: false },
 ];
 const titles = scales.map((scale) => scale.title);
 
 const box = ({ x, y, width, height }: Rect) =>
-  htmlSafe(
-    `inset-inline-start: ${x}px; inset-block-start: ${y}px; inline-size: ${width}px; block-size: ${height}px`,
-  );
+	htmlSafe(
+		`inset-inline-start: ${x}px; inset-block-start: ${y}px; inline-size: ${width}px; block-size: ${height}px`,
+	);
 
 export default class Measures extends Component {
-  @tracked area: Rect = { x: 0, y: 0, width: 0, height: 0 };
-  @tracked scale = 0;
-  @tracked blank = false;
+	@tracked area: Rect = { x: 0, y: 0, width: 0, height: 0 };
+	@tracked scale = 0;
+	@tracked blank = false;
 
-  get frame() {
-    return sheet(picture, this.area);
-  }
+	get frame() {
+		return sheet(picture, this.area);
+	}
 
-  get lines() {
-    const { across, down } = dimensionLines(this.frame);
-    return { sheet: box(this.frame), across: box(across), down: box(down) };
-  }
+	get lines() {
+		const { across, down } = dimensionLines(this.frame);
+		return {
+			sheet: box(this.frame),
+			across: box(across),
+			down: box(down),
+		};
+	}
 
-  get shown() {
-    return scales[this.scale]!;
-  }
+	get shown() {
+		return scales[this.scale]!;
+	}
 
-  measure = modifier((element: HTMLElement) => {
-    const observer = new ResizeObserver(() => {
-      this.area = {
-        x: element.offsetLeft,
-        y: element.offsetTop,
-        width: element.clientWidth,
-        height: element.clientHeight,
-      };
-    });
-    observer.observe(element);
-    return () => observer.disconnect();
-  });
+	measure = modifier((element: HTMLElement) => {
+		const observer = new ResizeObserver(() => {
+			this.area = {
+				x: element.offsetLeft,
+				y: element.offsetTop,
+				width: element.clientWidth,
+				height: element.clientHeight,
+			};
+		});
+		observer.observe(element);
+		return () => observer.disconnect();
+	});
 
-  pick = (index: number) => {
-    this.scale = index;
-  };
+	pick = (index: number) => {
+		this.scale = index;
+	};
 
-  toggle = (on: boolean) => {
-    this.blank = on;
-  };
+	toggle = (on: boolean) => {
+		this.blank = on;
+	};
 
-  <template>
-    <CanonCanvas @height={{220}} @background="var(--canon-muted)">
-      <div class="gallery-dimensions">
-        <span class="gallery-dimensions-area" {{this.measure}}></span>
-        {{#if this.area.width}}
-          <span
-            class="gallery-dimensions-sheet"
-            style={{this.lines.sheet}}
-          ></span>
-          <CanonDimensionLine
-            @pixels={{picture.width}}
-            @blank={{this.blank}}
-            style={{this.lines.across}}
-          />
-          <CanonDimensionLine
-            @pixels={{picture.height}}
-            @blank={{this.blank}}
-            @down={{true}}
-            style={{this.lines.down}}
-          />
-        {{/if}}
-      </div>
-    </CanonCanvas>
-    <CanonCanvas @height={{176}}>
-      <CanonCompressionScale
-        @before={{this.shown.before}}
-        @after={{this.shown.after}}
-        @format="JPEG"
-        @working={{this.shown.working}}
-      />
-    </CanonCanvas>
-    <CanonRows @framed={{true}}>
-      <CanonHeading @text="Measures" />
-      <CanonSegmented
-        @items={{titles}}
-        @selected={{this.scale}}
-        @onChange={{this.pick}}
-      />
-      <CanonRow @title="Blank" as |titleId|>
-        <CanonSwitch
-          @on={{this.blank}}
-          @onChange={{this.toggle}}
-          aria-labelledby={{titleId}}
-        />
-      </CanonRow>
-    </CanonRows>
-  </template>
+	<template>
+		<CanonCanvas @height={{220}} @background="var(--canon-muted)">
+			<div class="gallery-dimensions">
+				<span
+					class="gallery-dimensions-area"
+					{{this.measure}}
+				></span>
+				{{#if this.area.width}}
+					<span
+						class="gallery-dimensions-sheet"
+						style={{this.lines.sheet}}
+					></span>
+					<CanonDimensionLine
+						@pixels={{picture.width}}
+						@blank={{this.blank}}
+						style={{this.lines.across}}
+					/>
+					<CanonDimensionLine
+						@pixels={{picture.height}}
+						@blank={{this.blank}}
+						@down={{true}}
+						style={{this.lines.down}}
+					/>
+				{{/if}}
+			</div>
+		</CanonCanvas>
+		<CanonCanvas @height={{176}}>
+			<CanonCompressionScale
+				@before={{this.shown.before}}
+				@after={{this.shown.after}}
+				@format="JPEG"
+				@working={{this.shown.working}}
+			/>
+		</CanonCanvas>
+		<CanonRows @framed={{true}}>
+			<CanonHeading @text="Measures" />
+			<CanonSegmented
+				@items={{titles}}
+				@selected={{this.scale}}
+				@onChange={{this.pick}}
+			/>
+			<CanonRow @title="Blank" as |titleId|>
+				<CanonSwitch
+					@on={{this.blank}}
+					@onChange={{this.toggle}}
+					aria-labelledby={{titleId}}
+				/>
+			</CanonRow>
+		</CanonRows>
+	</template>
 }

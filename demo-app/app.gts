@@ -6,21 +6,21 @@ import CanonToastService from '#src/services/canon-toast.ts';
 // ?theme=dark or ?theme=light forces the class the web app writes on <html>
 const theme = new URLSearchParams(window.location.search).get('theme');
 if (theme === 'dark' || theme === 'light') {
-  document.documentElement.classList.add(theme);
+	document.documentElement.classList.add(theme);
 }
 
 class Router extends EmberRouter {
-  location = 'history';
-  rootURL = '/';
+	location = 'history';
+	rootURL = '/';
 }
 
 export class App extends EmberApp {
-  modules = {
-    './router': Router,
-    './services/page-title': PageTitleService,
-    './services/canon-toast': CanonToastService,
-    ...import.meta.glob('./templates/**/*', { eager: true }),
-  };
+	modules = {
+		'./router': Router,
+		'./services/page-title': PageTitleService,
+		'./services/canon-toast': CanonToastService,
+		...import.meta.glob('./templates/**/*', { eager: true }),
+	};
 }
 
 Router.map(function () {});

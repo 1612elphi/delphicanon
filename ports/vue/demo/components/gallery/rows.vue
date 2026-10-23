@@ -12,22 +12,23 @@ import CanonRows from '../../../src/components/canon-rows.vue';
 import { icon } from '../icon.ts';
 import bug from 'lucide-static/icons/bug.svg?raw';
 
-// ∑CG: gallery, caption under the "Detail and icon" row title
-//   spec: shows what a row's detail line looks like; plain, lowercase after the first word, about 25 characters
-//   sample: "Caption under the title"
-const detailCaption = '∑CG';
+const detailCaption = 'Caption under the title';
 </script>
 
 <template>
-  <CanonRows :framed="true">
-    <CanonHeading text="Rows" />
-    <CanonRow title="Plain"
-      ><CanonBar class="gallery-bar" :share="0.65"
-    /></CanonRow>
-    <CanonRow title="Detail and icon" :icon="icon(bug)" :detail="detailCaption">
-      <CanonBar class="gallery-bar" :share="0.3" />
-    </CanonRow>
-    <CanonRow title="No control" />
-    <CanonEmptyRow text="Nothing here" />
-  </CanonRows>
+	<CanonRows :framed="true">
+		<CanonHeading text="Rows" />
+		<CanonRow title="Plain"
+			><CanonBar class="gallery-bar" :share="0.65"
+		/></CanonRow>
+		<CanonRow
+			title="Detail and icon"
+			:icon="icon(bug)"
+			:detail="detailCaption"
+		>
+			<CanonBar class="gallery-bar" :share="0.3" />
+		</CanonRow>
+		<CanonRow title="No control" />
+		<CanonEmptyRow text="Nothing here" />
+	</CanonRows>
 </template>

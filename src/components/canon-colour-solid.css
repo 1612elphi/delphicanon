@@ -1,124 +1,124 @@
 .canon-colour-solid {
-  position: relative;
-  inline-size: 100%;
-  block-size: 100%;
-  overflow: hidden;
-  touch-action: none;
-  user-select: none;
-  outline: none;
+	position: relative;
+	inline-size: 100%;
+	block-size: 100%;
+	overflow: hidden;
+	touch-action: none;
+	user-select: none;
+	outline: none;
 }
 
 .canon-colour-solid:focus-visible {
-  box-shadow: inset 0 0 0 var(--canon-frame) var(--canon-primary);
+	box-shadow: inset 0 0 0 var(--canon-frame) var(--canon-primary);
 }
 
 .canon-colour-solid-canvas,
 .canon-colour-solid-wire,
 .canon-colour-solid-overlay {
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  pointer-events: none;
+	position: absolute;
+	inset: 0;
+	inline-size: 100%;
+	block-size: 100%;
+	pointer-events: none;
 }
 
 .canon-colour-solid-canvas {
-  touch-action: none;
+	touch-action: none;
 }
 
 .canon-colour-solid-wire {
-  overflow: visible;
-  opacity: 0;
-  transition: opacity var(--canon-colour-solid-fade);
-  fill: none;
-  stroke: var(--canon-colour-solid-wire);
-  stroke-width: var(--canon-hairline);
+	overflow: visible;
+	opacity: 0;
+	transition: opacity var(--canon-colour-solid-fade);
+	fill: none;
+	stroke: var(--canon-colour-solid-wire);
+	stroke-width: var(--canon-hairline);
 }
 
 .canon-colour-solid-axis {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  transform: translate(-50%, -50%);
-  color: var(--canon-muted-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-caption);
-  font-weight: var(--canon-weight-semibold);
-  line-height: 1;
+	position: absolute;
+	inset-block-start: 0;
+	inset-inline-start: 0;
+	transform: translate(-50%, -50%);
+	color: var(--canon-muted-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-caption);
+	font-weight: var(--canon-weight-semibold);
+	line-height: 1;
 }
 
 .canon-colour-solid-axis--depth {
-  opacity: 0;
-  transition: opacity var(--canon-colour-solid-fade);
+	opacity: 0;
+	transition: opacity var(--canon-colour-solid-fade);
 }
 
 .canon-colour-solid--whole .canon-colour-solid-wire,
 .canon-colour-solid--whole .canon-colour-solid-axis--depth {
-  opacity: 1;
+	opacity: 1;
 }
 
 .canon-colour-solid-marker {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  box-sizing: border-box;
-  inline-size: 10px;
-  block-size: 10px;
-  transform: translate(-50%, -50%);
-  border: 2px solid var(--canon-colour-solid-ink-light);
-  box-shadow: 0 0 2px var(--canon-colour-solid-shadow);
+	position: absolute;
+	inset-block-start: 0;
+	inset-inline-start: 0;
+	box-sizing: border-box;
+	inline-size: 10px;
+	block-size: 10px;
+	transform: translate(-50%, -50%);
+	border: 2px solid var(--canon-colour-solid-ink-light);
+	box-shadow: 0 0 2px var(--canon-colour-solid-shadow);
 }
 
 .canon-colour-solid-marker--pick {
-  inline-size: 18px;
-  block-size: 18px;
-  border-width: 3px;
+	inline-size: 18px;
+	block-size: 18px;
+	border-width: 3px;
 }
 
 .canon-colour-solid-marker[data-ink="black"] {
-  border-color: var(--canon-colour-solid-ink-dark);
+	border-color: var(--canon-colour-solid-ink-dark);
 }
 
 .canon-colour-solid-marker[data-hollow] {
-  border-color: var(--canon-colour-solid-hollow);
-  background: transparent;
-  box-shadow: none;
+	border-color: var(--canon-colour-solid-hollow);
+	background: transparent;
+	box-shadow: none;
 }
 
 .canon-colour-solid-marker[hidden],
 .canon-colour-solid-axis[hidden] {
-  display: none;
+	display: none;
 }
 
 .canon-colour-solid-hint {
-  position: absolute;
-  inset-block-end: 8px;
-  inset-inline-end: 8px;
-  color: var(--canon-muted-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-caption);
-  line-height: 1;
-  pointer-events: none;
-  transition: opacity var(--canon-colour-solid-fade);
+	position: absolute;
+	inset-block-end: 8px;
+	inset-inline-end: 8px;
+	color: var(--canon-muted-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-caption);
+	line-height: 1;
+	pointer-events: none;
+	transition: opacity var(--canon-colour-solid-fade);
 }
 
 .canon-colour-solid--flat .canon-colour-solid-hint {
-  opacity: 0;
+	opacity: 0;
 }
 
 .canon-colour-solid-value {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .canon-colour-solid-wire,
-  .canon-colour-solid-axis--depth,
-  .canon-colour-solid-hint {
-    transition: none;
-  }
+	.canon-colour-solid-wire,
+	.canon-colour-solid-axis--depth,
+	.canon-colour-solid-hint {
+		transition: none;
+	}
 }

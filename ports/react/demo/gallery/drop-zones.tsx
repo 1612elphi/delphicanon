@@ -9,36 +9,38 @@ import file from 'lucide-static/icons/file.svg?raw';
 export const pane = 'main';
 export const order = 25;
 
-// ∑CG: gallery, prompt inside both drop zones
-//   spec: invites dropping a file onto the area; four to six words, sentence case, no period
-//   sample: "Drop an image here"
-const dropPrompt = '∑CG';
+const dropPrompt = 'Drop an image here';
 
 export default function DropZones() {
-  const [imported, setImported] = useState('None');
+	const [imported, setImported] = useState('None');
 
-  const showImages = (images: ImageBitmap[], names: string[]) => {
-    const [image] = images;
-    if (image)
-      setImported(`${names[0] ?? ''} ${image.width} x ${image.height}`.trim());
-  };
+	const showImages = (images: ImageBitmap[], names: string[]) => {
+		const [image] = images;
+		if (image)
+			setImported(
+				`${names[0] ?? ''} ${image.width} x ${image.height}`.trim(),
+			);
+	};
 
-  const showFiles = (files: File[]) =>
-    setImported(files.map((f) => f.name).join(', '));
+	const showFiles = (files: File[]) =>
+		setImported(files.map((f) => f.name).join(', '));
 
-  return (
-    <CanonRows framed>
-      <CanonHeading text="Drop zones" />
-      <CanonDropZone prompt={dropPrompt} onImages={showImages} />
-      <CanonStatus text={imported} tone="muted" row />
-      <CanonDropZone
-        prompt={dropPrompt}
-        icon={<CanonIcon svg={file} />}
-        accept=""
-        multiple
-        paste={false}
-        onFiles={showFiles}
-      />
-    </CanonRows>
-  );
+	return (
+		<CanonRows framed>
+			<CanonHeading text="Drop zones" />
+			<CanonDropZone
+				prompt={dropPrompt}
+				onImages={showImages}
+			/>
+			<CanonStatus text={imported} tone="muted" row />
+			<CanonDropZone
+				prompt={dropPrompt}
+				icon={<CanonIcon svg={file} />}
+				accept=""
+				multiple
+				paste={false}
+				onFiles={showFiles}
+			/>
+		</CanonRows>
+	);
 }

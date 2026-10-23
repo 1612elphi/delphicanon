@@ -1,12 +1,12 @@
 .canon-rows {
-  display: flex;
-  flex-direction: column;
-  gap: var(--canon-hairline);
-  background: var(--canon-border);
-  font-family: var(--canon-font);
-  color: var(--canon-foreground);
+	display: flex;
+	flex-direction: column;
+	gap: var(--canon-hairline);
+	background: var(--canon-border);
+	font-family: var(--canon-font);
+	color: var(--canon-foreground);
 }
 
 .canon-rows--framed {
-  padding: var(--canon-frame);
+	padding: var(--canon-frame);
 }

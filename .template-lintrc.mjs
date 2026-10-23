@@ -1,4 +1,4 @@
 export default {
-  extends: 'recommended',
-  checkHbsTemplateLiterals: false,
+	extends: 'recommended',
+	checkHbsTemplateLiterals: false,
 };

@@ -4,8 +4,8 @@ import '@canon/styles/tokens.css';
 import '@canon/components/canon-page.css';
 
 export interface CanonPageProps extends HTMLAttributes<HTMLDivElement> {
-  /** Widest a section gets, in px; null for no cap. Default 720. */
-  maxWidth?: number | null;
+	/** Widest a section gets, in px; null for no cap. Default 720. */
+	maxWidth?: number | null;
 }
 
 /**
@@ -14,23 +14,23 @@ export interface CanonPageProps extends HTMLAttributes<HTMLDivElement> {
  * (CanonPage and CanonPaddedSection).
  */
 export default function CanonPage({
-  maxWidth,
-  className,
-  style,
-  children,
-  ...rest
+	maxWidth,
+	className,
+	style,
+	children,
+	...rest
 }: CanonPageProps) {
-  const width =
-    maxWidth === null
-      ? undefined
-      : { '--canon-page-max-width': `${maxWidth ?? 720}px` };
-  return (
-    <div
-      className={cx('canon-page', className)}
-      style={{ ...width, ...style } as CSSProperties}
-      {...rest}
-    >
-      {children}
-    </div>
-  );
+	const width =
+		maxWidth === null
+			? undefined
+			: { '--canon-page-max-width': `${maxWidth ?? 720}px` };
+	return (
+		<div
+			className={cx('canon-page', className)}
+			style={{ ...width, ...style } as CSSProperties}
+			{...rest}
+		>
+			{children}
+		</div>
+	);
 }

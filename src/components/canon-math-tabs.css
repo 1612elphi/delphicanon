@@ -1,54 +1,55 @@
 .canon-math-tabs {
-  --canon-math-tab-cell: calc((100% - 3 * var(--canon-hairline)) / 4);
+	--canon-math-tab-cell: calc((100% - 3 * var(--canon-hairline)) / 4);
 
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--canon-hairline);
-  block-size: var(--canon-math-tab-height, 40px);
-  background: var(--canon-border);
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: var(--canon-hairline);
+	block-size: var(--canon-math-tab-height, 40px);
+	background: var(--canon-border);
 }
 
 .canon-math-tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-inline-size: 0;
-  margin: 0;
-  padding: 6px 4px 8px;
-  border: 0;
-  border-radius: 0;
-  background: var(--canon-card);
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  appearance: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-inline-size: 0;
+	margin: 0;
+	padding: 6px 4px 8px;
+	border: 0;
+	border-radius: 0;
+	background: var(--canon-card);
+	cursor: pointer;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 }
 
 @media (hover: hover) {
-  .canon-math-tab:hover {
-    background: var(--canon-accent-bg);
-  }
+	.canon-math-tab:hover {
+		background: var(--canon-accent-bg);
+	}
 }
 
 .canon-math-tab:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -2px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -2px;
 }
 
 .canon-math-tab > .canon-math-view {
-  max-inline-size: 100%;
+	max-inline-size: 100%;
 }
 
 .canon-math-tabs-lamp {
-  position: absolute;
-  inset-block-end: 0;
-  inset-inline-start: calc(
-    var(--canon-math-progress) *
-      (var(--canon-math-tab-cell) + var(--canon-hairline)) +
-      var(--canon-math-tab-cell) * (1 - var(--canon-math-lamp)) / 2
-  );
-  inline-size: calc(var(--canon-math-tab-cell) * var(--canon-math-lamp));
-  block-size: 3px;
-  pointer-events: none;
+	position: absolute;
+	inset-block-end: 0;
+	inset-inline-start: calc(
+		var(--canon-math-progress) *
+			(var(--canon-math-tab-cell) + var(--canon-hairline)) +
+			var(--canon-math-tab-cell) *
+			(1 - var(--canon-math-lamp)) / 2
+	);
+	inline-size: calc(var(--canon-math-tab-cell) * var(--canon-math-lamp));
+	block-size: 3px;
+	pointer-events: none;
 }

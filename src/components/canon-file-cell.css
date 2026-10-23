@@ -1,39 +1,39 @@
 .canon-file-cell {
-  display: flex;
-  gap: var(--canon-hairline);
-  min-block-size: var(--canon-control-height);
-  background: var(--canon-border);
+	display: flex;
+	gap: var(--canon-hairline);
+	min-block-size: var(--canon-control-height);
+	background: var(--canon-border);
 }
 
 .canon-file-cell > .canon-button {
-  flex: none;
+	flex: none;
 }
 
 .canon-file-cell-name {
-  display: flex;
-  flex: 1 1 auto;
-  align-items: center;
-  justify-content: flex-end;
-  box-sizing: border-box;
-  min-inline-size: 64px;
-  padding: 0 10px;
-  background: var(--canon-card);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-caption);
-  white-space: nowrap;
+	display: flex;
+	flex: 1 1 auto;
+	align-items: center;
+	justify-content: flex-end;
+	box-sizing: border-box;
+	min-inline-size: 64px;
+	padding: 0 10px;
+	background: var(--canon-card);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-caption);
+	white-space: nowrap;
 }
 
 .canon-file-cell-name--none {
-  color: var(--canon-muted-foreground);
+	color: var(--canon-muted-foreground);
 }
 
 .canon-file-cell-head {
-  min-inline-size: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+	min-inline-size: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .canon-file-cell-tail {
-  flex: none;
+	flex: none;
 }

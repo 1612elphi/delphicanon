@@ -8,7 +8,7 @@ const start = 'Glyph flow';
 const metrics = { height: 36, rowGap: 8, gap: 4 };
 const measure = () => 28;
 const kind = (c: string): GlyphKind =>
-  c === '\n' ? 'newline' : /\s/.test(c) ? 'space' : 'glyph';
+	c === '\n' ? 'newline' : /\s/.test(c) ? 'space' : 'glyph';
 const isSpace = (c: string) => /\s/.test(c);
 </script>
 
@@ -26,30 +26,32 @@ const text = ref(start);
 const glyphs = computed(() => [...text.value]);
 const upper = computed(() => text.value.toUpperCase());
 const change = (value: string) => {
-  text.value = value;
+	text.value = value;
 };
 </script>
 
 <template>
-  <CanonCanvas :height="120">
-    <CanonGlyphFlow
-      v-slot="{ glyph }"
-      :glyphs="glyphs"
-      :metrics="metrics"
-      :measure="measure"
-      :kind="kind"
-      :label="text"
-    >
-      <span v-if="!isSpace(glyph)" class="gallery-glyph">{{ glyph }}</span>
-    </CanonGlyphFlow>
-  </CanonCanvas>
-  <CanonRows :framed="true">
-    <CanonHeading text="Text input" />
-    <CanonTextInput :value="start" :on-change="change" />
-  </CanonRows>
-  <CanonTextOutput
-    :text="upper"
-    heading="Text output"
-    file-name="gallery.txt"
-  />
+	<CanonCanvas :height="120">
+		<CanonGlyphFlow
+			v-slot="{ glyph }"
+			:glyphs="glyphs"
+			:metrics="metrics"
+			:measure="measure"
+			:kind="kind"
+			:label="text"
+		>
+			<span v-if="!isSpace(glyph)" class="gallery-glyph">{{
+				glyph
+			}}</span>
+		</CanonGlyphFlow>
+	</CanonCanvas>
+	<CanonRows :framed="true">
+		<CanonHeading text="Text input" />
+		<CanonTextInput :value="start" :on-change="change" />
+	</CanonRows>
+	<CanonTextOutput
+		:text="upper"
+		heading="Text output"
+		file-name="gallery.txt"
+	/>
 </template>

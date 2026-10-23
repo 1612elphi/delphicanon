@@ -1,4 +1,4 @@
 /** Joins the truthy class names. */
 export function cx(...names: (string | false | null | undefined)[]): string {
-  return names.filter(Boolean).join(' ');
+	return names.filter(Boolean).join(' ');
 }

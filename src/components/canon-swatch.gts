@@ -9,12 +9,12 @@ import '../styles/tokens.css';
 import './canon-swatch.css';
 
 export interface CanonSwatchSignature {
-  Args: {
-    colour: Rgb;
-    /** Nearest colour name for a hex, read by assistive technology. */
-    nameOf?: (hex: string) => string;
-  };
-  Element: HTMLButtonElement;
+	Args: {
+		colour: Rgb;
+		/** Nearest colour name for a hex, read by assistive technology. */
+		nameOf?: (hex: string) => string;
+	};
+	Element: HTMLButtonElement;
 }
 
 /**
@@ -23,36 +23,36 @@ export interface CanonSwatchSignature {
  * a flex item that grows): it measures itself for the hex.
  */
 export default class CanonSwatch extends Component<CanonSwatchSignature> {
-  @service('canon-toast') declare toast: CanonToastService;
+	@service('canon-toast') declare toast: CanonToastService;
 
-  get hex() {
-    return hex(this.args.colour);
-  }
+	get hex() {
+		return hex(this.args.colour);
+	}
 
-  get label() {
-    const name = this.args.nameOf?.(this.hex);
-    return name ? `${name} ${this.hex}` : this.hex;
-  }
+	get label() {
+		const name = this.args.nameOf?.(this.hex);
+		return name ? `${name} ${this.hex}` : this.hex;
+	}
 
-  get style() {
-    const ink = takesBlackInk(this.args.colour) ? 'black' : 'white';
-    return htmlSafe(`background: ${this.hex}; color: ${ink}`);
-  }
+	get style() {
+		const ink = takesBlackInk(this.args.colour) ? 'black' : 'white';
+		return htmlSafe(`background: ${this.hex}; color: ${ink}`);
+	}
 
-  copy = () => void this.toast.copy(this.hex);
+	copy = () => void this.toast.copy(this.hex);
 
-  <template>
-    <button
-      type="button"
-      class="canon-swatch"
-      style={{this.style}}
-      aria-label={{this.label}}
-      {{press}}
-      {{on "click" this.copy}}
-      ...attributes
-    ><span
-        class="canon-swatch-hex"
-        aria-hidden="true"
-      >{{this.hex}}</span></button>
-  </template>
+	<template>
+		<button
+			type="button"
+			class="canon-swatch"
+			style={{this.style}}
+			aria-label={{this.label}}
+			{{press}}
+			{{on "click" this.copy}}
+			...attributes
+		><span
+				class="canon-swatch-hex"
+				aria-hidden="true"
+			>{{this.hex}}</span></button>
+	</template>
 }

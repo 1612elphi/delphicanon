@@ -21,51 +21,51 @@ const modes = ['Region', 'Window', 'Screen', 'Timed'];
 const five = ['One', 'Two', 'Three', 'Four', 'Five'];
 const sizes = ['Tiny', 'Base', 'Small', 'Large'];
 const labels = [
-  'Top left',
-  'Top',
-  'Top right',
-  'Left',
-  'Centre',
-  'Right',
-  'Bottom left',
-  'Bottom',
-  'Bottom right',
+	'Top left',
+	'Top',
+	'Top right',
+	'Left',
+	'Centre',
+	'Right',
+	'Bottom left',
+	'Bottom',
+	'Bottom right',
 ];
 
 <template>
-  <CanonRows @framed={{true}}>
-    <CanonHeading @text="Segmented" />
-    <CanonRow @title="Mode" @form="stacked">
-      <CanonSegmented @items={{modes}} />
-    </CanonRow>
-    <CanonRow @title="Six in three" @form="stacked">
-      <CanonSegmented @items={{five}} @columns={{3}} />
-    </CanonRow>
-    <CanonRow @title="Inline picker" @form="flush">
-      <CanonSegmented @items={{modes}} />
-    </CanonRow>
-    <CanonSegmented
-      @items={{sizes}}
-      @selected={{1}}
-      @disabledIndices={{array 2 3}}
-    />
-    <CanonRow @title="Symbols" @form="stacked">
-      <CanonSegmented
-        @items={{labels}}
-        @icons={{array
-          (component Icon svg=arrowUpLeft)
-          (component Icon svg=arrowUp)
-          (component Icon svg=arrowUpRight)
-          (component Icon svg=arrowLeft)
-          (component Icon svg=circleDot)
-          (component Icon svg=arrowRight)
-          (component Icon svg=arrowDownLeft)
-          (component Icon svg=arrowDown)
-          (component Icon svg=arrowDownRight)
-        }}
-        @selected={{7}}
-        @columns={{3}}
-      />
-    </CanonRow>
-  </CanonRows>
+	<CanonRows @framed={{true}}>
+		<CanonHeading @text="Segmented" />
+		<CanonRow @title="Mode" @form="stacked">
+			<CanonSegmented @items={{modes}} />
+		</CanonRow>
+		<CanonRow @title="Six in three" @form="stacked">
+			<CanonSegmented @items={{five}} @columns={{3}} />
+		</CanonRow>
+		<CanonRow @title="Inline picker" @form="flush">
+			<CanonSegmented @items={{modes}} />
+		</CanonRow>
+		<CanonSegmented
+			@items={{sizes}}
+			@selected={{1}}
+			@disabledIndices={{array 2 3}}
+		/>
+		<CanonRow @title="Symbols" @form="stacked">
+			<CanonSegmented
+				@items={{labels}}
+				@icons={{array
+					(component Icon svg=arrowUpLeft)
+					(component Icon svg=arrowUp)
+					(component Icon svg=arrowUpRight)
+					(component Icon svg=arrowLeft)
+					(component Icon svg=circleDot)
+					(component Icon svg=arrowRight)
+					(component Icon svg=arrowDownLeft)
+					(component Icon svg=arrowDown)
+					(component Icon svg=arrowDownRight)
+				}}
+				@selected={{7}}
+				@columns={{3}}
+			/>
+		</CanonRow>
+	</CanonRows>
 </template>

@@ -1,9 +1,9 @@
 /* the rows belong to the enclosing CanonRows */
 .canon-colour-controls {
-  display: contents;
+	display: contents;
 }
 
 .canon-colour-controls-lit .canon-row-title:not(.canon-row-sizer) {
-  color: var(--canon-primary);
-  font-weight: var(--canon-weight-semibold);
+	color: var(--canon-primary);
+	font-weight: var(--canon-weight-semibold);
 }

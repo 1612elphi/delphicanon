@@ -1,13 +1,13 @@
 .canon-detent-wheel-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  block-size: 100%;
-  overflow: hidden;
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  font-size: var(--canon-text-body);
-  font-weight: var(--canon-weight-semibold);
-  white-space: nowrap;
-  opacity: calc(0.35 + 0.65 * var(--canon-detent-focus, 1));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	block-size: 100%;
+	overflow: hidden;
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	font-size: var(--canon-text-body);
+	font-weight: var(--canon-weight-semibold);
+	white-space: nowrap;
+	opacity: calc(0.35 + 0.65 * var(--canon-detent-focus, 1));
 }

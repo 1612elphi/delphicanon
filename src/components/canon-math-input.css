@@ -1,85 +1,86 @@
 .canon-math-input {
-  position: fixed;
-  inset: auto 0 0;
-  box-sizing: border-box;
-  inline-size: 100%;
-  max-inline-size: none;
-  block-size: min(
-    var(--canon-math-sheet-height) + env(safe-area-inset-bottom, 0px),
-    100dvh - 24px
-  );
-  max-block-size: none;
-  margin: 0;
-  padding: 0 0 env(safe-area-inset-bottom, 0px);
-  overflow: hidden;
-  border: 0;
-  border-radius: 24px 24px 0 0;
-  background: var(--canon-background);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  box-shadow: 0 -2px 16px rgb(0 0 0 / 14%);
-  transition: block-size 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+	position: fixed;
+	inset: auto 0 0;
+	box-sizing: border-box;
+	inline-size: 100%;
+	max-inline-size: none;
+	block-size: min(
+		var(--canon-math-sheet-height) +
+			env(safe-area-inset-bottom, 0px),
+		100dvh - 24px
+	);
+	max-block-size: none;
+	margin: 0;
+	padding: 0 0 env(safe-area-inset-bottom, 0px);
+	overflow: hidden;
+	border: 0;
+	border-radius: 24px 24px 0 0;
+	background: var(--canon-background);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	box-shadow: 0 -2px 16px rgb(0 0 0 / 14%);
+	transition: block-size 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .canon-math-input:focus {
-  outline: none;
+	outline: none;
 }
 
 .canon-math-input::backdrop {
-  background: transparent;
-  transition: background 0.35s;
+	background: transparent;
+	transition: background 0.35s;
 }
 
 .canon-math-input--docked {
-  inset-inline: auto;
-  left: var(--canon-math-sheet-left, 0);
-  inline-size: var(--canon-math-sheet-width, 100%);
+	inset-inline: auto;
+	left: var(--canon-math-sheet-left, 0);
+	inline-size: var(--canon-math-sheet-width, 100%);
 }
 
 .canon-math-input--large {
-  block-size: calc(100dvh - 40px);
+	block-size: calc(100dvh - 40px);
 }
 
 .canon-math-input--large::backdrop {
-  background: rgb(0 0 0 / 25%);
+	background: rgb(0 0 0 / 25%);
 }
 
 .canon-math-input-grabber {
-  position: absolute;
-  inset-block-start: 5px;
-  inset-inline-start: 50%;
-  inline-size: 36px;
-  block-size: 5px;
-  translate: -50% 0;
-  border-radius: 2.5px;
-  background: var(--canon-border);
+	position: absolute;
+	inset-block-start: 5px;
+	inset-inline-start: 50%;
+	inline-size: 36px;
+	block-size: 5px;
+	translate: -50% 0;
+	border-radius: 2.5px;
+	background: var(--canon-border);
 }
 
 .canon-math-input-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  box-sizing: border-box;
-  block-size: 100%;
-  padding: var(--canon-panel-padding);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	box-sizing: border-box;
+	block-size: 100%;
+	padding: var(--canon-panel-padding);
 }
 
 .canon-math-input-display {
-  flex: 1 1 auto;
-  min-block-size: 0;
+	flex: 1 1 auto;
+	min-block-size: 0;
 }
 
 .canon-math-input-display > .canon-math-editor {
-  flex: 1 1 auto;
-  min-block-size: var(--canon-math-editor-height);
+	flex: 1 1 auto;
+	min-block-size: var(--canon-math-editor-height);
 }
 
 .canon-math-input-stack > .canon-rows:last-child {
-  flex: none;
+	flex: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .canon-math-input {
-    transition: none;
-  }
+	.canon-math-input {
+		transition: none;
+	}
 }

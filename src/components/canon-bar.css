@@ -1,10 +1,10 @@
 .canon-bar {
-  block-size: 4px;
-  background: var(--canon-bar-track, var(--canon-muted));
+	block-size: 4px;
+	background: var(--canon-bar-track, var(--canon-muted));
 }
 
 .canon-bar-fill {
-  block-size: 100%;
-  inline-size: calc(var(--canon-bar-share) * 100%);
-  background: var(--canon-bar-fill, var(--canon-primary));
+	block-size: 100%;
+	inline-size: calc(var(--canon-bar-share) * 100%);
+	background: var(--canon-bar-fill, var(--canon-primary));
 }

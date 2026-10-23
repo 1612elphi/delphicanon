@@ -1,35 +1,35 @@
 .canon-readout-band {
-  position: relative;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr);
-  block-size: 100%;
-  background: var(--canon-muted);
+	position: relative;
+	display: grid;
+	grid-template-rows: minmax(0, 1fr);
+	block-size: 100%;
+	background: var(--canon-muted);
 }
 
 .canon-readout-band--below {
-  grid-template-rows: minmax(0, 1fr) 44px;
+	grid-template-rows: minmax(0, 1fr) 44px;
 }
 
 .canon-readout-band-strip {
-  grid-area: 1 / 1;
-  min-block-size: 0;
+	grid-area: 1 / 1;
+	min-block-size: 0;
 }
 
 .canon-readout-band-readout {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-inline: var(--canon-panel-padding);
-  pointer-events: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-inline: var(--canon-panel-padding);
+	pointer-events: none;
 }
 
 .canon-readout-band--over > .canon-readout-band-readout {
-  grid-area: 1 / 1;
-  align-items: flex-end;
-  align-self: end;
-  padding-block-end: 10px;
+	grid-area: 1 / 1;
+	align-items: flex-end;
+	align-self: end;
+	padding-block-end: 10px;
 }
 
 .canon-readout-band--over .canon-lamps {
-  margin-block-end: calc(var(--canon-panel-padding) - 10px);
+	margin-block-end: calc(var(--canon-panel-padding) - 10px);
 }

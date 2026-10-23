@@ -1,93 +1,97 @@
 .canon-dialog.canon-jump-grid {
-  inline-size: 100%;
-  block-size: 100%;
-  max-inline-size: none;
-  max-block-size: none;
-  margin: 0;
-  background: color-mix(in srgb, var(--canon-background) 94%, transparent);
-  box-shadow: none;
+	inline-size: 100%;
+	block-size: 100%;
+	max-inline-size: none;
+	max-block-size: none;
+	margin: 0;
+	background: color-mix(
+		in srgb,
+		var(--canon-background) 94%,
+		transparent
+	);
+	box-shadow: none;
 }
 
 .canon-dialog.canon-jump-grid::backdrop {
-  background: transparent;
+	background: transparent;
 }
 
 .canon-jump-grid .canon-dialog-rows {
-  padding: 0;
-  background: transparent;
+	padding: 0;
+	background: transparent;
 }
 
 .canon-jump-grid .canon-dialog-body::after {
-  content: none;
+	content: none;
 }
 
 .canon-jump-grid-holder {
-  flex: 1 0 auto;
-  padding: calc(2 * var(--canon-panel-padding)) var(--canon-panel-padding)
-    var(--canon-panel-padding);
+	flex: 1 0 auto;
+	padding: calc(2 * var(--canon-panel-padding)) var(--canon-panel-padding)
+		var(--canon-panel-padding);
 }
 
 .canon-jump-grid-holder > .canon-grid {
-  max-inline-size: 640px;
-  margin-inline: auto;
+	max-inline-size: 640px;
+	margin-inline: auto;
 }
 
 .canon-jump-grid-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  box-sizing: border-box;
-  min-block-size: 84px;
-  margin: 0;
-  padding: 14px;
-  border: 0;
-  border-radius: 0;
-  background: var(--canon-card);
-  color: var(--canon-foreground);
-  font-family: var(--canon-font);
-  line-height: 1.25;
-  text-align: start;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  appearance: none;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	box-sizing: border-box;
+	min-block-size: 84px;
+	margin: 0;
+	padding: 14px;
+	border: 0;
+	border-radius: 0;
+	background: var(--canon-card);
+	color: var(--canon-foreground);
+	font-family: var(--canon-font);
+	line-height: 1.25;
+	text-align: start;
+	cursor: pointer;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+	appearance: none;
 }
 
 .canon-jump-grid-title {
-  display: -webkit-box;
-  overflow: hidden;
-  font-size: var(--canon-text-title3);
-  font-weight: var(--canon-weight-bold);
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+	display: -webkit-box;
+	overflow: hidden;
+	font-size: var(--canon-text-title3);
+	font-weight: var(--canon-weight-bold);
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
 }
 
 .canon-jump-grid-detail {
-  color: var(--canon-muted-foreground);
-  font-size: var(--canon-text-caption);
+	color: var(--canon-muted-foreground);
+	font-size: var(--canon-text-caption);
 }
 
 .canon-jump-grid-tile--lit {
-  background: var(--canon-primary);
-  color: var(--canon-primary-foreground);
+	background: var(--canon-primary);
+	color: var(--canon-primary-foreground);
 }
 
 .canon-jump-grid-tile--lit .canon-jump-grid-detail {
-  color: var(--canon-primary-foreground);
+	color: var(--canon-primary-foreground);
 }
 
 .canon-jump-grid-tile:focus-visible {
-  outline: 2px solid var(--canon-primary);
-  outline-offset: -4px;
+	outline: 2px solid var(--canon-primary);
+	outline-offset: -4px;
 }
 
 .canon-jump-grid-tile--lit:focus-visible {
-  outline-color: var(--canon-primary-foreground);
+	outline-color: var(--canon-primary-foreground);
 }
 
 @media (hover: hover) {
-  .canon-jump-grid-tile:not(.canon-jump-grid-tile--lit):hover {
-    background: var(--canon-accent-bg);
-  }
+	.canon-jump-grid-tile:not(.canon-jump-grid-tile--lit):hover {
+		background: var(--canon-accent-bg);
+	}
 }

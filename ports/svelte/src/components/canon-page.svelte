@@ -1,16 +1,21 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
-  import type { HTMLAttributes } from 'svelte/elements';
-  import '@canon/styles/tokens.css';
-  import '@canon/components/canon-page.css';
+	import type { Snippet } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import '@canon/styles/tokens.css';
+	import '@canon/components/canon-page.css';
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {
-    /** Widest a section gets, in px; null for no cap. Default 720. */
-    maxWidth?: number | null;
-    children?: Snippet;
-  }
+	interface Props extends HTMLAttributes<HTMLDivElement> {
+		/** Widest a section gets, in px; null for no cap. Default 720. */
+		maxWidth?: number | null;
+		children?: Snippet;
+	}
 
-  let { maxWidth = 720, children, class: className, ...rest }: Props = $props();
+	let {
+		maxWidth = 720,
+		children,
+		class: className,
+		...rest
+	}: Props = $props();
 </script>
 
 <!--
@@ -20,11 +25,11 @@
   (CanonPage and CanonPaddedSection).
 -->
 <div
-  class={['canon-page', className]}
-  style={maxWidth === null
-    ? undefined
-    : `--canon-page-max-width: ${maxWidth}px`}
-  {...rest}
+	class={['canon-page', className]}
+	style={maxWidth === null
+		? undefined
+		: `--canon-page-max-width: ${maxWidth}px`}
+	{...rest}
 >
-  {@render children?.()}
+	{@render children?.()}
 </div>
