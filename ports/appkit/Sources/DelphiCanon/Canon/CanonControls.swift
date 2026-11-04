@@ -273,6 +273,11 @@ public final class CanonSegmented: CanonView {
         guard cells.indices.contains(index) else { return }
         cells[index].isEnabled = enabled
     }
+
+    public var isEnabled: Bool {
+        get { cells.contains(where: \.isEnabled) }
+        set { cells.forEach { $0.isEnabled = newValue } }
+    }
 }
 
 public final class CanonSwitch: NSSwitch {
@@ -367,6 +372,15 @@ final class CanonTextFieldCell: NSTextFieldCell {
 
     override func drawingRect(forBounds rect: NSRect) -> NSRect { inset(super.drawingRect(forBounds: rect)) }
 
+    // background spans the inset
+    override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
+        if drawsBackground, let backgroundColor {
+            backgroundColor.setFill()
+            cellFrame.fill()
+        }
+        drawInterior(withFrame: cellFrame, in: controlView)
+    }
+
     override func edit(withFrame rect: NSRect, in controlView: NSView, editor textObj: NSText, delegate: Any?, event: NSEvent?) {
         super.edit(withFrame: inset(rect), in: controlView, editor: textObj, delegate: delegate, event: event)
     }
@@ -380,6 +394,7 @@ final class CanonTextFieldCell: NSTextFieldCell {
 open class CanonTextCell: NSTextField {
     private let idealWidth: CGFloat
     private var handlers: [(CanonTextCell) -> Void] = []
+    public var onBeginEditing: ((CanonTextCell) -> Void)?
     /// Runs when editing ends: return, tab or focus moving away.
     public var onEndEditing: ((CanonTextCell) -> Void)?
 
@@ -407,6 +422,13 @@ open class CanonTextCell: NSTextField {
     open override var intrinsicContentSize: NSSize {
         NSSize(width: idealWidth, height: DelphiMetrics.controlHeight)
     }
+
+    open override func textDidBeginEditing(_ notification: Notification) {
+        super.textDidBeginEditing(notification)
+        onBeginEditing?(self)
+    }
+
+    public var isEditing: Bool { currentEditor() != nil }
 
     open override func textDidEndEditing(_ notification: Notification) {
         super.textDidEndEditing(notification)

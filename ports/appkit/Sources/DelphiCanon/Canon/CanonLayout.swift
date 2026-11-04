@@ -437,7 +437,7 @@ public final class CanonPage: NSScrollView {
     }
 
     private func padded(_ section: NSView) -> NSView {
-        let wrapper = NSView()
+        let wrapper = CanonPaddedSection()
         wrapper.isHidden = section.isHidden
         let padding = DelphiMetrics.panelPadding
         section.translatesAutoresizingMaskIntoConstraints = false
@@ -453,5 +453,16 @@ public final class CanonPage: NSScrollView {
         ])
         if let maxWidth { section.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth).isActive = true }
         return wrapper
+    }
+}
+
+/// The padding `CanonPage` wraps around a section that does not span the column.
+public final class CanonPaddedSection: NSView {}
+
+extension NSView {
+    /// Hides a page section together with the padding the page wrapped around it.
+    public func setCanonSectionHidden(_ hidden: Bool) {
+        isHidden = hidden
+        (superview as? CanonPaddedSection)?.isHidden = hidden
     }
 }
