@@ -532,6 +532,81 @@ public final class CanonNumberField: CanonView {
     }
 }
 
+/// A decimal to type or step, kept in a range and rounded to `decimals`. Typing commits once it pauses.
+public final class CanonDecimalField: CanonView {
+    public private(set) var value = 0.0
+    private var range = 0.0...0.0
+    private let field = CanonTextCell(width: 72)
+    private let typing = CanonDebounce()
+    private let step: Double
+    private let decimals: Int
+    private var handlers: [(CanonDecimalField) -> Void] = []
+
+    public init(unit: String, step: Double = 0.1, decimals: Int = 3) {
+        self.step = step
+        self.decimals = decimals
+        super.init(fill: .delphiBorder)
+        field.font = .delphiMono(13, weight: .semibold)
+        field.alignment = .right
+        field.onChange { [unowned self] _ in typing.after(CanonDebounce.typingDelay) { [weak self] in self?.commit() } }
+        field.onEndEditing = { [unowned self] in
+            commit()
+            $0.stringValue = format(value)
+        }
+        let label = NSTextField.canon(unit, size: 11, colour: .delphiMutedForeground)
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        let inner = NSStackView(views: [field, label])
+        inner.spacing = 4
+        let middle = CanonView(fill: .delphiCard)
+        middle.pin(inner, insets: NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        let minus = CanonButton("−", kind: .cell, repeats: true) { [unowned self] in set(value - self.step) }
+        minus.accessibilityTitle = String(localized: "Decrease")
+        let plus = CanonButton("+", kind: .cell, repeats: true) { [unowned self] in set(value + self.step) }
+        plus.accessibilityTitle = String(localized: "Increase")
+        pin(CanonStack([minus, middle, plus], vertical: false))
+    }
+
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    public override func setAccessibilityLabel(_ label: String?) {
+        field.setAccessibilityLabel(label)
+    }
+
+    @discardableResult
+    public func onChange(_ handler: @escaping (CanonDecimalField) -> Void) -> Self {
+        handlers.append(handler)
+        return self
+    }
+
+    /// Shows a value set from code; no handler runs.
+    public func show(_ value: Double, range: ClosedRange<Double>) {
+        self.value = value
+        self.range = range
+        if !field.isEditing { field.stringValue = format(value) }
+    }
+
+    private func set(_ next: Double) {
+        let grain = pow(10, Double(decimals))
+        let clamped = min(max((next * grain).rounded() / grain, range.lowerBound), range.upperBound)
+        guard clamped != value else { return }
+        value = clamped
+        if !field.isEditing { field.stringValue = format(value) }
+        handlers.forEach { $0(self) }
+    }
+
+    private func commit() {
+        typing.cancel()
+        if let typed = Double(field.stringValue.replacingOccurrences(of: ",", with: ".")) { set(typed) }
+    }
+
+    private static let posix = Locale(identifier: "en_US_POSIX")
+
+    private func format(_ value: Double) -> String {
+        value.formatted(.number.precision(.fractionLength(0...decimals)).grouping(.never).locale(Self.posix))
+    }
+}
+
 /// A large centred number to type, its unit under it, and step cells either side; the caller reads and steps the text.
 public final class CanonBigNumberField: CanonView {
     public let field = CanonTextCell(width: 0)
