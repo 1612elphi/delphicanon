@@ -79,3 +79,7 @@ extension NSFont {
         .monospacedSystemFont(ofSize: size, weight: weight)
     }
 }
+
+extension NSFont {
+    public var lineHeight: CGFloat { (ascender - descender + leading).rounded(.up) }
+}

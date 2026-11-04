@@ -377,19 +377,22 @@ public final class CanonGrid: CanonView {
     }
 }
 
-/// Scrolling body. Sections are centred, capped at `maxWidth` when set, and inset by the panel padding.
+/// Scrolling body. Sections are centred, capped at `maxWidth` when set, and inset by the panel padding; an unboxed
+/// `CanonCanvas` spans the width, and as the first section it starts at the top edge.
 public final class CanonPage: NSScrollView {
     @available(*, unavailable)
     public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
-    private let stack: CanonStack
+    private let stack = CanonStack(spacing: DelphiMetrics.panelPadding)
+    private let maxWidth: CGFloat?
+    private var top: NSLayoutConstraint!
 
     public convenience init(_ content: NSView, maxWidth: CGFloat? = nil) {
         self.init(sections: [content], maxWidth: maxWidth)
     }
 
     public init(sections: [NSView], maxWidth: CGFloat? = nil) {
-        stack = CanonStack(sections, spacing: DelphiMetrics.panelPadding)
+        self.maxWidth = maxWidth
         super.init(frame: .zero)
         drawsBackground = true
         backgroundColor = .delphiBackground
@@ -401,20 +404,44 @@ public final class CanonPage: NSScrollView {
         let padding = DelphiMetrics.panelPadding
         stack.translatesAutoresizingMaskIntoConstraints = false
         document.addSubview(stack)
-        let fill = stack.widthAnchor.constraint(equalTo: document.widthAnchor, constant: -padding * 2)
-        fill.priority = .init(999)
+        top = stack.topAnchor.constraint(equalTo: document.topAnchor, constant: padding)
         NSLayoutConstraint.activate([
             document.topAnchor.constraint(equalTo: contentView.topAnchor),
             document.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            stack.topAnchor.constraint(equalTo: document.topAnchor, constant: padding),
+            top,
             document.bottomAnchor.constraint(equalTo: stack.bottomAnchor, constant: padding),
-            stack.centerXAnchor.constraint(equalTo: document.centerXAnchor),
-            fill,
+            stack.leadingAnchor.constraint(equalTo: document.leadingAnchor),
+            stack.trailingAnchor.constraint(equalTo: document.trailingAnchor),
         ])
-        if let maxWidth { stack.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth).isActive = true }
+        setSections(sections)
     }
 
     public func setSections(_ sections: [NSView]) {
-        stack.setViews(sections)
+        stack.setViews(sections.map { Self.spans($0) ? $0 : padded($0) })
+        (sections.first as? CanonCanvas)?.dropsTopRule = sections.first.map(Self.spans) == true
+        top.constant = sections.first.map(Self.spans) == true ? 0 : DelphiMetrics.panelPadding
+    }
+
+    private static func spans(_ section: NSView) -> Bool {
+        (section as? CanonCanvas)?.isBoxed == false
+    }
+
+    private func padded(_ section: NSView) -> NSView {
+        let wrapper = NSView()
+        wrapper.isHidden = section.isHidden
+        let padding = DelphiMetrics.panelPadding
+        section.translatesAutoresizingMaskIntoConstraints = false
+        wrapper.addSubview(section)
+        let fill = section.widthAnchor.constraint(equalTo: wrapper.widthAnchor, constant: -padding * 2)
+        fill.priority = .init(999)
+        NSLayoutConstraint.activate([
+            section.topAnchor.constraint(equalTo: wrapper.topAnchor),
+            section.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor),
+            section.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor),
+            section.widthAnchor.constraint(lessThanOrEqualTo: wrapper.widthAnchor, constant: -padding * 2),
+            fill,
+        ])
+        if let maxWidth { section.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth).isActive = true }
+        return wrapper
     }
 }

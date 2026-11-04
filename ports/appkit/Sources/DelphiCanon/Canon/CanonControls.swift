@@ -39,6 +39,7 @@ public final class CanonButton: CanonView {
 
     private let label = NSTextField.canon()
     private let image = NSImageView()
+    private lazy var content = NSStackView(views: [image, label])
     private var isHovering = false {
         didSet { if isHovering != oldValue { refresh() } }
     }
@@ -69,7 +70,6 @@ public final class CanonButton: CanonView {
         if boxed { border = (.delphiBorder, DelphiMetrics.hairline) }
         label.alignment = .center
         label.setContentCompressionResistancePriority(.init(700), for: .horizontal)
-        let content = NSStackView(views: [image, label])
         content.spacing = 6
         content.translatesAutoresizingMaskIntoConstraints = false
         addSubview(content)
@@ -119,6 +119,11 @@ public final class CanonButton: CanonView {
         alphaValue = isPressed ? 0.75 : 1
         setAccessibilityLabel(text.isEmpty ? systemImage : text)
         setAccessibilityEnabled(isEnabled)
+        invalidateIntrinsicContentSize()
+    }
+
+    public override var intrinsicContentSize: NSSize {
+        NSSize(width: content.fittingSize.width + 24, height: NSView.noIntrinsicMetric)
     }
 
     public func flashCopied() {
