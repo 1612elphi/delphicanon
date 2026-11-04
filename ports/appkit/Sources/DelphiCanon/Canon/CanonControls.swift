@@ -524,3 +524,32 @@ public final class CanonNumberField: CanonView {
         if value != before { handlers.forEach { $0(self) } }
     }
 }
+
+/// A large centred number to type, its unit under it, and step cells either side; the caller reads and steps the text.
+public final class CanonBigNumberField: CanonView {
+    public let field = CanonTextCell(width: 0)
+    public let unit = NSTextField.canon(size: 11, weight: .bold, colour: .delphiMutedForeground)
+    public var onEndEditing: (() -> Void)?
+
+    /// - Parameter onStep: called with -1 or 1.
+    public init(placeholder: String, unit text: String? = nil, onStep: @escaping (Int) -> Void) {
+        super.init(fill: .delphiBorder)
+        field.placeholderString = placeholder
+        field.font = .delphiMono(32, weight: .bold)
+        field.alignment = .center
+        field.onEndEditing = { [unowned self] _ in onEndEditing?() }
+        unit.stringValue = text ?? ""
+        unit.alignment = .center
+        let middle = CanonView(fill: .delphiCard)
+        middle.pin(CanonStack([field, unit], spacing: 4), insets: NSEdgeInsets(top: 16, left: 0, bottom: 12, right: 0))
+        let minus = CanonButton("−", kind: .cell, repeats: true) { onStep(-1) }
+        minus.accessibilityTitle = String(localized: "Decrease")
+        let plus = CanonButton("+", kind: .cell, repeats: true) { onStep(1) }
+        plus.accessibilityTitle = String(localized: "Increase")
+        for cell in [minus, plus] { cell.widthAnchor.constraint(equalToConstant: DelphiMetrics.rowHeight).isActive = true }
+        pin(CanonStack([minus, middle, plus], vertical: false))
+    }
+
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
