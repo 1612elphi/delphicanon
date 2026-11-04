@@ -20,6 +20,27 @@ public enum FileExportService {
         }
     }
 
+    /// Asks where to save a copy of the file at `source`, starting from its name; the source stays where it is.
+    public static func save(file source: URL, from view: NSView? = nil) {
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = safeFilename(source.lastPathComponent)
+        let write = { (response: NSApplication.ModalResponse) in
+            guard response == .OK, let url = panel.url else { return }
+            do {
+                // the panel confirmed replacing
+                if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.removeItem(at: url) }
+                try FileManager.default.copyItem(at: source, to: url)
+            } catch {
+                NSAlert(error: error).runModal()
+            }
+        }
+        if let window = view?.window {
+            panel.beginSheetModal(for: window, completionHandler: write)
+        } else {
+            write(panel.runModal())
+        }
+    }
+
     /// The share menu for `items`, under `view`.
     public static func share(_ items: [Any], from view: NSView) {
         NSSharingServicePicker(items: items).show(relativeTo: view.bounds, of: view, preferredEdge: .minY)
