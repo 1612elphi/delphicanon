@@ -108,6 +108,7 @@ public final class CanonButton: CanonPressable {
     private let label = NSTextField.canon()
     private let image = NSImageView()
     private lazy var content = NSStackView(views: [image, label])
+    private var contentWidth: CGFloat = 0
     private let repeats: Bool
     private var holdTimer: Timer?
     private var didRepeat = false
@@ -181,11 +182,16 @@ public final class CanonButton: CanonPressable {
         alphaValue = isPressed ? 0.75 : 1
         setAccessibilityLabel(accessibilityTitle ?? (text.isEmpty ? systemImage : text))
         setAccessibilityEnabled(isEnabled)
-        invalidateIntrinsicContentSize()
+        // fittingSize per call stalled long lists
+        let width = content.fittingSize.width + sideInset * 2
+        if width != contentWidth {
+            contentWidth = width
+            invalidateIntrinsicContentSize()
+        }
     }
 
     public override var intrinsicContentSize: NSSize {
-        NSSize(width: content.fittingSize.width + sideInset * 2, height: NSView.noIntrinsicMetric)
+        NSSize(width: contentWidth, height: NSView.noIntrinsicMetric)
     }
 
     public func flashCopied() {
