@@ -27,6 +27,8 @@ extension NSColor {
     public static let mathYellow = asset(light: (0.965, 0.776, 0.157), dark: (0.914, 0.741, 0.200))
     public static let mathClay = asset(light: (0.659, 0.275, 0.133), dark: (0.925, 0.561, 0.431))
     public static let mathBlue = asset(light: (0.125, 0.333, 0.561), dark: (0.537, 0.706, 0.922))
+    public static let mathUmber = asset(light: (0.235, 0.188, 0.145), dark: (0.251, 0.204, 0.157))
+    public static let mathCream = asset(light: (0.980, 0.961, 0.902), dark: (0.922, 0.894, 0.824))
 
     private static func asset(light: (CGFloat, CGFloat, CGFloat), dark: (CGFloat, CGFloat, CGFloat)) -> NSColor {
         NSColor(name: nil) { appearance in
