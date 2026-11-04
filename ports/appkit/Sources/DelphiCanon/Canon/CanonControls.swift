@@ -467,7 +467,7 @@ open class CanonTextCell: NSTextField {
 }
 
 public final class CanonNumberField: CanonView {
-    private let field = CanonTextCell(width: 48)
+    private let field: CanonTextCell
     private let step: Int
     private var handlers: [(CanonNumberField) -> Void] = []
 
@@ -482,7 +482,8 @@ public final class CanonNumberField: CanonView {
         }
     }
 
-    public init(value: Int, range: ClosedRange<Int> = 0...Int.max, step: Int = 1, unit: String? = nil) {
+    public init(value: Int, range: ClosedRange<Int> = 0...Int.max, step: Int = 1, unit: String? = nil, width: CGFloat = 48) {
+        field = CanonTextCell(width: width)
         self.range = range
         self.value = min(max(value, range.lowerBound), range.upperBound)
         self.step = step
