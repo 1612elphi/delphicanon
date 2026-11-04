@@ -332,12 +332,14 @@ public final class CanonImageCompare: CanonView {
             grip.layer?.backgroundColor = NSColor.delphiCard.cgColor
             grip.layer?.borderColor = NSColor.delphiForeground.cgColor
         }
-        let inset = bounds.insetBy(dx: 10, dy: 10)
+        // insetBy past zero is null, origin infinite
+        let inset = bounds.width > 20 && bounds.height > 20 ? bounds.insetBy(dx: 10, dy: 10) : bounds
         let leading = beforeTag.fittingSize, trailing = afterTag.fittingSize
         beforeTag.frame = CGRect(origin: CGPoint(x: inset.minX, y: inset.minY), size: leading)
         afterTag.frame = CGRect(origin: CGPoint(x: inset.maxX - trailing.width, y: inset.minY), size: trailing)
-        let height = failure.sizeThatFits(CGSize(width: bounds.width - 48, height: .greatestFiniteMagnitude)).height
-        failure.frame = CGRect(x: 24, y: (bounds.height - height) / 2, width: bounds.width - 48, height: height)
+        let width = max(0, bounds.width - 48)
+        let height = width > 0 ? failure.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height : 0
+        failure.frame = CGRect(x: 24, y: (bounds.height - height) / 2, width: width, height: height)
     }
 
     private static func tag(_ text: String) -> NSView {
