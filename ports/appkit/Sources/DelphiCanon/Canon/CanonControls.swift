@@ -138,7 +138,7 @@ public final class CanonButton: CanonPressable {
         NSLayoutConstraint.activate([
             content.centerXAnchor.constraint(equalTo: centerXAnchor),
             content.centerYAnchor.constraint(equalTo: centerYAnchor),
-            content.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 12),
+            content.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: sideInset),
             content.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 6),
         ])
         let fills = kind == .primary || kind == .secondary
@@ -151,6 +151,8 @@ public final class CanonButton: CanonPressable {
 
     @available(*, unavailable)
     public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    private var sideInset: CGFloat { kind == .segment ? 6 : 12 }
 
     private var isFilled: Bool {
         kind == .primary || (isSelected && (kind == .segment || kind == .secondary))
@@ -183,7 +185,7 @@ public final class CanonButton: CanonPressable {
     }
 
     public override var intrinsicContentSize: NSSize {
-        NSSize(width: content.fittingSize.width + 24, height: NSView.noIntrinsicMetric)
+        NSSize(width: content.fittingSize.width + sideInset * 2, height: NSView.noIntrinsicMetric)
     }
 
     public func flashCopied() {
