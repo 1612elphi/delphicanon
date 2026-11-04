@@ -1,6 +1,6 @@
 import AppKit
 
-public enum DelphiMetrics {
+public nonisolated enum DelphiMetrics {
     public static let hairline: CGFloat = 1
     public static let frame: CGFloat = 2
     public static let controlHeight: CGFloat = 32
@@ -22,6 +22,12 @@ extension NSColor {
     public static let delphiAccentBG = oklch((0.91, 0.04, 95), dark: (0.28, 0.04, 145))
     public static let delphiDestructive = oklch((0.55, 0.2, 25), dark: (0.6, 0.18, 25))
     public static let delphiBorder = oklch((0.88, 0.03, 95), dark: (0.3, 0.04, 145))
+    // ios asset catalogue values
+    public static let mathGreen = NSColor(name: nil) { appearance in
+        appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua
+            ? NSColor(srgbRed: 0.490, green: 0.741, blue: 0.451, alpha: 1)
+            : NSColor(srgbRed: 0.118, green: 0.400, blue: 0.149, alpha: 1)
+    }
 
     private static func oklch(_ light: (Double, Double, Double), dark: (Double, Double, Double)) -> NSColor {
         NSColor(name: nil) { appearance in
