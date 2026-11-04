@@ -209,9 +209,16 @@ public final class CanonEmptyRow: CanonView {
         super.init(fill: .delphiCard)
         let label = CanonStatus(text, .muted)
         label.alignment = .center
-        pin(label, insets: canonInsets(vertical: 12, horizontal: DelphiMetrics.panelPadding))
-        heightAnchor.constraint(greaterThanOrEqualToConstant: 96).isActive = true
-        label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(label)
+        let padding = DelphiMetrics.panelPadding
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            trailingAnchor.constraint(equalTo: label.trailingAnchor, constant: padding),
+            label.centerYAnchor.constraint(equalTo: centerYAnchor),
+            label.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 12),
+            heightAnchor.constraint(greaterThanOrEqualToConstant: 96),
+        ])
     }
 }
 
