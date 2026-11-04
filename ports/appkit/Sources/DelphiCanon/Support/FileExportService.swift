@@ -8,7 +8,7 @@ public enum FileExportService {
         let write = { (response: NSApplication.ModalResponse) in
             guard response == .OK, let url = panel.url else { return }
             do {
-                try data.write(to: url)
+                try data.write(to: url, options: .atomic)
             } catch {
                 NSAlert(error: error).runModal()
             }
@@ -27,9 +27,18 @@ public enum FileExportService {
         let write = { (response: NSApplication.ModalResponse) in
             guard response == .OK, let url = panel.url else { return }
             do {
-                // the panel confirmed replacing
-                if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.removeItem(at: url) }
-                try FileManager.default.copyItem(at: source, to: url)
+                guard url.resolvingSymlinksInPath().standardizedFileURL != source.resolvingSymlinksInPath().standardizedFileURL else { return }
+                let files = FileManager.default
+                // the original stays until the copy is whole
+                let staging = try files.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: url, create: true)
+                defer { try? files.removeItem(at: staging) }
+                let copy = staging.appendingPathComponent(url.lastPathComponent)
+                try files.copyItem(at: source, to: copy)
+                if files.fileExists(atPath: url.path) {
+                    _ = try files.replaceItemAt(url, withItemAt: copy)
+                } else {
+                    try files.moveItem(at: copy, to: url)
+                }
             } catch {
                 NSAlert(error: error).runModal()
             }
