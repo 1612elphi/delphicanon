@@ -28,6 +28,16 @@ extension NSColor {
             ? NSColor(srgbRed: 0.490, green: 0.741, blue: 0.451, alpha: 1)
             : NSColor(srgbRed: 0.118, green: 0.400, blue: 0.149, alpha: 1)
     }
+    public static let mathYellow = asset(light: (0.965, 0.776, 0.157), dark: (0.914, 0.741, 0.200))
+    public static let mathClay = asset(light: (0.659, 0.275, 0.133), dark: (0.925, 0.561, 0.431))
+    public static let mathBlue = asset(light: (0.125, 0.333, 0.561), dark: (0.537, 0.706, 0.922))
+
+    private static func asset(light: (CGFloat, CGFloat, CGFloat), dark: (CGFloat, CGFloat, CGFloat)) -> NSColor {
+        NSColor(name: nil) { appearance in
+            let (red, green, blue) = appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua ? dark : light
+            return NSColor(srgbRed: red, green: green, blue: blue, alpha: 1)
+        }
+    }
 
     private static func oklch(_ light: (Double, Double, Double), dark: (Double, Double, Double)) -> NSColor {
         NSColor(name: nil) { appearance in
