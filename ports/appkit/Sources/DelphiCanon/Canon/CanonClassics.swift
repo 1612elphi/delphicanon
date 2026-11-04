@@ -239,3 +239,69 @@ public final class CanonCodeBlock: CanonView {
         height.constant = min(full, maxHeight ?? full)
     }
 }
+
+/// A calculated figure, monospaced and bold, with an optional smaller unit after it. A changed figure slides in, up
+/// when the number grew and down when it shrank.
+public final class CanonFigure: NSStackView {
+    private let figure = NSTextField.canon()
+    private let unitLabel = NSTextField.canon()
+    private let halo: NSColor?
+    private var value = 0.0
+    private var colour: NSColor
+
+    /// - Parameter halo: outline in this colour, for a figure that sits over a picture.
+    public init(size: CGFloat = 40, colour: NSColor = .delphiPrimary, halo: NSColor? = nil) {
+        self.colour = colour
+        self.halo = halo
+        super.init(frame: .zero)
+        figure.font = .delphiMono(size, weight: .bold)
+        unitLabel.font = .systemFont(ofSize: size * 0.55, weight: .semibold, width: .condensed)
+        figure.wantsLayer = true
+        orientation = .horizontal
+        alignment = .firstBaseline
+        spacing = size * 0.08
+        setViews([figure, unitLabel], in: .leading)
+        setAccessibilityElement(true)
+        setAccessibilityRole(.staticText)
+    }
+
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    public func setColour(_ colour: NSColor) {
+        self.colour = colour
+        paint()
+    }
+
+    public func show(_ text: String, unit: String = "", animated: Bool = true) {
+        guard text != figure.stringValue || unit != unitLabel.stringValue else { return }
+        let next = Double(text.prefix { $0.isNumber || $0 == "." || $0 == "-" }) ?? 0
+        if animated, !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion, text != figure.stringValue {
+            let slide = CATransition()
+            slide.type = .push
+            slide.subtype = next >= value ? .fromTop : .fromBottom
+            slide.duration = 0.25
+            figure.layer?.add(slide, forKey: "slide")
+        }
+        value = next
+        figure.stringValue = text
+        unitLabel.stringValue = unit
+        unitLabel.isHidden = unit.isEmpty
+        setAccessibilityLabel(text + unit)
+        paint()
+    }
+
+    private func paint() {
+        var attributes: [NSAttributedString.Key: Any] = [.foregroundColor: colour]
+        if let halo {
+            let shadow = NSShadow()
+            shadow.shadowColor = halo
+            shadow.shadowBlurRadius = 2
+            attributes[.shadow] = shadow
+        }
+        for label in [figure, unitLabel] {
+            attributes[.font] = label.font
+            label.attributedStringValue = NSAttributedString(string: label.stringValue, attributes: attributes)
+        }
+    }
+}
