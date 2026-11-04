@@ -346,6 +346,16 @@ public final class CanonStatus: NSTextField {
     @available(*, unavailable)
     public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
+    /// A status that wraps onto as many lines as it needs.
+    public static func wrapping(_ text: String, _ tone: Tone) -> CanonStatus {
+        let status = CanonStatus(text, tone)
+        status.maximumNumberOfLines = 0
+        status.lineBreakMode = .byWordWrapping
+        status.cell?.wraps = true
+        status.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        return status
+    }
+
     public static func row(_ text: String, _ tone: Tone) -> NSView {
         row(CanonStatus(text, tone))
     }
