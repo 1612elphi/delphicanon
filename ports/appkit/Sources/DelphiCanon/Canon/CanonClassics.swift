@@ -261,6 +261,8 @@ public final class CanonFigure: NSStackView {
         alignment = .firstBaseline
         spacing = size * 0.08
         setViews([figure, unitLabel], in: .leading)
+        setContentHuggingPriority(.required, for: .horizontal)
+        setContentCompressionResistancePriority(.required, for: .horizontal)
         setAccessibilityElement(true)
         setAccessibilityRole(.staticText)
     }
@@ -276,7 +278,7 @@ public final class CanonFigure: NSStackView {
     public func show(_ text: String, unit: String = "", animated: Bool = true) {
         guard text != figure.stringValue || unit != unitLabel.stringValue else { return }
         let next = Double(text.prefix { $0.isNumber || $0 == "." || $0 == "-" }) ?? 0
-        if animated, !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion, text != figure.stringValue {
+        if animated, canonAnimates, text != figure.stringValue {
             let slide = CATransition()
             slide.type = .push
             slide.subtype = next >= value ? .fromTop : .fromBottom
@@ -289,6 +291,12 @@ public final class CanonFigure: NSStackView {
         unitLabel.isHidden = unit.isEmpty
         setAccessibilityLabel(text + unit)
         paint()
+    }
+
+    /// A formatted amount such as "3 d" or "184 bytes": the leading number large, the rest as the unit.
+    public func show(formatted text: String, animated: Bool = true) {
+        let number = String(text.prefix { $0.isNumber || $0 == "," || $0 == "." })
+        show(number, unit: text.dropFirst(number.count).trimmingCharacters(in: .whitespaces), animated: animated)
     }
 
     private func paint() {

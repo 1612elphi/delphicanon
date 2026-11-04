@@ -3,18 +3,16 @@ import AppKit
 /// A flush cell showing the chosen title; a click opens a menu of all titles under it.
 public final class CanonMenuCell: CanonPressable {
     public let titles: [String]
-    private let placeholder: String
     private let label = NSTextField.canon(weight: .medium)
     private let chevron = NSImageView(image: .canonSymbol("chevron.up.chevron.down", size: 10) ?? NSImage())
     private var handlers: [(CanonMenuCell) -> Void] = []
 
-    public var selectedIndex: Int? {
+    public var selectedIndex: Int {
         didSet { refresh() }
     }
 
-    public init(_ titles: [String], selected: Int? = nil, placeholder: String = "\u{2014}") {
+    public init(_ titles: [String], selected: Int = 0) {
         self.titles = titles
-        self.placeholder = placeholder
         selectedIndex = selected
         super.init(fill: .delphiCard)
         chevron.contentTintColor = .delphiMutedForeground
@@ -34,7 +32,7 @@ public final class CanonMenuCell: CanonPressable {
     }
 
     private func refresh() {
-        label.stringValue = selectedIndex.flatMap { titles.indices.contains($0) ? titles[$0] : nil } ?? placeholder
+        label.stringValue = titles.indices.contains(selectedIndex) ? titles[selectedIndex] : ""
         setAccessibilityValue(label.stringValue)
     }
 
@@ -52,7 +50,7 @@ public final class CanonMenuCell: CanonPressable {
             item.state = index == selectedIndex ? .on : .off
             menu.addItem(item)
         }
-        menu.popUp(positioning: selectedIndex.flatMap { menu.item(at: $0) }, at: NSPoint(x: 0, y: bounds.maxY), in: self)
+        menu.popUp(positioning: menu.item(at: selectedIndex), at: NSPoint(x: 0, y: bounds.maxY), in: self)
     }
 
     @objc private func picked(_ item: NSMenuItem) {

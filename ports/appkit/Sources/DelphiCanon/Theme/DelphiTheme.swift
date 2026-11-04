@@ -23,11 +23,7 @@ extension NSColor {
     public static let delphiDestructive = oklch((0.55, 0.2, 25), dark: (0.6, 0.18, 25))
     public static let delphiBorder = oklch((0.88, 0.03, 95), dark: (0.3, 0.04, 145))
     // ios asset catalogue values
-    public static let mathGreen = NSColor(name: nil) { appearance in
-        appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua
-            ? NSColor(srgbRed: 0.490, green: 0.741, blue: 0.451, alpha: 1)
-            : NSColor(srgbRed: 0.118, green: 0.400, blue: 0.149, alpha: 1)
-    }
+    public static let mathGreen = asset(light: (0.118, 0.400, 0.149), dark: (0.490, 0.741, 0.451))
     public static let mathYellow = asset(light: (0.965, 0.776, 0.157), dark: (0.914, 0.741, 0.200))
     public static let mathClay = asset(light: (0.659, 0.275, 0.133), dark: (0.925, 0.561, 0.431))
     public static let mathBlue = asset(light: (0.125, 0.333, 0.561), dark: (0.537, 0.706, 0.922))

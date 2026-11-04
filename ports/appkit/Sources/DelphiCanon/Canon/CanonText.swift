@@ -73,8 +73,8 @@ public final class CanonTextArea: CanonView, NSTextViewDelegate {
 
 /// The input block of a text tool: a text area with Paste and Clear under it. Typing reaches `onChange` once it pauses.
 public final class CanonTextInput {
-    private static let typingDelay = 0.4
     public let area: CanonTextArea
+    private let extra: [NSView]
     private let typing = CanonDebounce()
     public var onChange: ((String) -> Void)?
 
@@ -83,19 +83,21 @@ public final class CanonTextInput {
     }
     private lazy var clear = CanonButton(String(localized: "Clear"), systemImage: "trash", kind: .cell) { [unowned self] in set("") }
 
-    public init(placeholder: String = String(localized: "Type or paste"), height: CGFloat = 128) {
+    /// - Parameter extra: rows between the text area and the Paste and Clear bar.
+    public init(placeholder: String = String(localized: "Type or paste"), height: CGFloat = 128, extra: [NSView] = []) {
         area = CanonTextArea(placeholder: placeholder, height: height)
+        self.extra = extra
         area.setAccessibilityLabel(String(localized: "Input"))
         area.onChange { [unowned self] area in
             clear.isEnabled = !area.text.isEmpty
-            typing.after(Self.typingDelay) { [weak self] in self?.onChange?(area.text) }
+            typing.after(CanonDebounce.typingDelay) { [weak self] in self?.onChange?(area.text) }
         }
         clear.isEnabled = false
     }
 
     public var text: String { area.text }
 
-    public var rows: [NSView] { [area, CanonActionBar([paste, clear])] }
+    public var rows: [NSView] { [area] + extra + [CanonActionBar([paste, clear])] }
 
     /// Text set from code reaches `onChange` at once.
     public func set(_ text: String) {

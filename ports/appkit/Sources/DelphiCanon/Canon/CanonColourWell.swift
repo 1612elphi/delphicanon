@@ -61,9 +61,18 @@ public final class CanonColourWell: CanonView {
         return self
     }
 
+    private var notifyPending = false
+
+    // throttle panel drag events
     @objc private func picked() {
         colour = swatch.color
-        handlers.forEach { $0(self) }
+        guard !notifyPending else { return }
+        notifyPending = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            guard let self else { return }
+            notifyPending = false
+            handlers.forEach { $0(self) }
+        }
     }
 
     private func refresh() {

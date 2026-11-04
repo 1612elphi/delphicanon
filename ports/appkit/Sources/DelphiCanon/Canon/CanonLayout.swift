@@ -59,6 +59,13 @@ extension NSTextField {
     }
 }
 
+extension NSView {
+    /// In a window, and the user has not asked to reduce motion.
+    public var canonAnimates: Bool {
+        window != nil && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
+    }
+}
+
 /// Runs `apply` now and again after any `@Observable` value it read changes, for as long as `owner` lives.
 public func canonObserve(_ owner: AnyObject, _ apply: @escaping @MainActor () -> Void) {
     let weakOwner = WeakOwner(owner)
@@ -80,6 +87,9 @@ private final class WeakOwner: @unchecked Sendable {
 
 /// Runs the latest body once typing has paused.
 public final class CanonDebounce {
+    /// Pause after the last keystroke before typed input is read.
+    public static let typingDelay = 0.4
+
     private var pending: DispatchWorkItem?
 
     public init() {}
@@ -457,12 +467,32 @@ public final class CanonPage: NSScrollView {
 }
 
 /// The padding `CanonPage` wraps around a section that does not span the column.
-public final class CanonPaddedSection: NSView {}
+final class CanonPaddedSection: NSView {}
 
 extension NSView {
     /// Hides a page section together with the padding the page wrapped around it.
     public func setCanonSectionHidden(_ hidden: Bool) {
         isHidden = hidden
         (superview as? CanonPaddedSection)?.isHidden = hidden
+    }
+}
+
+extension CGContext {
+    /// Strokes `rect` as it is, hairline wide and dashed, leaving the context's stroke state as it found it.
+    public func strokeDashed(_ rect: CGRect, colour: NSColor, lengths: [CGFloat]) {
+        saveGState()
+        setStrokeColor(colour.cgColor)
+        setLineWidth(DelphiMetrics.hairline)
+        setLineDash(phase: 0, lengths: lengths)
+        stroke(rect)
+        restoreGState()
+    }
+}
+
+extension NSAttributedString {
+    /// Draws the string with its box centred on `point`.
+    public func draw(centredAt point: CGPoint) {
+        let size = size()
+        draw(at: CGPoint(x: point.x - size.width / 2, y: point.y - size.height / 2))
     }
 }

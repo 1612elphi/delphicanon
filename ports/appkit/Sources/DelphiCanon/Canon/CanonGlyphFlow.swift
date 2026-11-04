@@ -99,7 +99,7 @@ public final class CanonGlyphFlow<Glyph: Equatable>: NSView {
     /// The rows in view; glyphs outside it are not drawn.
     private var rowWindow = CGRect.zero
 
-    public static var settleDuration: Double { 0.45 }
+    private static var settleDuration: Double { 0.45 }
 
     public override var isFlipped: Bool { true }
 
@@ -119,8 +119,6 @@ public final class CanonGlyphFlow<Glyph: Equatable>: NSView {
         return CGRect(x: padding, y: padding * 0.75, width: max(0, bounds.width - padding * 2), height: max(0, bounds.height - padding * 1.5))
     }
 
-    private var reducesMotion: Bool { NSWorkspace.shared.accessibilityDisplayShouldReduceMotion }
-
     /// Replaces the glyphs. Glyphs that match at the start and the end stay and slide; the rest are new.
     /// - Parameter dropping: glyphs cut from the front since the last call, or added there if negative; the rest line up
     ///   with the old glyphs, so a caller that shows only the tail of a long text slides them as if it showed all of it.
@@ -135,7 +133,7 @@ public final class CanonGlyphFlow<Glyph: Equatable>: NSView {
         while suffix < limit, old[old.count - 1 - suffix] == glyphs[glyphs.count - 1 - suffix] { suffix += 1 }
         self.glyphs = glyphs
         target = layoutFrames()
-        guard animated, window != nil, !reducesMotion, shown.count == old.count else {
+        guard animated, canonAnimates, shown.count == old.count else {
             stopAnimating()
             return
         }

@@ -159,7 +159,8 @@ public final class CanonButton: CanonPressable {
         kind == .primary || (isSelected && (kind == .segment || kind == .secondary))
     }
 
-    private func refresh() {
+    /// - Parameter remeasure: false for hover, press and enabled changes, which keep the width.
+    private func refresh(remeasure: Bool = true) {
         let filled = isFilled
         let size: CGFloat = kind == .segment ? 11 : 13
         label.font = .delphi(size, weight: filled ? .semibold : .medium)
@@ -182,7 +183,7 @@ public final class CanonButton: CanonPressable {
         alphaValue = isPressed ? 0.75 : 1
         setAccessibilityLabel(accessibilityTitle ?? (text.isEmpty ? systemImage : text))
         setAccessibilityEnabled(isEnabled)
-        // fittingSize per call stalled long lists
+        guard remeasure else { return }
         let width = content.fittingSize.width + sideInset * 2
         if width != contentWidth {
             contentWidth = width
@@ -210,7 +211,7 @@ public final class CanonButton: CanonPressable {
     }
 
     public override func stateChanged() {
-        refresh()
+        refresh(remeasure: false)
     }
 
     public override func mouseDown(with event: NSEvent) {
@@ -558,4 +559,42 @@ public final class CanonBigNumberField: CanonView {
 
     @available(*, unavailable)
     public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+/// A card row with a symbol, a text cell and, with `clears`, a clear cell that shows while there is text. Typing
+/// reaches `onChange` once it pauses; Clear and `set` reach it at once.
+public final class CanonSearchField: CanonView {
+    public let field: CanonTextCell
+    public var onChange: ((String) -> Void)?
+    private let typing = CanonDebounce()
+    private lazy var clear: CanonButton = CanonButton("", systemImage: "xmark.circle.fill", kind: .cell) { [unowned self] in set("") }
+
+    public init(placeholder: String, symbol: String = "magnifyingglass", clears: Bool = true, width: CGFloat = 240) {
+        field = CanonTextCell(placeholder: placeholder, width: width)
+        super.init(fill: .delphiCard)
+        let icon = NSImageView(image: .canonSymbol(symbol, size: 12) ?? NSImage())
+        icon.contentTintColor = .delphiMutedForeground
+        icon.setContentHuggingPriority(.required, for: .horizontal)
+        field.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        let row = NSStackView(views: clears ? [icon, field, clear] : [icon, field])
+        row.distribution = .fill
+        row.spacing = 0
+        row.edgeInsets = NSEdgeInsets(top: 0, left: DelphiMetrics.panelPadding, bottom: 0, right: 0)
+        pin(row)
+        clear.accessibilityTitle = String(localized: "Clear")
+        clear.isHidden = true
+        field.onChange { [unowned self] field in
+            clear.isHidden = field.stringValue.isEmpty
+            typing.after(CanonDebounce.typingDelay) { [weak self] in self?.onChange?(field.stringValue) }
+        }
+    }
+
+    public var text: String { field.stringValue }
+
+    public func set(_ text: String) {
+        typing.cancel()
+        field.stringValue = text
+        clear.isHidden = text.isEmpty
+        onChange?(text)
+    }
 }

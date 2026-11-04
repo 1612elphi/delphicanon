@@ -211,7 +211,7 @@ public final class CanonCanvas: CanonView {
 
     public override func layout() {
         super.layout()
-        guard size == .fitting, content.bounds.width != fittedWidth else { return }
+        guard size == .fitting, content.bounds.width > 0, content.bounds.width != fittedWidth else { return }
         fittedWidth = content.bounds.width
         refit(animated: false)
         content.needsDisplay = true
@@ -219,7 +219,7 @@ public final class CanonCanvas: CanonView {
 
     /// Asks a `.fitting` canvas's content for its height again, after the content changed.
     public func refit(animated: Bool) {
-        guard size == .fitting, let content = content as? CanonCanvasContent else { return }
+        guard size == .fitting, let content = content as? CanonCanvasContent, content.bounds.width > 0 else { return }
         let band = Self.band(fitting: content.canvasFittingHeight)
         guard band > 0, band != fitted else { return }
         fitted = band
@@ -268,6 +268,7 @@ public final class CanonCanvas: CanonView {
 /// A view that draws itself inside a `.fitting` canvas.
 public protocol CanonCanvasContent: NSView {
     /// Height the content needs at its current width, without the canvas frame; zero keeps the band as it is.
+    /// The canvas asks only once the content has a width.
     var canvasFittingHeight: CGFloat { get }
 }
 
