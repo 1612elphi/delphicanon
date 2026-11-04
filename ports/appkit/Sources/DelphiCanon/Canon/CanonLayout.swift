@@ -461,7 +461,8 @@ public final class CanonPage: NSScrollView {
             section.widthAnchor.constraint(lessThanOrEqualTo: wrapper.widthAnchor, constant: -padding * 2),
             fill,
         ])
-        if let maxWidth { section.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth).isActive = true }
+        // held by wrapper: leaves with it
+        if let maxWidth { wrapper.addConstraint(section.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth)) }
         return wrapper
     }
 }
