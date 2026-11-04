@@ -45,6 +45,11 @@ public final class CanonFileCell: CanonView {
         url = nil
     }
 
+    /// Shows `chosen` as the file without running the change handlers, for a file that came from elsewhere.
+    public func show(_ chosen: URL) {
+        url = chosen
+    }
+
     private func refresh() {
         name.stringValue = url?.lastPathComponent ?? String(localized: "None")
         name.textColor = url == nil ? .delphiMutedForeground : .delphiForeground
