@@ -80,6 +80,11 @@ public final class CanonGlyphFlow<Glyph: Equatable>: NSView {
         didSet { if metrics != oldValue { relayout() } }
     }
 
+    /// Glyph kept in view, with a row of context above it; nil keeps the last row in view.
+    public var focus: Int? {
+        didSet { if focus != oldValue { settle(from: presentedFrames()) } }
+    }
+
     /// Draws a glyph into its frame; the index is nil for a glyph fading out.
     public var paint: (Glyph, Int?, CGRect, CGContext) -> Void = { _, _, _, _ in }
     /// Draws the picture with no glyphs, into the content area.
@@ -149,6 +154,18 @@ public final class CanonGlyphFlow<Glyph: Equatable>: NSView {
         animate()
     }
 
+    /// The glyph under a point, or the nearest in its row within `slop`; spaces and newlines never match.
+    public func glyphIndex(at point: CGPoint, slop: CGFloat = 0) -> Int? {
+        guard rowWindow.contains(point) else { return nil }
+        let half = metrics.rowGap / 2
+        let candidates = target.indices.filter { i in
+            kind(glyphs[i]) == .glyph && target[i].width > 0 && (target[i].minY - half...target[i].maxY + half).contains(point.y)
+        }
+        func distance(_ i: Int) -> CGFloat { max(0, target[i].minX - point.x, point.x - target[i].maxX) }
+        guard let nearest = candidates.min(by: { distance($0) < distance($1) }), distance(nearest) <= slop else { return nil }
+        return nearest
+    }
+
     private func presentedFrames() -> [CGRect] {
         target.indices.map(presented)
     }
@@ -166,6 +183,16 @@ public final class CanonGlyphFlow<Glyph: Equatable>: NSView {
                       width: from.width + (to.width - from.width) * e, height: from.height + (to.height - from.height) * e)
     }
 
+    private func settle(from shown: [CGRect]) {
+        target = layoutFrames()
+        guard shown != target else { return needsDisplay = true }
+        guard canonAnimates, shown.count == target.count else { return stopAnimating() }
+        start = shown
+        appearing = Array(repeating: false, count: target.count)
+        ghosts = []
+        animate()
+    }
+
     private func relayout() {
         target = layoutFrames()
         stopAnimating()
@@ -180,7 +207,8 @@ public final class CanonGlyphFlow<Glyph: Equatable>: NSView {
             widths: glyphs.map(measure), kinds: glyphs.map(kind), width: area.width, gap: metrics.gap, height: metrics.height, pitch: pitch
         )
         let fit = max(1, Int((area.height + metrics.rowGap) / pitch))
-        let first = rows <= fit ? 0 : rows - fit
+        let focusRow = focus.flatMap { frames.indices.contains($0) ? Int((frames[$0].minY / pitch).rounded()) - (fit > 2 ? 1 : 0) : nil }
+        let first = rows <= fit ? 0 : min(max(0, focusRow ?? rows - fit), rows - fit)
         let block = CGFloat(min(rows, fit)) * pitch - metrics.rowGap
         let y = area.minY + max(0, (area.height - block) / 2) - CGFloat(first) * pitch
         rowWindow = CGRect(x: bounds.minX, y: y + CGFloat(first) * pitch - metrics.rowGap / 2, width: bounds.width, height: block + metrics.rowGap)
