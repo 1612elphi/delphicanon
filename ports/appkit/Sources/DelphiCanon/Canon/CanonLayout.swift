@@ -69,7 +69,7 @@ public func canonObserve(_ owner: AnyObject, _ apply: @escaping @MainActor () ->
     }
 }
 
-// read on the main actor only
+// main actor reads only
 private final class WeakOwner: @unchecked Sendable {
     weak var value: AnyObject?
 
@@ -418,8 +418,11 @@ public final class CanonPage: NSScrollView {
 
     public func setSections(_ sections: [NSView]) {
         stack.setViews(sections.map { Self.spans($0) ? $0 : padded($0) })
-        (sections.first as? CanonCanvas)?.dropsTopRule = sections.first.map(Self.spans) == true
-        top.constant = sections.first.map(Self.spans) == true ? 0 : DelphiMetrics.panelPadding
+        let spansTop = sections.first.map(Self.spans) == true
+        for (index, section) in sections.enumerated() {
+            (section as? CanonCanvas)?.dropsTopRule = index == 0 && spansTop
+        }
+        top.constant = spansTop ? 0 : DelphiMetrics.panelPadding
     }
 
     private static func spans(_ section: NSView) -> Bool {

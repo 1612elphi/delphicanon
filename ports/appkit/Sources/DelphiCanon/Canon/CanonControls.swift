@@ -8,7 +8,75 @@ extension NSImage {
     }
 }
 
-public final class CanonButton: CanonView {
+/// Tracks hover and press; `press()` runs on a click released inside the view or on an accessibility press.
+open class CanonPressable: CanonView {
+    public var action: (() -> Void)?
+
+    public var isEnabled = true {
+        didSet { if isEnabled != oldValue { stateChanged() } }
+    }
+
+    public private(set) var isHovering = false {
+        didSet { if isHovering != oldValue { stateChanged() } }
+    }
+
+    public private(set) var isPressed = false {
+        didSet { if isPressed != oldValue { stateChanged() } }
+    }
+
+    public override init(fill: NSColor? = nil) {
+        super.init(fill: fill)
+        addTrackingArea(NSTrackingArea(rect: .zero, options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect], owner: self))
+        setAccessibilityElement(true)
+        setAccessibilityRole(.button)
+    }
+
+    @available(*, unavailable)
+    public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    /// Hover, press or enabled state changed.
+    open func stateChanged() {}
+
+    open func press() {
+        action?()
+    }
+
+    open override func mouseEntered(with event: NSEvent) { isHovering = true }
+    open override func mouseExited(with event: NSEvent) { isHovering = false }
+    open override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
+
+    open override func mouseDown(with event: NSEvent) {
+        if isEnabled { isPressed = true }
+    }
+
+    open override func mouseDragged(with event: NSEvent) {
+        if isEnabled { isPressed = bounds.contains(convert(event.locationInWindow, from: nil)) }
+    }
+
+    open override func mouseUp(with event: NSEvent) {
+        let wasPressed = isPressed
+        isPressed = false
+        if isEnabled, wasPressed { press() }
+    }
+
+    open override func viewDidHide() {
+        super.viewDidHide()
+        isHovering = false
+    }
+
+    open override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        if window == nil { isHovering = false }
+    }
+
+    open override func accessibilityPerformPress() -> Bool {
+        guard isEnabled else { return false }
+        press()
+        return true
+    }
+}
+
+public final class CanonButton: CanonPressable {
 
     public enum Kind {
         case primary
@@ -19,7 +87,11 @@ public final class CanonButton: CanonView {
     }
 
     public let kind: Kind
-    public var action: (() -> Void)?
+
+    /// Spoken in place of the title, for a button whose title is a symbol or empty.
+    public var accessibilityTitle: String? {
+        didSet { refresh() }
+    }
 
     public var text: String {
         didSet { if text != oldValue { refresh() } }
@@ -29,10 +101,6 @@ public final class CanonButton: CanonView {
         didSet { if systemImage != oldValue { refresh() } }
     }
 
-    public var isEnabled = true {
-        didSet { if isEnabled != oldValue { refresh() } }
-    }
-
     public var isSelected = false {
         didSet { if isSelected != oldValue { refresh() } }
     }
@@ -40,16 +108,10 @@ public final class CanonButton: CanonView {
     private let label = NSTextField.canon()
     private let image = NSImageView()
     private lazy var content = NSStackView(views: [image, label])
-    private var isHovering = false {
-        didSet { if isHovering != oldValue { refresh() } }
-    }
-    private var isPressed = false {
-        didSet { if isPressed != oldValue { refresh() } }
-    }
     private let repeats: Bool
     private var holdTimer: Timer?
     private var didRepeat = false
-    private var flashRevert: DispatchWorkItem?
+    private let flashRevert = CanonDebounce()
     private var beforeFlash: (text: String, systemImage: String?)?
 
     /// seconds: delay, interval, fast
@@ -65,8 +127,8 @@ public final class CanonButton: CanonView {
         text = title
         self.systemImage = systemImage
         self.repeats = repeats
-        self.action = action
         super.init()
+        self.action = action
         if boxed { border = (.delphiBorder, DelphiMetrics.hairline) }
         label.alignment = .center
         label.setContentCompressionResistancePriority(.init(700), for: .horizontal)
@@ -84,8 +146,6 @@ public final class CanonButton: CanonView {
         let height = heightAnchor.constraint(greaterThanOrEqualToConstant: DelphiMetrics.controlHeight)
         height.priority = .init(999)
         height.isActive = true
-        setAccessibilityElement(true)
-        setAccessibilityRole(.button)
         refresh()
     }
 
@@ -117,7 +177,7 @@ public final class CanonButton: CanonView {
             hovering ? .delphiAccentBG : .delphiCard
         }
         alphaValue = isPressed ? 0.75 : 1
-        setAccessibilityLabel(text.isEmpty ? systemImage : text)
+        setAccessibilityLabel(accessibilityTitle ?? (text.isEmpty ? systemImage : text))
         setAccessibilityEnabled(isEnabled)
         invalidateIntrinsicContentSize()
     }
@@ -135,49 +195,31 @@ public final class CanonButton: CanonView {
         if beforeFlash == nil { beforeFlash = (text, systemImage) }
         text = title
         systemImage = symbol
-        flashRevert?.cancel()
-        let revert = DispatchWorkItem { [weak self] in
+        flashRevert.after(1.5) { [weak self] in
             guard let self, let before = beforeFlash else { return }
             (text, systemImage, beforeFlash) = (before.text, before.systemImage, nil)
         }
-        flashRevert = revert
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: revert)
     }
 
-    public override func updateTrackingAreas() {
-        super.updateTrackingAreas()
-        trackingAreas.forEach(removeTrackingArea)
-        addTrackingArea(NSTrackingArea(rect: .zero, options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect], owner: self))
+    public override func stateChanged() {
+        refresh()
     }
-
-    public override func mouseEntered(with event: NSEvent) { isHovering = true }
-    public override func mouseExited(with event: NSEvent) { isHovering = false }
-    public override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 
     public override func mouseDown(with event: NSEvent) {
-        guard isEnabled else { return }
-        isPressed = true
+        super.mouseDown(with: event)
         didRepeat = false
-        if repeats { schedule(after: Self.repeatTiming.delay, count: 0) }
-    }
-
-    public override func mouseDragged(with event: NSEvent) {
-        guard isEnabled else { return }
-        isPressed = bounds.contains(convert(event.locationInWindow, from: nil))
+        if repeats, isPressed { schedule(after: Self.repeatTiming.delay, count: 0) }
     }
 
     public override func mouseUp(with event: NSEvent) {
         holdTimer?.invalidate()
-        guard isEnabled, isPressed else { return }
-        isPressed = false
-        // hold release: no step
-        if !didRepeat { action?() }
+        super.mouseUp(with: event)
     }
 
-    public override func accessibilityPerformPress() -> Bool {
-        guard isEnabled else { return false }
-        action?()
-        return true
+    public override func press() {
+        // hold release: no step
+        if !didRepeat { action?() }
+        didRepeat = false
     }
 
     private func schedule(after seconds: TimeInterval, count: Int) {
@@ -316,7 +358,7 @@ public final class CanonStatus: NSTextField {
     }
 }
 
-/// Text inset 10 pt and centred vertically.
+// 10 pt inset, centred
 final class CanonTextFieldCell: NSTextFieldCell {
     private func inset(_ rect: NSRect) -> NSRect {
         let height = cellSize(forBounds: rect).height
@@ -338,6 +380,8 @@ final class CanonTextFieldCell: NSTextFieldCell {
 open class CanonTextCell: NSTextField {
     private let idealWidth: CGFloat
     private var handlers: [(CanonTextCell) -> Void] = []
+    /// Runs when editing ends: return, tab or focus moving away.
+    public var onEndEditing: ((CanonTextCell) -> Void)?
 
     public init(text: String = "", placeholder: String = "", width: CGFloat = 180) {
         idealWidth = width
@@ -362,6 +406,11 @@ open class CanonTextCell: NSTextField {
 
     open override var intrinsicContentSize: NSSize {
         NSSize(width: idealWidth, height: DelphiMetrics.controlHeight)
+    }
+
+    open override func textDidEndEditing(_ notification: Notification) {
+        super.textDidEndEditing(notification)
+        onEndEditing?(self)
     }
 
     open override func textDidChange(_ notification: Notification) {
@@ -400,6 +449,8 @@ public final class CanonNumberField: CanonView {
         field.stringValue = String(self.value)
         field.font = .delphi(13, weight: .semibold)
         field.alignment = .right
+        // invalid input reverts
+        field.onEndEditing = { [unowned self] in $0.stringValue = String(self.value) }
         field.onChange { [unowned self] field in
             guard let typed = Int(field.stringValue), self.range.contains(typed), typed != self.value else { return }
             self.value = typed
@@ -416,9 +467,9 @@ public final class CanonNumberField: CanonView {
         }
         middle.pin(inner, insets: NSEdgeInsets(top: 0, left: 0, bottom: 0, right: unit == nil ? 0 : 10))
         let minus = CanonButton("−", kind: .cell, repeats: true) { [unowned self] in nudge(-step) }
-        minus.setAccessibilityLabel(String(localized: "Decrease"))
+        minus.accessibilityTitle = String(localized: "Decrease")
         let plus = CanonButton("+", kind: .cell, repeats: true) { [unowned self] in nudge(step) }
-        plus.setAccessibilityLabel(String(localized: "Increase"))
+        plus.accessibilityTitle = String(localized: "Increase")
         pin(CanonStack([minus, middle, plus], vertical: false))
     }
 

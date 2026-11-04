@@ -48,14 +48,13 @@ public final class CanonSplit: CanonView {
         self.halves = halves
         self.pictureShare = pictureShare
         super.init(fill: .delphiBackground)
-        banner?.dropsTopRule = true
         addSubview(rule)
     }
 
     @available(*, unavailable)
     public required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
-    /// The `halves` sidebar that is one canvas.
+    // halves sidebar canvas
     private var picture: CanonCanvas? {
         halves && sidebar.count == 1 ? sidebar[0] as? CanonCanvas : nil
     }
@@ -104,7 +103,9 @@ public final class CanonSplit: CanonView {
     }
 
     private func rebuild(_ layout: Layout) {
-        let editing = window?.firstResponder as? NSView
+        // restore edited field
+        let responder = window?.firstResponder
+        let editing = ((responder as? NSText)?.delegate as? NSView) ?? responder as? NSView
         for view in [leading, trailing, banner] { view?.removeFromSuperview() }
         (sidebar + main).forEach { $0.removeFromSuperview() }
         picture?.fillsPane = false
@@ -117,12 +118,12 @@ public final class CanonSplit: CanonView {
             leading = CanonPage(sections: (banner.map { [$0] } ?? []) + sections, maxWidth: 720)
         case .sidebar:
             if let banner {
+                banner.dropsTopRule = true
                 banner.translatesAutoresizingMaskIntoConstraints = true
                 addSubview(banner)
             }
             if let picture {
                 picture.fillsPane = true
-                picture.translatesAutoresizingMaskIntoConstraints = true
                 leading = picture
             } else {
                 leading = CanonPage(sections: sidebar)
@@ -162,7 +163,7 @@ public final class CanonCanvas: CanonView {
         didSet { contentTop.constant = dropsTopRule ? 0 : DelphiMetrics.frame }
     }
 
-    /// Caps an `.aspect` canvas in a wide column.
+    /// Caps the height, in a page and as a split banner.
     public var maxHeight: CGFloat? {
         didSet {
             cap?.isActive = false
@@ -239,11 +240,12 @@ public final class CanonCanvas: CanonView {
 
     /// Height of the band at `width`.
     public func height(for width: CGFloat) -> CGFloat {
-        switch size {
+        let height = switch size {
         case .fixed(let points): points
-        case .aspect(let ratio): min(width / ratio + DelphiMetrics.frame * 2, maxHeight ?? .greatestFiniteMagnitude)
+        case .aspect(let ratio): width / ratio + DelphiMetrics.frame * 2
         case .fitting: fitted
         }
+        return min(height, maxHeight ?? height)
     }
 
     private func remakeHeight() {

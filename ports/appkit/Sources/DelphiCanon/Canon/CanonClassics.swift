@@ -4,8 +4,8 @@ import AppKit
 public typealias CanonActionBar = CanonGrid
 
 /// A name and a value in a flush cell; a click copies the value and runs `action`. `show` with a nil value shows a
-/// dash and turns copying off. `isLit` marks the chosen line of a list; `tint` colours the value character by character.
-public final class CanonValueLine: CanonView {
+/// dash and disables the line. `isLit` marks the chosen line of a list; `tint` colours the value character by character.
+public final class CanonValueLine: CanonPressable {
     public enum Layout {
         /// The name in a column `labelWidth` wide, the value on one line beside it.
         case beside(labelWidth: CGFloat)
@@ -21,30 +21,17 @@ public final class CanonValueLine: CanonView {
         didSet { if isLit != oldValue { paintValue() } }
     }
 
-    public var isEnabled = true {
-        didSet {
-            glyph.isHidden = !isEnabled
-            paint()
-        }
-    }
-
     /// Colours characters by kind; nil sets the whole value in one colour.
     public var tint: ((Character) -> NSColor)? {
         didSet { paintValue() }
     }
-
-    /// Runs after the copy, on a click.
-    public var action: (() -> Void)?
 
     private let layout: Layout
     private let format = NSTextField.canon(size: 11, weight: .semibold, colour: .delphiMutedForeground)
     private let value = NSTextField.canon()
     private let glyph = NSImageView()
     private var text = ""
-    private var copiedRevert: DispatchWorkItem?
-    private var isHovering = false {
-        didSet { if isHovering != oldValue { paint() } }
-    }
+    private let copiedRevert = CanonDebounce()
 
     public convenience init(labelWidth: CGFloat = 48) {
         self.init(layout: .beside(labelWidth: labelWidth))
@@ -98,8 +85,6 @@ public final class CanonValueLine: CanonView {
         value.setContentHuggingPriority(.defaultLow, for: .horizontal)
         pin(stack, insets: canonInsets(vertical: inset, horizontal: DelphiMetrics.panelPadding))
         heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
-        setAccessibilityElement(true)
-        setAccessibilityRole(.button)
         paint()
     }
 
@@ -160,36 +145,16 @@ public final class CanonValueLine: CanonView {
         glyph.contentTintColor = copied ? .systemGreen : .delphiMutedForeground
     }
 
-    private func press() {
-        if isEnabled {
-            ClipboardService.copy(text)
-            showGlyph(copied: true)
-            copiedRevert?.cancel()
-            let revert = DispatchWorkItem { [weak self] in self?.showGlyph(copied: false) }
-            copiedRevert = revert
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: revert)
-        }
+    public override func stateChanged() {
+        glyph.isHidden = !isEnabled
+        paint()
+    }
+
+    public override func press() {
+        ClipboardService.copy(text)
+        showGlyph(copied: true)
+        copiedRevert.after(1.5) { [weak self] in self?.showGlyph(copied: false) }
         action?()
-    }
-
-    public override func updateTrackingAreas() {
-        super.updateTrackingAreas()
-        trackingAreas.forEach(removeTrackingArea)
-        addTrackingArea(NSTrackingArea(rect: .zero, options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect], owner: self))
-    }
-
-    public override func mouseEntered(with event: NSEvent) { isHovering = true }
-    public override func mouseExited(with event: NSEvent) { isHovering = false }
-    public override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
-    public override func mouseDown(with event: NSEvent) {}
-
-    public override func mouseUp(with event: NSEvent) {
-        if bounds.contains(convert(event.locationInWindow, from: nil)) { press() }
-    }
-
-    public override func accessibilityPerformPress() -> Bool {
-        press()
-        return true
     }
 }
 
@@ -243,10 +208,12 @@ public final class CanonCodeBlock: CanonView {
         height = scroll.heightAnchor.constraint(equalToConstant: DelphiMetrics.rowHeight)
         height.isActive = true
 
-        copyButton.setAccessibilityLabel(String(localized: "Copy code"))
+        copyButton.accessibilityTitle = String(localized: "Copy code")
         copyButton.setContentHuggingPriority(.required, for: .horizontal)
         let title = NSTextField.canonHeading(language?.uppercased() ?? "")
-        let bar = NSStackView(views: [title, NSView(), copyButton])
+        let spacer = NSView()
+        spacer.setContentHuggingPriority(.init(1), for: .horizontal)
+        let bar = NSStackView(views: [title, spacer, copyButton])
         bar.distribution = .fill
         bar.edgeInsets = NSEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
         let header = CanonView(fill: language == nil ? nil : .delphiMuted)
