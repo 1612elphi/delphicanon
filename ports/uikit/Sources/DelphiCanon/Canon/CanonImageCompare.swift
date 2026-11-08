@@ -6,7 +6,7 @@ public final class CanonImageCompare: UIView {
     private let after = UIImageView()
     private let afterClip = UIView()
     private let divider = UIView()
-    private let grip = UIImageView(image: UIImage(systemName: "arrow.left.and.right"))
+    private let grip = UIImageView(image: UIImage.canonSymbol("arrow.left.and.right"))
     private let beforeTag = CanonImageCompare.tag(String(localized: "Before"))
     private let afterTag = CanonImageCompare.tag(String(localized: "After"))
     private let failure = UILabel.canon(String(localized: "This format couldn't encode this image"), .subheadline, colour: .delphiMutedForeground)

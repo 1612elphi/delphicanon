@@ -285,7 +285,7 @@ public final class CanonRow: UIView {
         addSubview(text)
 
         if let systemImage, form == .plain {
-            let view = UIImageView(image: UIImage(systemName: systemImage))
+            let view = UIImageView(image: UIImage.canonSymbol(systemImage))
             view.tintColor = .delphiMutedForeground
             view.contentMode = .scaleAspectFit
             view.translatesAutoresizingMaskIntoConstraints = false

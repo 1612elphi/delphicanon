@@ -249,7 +249,7 @@ public enum CanonPattern {
     public static func tile(symbol: String, base: UIColor, ink: UIColor) -> UIImage {
         let key = "\(symbol)|\(base)|\(ink)"
         if let cached = cache[key] { return cached }
-        let glyph = UIImage(systemName: symbol, withConfiguration: UIImage.SymbolConfiguration(pointSize: symbolSize, weight: .medium))?
+        let glyph = UIImage.canonSymbol(symbol, UIImage.SymbolConfiguration(pointSize: symbolSize, weight: .medium))?
             .withTintColor(ink.withAlphaComponent(inkAlpha), renderingMode: .alwaysOriginal)
         let image = UIGraphicsImageRenderer(size: CGSize(width: tile, height: tile)).image { context in
             base.setFill()

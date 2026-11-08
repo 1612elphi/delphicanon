@@ -175,7 +175,7 @@ public final class CanonValueLine: UIControl {
     private let layout: Layout
     private let format = UILabel.canon(nil, .caption2, weight: .semibold, colour: .delphiMutedForeground)
     private let value = UILabel.canon(nil, .callout)
-    private let glyph = UIImageView(image: UIImage(systemName: "doc.on.doc"))
+    private let glyph = UIImageView(image: UIImage.canonSymbol("doc.on.doc"))
     private var text = ""
     private var isHovering = false {
         didSet { paint() }
@@ -192,6 +192,7 @@ public final class CanonValueLine: UIControl {
         value.font = .delphiMono(14, relativeTo: .callout)
         glyph.tintColor = .delphiMutedForeground
         glyph.preferredSymbolConfiguration = UIImage.SymbolConfiguration(textStyle: .caption2)
+        glyph.image = UIImage.canonSymbol("doc.on.doc", glyph.preferredSymbolConfiguration)
         glyph.setContentHuggingPriority(.required, for: .horizontal)
         glyph.setContentCompressionResistancePriority(.required, for: .horizontal)
 

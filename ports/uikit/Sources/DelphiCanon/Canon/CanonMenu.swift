@@ -59,7 +59,7 @@ public final class CanonFromTo: UIControl {
         super.init(frame: .zero)
         backgroundColor = .delphiBorder
 
-        let symbol = UIImageView(image: UIImage(systemName: "arrow.forward", withConfiguration: UIImage.SymbolConfiguration(textStyle: .footnote, scale: .medium)))
+        let symbol = UIImageView(image: UIImage.canonSymbol("arrow.forward", UIImage.SymbolConfiguration(textStyle: .footnote, scale: .medium)))
         symbol.tintColor = .delphiMutedForeground
         symbol.isAccessibilityElement = false
         symbol.translatesAutoresizingMaskIntoConstraints = false

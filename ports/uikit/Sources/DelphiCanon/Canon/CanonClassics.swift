@@ -261,7 +261,7 @@ public final class CanonCodeBlock: UIView {
 
     private func showCopied(_ copied: Bool) {
         isCopied = copied
-        copy.configuration?.image = UIImage(systemName: copied ? "checkmark" : "doc.on.doc")
+        copy.configuration?.image = UIImage.canonSymbol(copied ? "checkmark" : "doc.on.doc")
         copy.configuration?.baseForegroundColor = copied ? .systemGreen : isHovering ? .delphiForeground : .delphiMutedForeground
     }
 }

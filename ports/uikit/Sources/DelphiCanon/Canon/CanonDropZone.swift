@@ -30,7 +30,7 @@ public final class CanonDropZone: UIView, UIDropInteractionDelegate, UIDocumentP
         super.init(frame: .zero)
         backgroundColor = .delphiBorder
 
-        icon.image = UIImage(systemName: systemImage, withConfiguration: UIImage.SymbolConfiguration(textStyle: .largeTitle))
+        icon.image = UIImage.canonSymbol(systemImage, UIImage.SymbolConfiguration(textStyle: .largeTitle))
         icon.contentMode = .center
         let label = UILabel.canon(prompt, .subheadline, colour: .delphiMutedForeground)
         label.textAlignment = .center

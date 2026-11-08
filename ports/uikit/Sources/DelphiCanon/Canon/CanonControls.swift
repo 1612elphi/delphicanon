@@ -1,9 +1,11 @@
 import UIKit
 
 extension UIImage {
-    /// An SF Symbol, else a custom symbol of that name in the main bundle's asset catalogue.
+    /// The host's drawn icon for `name`, else an SF Symbol, else a custom symbol of that name in the main bundle's asset catalogue.
     public static func canonSymbol(_ name: String, _ configuration: UIImage.Configuration? = nil) -> UIImage? {
-        UIImage(systemName: name, withConfiguration: configuration) ?? UIImage(named: name, in: nil, with: configuration)
+        CanonHost.drawnIcon(name, configuration)
+            ?? UIImage(systemName: name, withConfiguration: configuration)
+            ?? UIImage(named: name, in: nil, with: configuration)
     }
 }
 
@@ -112,10 +114,11 @@ public final class CanonButton: UIButton {
             guard let button = button as? CanonButton, var config = button.configuration else { return }
             let titled = button.showsTitle
             config.title = titled ? button.text : nil
-            config.image = button.watermark == nil ? button.systemImage.flatMap { UIImage.canonSymbol($0) } : nil
-            config.preferredSymbolConfigurationForImage = titled
+            let symbol = titled
                 ? UIImage.SymbolConfiguration(textStyle: .footnote)
                 : UIImage.SymbolConfiguration(textStyle: .body, scale: .medium).applying(UIImage.SymbolConfiguration(weight: .semibold))
+            config.image = button.watermark == nil ? button.systemImage.flatMap { UIImage.canonSymbol($0, symbol) } : nil
+            config.preferredSymbolConfigurationForImage = symbol
             let filled = button.kind == .primary || (button.isSelected && (button.kind == .segment || button.kind == .secondary))
             let style: UIFont.TextStyle = button.kind == .segment ? .subheadline : .body
             let weight: UIFont.Weight = filled ? .semibold : .medium

@@ -128,7 +128,7 @@ public final class CanonLamps: UIView {
     public init(lamps: [Lamp] = transport) {
         super.init(frame: .zero)
         let row = UIStackView(arrangedSubviews: lamps.map { lamp in
-            let view = UIImageView(image: UIImage(systemName: lamp.systemImage, withConfiguration: UIImage.SymbolConfiguration(pointSize: 17, weight: .bold)))
+            let view = UIImageView(image: UIImage.canonSymbol(lamp.systemImage, UIImage.SymbolConfiguration(pointSize: 17, weight: .bold)))
             view.contentMode = .center
             view.layer.shadowOffset = .zero
             view.layer.shadowRadius = 6

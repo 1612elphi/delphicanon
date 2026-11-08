@@ -60,7 +60,7 @@ public final class CanonToast: UIView {
         detail.font = .delphiMono(13, relativeTo: .footnote)
         detail.alpha = 0.7
         detail.lineBreakMode = .byTruncatingMiddle
-        let check = UIImageView(image: UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration(textStyle: .subheadline, scale: .medium)))
+        let check = UIImageView(image: UIImage.canonSymbol("checkmark", UIImage.SymbolConfiguration(textStyle: .subheadline, scale: .medium)))
         check.tintColor = .delphiBackground
         for view in [check, title] {
             view.setContentHuggingPriority(.required, for: .horizontal)

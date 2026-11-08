@@ -35,8 +35,8 @@ public final class CanonFileCell: UIControl, UIDocumentPickerDelegate, PHPickerV
         } else {
             choose.showsMenuAsPrimaryAction = true
             choose.menu = UIMenu(children: [
-                UIAction(title: String(localized: "Photos"), image: UIImage(systemName: "photo.stack")) { [unowned self] _ in pickPhoto() },
-                UIAction(title: String(localized: "Files"), image: UIImage(systemName: "folder")) { [unowned self] _ in pickFile() },
+                UIAction(title: String(localized: "Photos"), image: UIImage.canonSymbol("photo.stack")) { [unowned self] _ in pickPhoto() },
+                UIAction(title: String(localized: "Files"), image: UIImage.canonSymbol("folder")) { [unowned self] _ in pickFile() },
             ])
         }
 

@@ -8,4 +8,6 @@ public enum CanonHost {
     public static var captureExport: (_ data: Data, _ filename: String, _ source: UIView?) -> Bool = { _, _, _ in false }
     /// Height a bar floating over the bottom of `controller`'s page covers above the safe area, or nil when none does.
     public static var bandHeight: (_ controller: UIViewController?, _ traits: UITraitCollection) -> CGFloat? = { _, _ in nil }
+    /// The host's own image for a symbol name under a symbol configuration, or nil to use the SF Symbol.
+    public static var drawnIcon: (_ symbol: String, _ configuration: UIImage.Configuration?) -> UIImage? = { _, _ in nil }
 }
