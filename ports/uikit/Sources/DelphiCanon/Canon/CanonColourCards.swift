@@ -192,7 +192,6 @@ public final class CanonValueLine: UIControl {
         value.font = .delphiMono(14, relativeTo: .callout)
         glyph.tintColor = .delphiMutedForeground
         glyph.preferredSymbolConfiguration = UIImage.SymbolConfiguration(textStyle: .caption2)
-        glyph.image = UIImage.canonSymbol("doc.on.doc", glyph.preferredSymbolConfiguration)
         glyph.setContentHuggingPriority(.required, for: .horizontal)
         glyph.setContentCompressionResistancePriority(.required, for: .horizontal)
 

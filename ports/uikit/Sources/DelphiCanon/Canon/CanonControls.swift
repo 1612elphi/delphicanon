@@ -114,11 +114,10 @@ public final class CanonButton: UIButton {
             guard let button = button as? CanonButton, var config = button.configuration else { return }
             let titled = button.showsTitle
             config.title = titled ? button.text : nil
-            let symbol = titled
+            config.image = button.watermark == nil ? button.systemImage.flatMap { UIImage.canonSymbol($0) } : nil
+            config.preferredSymbolConfigurationForImage = titled
                 ? UIImage.SymbolConfiguration(textStyle: .footnote)
                 : UIImage.SymbolConfiguration(textStyle: .body, scale: .medium).applying(UIImage.SymbolConfiguration(weight: .semibold))
-            config.image = button.watermark == nil ? button.systemImage.flatMap { UIImage.canonSymbol($0, symbol) } : nil
-            config.preferredSymbolConfigurationForImage = symbol
             let filled = button.kind == .primary || (button.isSelected && (button.kind == .segment || button.kind == .secondary))
             let style: UIFont.TextStyle = button.kind == .segment ? .subheadline : .body
             let weight: UIFont.Weight = filled ? .semibold : .medium

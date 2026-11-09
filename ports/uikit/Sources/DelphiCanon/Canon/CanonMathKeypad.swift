@@ -143,7 +143,6 @@ public final class CanonMathKeyView: UIView {
             image.contentMode = .center
             image.preferredSymbolConfiguration = UIImage.SymbolConfiguration(textStyle: .title2)
                 .applying(UIImage.SymbolConfiguration(weight: .medium))
-            image.image = UIImage.canonSymbol(name, image.preferredSymbolConfiguration)
             self.face = image
         case .word(let text):
             let word = UILabel.canon(text, .title3, weight: .semibold, colour: family.ink)
@@ -157,7 +156,6 @@ public final class CanonMathKeyView: UIView {
             let mark = UIImageView(image: UIImage.canonSymbol("chevron.up"))
             mark.tintColor = family.ink.withAlphaComponent(0.6)
             mark.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 11, weight: .bold)
-            mark.image = UIImage.canonSymbol("chevron.up", mark.preferredSymbolConfiguration)
             chevron = mark
         } else {
             chevron = nil

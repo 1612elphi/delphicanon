@@ -1091,7 +1091,6 @@ public final class CanonMathField: UIControl {
         let glyph = UIImageView(image: UIImage.canonSymbol("keyboard"))
         glyph.tintColor = .delphiMutedForeground
         glyph.preferredSymbolConfiguration = UIImage.SymbolConfiguration(textStyle: .footnote)
-        glyph.image = UIImage.canonSymbol("keyboard", glyph.preferredSymbolConfiguration)
         glyph.setContentHuggingPriority(.required, for: .horizontal)
         glyph.setContentCompressionResistancePriority(.required, for: .horizontal)
         math.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
