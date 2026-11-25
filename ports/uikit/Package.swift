@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "DelphiCanon", targets: ["DelphiCanon"]),
     ],
     dependencies: [
-        .package(path: "../../../delphitools-core"),
+        .package(url: "https://github.com/1612elphi/delphitools-core.git", from: "0.1.1"),
     ],
     targets: [
         .target(
